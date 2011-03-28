@@ -1,0 +1,11 @@
+## Site-info.def Batch
+BATCH_SERVER="griffon-80.nancy.grid5000.fr"
+CE_HOST="griffon-8.nancy.grid5000.fr"
+CE_SMPSIZE=`grep -c processor /proc/cpuinfo`
+VOS="nancy"
+QUEUES="default"
+DEFAULT_GROUP_ENABLE="nancy"
+USERS_CONF=/opt/glite/yaim/etc/users.conf
+GROUPS_CONF=/opt/glite/yaim/etc/groups.conf
+WN_LIST=/opt/glite/yaim/etc/wn-list.conf
+CONFIG_MAUI="yes"
