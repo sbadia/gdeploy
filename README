@@ -1,0 +1,31 @@
+== gdeploy
+Deploy gLite Midelware on Grid'5000
+
+https://www.grid5000.fr/
+
+=== lexique
+Egee:
+ -CE = Computing Element (Cluster).
+ -SE = Stockage Element (Baie).
+   - Gsiftp transfert intégral
+   - Rfio accès direct API Posix Like.
+ -FTS = File Transfert Service.
+ -WMS = Workload Management System (meta-scheduler). -> Condor-G.
+ -BDII = Système d'Information (Publication des ressources et inforamtions diverses (stats dynamiques).
+ -VOMS = Virtual Organisation Membership Service.
+ -LFC = File Catalog (non distribué).
+ -VO = Virtual Organisation.
+ -EGEE = Enabling Grids for E-sciencE.
+ -UI = User Interface (pas GUI) mais client de la grille.
+ -SRM = Storage Ressource Manager.
+ -ROC = Regional Operation Center.
+ -RC = Replica Catalog.
+ -GOC = Grid Operations Center.
+ -WN = Working Node.
+ -LB = Logging & Brokekeeping.
+ -JSS = Job Submission Service.
+ -RB = Ressources Broker.
+ -IS = Information System.
+
+AlGorille:
+ -SG = SimGrid.
