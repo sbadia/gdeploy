@@ -406,7 +406,7 @@ if $cfg.sendconf == true :
       elsif $cfg.pbar == true :
         pbarc.inc
       end
-      ssh.exec!('mkdir -p /root/yaim && rm -f /etc/yum.repos.d/dag.repo* && wget -P /etc/yum.repos.d/ http://apt.grid5000.fr/glite/repo/dag.repo -q && yum update -q -y')
+      ssh.exec!('mkdir -p /root/yaim && rm -f /etc/yum.repos.d/dag.repo* && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/dag.repo -q && yum update -q -y')
     end
   }
   if $cfg.pbar == true:
@@ -422,7 +422,7 @@ if $cfg.sendconf == true :
     elsif $cfg.pbar == true :
       pbarb.inc
     end
-    ssh.exec!('wget -P /etc/yum.repos.d/ http://apt.grid5000.fr/glite/repo/glite-BDII.repo -q && yum install glite-BDII -q -y')
+    ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-BDII.repo -q && yum install glite-BDII -q -y')
   if $cfg.pbar == true:
     pbarb.inc
   end
@@ -449,7 +449,7 @@ if $cfg.sendconf == true :
     if $cfg.pbar == true:
       pbaro.inc
     end
-    ssh.exec!('wget -P /etc/yum.repos.d/ http://apt.grid5000.fr/glite/repo/glite-TORQUE_server.repo -q && yum install glite-TORQUE_server -q -y')
+    ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_server.repo -q && yum install glite-TORQUE_server -q -y')
     ssh.scp.upload!("/home/#{$cfg.user}/site-info-batch.def","/root/yaim/site-info.def") do |ch, name, sent, total|
       #print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
     end
@@ -483,7 +483,7 @@ wn.each {|wo|
     if $cfg.verbose == true:
       puts "*** intall worker #{wo}"
     end
-    ssh.exec!('wget -P /etc/yum.repos.d/ http://apt.grid5000.fr/glite/repo/glite-WN.repo -q && wget -P /etc/yum.repos.d/ http://apt.grid5000.fr/glite/repo/glite-TORQUE_client.repo -q && wget -P /etc/yum.repos.d/ http://apt.grid5000.fr/glite/repo/lcg-CA.repo -q  && yum groupinstall glite-WN -q -y && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck')
+    ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-WN.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_client.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q  && yum groupinstall glite-WN -q -y && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck')
     ssh.scp.upload!("/home/#{$cfg.user}/site-info-wn.def","/root/yaim/site-info.def") do |ch, name, sent, total|
       #print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
     end
