@@ -1,0 +1,33 @@
+---
+bdii:
+  site_bdii_host: `hostname -f`
+  ce_host:
+  lfc_host:
+  site_name:
+  site_support_email:
+  site_loc:
+  site_lat:
+  site_long:
+  site_web:
+  site_email:
+  site_security_email:
+  site_desc:
+  site_other_grid:
+  bdii_regions: "CE SITE_BDII WMS BDII SBDII"
+  bdii_ce_url:
+  bdii_site_bdii_url:
+  bdii_wms_url:
+  bdii_bdii_url:
+  bdii_sbdii_url:
+
+batch:
+  batch_server: `hostname -f`
+  ce_host:
+  ce_smpsize:
+  vos:
+  queues:
+  test_group_enable:
+  users_conf: /opt/glite/yaim/etc/users.conf
+  groups_conf: /opt/glite/yaim/etc/groups.conf
+  wn_list: /opt/glite/yaim/etc/wn-list.conf
+  config_maui: "yes"
