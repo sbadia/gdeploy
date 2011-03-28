@@ -165,115 +165,125 @@ end
 
 def conf_bdii(bdii, sname, cehost)
   f = File.new("/home/#{$cfg.user}/site-info-bdii.def", "w")
-  f.write "## Site-info.def Bdii\n"
-  f.write "SITE_BDII_HOST=\"#{bdii}\"\n"
-  f.write "SITE_NAME=#{sname}\n"
-  f.write "SITE_LOC=\"#{sname.capitalize}, France\"\n"
-  f.write "SITE_WEB=\"https://www.grid5000.fr/\"\n"
-  f.write "SITE_LAT=\"48,7\"\n"
-  f.write "SITE_LONG=\"6,2\"\n"
-  f.write "SITE_EMAIL=root@localhost\n"
-  f.write "SITE_SECURITY_EMAIL=root@localhost\n"
-  f.write "SITE_SUPPORT_EMAIL=root@localhost\n"
-  f.write "SITE_DESC=\"Grid5000 School - gLite\"\n"
-  f.write "SITE_OTHER_GRID=\"#{clusters($nodes)}\"\n\n"
-  f.write "CE_HOST=\"#{cehost}\"\n"
-  f.write "BDII_REGIONS=\"CE SITE_BDII\"\n"
-  f.write "BDII_CE_URL=\"ldap://#{cehost}:2170/mds-vo-name=resource,o=grid\"\n"
-  f.write "BDII_SITE_BDII_URL=\"ldap://#{bdii}:2170/mds-vo-name=resource,o=grid\"\n"
+  f.puts <<-EOF
+## Site-info.def Bdii
+SITE_BDII_HOST="#{bdii}"
+SITE_NAME=#{sname}
+SITE_LOC="#{sname.capitalize}, France"
+SITE_WEB="https://www.grid5000.fr/"
+SITE_LAT="48,7"
+SITE_LONG="6,2"
+SITE_EMAIL=root@localhost
+SITE_SECURITY_EMAIL=root@localhost
+SITE_SUPPORT_EMAIL=root@localhost
+SITE_DESC="Grid5000 School - gLite"
+SITE_OTHER_GRID="#{clusters($nodes)}"
+CE_HOST="#{cehost}"
+BDII_REGIONS="CE SITE_BDII"
+BDII_CE_URL="ldap://#{cehost}:2170/mds-vo-name=resource,o=grid"
+BDII_SITE_BDII_URL="ldap://#{bdii}:2170/mds-vo-name=resource,o=grid"
+EOF
   f.close
 end
 
 def conf_batch(batch, cehost, sname)
   f = File.new("/home/#{$cfg.user}/site-info-batch.def", "w")
-  f.write "## Site-info.def Batch\n"
-  f.write "BATCH_SERVER=\"#{batch}\"\n"
-  f.write "CE_HOST=\"#{cehost}\"\n"
-  f.write "CE_SMPSIZE=`grep -c processor /proc/cpuinfo`\n"
-  f.write "VOS=\"#{sname}\"\n"
-  f.write "QUEUES=\"default\"\n"
-  f.write "DEFAULT_GROUP_ENABLE=\"#{sname}\"\n"
-  f.write "USERS_CONF=/opt/glite/yaim/etc/conf/users.conf\n"
-  f.write "GROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf\n"
-  f.write "WN_LIST=/opt/glite/yaim/etc/conf/wn-list.conf\n"
-  f.write "CONFIG_MAUI=\"yes\"\n"
+  f.puts <<-EOF
+## Site-info.def Batch
+BATCH_SERVER="#{batch}"
+CE_HOST="#{cehost}"
+CE_SMPSIZE=`grep -c processor /proc/cpuinfo`
+VOS="#{sname}"
+QUEUES="default"
+DEFAULT_GROUP_ENABLE="#{sname}"
+USERS_CONF=/opt/glite/yaim/etc/conf/users.conf
+GROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf
+WN_LIST=/opt/glite/yaim/etc/conf/wn-list.conf
+CONFIG_MAUI="yes"
+EOF
   f.close
 end
 
 def conf_wn(bdii, se, sname, batch, cehost)
   f = File.new("/home/#{$cfg.user}/site-info-wn.def", "w")
-  f.write "## Site-info.def Batch\n"
-  f.write "BDII_HOST=\"#{bdii}\"\n"
-  f.write "SE_LIST=\"#{se}\"\n"
-  f.write "SITE_NAME=#{sname}\n"
-  f.write "USERS_CONF=/opt/glite/yaim/etc/conf/users.conf\n"
-  f.write "GROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf\n"
-  f.write "WN_LIST=/opt/glite/yaim/etc/conf/wn-list.conf\n"
-  f.write "VOS=#{sname}\n"
-  f.write "BATCH_SERVER=#{batch}\n"
-  f.write "CE_HOST=#{cehost}\n"
-  f.write "CE_SMPSIZE=`grep -c processor /proc/cpuinfo`\n"
-  f.write "VO_#{sname.upcase}_SW_DIR=/opt/vo_software/#{sname}\n"
-  f.write "VO_#{sname.upcase}_VOMS_CA_DN=\"/C=FR/O=Grid5000/CN=G5k-CA\"\n"
-  f.write "VO_#{sname.upcase}_VOMSES=\"#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}\"\n"
+  f.puts <<-EOF
+## Site-info.def Batch
+BDII_HOST="#{bdii}"
+SE_LIST="#{se}"
+SITE_NAME=#{sname}
+USERS_CONF=/opt/glite/yaim/etc/conf/users.conf
+GROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf
+WN_LIST=/opt/glite/yaim/etc/conf/wn-list.conf
+VOS=#{sname}
+BATCH_SERVER=#{batch}
+CE_HOST=#{cehost}
+CE_SMPSIZE=`grep -c processor /proc/cpuinfo`
+VO_#{sname.upcase}_SW_DIR=/opt/vo_software/#{sname}
+VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5k-CA"
+VO_#{sname.upcase}_VOMSES="#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}"
+EOF
   f.close
 end
 
 def conf_cehost(sname, cehost, batch, se)
   f = File.new("/home/#{$cfg.user}/site-info-ce.def", "w")
-  f.write "## Site-info.def Ce\n"
-  f.write "SITE_NAME=#{sname}\n"
-  f.write "CE_HOST=\"#{cehost}\"\n"
-  f.write "BATCH_SERVER=\"#{batch}\"\n"
-  f.write "USERS_CONF=/opt/glite/yaim/etc/conf/users.conf\n"
-  f.write "GROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf\n"
-  f.write "WN_LIST=/opt/glite/yaim/etc/conf/wn-list.conf\n"
-  f.write "JAVA_LOCATION=/usr/java/default\n"
-  f.write "JOB_MANAGER=pbs\n"
-  f.write "CE_BATCH_SYS=pbs\n"
-  f.write "BATCH_VERSION=torque-2.3.6-2\n"
-  f.write "BATCH_BIN_DIR=/usr/bin\n"
-  f.write "BATCH_LOG_DIR=/var/spool/pbs/\n"
-  f.write "BATCH_SPOOL_DIR=/var/spool/pbs/\n"
-  f.write "CREAM_CE_STATE=\"Special\"\n"
-  f.write "BLPARSER_HOST=#{cehost}\n"
-  f.write "BLAH_JOBID_PREFIX=\"cream_\"\n"
-  f.write "BLPARSER_WITH_UPDATER_NOTIFIER=\"false\"\n"
-  f.write "MYSQL_PASSWORD=koala\n"
-  f.write "APEL_DB_PASSWORD=\"APELDB_PWD\"\n"
-  f.write "APEL_MYSQL_HOST=\"#{cehost}\"\n"
-  f.write "CE_OS_ARCH=x86_64  # uname -i\n"
-  f.write "CE_OS=`lsb_release -i | cut -f2`\n"
-  f.write "CE_OS_RELEASE=`lsb_release -r | cut -f2`\n"
-  f.write "CE_OS_VERSION=`lsb_release -c | cut -f2`\n"
-  f.write "CE_CPU_MODEL=Xeon\n"
-  f.write "CE_CPU_VENDOR=GenuineIntel\n"
-  f.write "CE_CPU_SPEED=2000  # grep MHz /proc/cpuinfo\n"
-  f.write "CE_MINPHYSMEM=16000          # grep MemTotal /proc/meminfo\n"
-  f.write "CE_MINVIRTMEM=4096          # grep SwapTotal /proc/meminfo\n"
-  f.write "CE_OUTBOUNDIP=TRUE\n"
-  f.write "CE_INBOUNDIP=FALSE\n"
-  f.write "CE_RUNTIMEENV=\"\nGLITE-3_2_0\nR-GMA\n\"\n"
-  f.write "CE_CAPABILITY=\"none\"\n"
-  f.write "CE_OTHERDESCR=\"Cores=4\" #grep -c physical id.*: 0 /proc/cpuinfo\n"
-  f.write "CE_PHYSCPU=2      #grep -c core id.*: 0 /proc/cpuinfo\n"
-  f.write "CE_LOGCPU=1       #grep -c processor /proc/cpuinfo\n"
-  f.write "CE_SMPSIZE=1      #grep -c processor /proc/cpuinfo\n"
-  f.write "CE_SI00=1592\n"
-  f.write "CE_SF00=1927\n"
-  f.write "CE_OTHER_DESCR=\"Cores=1, Benchmark=1.11-HEP-SPEC06\"\n"
-  f.write "SE_LIST=\"#{se}\"\n"
-  f.write "SE_MOUNT_INFO_LIST=\"none\"\n"
-  f.write "VOS=\"#{sname}\"\n"
-  f.write "QUEUES=\"default\"\n"
-  f.write "DEFAULT_GROUP_ENABLE=\"#{sname}\"\n"
-  f.write "ACCESS_BY_DOMAIN=false\n"
-  f.write "CREAM_DB_USER=creamdb\n"
-  f.write "CREAM_DB_PASSWORD=\"secretPassword\"\n"
-  f.write "BLPARSER_HOST=#{cehost}\n"
-  f.write "BLP_PORT=33333\n"
-  f.write "CREAM_PORT=56565\n"
-  f.write "CEMON_HOST=#{cehost}\n"
+  f.puts <<-EOF
+## Site-info.def Ce
+SITE_NAME=#{sname}
+CE_HOST="#{cehost}"
+BATCH_SERVER="#{batch}"
+USERS_CONF=/opt/glite/yaim/etc/conf/users.conf
+GROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf
+WN_LIST=/opt/glite/yaim/etc/conf/wn-list.conf
+JAVA_LOCATION=/usr/java/default
+JOB_MANAGER=pbs
+CE_BATCH_SYS=pbs
+BATCH_VERSION=torque-2.3.6-2
+BATCH_BIN_DIR=/usr/bin
+BATCH_LOG_DIR=/var/spool/pbs/
+BATCH_SPOOL_DIR=/var/spool/pbs/
+CREAM_CE_STATE="Special"
+BLPARSER_HOST=#{cehost}
+BLAH_JOBID_PREFIX="cream_"
+BLPARSER_WITH_UPDATER_NOTIFIER="false"
+MYSQL_PASSWORD=koala
+APEL_DB_PASSWORD="APELDB_PWD"
+APEL_MYSQL_HOST="#{cehost}"
+CE_OS_ARCH=x86_64  # uname -i
+CE_OS=`lsb_release -i | cut -f2`
+CE_OS_RELEASE=`lsb_release -r | cut -f2`
+CE_OS_VERSION=`lsb_release -c | cut -f2`
+CE_CPU_MODEL=Xeon
+CE_CPU_VENDOR=GenuineIntel
+CE_CPU_SPEED=2000  # grep MHz /proc/cpuinfo
+CE_MINPHYSMEM=16000          # grep MemTotal /proc/meminfo
+CE_MINVIRTMEM=4096          # grep SwapTotal /proc/meminfo
+CE_OUTBOUNDIP=TRUE
+CE_INBOUNDIP=FALSE
+CE_RUNTIMEENV="
+  GLITE-3_2_0
+  R-GMA"
+CE_CAPABILITY="none"
+CE_OTHERDESCR="Cores=4" #grep -c physical id.*: 0 /proc/cpuinfo
+CE_PHYSCPU=2      #grep -c core id.*: 0 /proc/cpuinfo
+CE_LOGCPU=1       #grep -c processor /proc/cpuinfo
+CE_SMPSIZE=1      #grep -c processor /proc/cpuinfo
+CE_SI00=1592
+CE_SF00=1927
+CE_OTHER_DESCR="Cores=1, Benchmark=1.11-HEP-SPEC06"
+SE_LIST="#{se}"
+SE_MOUNT_INFO_LIST="none"
+VOS="#{sname}"
+QUEUES="default"
+DEFAULT_GROUP_ENABLE="#{sname}"
+ACCESS_BY_DOMAIN=false
+CREAM_DB_USER=creamdb
+CREAM_DB_PASSWORD="secretPassword"
+BLPARSER_HOST=#{cehost}
+BLP_PORT=33333
+CREAM_PORT=56565
+CEMON_HOST=#{cehost}
+EOF
   f.close
 end
 
@@ -291,9 +301,11 @@ end
 # "/<vo>/<group>/ROLE=<role>:::<special_user_type>:
 def conf_groups(sname)
   f = File.new("/home/#{$cfg.user}/conf/groups.conf", "w")
-  f.write "\"/#{sname}\"::::\n"
-  f.write "\"/#{sname}/ROLE=#{sname.upcase}\"::::\n"
-  f.write "\"/#{sname}/ROLE=VO-Admin\":::adm:\n"
+  f.puts <<-EOF
+"/#{sname}"::::
+"/#{sname}/ROLE=#{sname.upcase}"::::
+"/#{sname}/ROLE=VO-Admin":::adm:
+EOF
   f.close
 end
 
@@ -307,26 +319,30 @@ end
 
 def export_nfs()
   f = File.new("/home/#{$cfg.user}/export", "w")
-  f.write "/var/spool/pbs/server_priv/accounting    *(rw,async,no_root_squash)"
-  f.write "/var/spool/pbs/server_logs               *(rw,async,no_root_squash)"
+  f.puts <<-EOF
+/var/spool/pbs/server_priv/accounting    *(rw,async,no_root_squash)
+/var/spool/pbs/server_logs               *(rw,async,no_root_squash)
+EOF
   f.close
 end
 
 def queue_config()
   f = File.new("/home/#{$cfg.user}/queue.conf", "w")
-  f.write "#!/bin/sh"
-  f.write "qmgr"
-  f.write "set server scheduling = True"
-  f.write "set server acl_hosts = localhost"
-  f.write "set server acl_hosts += <other hosts allowed to submit jobs>"
-  f.write "set server managers = <e-mail of batch system manager>"
-  f.write "set server operators = <e-mail of batch system operator>"
-  f.write "set server default_queue = <queuename>"
-  f.write "set server scheduler_iteration = 600"
-  f.write "set server node_check_rate = 150"
-  f.write "set server tcp_timeout = 12"
-  f.write "set server poll_jobs = False"
-  f.write "set server log_level = 3"
+  f.puts <<-EOF
+#!/bin/sh
+qmgr
+set server scheduling = True
+set server acl_hosts = localhost
+set server acl_hosts += <other hosts allowed to submit jobs>
+set server managers = <e-mail of batch system manager>
+set server operators = <e-mail of batch system operator>
+set server default_queue = <queuename>
+set server scheduler_iteration = 600
+set server node_check_rate = 150
+set server tcp_timeout = 12
+set server poll_jobs = False
+set server log_level = 3
+EOF
   f.close
 end
 
