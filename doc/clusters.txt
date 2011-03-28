@@ -1,0 +1,11 @@
+grenoble:
+ - adonis
+ - edel
+lille:
+ - chinqchint
+ - chirloute
+nancy:
+ - graphene
+rennes:
+ - parapide
+ -parapluie
