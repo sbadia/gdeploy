@@ -26,6 +26,7 @@ $cfg.verbose = false
 $cfg.pbar = false
 
 $tstart = Time::now
+DIR = File.expand_path(File.dirname(__FILE__))
 
 
 # Nodes from file
@@ -158,13 +159,13 @@ utils = [ 'users', 'groups', 'wn-list' ]
 
 if $cfg.config == true :
 begin
- Dir::mkdir("/home/#{$cfg.user}/conf/", 0755)
+ Dir::mkdir("#{DIR}/conf/", 0755)
 rescue
 end
 end
 
 def conf_bdii(bdii, sname, cehost)
-  f = File.new("/home/#{$cfg.user}/site-info-bdii.def", "w")
+  f = File.new("#{DIR}/site-info-bdii.def", "w")
   f.puts <<-EOF
 ## Site-info.def Bdii
 SITE_BDII_HOST="#{bdii}"
@@ -187,7 +188,7 @@ EOF
 end
 
 def conf_batch(batch, cehost, sname)
-  f = File.new("/home/#{$cfg.user}/site-info-batch.def", "w")
+  f = File.new("#{DIR}/site-info-batch.def", "w")
   f.puts <<-EOF
 ## Site-info.def Batch
 BATCH_SERVER="#{batch}"
@@ -205,7 +206,7 @@ EOF
 end
 
 def conf_wn(bdii, se, sname, batch, cehost)
-  f = File.new("/home/#{$cfg.user}/site-info-wn.def", "w")
+  f = File.new("#{DIR}/site-info-wn.def", "w")
   f.puts <<-EOF
 ## Site-info.def Batch
 BDII_HOST="#{bdii}"
@@ -226,7 +227,7 @@ EOF
 end
 
 def conf_cehost(sname, cehost, batch, se)
-  f = File.new("/home/#{$cfg.user}/site-info-ce.def", "w")
+  f = File.new("#{DIR}/site-info-ce.def", "w")
   f.puts <<-EOF
 ## Site-info.def Ce
 SITE_NAME=#{sname}
@@ -289,7 +290,7 @@ end
 
 # <user_id>:<username>:<group_id>:<group_name>:<vo_name>:<special_user_type>:
 def conf_users(group,sname)
-  f = File.new("/home/#{$cfg.user}/conf/users.conf", "w")
+  f = File.new("#{DIR}/conf/users.conf", "w")
   3.times { |a| f.write "#{a + 10410}:adm#{sname}#{a +1}:1390,1395:#{group}adm,#{group}:#{sname}:adm:\n" }
   10.times { |x| f.write "#{x + 10420}:#{sname}00#{x + 1}:1395:#{group}:#{sname}::\n" }
   f.close
@@ -300,7 +301,7 @@ end
 # "/<vo>/<group>/ROLE=<role>::::
 # "/<vo>/<group>/ROLE=<role>:::<special_user_type>:
 def conf_groups(sname)
-  f = File.new("/home/#{$cfg.user}/conf/groups.conf", "w")
+  f = File.new("#{DIR}/conf/groups.conf", "w")
   f.puts <<-EOF
 "/#{sname}"::::
 "/#{sname}/ROLE=#{sname.upcase}"::::
@@ -310,7 +311,7 @@ EOF
 end
 
 def list_wn(wn)
-  f = File.new("/home/#{$cfg.user}/conf/wn-list.conf", "w")
+  f = File.new("#{DIR}/conf/wn-list.conf", "w")
     for i in wn
       f.write "#{i}\n"
     end
@@ -318,7 +319,7 @@ def list_wn(wn)
 end
 
 def export_nfs()
-  f = File.new("/home/#{$cfg.user}/export", "w")
+  f = File.new("#{DIR}/export", "w")
   f.puts <<-EOF
 /var/spool/pbs/server_priv/accounting    *(rw,async,no_root_squash)
 /var/spool/pbs/server_logs               *(rw,async,no_root_squash)
@@ -327,7 +328,7 @@ EOF
 end
 
 def queue_config()
-  f = File.new("/home/#{$cfg.user}/queue.conf", "w")
+  f = File.new("#{DIR}/queue.conf", "w")
   f.puts <<-EOF
 #!/bin/sh
 qmgr
@@ -426,7 +427,7 @@ if $cfg.sendconf == true :
   if $cfg.pbar == true:
     pbarb.inc
   end
-    ssh.scp.upload!("/home/#{$cfg.user}/site-info-bdii.def","/root/yaim/site-info.def") do |ch, name, sent, total|
+    ssh.scp.upload!("#{DIR}/site-info-bdii.def","/root/yaim/site-info.def") do |ch, name, sent, total|
       #print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
     end
     if $cfg.verbose == true:
@@ -450,7 +451,7 @@ if $cfg.sendconf == true :
       pbaro.inc
     end
     ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_server.repo -q && yum install glite-TORQUE_server -q -y')
-    ssh.scp.upload!("/home/#{$cfg.user}/site-info-batch.def","/root/yaim/site-info.def") do |ch, name, sent, total|
+    ssh.scp.upload!("#{DIR}/site-info-batch.def","/root/yaim/site-info.def") do |ch, name, sent, total|
       #print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
     end
     if $cfg.verbose == true:
@@ -461,7 +462,7 @@ if $cfg.sendconf == true :
   end
   begin
     Net::SCP.start(serv.fetch("batch"), 'root') do |scp|
-      scp.upload!("/home/#{$cfg.user}/conf", "/opt/glite/yaim/etc", :recursive => true)
+      scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
     end
   rescue
     puts "Erreur scp conf batch"
@@ -484,7 +485,7 @@ wn.each {|wo|
       puts "*** intall worker #{wo}"
     end
     ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-WN.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_client.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q  && yum groupinstall glite-WN -q -y && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck')
-    ssh.scp.upload!("/home/#{$cfg.user}/site-info-wn.def","/root/yaim/site-info.def") do |ch, name, sent, total|
+    ssh.scp.upload!("#{DIR}/site-info-wn.def","/root/yaim/site-info.def") do |ch, name, sent, total|
       #print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
     end
     if $cfg.pbar == true:
@@ -496,7 +497,7 @@ wn.each {|wo|
   end
   begin
     Net::SCP.start("#{wo}", 'root') do |scp|
-      scp.upload!("/home/#{$cfg.user}/conf/", "/opt/glite/yaim/etc/", :recursive => true)
+      scp.upload!("#{DIR}/conf/", "/opt/glite/yaim/etc/", :recursive => true)
     end
   rescue
     puts "Erreur scp conf wn : #{wo}"
@@ -517,7 +518,7 @@ wn.each {|wo|
     end
     ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-CREAM.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_utils.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q')
     ssh.exec!('yum install glite-CREAM glite-TORQUE_utils lcg-CA -q -y --nogpgcheck')
-    ssh.scp.upload!("/home/#{$cfg.user}/site-info-batch.def","/root/yaim/site-info.def") do |ch, name, sent, total|
+    ssh.scp.upload!("#{DIR}/site-info-batch.def","/root/yaim/site-info.def") do |ch, name, sent, total|
       #print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
     end
     if $cfg.verbose == true:
@@ -528,7 +529,7 @@ wn.each {|wo|
   end
   begin
     Net::SCP.start(serv.fetch("cehost"), 'root') do |scp|
-      scp.upload!("/home/#{$cfg.user}/conf", "/opt/glite/yaim/etc", :recursive => true)
+      scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
     end
   rescue
     puts "Erreur scp conf Ce"
