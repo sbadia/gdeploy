@@ -516,7 +516,7 @@ wn.each {|wo|
       pbaro.inc
     end
     ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-CREAM.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_utils.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q')
-    ssh.exec!('yum install glite-CREAM glite-TORQUE_utils lcg-CA -q -y')
+    ssh.exec!('yum install glite-CREAM glite-TORQUE_utils lcg-CA -q -y --nogpgcheck')
     ssh.scp.upload!("/home/#{$cfg.user}/site-info-batch.def","/root/yaim/site-info.def") do |ch, name, sent, total|
       #print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
     end
@@ -527,14 +527,14 @@ wn.each {|wo|
     end
   end
   begin
-    Net::SCP.start(serv.fetch("batch"), 'root') do |scp|
+    Net::SCP.start(serv.fetch("cehost"), 'root') do |scp|
       scp.upload!("/home/#{$cfg.user}/conf", "/opt/glite/yaim/etc", :recursive => true)
     end
   rescue
-    puts "Erreur scp conf batch"
-    puts serv.fetch("batch")
+    puts "Erreur scp conf Ce"
+    puts serv.fetch("cehost")
   end
-  Net::SSH.start(serv.fetch("batch"), 'root') do |ssh|
+  Net::SSH.start(serv.fetch("cehost"), 'root') do |ssh|
     ssh.exec!('mkdir -p /var/spool/pbs/server_priv/accounting')
     ssh.exec!("mount #{serv.fetch("batch")}:/var/spool/pbs/server_priv/accounting /var/spool/pbs/server_priv/accounting")
     ssh.exec!("mount #{serv.fetch("batch")}:/var/spool/pbs/server_logs /var/spool/pbs/server_logs")
