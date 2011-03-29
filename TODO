@@ -15,3 +15,12 @@ II]- FEATURES
   + Réorganisation fct/opts pour update, et service seuls.
   + Ajout des briques lfc/se.
   + Gestion Multivo (proxy/certificats).
+
+III]- LONG TERM
+  + Gestion conf puppet/cfengine ?
+  + Image sl 6.0/5.5 générique
+
+IV]- TIPS
+  o kernel_params : ETH_DRV=igb ETH_DEV=eth0 \
+    			DISK_DRV=ahci \
+    			console=tty0 console=ttyS0,38400n8
