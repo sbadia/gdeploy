@@ -6,6 +6,7 @@
   require 'ostruct'
   require 'net/scp'
   require 'net/ssh'
+  require 'net/ssh/multi'
   require 'misc/progressbar'
 #rescue LoadError
 
@@ -399,17 +400,23 @@ if $cfg.sendconf == true :
   if $cfg.pbar == true:
     pbarc = ProgressBar.new("Maj", 5)
   end
-  #serv.each_value{|service|
-  $nodes.each{|service|
-    Net::SSH.start(service, 'root') do |ssh|
+
+  puts $nodes
+  Net::SSH::Multi.start do |session|
+    session.on_error = :warn
+    $nodes.each do |node|
+      session.use "root@#{node}" #if $nodes[node].nil?
       if $cfg.verbose == true:
-        puts "*** yaim on #{service}"
+        puts "*** Update #{node}"
       elsif $cfg.pbar == true :
         pbarc.inc
       end
-      ssh.exec!('mkdir -p /root/yaim && rm -f /etc/yum.repos.d/dag.repo* && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/dag.repo -q && yum update -q -y')
     end
-  }
+    ssh.exec('mkdir -p /root/yaim && rm -f /etc/yum.repos.d/dag.repo* && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/dag.repo -q && yum update -q -y')
+    session.exec("uptime")
+    session.loop
+  end
+
   if $cfg.pbar == true:
     pbarc.finish
     pbarb = ProgressBar.new("Bdii", 4)
@@ -479,14 +486,26 @@ if $cfg.sendconf == true :
 ### Worker nodes
 #
 
-wn.each {|wo|
-  Net::SSH.start(wo, 'root') do |ssh|
-    if $cfg.verbose == true:
-      puts "*** intall worker #{wo}"
+  puts wn
+  Net::SSH::Multi.start do |session|
+    session.on_error = :warn
+    wn.each do |node|
+      session.use "root@#{node}" #if $nodes[node].nil?
+      if $cfg.verbose == true:
+        puts "*** Install #{node}"
+      elsif $cfg.pbar == true :
+        pbarc.inc
+      end
     end
-    ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-WN.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_client.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q  && yum groupinstall glite-WN -q -y && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck')
-    ssh.scp.upload!("#{DIR}/site-info-wn.def","/root/yaim/site-info.def") do |ch, name, sent, total|
-      #print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
+    ssh.exec('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-WN.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_client.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q  && yum groupinstall glite-WN -q -y && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck')
+    session.exec("uptime")
+    session.loop
+  end
+
+
+wn.each do |wo|
+  Net::SSH.start(wo, 'root') do |ssh|
+    ssh.scp.upload!("#{DIR}/site-info-wn.def","/root/yaim/site-info.def")
     end
     if $cfg.pbar == true:
       pbaro.inc
@@ -502,13 +521,17 @@ wn.each {|wo|
   rescue
     puts "Erreur scp conf wn : #{wo}"
   end
-  Net::SSH.start(wo, 'root') do |ssh|
-    ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1')
+end
+  Net::SSH::Multi.start do |session|
+    session.on_error = :warn
+    wn.each do |node|
+      session.use "root@#{node}"
+    end
+    ssh.exec('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1')
   end
   if $cfg.verbose == true:
    puts "*** intall #{wo} ok."
   end
-}
 
 ### Computing element
 #
