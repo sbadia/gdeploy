@@ -6,8 +6,8 @@ Legende:
 I]- FIXME/BUGS
   + VOMS_CA_DN dans la conf CE.
   + Certificats dans /etc/grid-security/hostkey.pem.
-  + Erreur java lors de l'install des wn et du ce.
-  + Mise en place nfs sur batch pour partage avec ce.
+  * Erreur java lors de l'install des wn et du ce.
+  * Mise en place nfs sur batch pour partage avec ce.
   * Gestion multiclusters (un ce/batch pour deux clusters).
 
 II]- FEATURES
