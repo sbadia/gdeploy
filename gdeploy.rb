@@ -292,7 +292,7 @@ end
 # <user_id>:<username>:<group_id>:<group_name>:<vo_name>:<special_user_type>:
 def conf_users(group,sname)
   f = File.new("#{DIR}/conf/users.conf", "w")
-  3.times { |a| f.write "#{a + 10410}:adm#{sname}#{a +1}:1390,1395:#{group}adm,#{group}:#{sname}:adm:\n" }
+  3.times { |a| f.write "#{a + 10410}:sgm#{sname}#{a +1}:1390,1395:#{group}sgm,#{group}:#{sname}:sgm:\n" }
   10.times { |x| f.write "#{x + 10420}:#{sname}00#{x + 1}:1395:#{group}:#{sname}::\n" }
   f.close
 end
@@ -306,7 +306,7 @@ def conf_groups(sname)
   f.puts <<-EOF
 "/#{sname}"::::
 "/#{sname}/ROLE=#{sname.upcase}"::::
-"/#{sname}/ROLE=VO-Admin":::adm:
+"/#{sname}/ROLE=VO-Admin":::sgm:
 EOF
   f.close
 end
@@ -499,6 +499,8 @@ if $cfg.sendconf == true :
     end
     session.exec('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-WN.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_client.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q  && yum groupinstall glite-WN -q -y && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck')
     session.exec("uptime")
+    # Hack immonde pour la fct_crl (certif revocation leak)
+    session.exec("sed '1iexit 0' -i /usr/sbin/fetch-crl")
     session.loop
   end
 
@@ -529,7 +531,7 @@ if $cfg.sendconf == true :
     session.exec('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1')
   end
   if $cfg.verbose == true:
-   puts "*** intall #{wo} ok."
+   puts "*** intall wn ok."
   end
 
 ### Computing element
