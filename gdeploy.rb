@@ -332,18 +332,18 @@ def queue_config()
   f = File.new("#{DIR}/queue.conf", "w")
   f.puts <<-EOF
 #!/bin/sh
-qmgr
+qmgr << EOF
 set server scheduling = True
-set server acl_hosts = localhost
-set server acl_hosts += <other hosts allowed to submit jobs>
-set server managers = <e-mail of batch system manager>
-set server operators = <e-mail of batch system operator>
-set server default_queue = <queuename>
+set server acl_hosts = #{batch}
+#{$nodes.each do |node| "set server acl_host += #{node}"end}
+set server managers = root@`hostname -f`
+set server operators = root@`hostname -f`
+set server default_queue = default
 set server scheduler_iteration = 600
 set server node_check_rate = 150
 set server tcp_timeout = 12
 set server poll_jobs = False
-set server log_level = 3
+set server log_level = 3\nEOF
 EOF
   f.close
 end
@@ -497,10 +497,10 @@ if $cfg.sendconf == true :
         pbarc.inc
       end
     end
-    session.exec('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-WN.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_client.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q  && yum groupinstall glite-WN -q -y && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck')
+    session.exec("wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-WN.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_client.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q  && yum groupinstall glite-WN -q -y && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck && sed '1iexit 0' -i /usr/sbin/fetch-crl")
     session.exec("uptime")
     # Hack immonde pour la fct_crl (certif revocation leak)
-    session.exec("sed '1iexit 0' -i /usr/sbin/fetch-crl")
+    #session.exec("sed '1iexit 0' -i /usr/sbin/fetch-crl")
     session.loop
   end
 
