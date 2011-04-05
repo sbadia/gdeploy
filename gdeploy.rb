@@ -170,7 +170,7 @@ end
 end
 
 def conf_bdii(bdii, sname, cehost)
-  f = File.new("#{DIR}/site-info-bdii.def", "w")
+  f = File.new("#{DIR}/conf/site-info-bdii.def", "w")
   f.puts <<-EOF
 ## Site-info.def Bdii
 SITE_BDII_HOST="#{bdii}"
@@ -196,7 +196,7 @@ end
 
 # <QUEUE_NAME>_GROUP_ENABLE=<list of vo>
 def conf_batch(batch, cehost, sname)
-  f = File.new("#{DIR}/site-info-batch.def", "w")
+  f = File.new("#{DIR}/conf/site-info-batch.def", "w")
   f.puts <<-EOF
 ## Site-info.def Batch
 BATCH_SERVER="#{batch}"
@@ -214,7 +214,7 @@ EOF
 end
 
 def conf_wn(bdii, se, sname, batch, cehost)
-  f = File.new("#{DIR}/site-info-wn.def", "w")
+  f = File.new("#{DIR}/conf/site-info-wn.def", "w")
   f.puts <<-EOF
 ## Site-info.def Batch
 BDII_HOST="#{bdii}"
@@ -235,7 +235,7 @@ EOF
 end
 
 def conf_cehost(sname, cehost, batch, se)
-  f = File.new("#{DIR}/site-info-ce.def", "w")
+  f = File.new("#{DIR}/conf/site-info-ce.def", "w")
   f.puts <<-EOF
 ## Site-info.def Ce
 SITE_NAME=#{sname}
@@ -327,7 +327,7 @@ def list_wn(wn)
 end
 
 def export_nfs()
-  f = File.new("#{DIR}/conf/export", "w")
+  f = File.new("#{DIR}/conf/exports", "w")
   f.puts <<-EOF
 /var/spool/pbs/server_priv/accounting    *(rw,async,no_root_squash)
 /var/spool/pbs/server_logs               *(rw,async,no_root_squash)
@@ -336,7 +336,7 @@ EOF
 end
 
 #{$nodes.each do |node| "set server acl_host += #{node}"end}
-def queue_config()
+def queue_config(batch, cehost)
   f = File.new("#{DIR}/conf/queue.conf", "w")
   f.puts <<-EOF
 #!/bin/sh
@@ -398,7 +398,7 @@ if $cfg.config == true :
        list_wn(wn)
        conf_cehost(sname, cehost, batch, se)
        export_nfs()
-       queue_config()
+       queue_config(batch, cehost)
     end
   end
 else
@@ -443,7 +443,7 @@ if $cfg.sendconf == true :
   if $cfg.pbar == true:
     pbarb.inc
   end
-    ssh.scp.upload!("#{DIR}/site-info-bdii.def","/root/yaim/site-info.def") do |ch, name, sent, total|
+    ssh.scp.upload!("#{DIR}/conf/site-info-bdii.def","/root/yaim/site-info.def") do |ch, name, sent, total|
       #print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
     end
     if $cfg.verbose == true:
@@ -467,9 +467,6 @@ if $cfg.sendconf == true :
       pbaro.inc
     end
     ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_server.repo -q && yum install glite-TORQUE_server -q -y')
-    ssh.scp.upload!("#{DIR}/site-info-batch.def","/root/yaim/site-info.def") do |ch, name, sent, total|
-      #print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
-    end
     if $cfg.verbose == true:
       puts "*** configure"
     elsif $cfg.pbar == true:
@@ -485,6 +482,7 @@ if $cfg.sendconf == true :
     puts serv.fetch("batch")
   end
   Net::SSH.start(serv.fetch("batch"), 'root') do |ssh|
+    ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-batch.def /root/yaim/site-info.def')
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-TORQUE_server -d 1')
     ssh.exec!('cat /opt/glite/yaim/etc/conf/exports >> /etc/exports && /etc/init.d/nfs restart')
   end
@@ -514,11 +512,7 @@ if $cfg.sendconf == true :
     session.loop
   end
 
-
   wn.each do |wo|
-    Net::SSH.start(wo, 'root') do |ssh|
-      ssh.scp.upload!("#{DIR}/site-info-wn.def","/root/yaim/site-info.def")
-    end
     if $cfg.pbar == true:
       pbaro.inc
     end
@@ -538,7 +532,7 @@ if $cfg.sendconf == true :
     wn.each do |node|
       session.use "root@#{node}"
     end
-    session.exec('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1')
+    session.exec('mv /opt/glite/yaim/etc/conf/site-info-wn.def /root/yaim/site-info.def && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1')
   end
   if $cfg.verbose == true:
    puts "*** intall wn ok."
@@ -552,9 +546,6 @@ if $cfg.sendconf == true :
     end
     ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-CREAM.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_utils.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q')
     ssh.exec!('yum install glite-CREAM glite-TORQUE_utils lcg-CA -q -y --nogpgcheck')
-    ssh.scp.upload!("#{DIR}/site-info-batch.def","/root/yaim/site-info.def") do |ch, name, sent, total|
-      #print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
-    end
     if $cfg.verbose == true:
       puts "*** configure"
     elsif $cfg.pbar == true:
@@ -570,7 +561,8 @@ if $cfg.sendconf == true :
     puts serv.fetch("cehost")
   end
   Net::SSH.start(serv.fetch("cehost"), 'root') do |ssh|
-    ssh.exec!('mkdir -p /var/spool/pbs/server_priv/accounting')
+    ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-ce.def /root/yaim/site-info.def')
+    ssh.exec!('mkdir -p /var/spool/pbs/server_priv/accounting && mkdir -p /var/spool/pbs/server_logs')
     ssh.exec!("mount #{serv.fetch("batch")}:/var/spool/pbs/server_priv/accounting /var/spool/pbs/server_priv/accounting")
     ssh.exec!("mount #{serv.fetch("batch")}:/var/spool/pbs/server_logs /var/spool/pbs/server_logs")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-creamCE -n glite-TORQUE_utils -d 1')
