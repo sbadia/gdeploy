@@ -1,5 +1,9 @@
 #!/usr/bin/ruby -w
 
+# = gDeploy
+# :title: Glite Deployment on Grid'5000
+# https://www.grid5000.fr/
+#
 #begin
   require 'yaml'
   require 'optparse'

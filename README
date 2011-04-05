@@ -30,3 +30,16 @@ Egee:
 
 AlGorille:
  -SG = SimGrid.
+
+=== Clusters ahci
+grenoble:
+ - adonis
+ - edel
+lille:
+ - chinqchint
+ - chirloute
+nancy:
+ - graphene
+rennes:
+ - parapide
+ - parapluie

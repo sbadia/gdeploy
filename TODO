@@ -17,10 +17,20 @@ II]- FEATURES
   + Gestion Multivo (proxy/certificats).
 
 III]- LONG TERM
-  + Gestion conf puppet/cfengine ?
+  + Gestion conf puppet/cfengine/quattor.org ?
   + Image sl 6.0/5.5 générique
 
 IV]- TIPS
   o kernel_params : ETH_DRV=igb ETH_DEV=eth0 \
     			DISK_DRV=ahci \
     			console=tty0 console=ttyS0,38400n8
+
+
+== Gdeploy etapes ==
+- Origin $OAR_NODE_FILE ou entrée manuelle (-m node).
+- Determiner le nombre de nodes min pour expé (bdii,batch,ce,ui,lfc,wn).
+- Deployer les noeuds sur sl5.
+- Lancer la génération de la configuration en fonction des noeuds qu'on a.
+- Certification.
+- Deployer la conf sur les machines de service (site-info.def et certifs).
+- Lancer les scripts en fonction de la machine visée.

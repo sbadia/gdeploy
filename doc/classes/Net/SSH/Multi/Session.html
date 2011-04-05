@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Net::SSH::Multi::Session</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Net::SSH::Multi::Session</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../../files/net/ssh/multi/session_rb.html">
+                net/ssh/multi/session.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Represents a collection of connections to various <a
+href="Session.html#M000223">servers</a>. It provides an interface for
+organizing the connections (<a href="Session.html#M000220">group</a>), as
+well as a way to scope commands to a subset of all connections (<a
+href="Session.html#M000225">with</a>). You can also provide a default
+gateway connection that <a href="Session.html#M000223">servers</a> should
+<a href="Session.html#M000222">use</a> when connecting (<a
+href="Session.html#M000221">via</a>). It exposes an interface similar to <a
+href="../Connection/Session.html">Net::SSH::Connection::Session</a> for
+opening <a href="../../SSH.html">SSH</a> channels and executing commands,
+allowing for these operations to be done in parallel across multiple
+connections.
+</p>
+<pre>
+  Net::SSH::Multi.start do |session|
+    # access servers via a gateway
+    session.via 'gateway', 'gateway-user'
+
+    # define the servers we want to use
+    session.use 'user1@host1'
+    session.use 'user2@host2'
+
+    # define servers in groups for more granular access
+    session.group :app do
+      session.use 'user@app1'
+      session.use 'user@app2'
+    end
+
+    # execute commands on all servers
+    session.exec &quot;uptime&quot;
+
+    # execute commands on a subset of servers
+    session.with(:app).exec &quot;hostname&quot;
+
+    # run the aggregated event loop
+    session.loop
+  end
+</pre>
+<p>
+Note that connections are established lazily, as soon as they are needed.
+You can force the connections to be opened immediately, though, using the
+connect! method.
+</p>
+<h2>Concurrent <a href="../Connection.html">Connection</a> Limiting</h2>
+<p>
+Sometimes you may be dealing <a href="Session.html#M000225">with</a> a
+large number of <a href="Session.html#M000223">servers</a>, and if you try
+to have connections open to all of them simultaneously you&#8216;ll run
+into open file handle limitations and such. If this happens to you, you can
+set the concurrent_connections property of the session. <a
+href="../Multi.html">Net::SSH::Multi</a> will then ensure that no more than
+this number of connections are ever open simultaneously.
+</p>
+<pre>
+  Net::SSH::Multi.start(:concurrent_connections =&gt; 5) do |session|
+    # ...
+  end
+</pre>
+<p>
+Opening channels and executing commands will still work exactly as before,
+but <a href="../Multi.html">Net::SSH::Multi</a> will transparently <a
+href="Session.html#M000227">close</a> finished connections and open pending
+ones.
+</p>
+<h2>Controlling <a href="../Connection.html">Connection</a> Errors</h2>
+<p>
+By default, <a href="../Multi.html">Net::SSH::Multi</a> will raise an
+exception if a connection error occurs when connecting to a server. This
+will typically bubble up and abort the entire connection <a
+href="Session.html#M000229">process</a>. Sometimes, however, you might wish
+to ignore connection errors, for instance when starting a daemon <a
+href="Session.html#M000226">on</a> a large number of boxes and you know
+that some of the boxes are going to be unavailable.
+</p>
+<p>
+To do this, simply set the on_error property of the session to :ignore (or
+to :warn, if you want a warning message when a connection attempt fails):
+</p>
+<pre>
+  Net::SSH::Multi.start(:on_error =&gt; :ignore) do |session|
+    # ...
+  end
+</pre>
+<p>
+The default is :fail, which causes the exception to bubble up.
+Additionally, you can specify a Proc object as the value for on_error,
+which will be invoked <a href="Session.html#M000225">with</a> the server in
+question if the connection attempt fails. You can force the connection
+attempt to retry by throwing the :go symbol, <a
+href="Session.html#M000225">with</a> :retry as the payload, or force the
+exception to be reraised by throwing :go <a
+href="Session.html#M000225">with</a> :raise as the payload:
+</p>
+<pre>
+  handler = Proc.new do |server|
+    server[:connection_attempts] ||= 0
+    if server[:connection_attempts] &lt; 3
+      server[:connection_attempts] += 1
+      throw :go, :retry
+    else
+      throw :go, :raise
+    end
+  end
+
+  Net::SSH::Multi.start(:on_error =&gt; handler) do |session|
+    # ...
+  end
+</pre>
+<p>
+Any other thrown value (or no thrown value at all) will result in the
+failure being ignored.
+</p>
+<h2>Lazily Evaluated <a href="Server.html">Server</a> Definitions</h2>
+<p>
+Sometimes you might be dealing <a href="Session.html#M000225">with</a> an
+environment where you don&#8216;t know the names or addresses of the <a
+href="Session.html#M000223">servers</a> until runtime. You can certainly
+dynamically build server names and pass them to <a
+href="Session.html#M000222">use</a>, but if the operation to determine the
+server names is expensive, you might want to defer it until the server is
+actually needed (especially if the logic of your program is such that you
+might not even need to connect to that server every time the program runs).
+</p>
+<p>
+You can do this by passing a block to <a
+href="Session.html#M000222">use</a>:
+</p>
+<pre>
+  session.use do |opt|
+    lookup_ip_address_of_remote_host
+  end
+</pre>
+<p>
+See <a href="Session.html#M000222">use</a> for more information about this
+usage.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000227">close</a>&nbsp;&nbsp;
+      <a href="#M000220">group</a>&nbsp;&nbsp;
+      <a href="#M000228">loop</a>&nbsp;&nbsp;
+      <a href="#M000219">new</a>&nbsp;&nbsp;
+      <a href="#M000226">on</a>&nbsp;&nbsp;
+      <a href="#M000229">process</a>&nbsp;&nbsp;
+      <a href="#M000223">servers</a>&nbsp;&nbsp;
+      <a href="#M000224">servers_for</a>&nbsp;&nbsp;
+      <a href="#M000222">use</a>&nbsp;&nbsp;
+      <a href="#M000221">via</a>&nbsp;&nbsp;
+      <a href="#M000225">with</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="SessionActions.html">SessionActions</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+    <div id="aliases-list">
+      <h3 class="section-bar">External Aliases</h3>
+
+      <div class="name-list">
+                        <table summary="aliases">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">loop</td>
+          <td>-&gt;</td>
+          <td class="context-item-value">loop_forever</td>
+        </tr>
+                        </table>
+      </div>
+    </div>
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">concurrent_connections</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+The number of allowed concurrent connections. No more than this number of
+sessions will be open at any given time.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">default_gateway</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The default <a href="../Gateway.html">Net::SSH::Gateway</a> instance to <a
+href="Session.html#M000222">use</a> to connect to the <a
+href="Session.html#M000223">servers</a>. If <tt>nil</tt>, no default
+gateway will be used.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">default_user</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+The default user name to <a href="Session.html#M000222">use</a> when
+connecting to a server. If a user name is not given for a particular
+server, this value will be used. It defaults to ENV[&#8216;USER&#8217;] ||
+ENV[&#8216;USERNAME&#8217;], or &quot;unknown&quot; if neither of those are
+set.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">groups</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The hash of <a href="Session.html#M000220">group</a> definitions, mapping
+each <a href="Session.html#M000220">group</a> name to a corresponding <a
+href="ServerList.html">Net::SSH::Multi::ServerList</a>.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">on_error</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+How connection errors should be handled. This defaults to :fail, but may be
+set to :ignore if connection errors should be ignored, or :warn if
+connection errors should cause a warning.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">server_list</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The <a href="ServerList.html">Net::SSH::Multi::ServerList</a> managed by
+this session.
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000219" class="method-detail">
+        <a name="M000219"></a>
+
+        <div class="method-heading">
+          <a href="Session.src/M000219.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000219.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Creates a <a href="Session.html#M000219">new</a> <a
+href="Session.html">Net::SSH::Multi::Session</a> instance. Initially, it
+contains no server definitions, no <a href="Session.html#M000220">group</a>
+definitions, and no default gateway.
+</p>
+<p>
+You can set the concurrent_connections property in the options. Setting it
+to <tt>nil</tt> (the default) will cause <a
+href="../Multi.html">Net::SSH::Multi</a> to ignore any concurrent
+connection limit and allow all defined sessions to be open simultaneously.
+Setting it to an integer will cause <a
+href="../Multi.html">Net::SSH::Multi</a> to allow no more than that number
+of concurrently open sessions, opening subsequent sessions only when other
+sessions finish and <a href="Session.html#M000227">close</a>.
+</p>
+<pre>
+  Net::SSH::Multi.start(:concurrent_connections =&gt; 10) do |session|
+    session.use ...
+  end
+</pre>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000227" class="method-detail">
+        <a name="M000227"></a>
+
+        <div class="method-heading">
+          <a href="Session.src/M000227.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000227.html');return false;">
+          <span class="method-name">close</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Closes the multi-session by shutting down all open server sessions, and the
+default gateway (if one was specified using <a
+href="Session.html#M000221">via</a>). Note that other gateway connections
+(e.g., those passed to <a href="Session.html#M000222">use</a> directly)
+will <em>not</em> be closed by this method, and must be managed externally.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000220" class="method-detail">
+        <a name="M000220"></a>
+
+        <div class="method-heading">
+          <a href="Session.src/M000220.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000220.html');return false;">
+          <span class="method-name">group</span><span class="method-args">(*args) {|self| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+At its simplest, this associates a named <a
+href="Session.html#M000220">group</a> <a
+href="Session.html#M000225">with</a> a server definition. It can be used in
+either of two ways:
+</p>
+<p>
+First, you can <a href="Session.html#M000222">use</a> it to associate a <a
+href="Session.html#M000220">group</a> (or array of groups) <a
+href="Session.html#M000225">with</a> a server definition (or array of
+server definitions). The server definitions must already exist in the
+server_list array (typically by calling <a
+href="Session.html#M000222">use</a>):
+</p>
+<pre>
+  server1 = session.use('host1', 'user1')
+  server2 = session.use('host2', 'user2')
+  session.group :app =&gt; server1, :web =&gt; server2
+  session.group :staging =&gt; [server1, server2]
+  session.group %w(xen linux) =&gt; server2
+  session.group %w(rackspace backup) =&gt; [server1, server2]
+</pre>
+<p>
+Secondly, instead of a mapping of groups to <a
+href="Session.html#M000223">servers</a>, you can just provide a list of <a
+href="Session.html#M000220">group</a> names, and then a block. Inside the
+block, any calls to <a href="Session.html#M000222">use</a> will
+automatically associate the <a href="Session.html#M000219">new</a> server
+definition <a href="Session.html#M000225">with</a> those groups. You can
+nest <a href="Session.html#M000220">group</a> calls, too, which will
+aggregate the <a href="Session.html#M000220">group</a> definitions.
+</p>
+<pre>
+  session.group :rackspace, :backup do
+    session.use 'host1', 'user1'
+    session.group :xen do
+      session.use 'host2', 'user2'
+    end
+  end
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000228" class="method-detail">
+        <a name="M000228"></a>
+
+        <div class="method-heading">
+          <a href="Session.src/M000228.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000228.html');return false;">
+          <span class="method-name">loop</span><span class="method-args">(wait=nil, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Run the aggregated event <a href="Session.html#M000228">loop</a> for all
+open server sessions, until the given block returns <tt>false</tt>. If no
+block is given, the <a href="Session.html#M000228">loop</a> will run for as
+long as busy? returns <tt>true</tt> (in other words, for as long as there
+are any (non-invisible) channels open).
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000226" class="method-detail">
+        <a name="M000226"></a>
+
+        <div class="method-heading">
+          <a href="Session.src/M000226.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000226.html');return false;">
+          <span class="method-name">on</span><span class="method-args">(*servers) {|subsession if block_given?| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Works as <a href="Session.html#M000225">with</a>, but for specific <a
+href="Session.html#M000223">servers</a> rather than groups. It will return
+a <a href="Session.html#M000219">new</a> subsession (<a
+href="Subsession.html">Net::SSH::Multi::Subsession</a>) consisting of the
+given <a href="Session.html#M000223">servers</a>. (Note that it requires
+that the <a href="Session.html#M000223">servers</a> in question have been
+created <a href="Session.html#M000221">via</a> calls to <a
+href="Session.html#M000222">use</a> <a href="Session.html#M000226">on</a>
+this session object, or things will not work quite right.) If a block is
+given, the <a href="Session.html#M000219">new</a> subsession will also be
+yielded to the block.
+</p>
+<pre>
+  srv1 = session.use('host1', 'user')
+  srv2 = session.use('host2', 'user')
+  # ...
+  session.on(srv1, srv2).exec('hostname')
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000229" class="method-detail">
+        <a name="M000229"></a>
+
+        <div class="method-heading">
+          <a href="Session.src/M000229.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000229.html');return false;">
+          <span class="method-name">process</span><span class="method-args">(wait=nil, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Run a single iteration of the aggregated event <a
+href="Session.html#M000228">loop</a> for all open server sessions. The
+<tt>wait</tt> parameter indicates how long to wait for an event to appear
+<a href="Session.html#M000226">on</a> any of the different sessions;
+<tt>nil</tt> (the default) means &quot;wait forever&quot;. If the block is
+given, then it will be used to determine whether <a
+href="Session.html#M000229">process</a> returns <tt>true</tt> (the block
+did not return <tt>false</tt>), or <tt>false</tt> (the block returned
+<tt>false</tt>).
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000223" class="method-detail">
+        <a name="M000223"></a>
+
+        <div class="method-heading">
+          <a href="Session.src/M000223.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000223.html');return false;">
+          <span class="method-name">servers</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Essentially an alias for <a href="Session.html#M000224">servers_for</a>
+without any arguments. This is used primarily to satistfy the expectations
+of the <a href="SessionActions.html">Net::SSH::Multi::SessionActions</a>
+module.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000224" class="method-detail">
+        <a name="M000224"></a>
+
+        <div class="method-heading">
+          <a href="Session.src/M000224.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000224.html');return false;">
+          <span class="method-name">servers_for</span><span class="method-args">(*criteria)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the set of <a href="Session.html#M000223">servers</a> that match
+the given criteria. It can be used in any (or all) of three ways.
+</p>
+<p>
+First, you can omit any arguments. In this case, the full list of <a
+href="Session.html#M000223">servers</a> will be returned.
+</p>
+<pre>
+  all = session.servers_for
+</pre>
+<p>
+Second, you can simply specify a list of <a
+href="Session.html#M000220">group</a> names. All <a
+href="Session.html#M000223">servers</a> in all named groups will be
+returned. If a server belongs to multiple matching groups, then it will
+appear only once in the list (the resulting list will contain only unique
+<a href="Session.html#M000223">servers</a>).
+</p>
+<pre>
+  servers = session.servers_for(:app, :db)
+</pre>
+<p>
+Last, you can specify a hash <a href="Session.html#M000225">with</a> <a
+href="Session.html#M000220">group</a> names as keys, and property
+constraints as the values. These property constraints are either
+&quot;only&quot; constraints (which restrict the set of <a
+href="Session.html#M000223">servers</a> to &quot;only&quot; those that
+match the given properties) or &quot;except&quot; constraints (which
+restrict the set of <a href="Session.html#M000223">servers</a> to those
+whose properties do <em>not</em> match). Properties are described when the
+server is defined (<a href="Session.html#M000221">via</a> the :properties
+key):
+</p>
+<pre>
+  session.group :db do
+    session.use 'dbmain', 'user', :properties =&gt; { :primary =&gt; true }
+    session.use 'dbslave', 'user2'
+    session.use 'dbslve2', 'user2'
+  end
+
+  # return ONLY on the servers in the :db group which have the :primary
+  # property set to true.
+  primary = session.servers_for(:db =&gt; { :only =&gt; { :primary =&gt; true } })
+</pre>
+<p>
+You can, naturally, combine these methods:
+</p>
+<pre>
+  # all servers in :app and :web, and all servers in :db with the
+  # :primary property set to true
+  servers = session.servers_for(:app, :web, :db =&gt; { :only =&gt; { :primary =&gt; true } })
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000222" class="method-detail">
+        <a name="M000222"></a>
+
+        <div class="method-heading">
+          <a href="Session.src/M000222.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000222.html');return false;">
+          <span class="method-name">use</span><span class="method-args">(*hosts, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Defines a <a href="Session.html#M000219">new</a> server definition, to be
+managed by this session. The server is at the given <tt>host</tt>, and will
+be connected to as the given <tt>user</tt>. The other options are passed
+as-is to the <a href="../../SSH.html">Net::SSH</a> session constructor.
+</p>
+<p>
+If a default gateway has been specified previously (<a
+href="Session.html#M000225">with</a> <a
+href="Session.html#M000221">via</a>) it will be passed to the <a
+href="Session.html#M000219">new</a> server definition. You can override
+this by passing a different <a href="../Gateway.html">Net::SSH::Gateway</a>
+instance (or <tt>nil</tt>) <a href="Session.html#M000225">with</a> the :<a
+href="Session.html#M000221">via</a> key in the <tt>options</tt>.
+</p>
+<pre>
+  session.use 'host'
+  session.use 'user@host2', :via =&gt; nil
+  session.use 'host3', :user =&gt; &quot;user3&quot;, :via =&gt; Net::SSH::Gateway.new('gateway.host', 'user')
+</pre>
+<p>
+If only a single host is given, the <a href="Session.html#M000219">new</a>
+server instance is returned. You can give multiple hosts at a time, though,
+in which case an array of server instances will be returned.
+</p>
+<pre>
+  server1, server2 = session.use &quot;host1&quot;, &quot;host2&quot;
+</pre>
+<p>
+If given a block, this will save the block as a <a
+href="DynamicServer.html">Net::SSH::Multi::DynamicServer</a> definition, to
+be evaluated lazily the first time the server is needed. The block will
+recive any options hash given to <a href="Session.html#M000222">use</a>,
+and should return <tt>nil</tt> (if no <a
+href="Session.html#M000223">servers</a> are to be added), a <a
+href="../../../String.html">String</a> or an array of Strings (to be
+interpreted as a connection specification), or a <a
+href="Server.html">Server</a> or an array of Servers.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000221" class="method-detail">
+        <a name="M000221"></a>
+
+        <div class="method-heading">
+          <a href="Session.src/M000221.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000221.html');return false;">
+          <span class="method-name">via</span><span class="method-args">(host, user, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets up a default gateway to <a href="Session.html#M000222">use</a> when
+establishing connections to <a href="Session.html#M000223">servers</a>.
+Note that any <a href="Session.html#M000223">servers</a> defined prior to
+this invocation will not <a href="Session.html#M000222">use</a> the default
+gateway; it only affects <a href="Session.html#M000223">servers</a> defined
+subsequently.
+</p>
+<pre>
+  session.via 'gateway.host', 'user'
+</pre>
+<p>
+You may override the default gateway <a href="Session.html#M000226">on</a>
+a per-server basis by passing the :<a href="Session.html#M000221">via</a>
+key to the <a href="Session.html#M000222">use</a> method; see <a
+href="Session.html#M000222">use</a> for details.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000225" class="method-detail">
+        <a name="M000225"></a>
+
+        <div class="method-heading">
+          <a href="Session.src/M000225.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000225.html');return false;">
+          <span class="method-name">with</span><span class="method-args">(*groups) {|subsession if block_given?| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a <a href="Session.html#M000219">new</a> <a
+href="Subsession.html">Net::SSH::Multi::Subsession</a> instance consisting
+of the <a href="Session.html#M000223">servers</a> that meet the given
+criteria. If a block is given, the subsession will be yielded to it. See <a
+href="Session.html#M000224">servers_for</a> for a discussion of how these
+criteria are interpreted.
+</p>
+<pre>
+  session.with(:app).exec('hostname')
+
+  session.with(:app, :db =&gt; { :primary =&gt; true }) do |s|
+    s.exec 'date'
+    s.exec 'uptime'
+  end
+</pre>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

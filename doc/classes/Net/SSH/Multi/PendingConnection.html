@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Net::SSH::Multi::PendingConnection</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Net::SSH::Multi::PendingConnection</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../../files/net/ssh/multi/pending_connection_rb.html">
+                net/ssh/multi/pending_connection.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+A <a href="PendingConnection.html">PendingConnection</a> instance mimics a
+<a href="../Connection/Session.html">Net::SSH::Connection::Session</a>
+instance, without actually being an open connection to a server. It is used
+by <a href="Session.html">Net::SSH::Multi::Session</a> when a concurrent
+connection limit is in effect, so that a server can hang on to a
+&quot;connection&quot; that isn&#8216;t really a connection.
+</p>
+<p>
+Any requests against this connection (like <a
+href="PendingConnection.html#M000254">open_channel</a> or <a
+href="PendingConnection.html#M000255">send_global_request</a>) are not
+actually sent, but are added to a list of recordings. When the real session
+is opened and replaces this pending connection, all recorded actions will
+be replayed against that session.
+</p>
+<p>
+You&#8216;ll never need to initialize one of these directly, and (if all
+goes well!) should never even notice that one of these is in use. <a
+href="Session.html">Net::SSH::Multi::Session</a> will instantiate these as
+needed, and only when there is a concurrent connection limit.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000256">busy?</a>&nbsp;&nbsp;
+      <a href="#M000258">channels</a>&nbsp;&nbsp;
+      <a href="#M000257">close</a>&nbsp;&nbsp;
+      <a href="#M000261">listeners</a>&nbsp;&nbsp;
+      <a href="#M000252">new</a>&nbsp;&nbsp;
+      <a href="#M000254">open_channel</a>&nbsp;&nbsp;
+      <a href="#M000260">postprocess</a>&nbsp;&nbsp;
+      <a href="#M000259">preprocess</a>&nbsp;&nbsp;
+      <a href="#M000253">replace_with</a>&nbsp;&nbsp;
+      <a href="#M000255">send_global_request</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">server</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The <a href="Server.html">Net::SSH::Multi::Server</a> object that
+&quot;owns&quot; this pending connection.
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000252" class="method-detail">
+        <a name="M000252"></a>
+
+        <div class="method-heading">
+          <a href="PendingConnection.src/M000252.html" target="Code" class="method-signature"
+            onclick="popupCode('PendingConnection.src/M000252.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(server)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Instantiates a <a href="PendingConnection.html#M000252">new</a> pending
+connection for the given <a href="Server.html">Net::SSH::Multi::Server</a>
+object.
+</p>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000256" class="method-detail">
+        <a name="M000256"></a>
+
+        <div class="method-heading">
+          <a href="PendingConnection.src/M000256.html" target="Code" class="method-signature"
+            onclick="popupCode('PendingConnection.src/M000256.html');return false;">
+          <span class="method-name">busy?</span><span class="method-args">(include_invisible=false)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Always returns <tt>true</tt>, so that the pending connection looks active
+until it can be truly opened and replaced with a real connection.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000258" class="method-detail">
+        <a name="M000258"></a>
+
+        <div class="method-heading">
+          <a href="PendingConnection.src/M000258.html" target="Code" class="method-signature"
+            onclick="popupCode('PendingConnection.src/M000258.html');return false;">
+          <span class="method-name">channels</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns an empty array, since a pending connection cannot have any real <a
+href="PendingConnection.html#M000258">channels</a>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000257" class="method-detail">
+        <a name="M000257"></a>
+
+        <div class="method-heading">
+          <a href="PendingConnection.src/M000257.html" target="Code" class="method-signature"
+            onclick="popupCode('PendingConnection.src/M000257.html');return false;">
+          <span class="method-name">close</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Does nothing, except to make a pending connection quack like a real
+connection.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000261" class="method-detail">
+        <a name="M000261"></a>
+
+        <div class="method-heading">
+          <a href="PendingConnection.src/M000261.html" target="Code" class="method-signature"
+            onclick="popupCode('PendingConnection.src/M000261.html');return false;">
+          <span class="method-name">listeners</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns an empty hash, since a pending connection has no real <a
+href="PendingConnection.html#M000261">listeners</a>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000254" class="method-detail">
+        <a name="M000254"></a>
+
+        <div class="method-heading">
+          <a href="PendingConnection.src/M000254.html" target="Code" class="method-signature"
+            onclick="popupCode('PendingConnection.src/M000254.html');return false;">
+          <span class="method-name">open_channel</span><span class="method-args">(type=&quot;session&quot;, *extras, &amp;on_confirm)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Records that a channel open request has been made, and returns a <a
+href="PendingConnection.html#M000252">new</a> <a
+href="ChannelProxy.html">Net::SSH::Multi::ChannelProxy</a> object to
+represent the (as yet unopened) channel.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000260" class="method-detail">
+        <a name="M000260"></a>
+
+        <div class="method-heading">
+          <a href="PendingConnection.src/M000260.html" target="Code" class="method-signature"
+            onclick="popupCode('PendingConnection.src/M000260.html');return false;">
+          <span class="method-name">postprocess</span><span class="method-args">(readers, writers)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns <tt>true</tt>, and does nothing else.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000259" class="method-detail">
+        <a name="M000259"></a>
+
+        <div class="method-heading">
+          <a href="PendingConnection.src/M000259.html" target="Code" class="method-signature"
+            onclick="popupCode('PendingConnection.src/M000259.html');return false;">
+          <span class="method-name">preprocess</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns <tt>true</tt>, and does nothing else.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000253" class="method-detail">
+        <a name="M000253"></a>
+
+        <div class="method-heading">
+          <a href="PendingConnection.src/M000253.html" target="Code" class="method-signature"
+            onclick="popupCode('PendingConnection.src/M000253.html');return false;">
+          <span class="method-name">replace_with</span><span class="method-args">(session)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Instructs the pending session to replay all of its recordings against the
+given <tt>session</tt>, and to then replace itself with the given session.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000255" class="method-detail">
+        <a name="M000255"></a>
+
+        <div class="method-heading">
+          <a href="PendingConnection.src/M000255.html" target="Code" class="method-signature"
+            onclick="popupCode('PendingConnection.src/M000255.html');return false;">
+          <span class="method-name">send_global_request</span><span class="method-args">(type, *extra, &amp;callback)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Records that a global request has been made. The request is not actually
+sent, and won&#8216;t be until <a
+href="PendingConnection.html#M000253">replace_with</a> is called.
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
