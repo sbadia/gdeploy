@@ -180,18 +180,21 @@ SITE_WEB="https://www.grid5000.fr/"
 SITE_LAT="48,7"
 SITE_LONG="6,2"
 SITE_EMAIL=root@localhost
-SITE_SECURITY_EMAIL=root@localhost
-SITE_SUPPORT_EMAIL=root@localhost
-SITE_DESC="Grid5000 School - gLite"
+SITE_SECURITY_EMAIL=sbadia@f#{sname}.#{sname}.grid5000.fr
+SITE_SUPPORT_EMAIL=sbadia@f#{sname}.#{sname}.grid5000.fr
+SITE_DESC="Grid5000 School 2011 - gLite"
 SITE_OTHER_GRID="#{clusters($nodes)}"
 CE_HOST="#{cehost}"
-BDII_REGIONS="CE SITE_BDII"
+BDII_REGIONS="CE SITE_BDII BDII WMS"
 BDII_CE_URL="ldap://#{cehost}:2170/mds-vo-name=resource,o=grid"
 BDII_SITE_BDII_URL="ldap://#{bdii}:2170/mds-vo-name=resource,o=grid"
+BDII_WMS_URL="ldap://#{bdii}:2170/mds-vo-name=resource,o=grid"
+BDII_BDII_URL="ldap://#{bdii}:2170/mds-vo-name=resource,o=grid"
 EOF
   f.close
 end
 
+# <QUEUE_NAME>_GROUP_ENABLE=<list of vo>
 def conf_batch(batch, cehost, sname)
   f = File.new("#{DIR}/site-info-batch.def", "w")
   f.puts <<-EOF
@@ -332,14 +335,14 @@ EOF
   f.close
 end
 
+#{$nodes.each do |node| "set server acl_host += #{node}"end}
 def queue_config()
   f = File.new("#{DIR}/queue.conf", "w")
   f.puts <<-EOF
 #!/bin/sh
 qmgr << EOF
 set server scheduling = True
-set server acl_hosts = #{batch}
-#{$nodes.each do |node| "set server acl_host += #{node}"end}
+set server acl_hosts = #{batch},#{cehost}
 set server managers = root@`hostname -f`
 set server operators = root@`hostname -f`
 set server default_queue = default
@@ -394,6 +397,7 @@ if $cfg.config == true :
        conf_groups(sname)
        list_wn(wn)
        conf_cehost(sname, cehost, batch, se)
+       export_nfs()
     end
   end
 else
