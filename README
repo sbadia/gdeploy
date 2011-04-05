@@ -31,15 +31,17 @@ Egee:
 AlGorille:
  -SG = SimGrid.
 
-=== Clusters ahci
-grenoble:
- - adonis
- - edel
-lille:
- - chinqchint
- - chirloute
-nancy:
- - graphene
-rennes:
- - parapide
- - parapluie
+== Deployments
+Image new (ahci):
+ - Graphene
+ - Adonis
+ - Edel
+ - Chinqchint
+ - Chirloute
+ - Parapide
+ - Parapluie
+
+Image previous (ata_piix):
+ - Genepi
+ - Griffon
+ - Paradent
