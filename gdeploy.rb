@@ -327,7 +327,7 @@ def list_wn(wn)
 end
 
 def export_nfs()
-  f = File.new("#{DIR}/export", "w")
+  f = File.new("#{DIR}/conf/export", "w")
   f.puts <<-EOF
 /var/spool/pbs/server_priv/accounting    *(rw,async,no_root_squash)
 /var/spool/pbs/server_logs               *(rw,async,no_root_squash)
@@ -337,7 +337,7 @@ end
 
 #{$nodes.each do |node| "set server acl_host += #{node}"end}
 def queue_config()
-  f = File.new("#{DIR}/queue.conf", "w")
+  f = File.new("#{DIR}/conf/queue.conf", "w")
   f.puts <<-EOF
 #!/bin/sh
 qmgr << EOF
@@ -398,6 +398,7 @@ if $cfg.config == true :
        list_wn(wn)
        conf_cehost(sname, cehost, batch, se)
        export_nfs()
+       queue_config()
     end
   end
 else
@@ -485,6 +486,7 @@ if $cfg.sendconf == true :
   end
   Net::SSH.start(serv.fetch("batch"), 'root') do |ssh|
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-TORQUE_server -d 1')
+    ssh.exec!('cat /opt/glite/yaim/etc/conf/exports >> /etc/exports && /etc/init.d/nfs restart')
   end
 
   if $cfg.pbar == true:
