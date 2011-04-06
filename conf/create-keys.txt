@@ -1,0 +1,24 @@
+== Creation
+openssl genrsa -des3 -out cle-ssl.key 1024
+  pass-phrase: glite
+openssl req -new -key cle-ssl.key > demande-ssl.csr
+openssl genrsa -des3 -out cle-CA.key 1024
+openssl req -new -key cle-CA.key -out demande-CA.csr
+openssl x509 -in demande-CA.csr -out certif-CA.crt -req -signkey cle-CA.key -days 365
+openssl x509 -req -in demande-ssl.csr -out certif-ssl.crt -CA certif-CA.crt -CAkey cle-CA.key -CAcreateserial -CAserial CA.srl
+
+
+== Correspondance
+  hostcert.pem --> certif-ssl.crt
+  hostkey.pem --> cle-ssl.key
+
+  SSLCertificateFile certif-ssl.crt
+  SSLCACertificateFile certif-CA.crt
+  SSLCertificateKeyFile cle-ssl.key
+
+== Arborescence
+/etc/grid-security/certificates/cle-CA.key
+/etc/grid-security/certificates/node
+/etc/grid-security/certificates/node.pem
+/etc/grid-security/hostcert.pem
+/etc/grid-security/hostkey.pem
