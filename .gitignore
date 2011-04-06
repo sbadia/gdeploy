@@ -1,4 +1,5 @@
 site-info*
-conf/*
+conf/*.conf
+conf/*.def
 .*~
 *.swp
