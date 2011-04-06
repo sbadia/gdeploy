@@ -292,6 +292,9 @@ BLPARSER_HOST=#{cehost}
 BLP_PORT=33333
 CREAM_PORT=56565
 CEMON_HOST=#{cehost}
+VO_#{sname.upcase}_SW_DIR=/opt/vo_software/#{sname}
+VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5k-CA"
+VO_#{sname.upcase}_VOMSES="#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}"
 EOF
   f.close
 end
@@ -561,7 +564,7 @@ if $cfg.sendconf == true :
     puts serv.fetch("cehost")
   end
   Net::SSH.start(serv.fetch("cehost"), 'root') do |ssh|
-    ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-ce.def /root/yaim/site-info.def')
+    ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-ce.def /root/yaim/site-info.def && mkdir -p /etc/grid-security/')
     ssh.exec!('mkdir -p /var/spool/pbs/server_priv/accounting && mkdir -p /var/spool/pbs/server_logs')
     ssh.exec!("mount #{serv.fetch("batch")}:/var/spool/pbs/server_priv/accounting /var/spool/pbs/server_priv/accounting")
     ssh.exec!("mount #{serv.fetch("batch")}:/var/spool/pbs/server_logs /var/spool/pbs/server_logs")
