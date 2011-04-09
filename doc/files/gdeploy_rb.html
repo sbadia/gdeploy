@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="utf8"?>
 <!DOCTYPE html 
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <title>File: gdeploy.rb</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Tue Apr 05 10:25:43 +0200 2011</td>
+      <td>Sun Apr 10 00:18:40 +0200 2011</td>
     </tr>
     </table>
   </div>
@@ -69,13 +69,51 @@
   <div id="contextContent">
 
     <div id="description">
-      <pre>
- = gDeploy
- https://www.grid5000.fr/
+      <h1>gDeploy</h1>
+<h2>Description</h2>
+<p>
+gDeploy est un petit script écrit en ruby, dans le but de déployer
+</p>
+<pre>
+ et de configurer les services de base du midelware de grilles de
+ calcul gLite.
 </pre>
 <p>
-begin
+gDeploy utilise les classes ruby net/ssh,scp. L&#8216;environnement
+utilisé pour le déploiement est un système Scientific Linux 5.5, et la
+version de gLite est la 3.2
 </p>
+<h2>Licence</h2>
+<p>
+Ce script est sous licence GPLv2.
+</p>
+<h2>Contacts</h2>
+<ul>
+<li>Lucas Nussbaum &lt;lucas.nussbaum@loria.fr&gt;
+
+</li>
+<li>Sebastien Badia &lt;sebastien.badia@inria.fr&gt;
+
+</li>
+</ul>
+<h2>Liens</h2>
+<ul>
+<li><a href="http://sbadia.github.com/gdeploy">sbadia.github.com/gdeploy</a>/
+
+</li>
+<li><a href="http://github.com/sbadia/gdeploy">github.com/sbadia/gdeploy</a>/
+
+</li>
+<li><a href="https://www.grid5000.fr">www.grid5000.fr</a>/
+
+</li>
+<li><a href="http://www.scientificlinux.org">www.scientificlinux.org</a>/
+
+</li>
+<li><a href="http://glite.cern.fr">glite.cern.fr</a>/
+
+</li>
+</ul>
 
     </div>
 
@@ -86,10 +124,10 @@ begin
       yaml&nbsp;&nbsp;
       optparse&nbsp;&nbsp;
       ostruct&nbsp;&nbsp;
-      <a href="net/scp_rb.html">net/scp</a>&nbsp;&nbsp;
-      <a href="net/ssh_rb.html">net/ssh</a>&nbsp;&nbsp;
-      <a href="net/ssh/multi_rb.html">net/ssh/multi</a>&nbsp;&nbsp;
-      <a href="misc/progressbar_rb.html">misc/progressbar</a>&nbsp;&nbsp;
+      net/scp&nbsp;&nbsp;
+      net/ssh&nbsp;&nbsp;
+      net/ssh/multi&nbsp;&nbsp;
+      misc/progressbar&nbsp;&nbsp;
       </div>
     </div>
 
@@ -99,19 +137,19 @@ begin
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000005">clusters</a>&nbsp;&nbsp;
-      <a href="#M000007">conf_batch</a>&nbsp;&nbsp;
-      <a href="#M000006">conf_bdii</a>&nbsp;&nbsp;
-      <a href="#M000009">conf_cehost</a>&nbsp;&nbsp;
-      <a href="#M000011">conf_groups</a>&nbsp;&nbsp;
-      <a href="#M000010">conf_users</a>&nbsp;&nbsp;
-      <a href="#M000008">conf_wn</a>&nbsp;&nbsp;
-      <a href="#M000015">create_conf</a>&nbsp;&nbsp;
-      <a href="#M000013">export_nfs</a>&nbsp;&nbsp;
-      <a href="#M000012">list_wn</a>&nbsp;&nbsp;
-      <a href="#M000003">nodes_file</a>&nbsp;&nbsp;
-      <a href="#M000014">queue_config</a>&nbsp;&nbsp;
-      <a href="#M000004">send_jabber</a>&nbsp;&nbsp;
+      <a href="#M000003">clusters</a>&nbsp;&nbsp;
+      <a href="#M000005">conf_batch</a>&nbsp;&nbsp;
+      <a href="#M000004">conf_bdii</a>&nbsp;&nbsp;
+      <a href="#M000007">conf_cehost</a>&nbsp;&nbsp;
+      <a href="#M000009">conf_groups</a>&nbsp;&nbsp;
+      <a href="#M000008">conf_users</a>&nbsp;&nbsp;
+      <a href="#M000006">conf_wn</a>&nbsp;&nbsp;
+      <a href="#M000013">create_conf</a>&nbsp;&nbsp;
+      <a href="#M000011">export_nfs</a>&nbsp;&nbsp;
+      <a href="#M000010">list_wn</a>&nbsp;&nbsp;
+      <a href="#M000001">nodes_file</a>&nbsp;&nbsp;
+      <a href="#M000012">queue_config</a>&nbsp;&nbsp;
+      <a href="#M000002">send_jabber</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -146,19 +184,54 @@ begin
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000005" class="method-detail">
-        <a name="M000005"></a>
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
 
         <div class="method-heading">
-          <a href="gdeploy_rb.src/M000005.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000005.html');return false;">
+          <a href="gdeploy_rb.src/M000003.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000003.html');return false;">
           <span class="method-name">clusters</span><span class="method-args">(nodes)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Autres <a href="gdeploy_rb.html#M000005">clusters</a> dans la vo
+Autres <a href="gdeploy_rb.html#M000003">clusters</a> dans la VO et dans la
+réservation passée.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="gdeploy_rb.src/M000005.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000005.html');return false;">
+          <span class="method-name">conf_batch</span><span class="method-args">(batch, cehost, sname)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+&lt;QUEUE_NAME&gt;_GROUP_ENABLE=&lt;list of vo&gt;
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="gdeploy_rb.src/M000004.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000004.html');return false;">
+          <span class="method-name">conf_bdii</span><span class="method-args">(bdii, sname, cehost)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Configuration de la brique Bdii, Site-Bdii, annuaire de la Vo.
 </p>
         </div>
       </div>
@@ -169,21 +242,7 @@ Autres <a href="gdeploy_rb.html#M000005">clusters</a> dans la vo
         <div class="method-heading">
           <a href="gdeploy_rb.src/M000007.html" target="Code" class="method-signature"
             onclick="popupCode('gdeploy_rb.src/M000007.html');return false;">
-          <span class="method-name">conf_batch</span><span class="method-args">(batch, cehost, sname)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-        </div>
-      </div>
-
-      <div id="method-M000006" class="method-detail">
-        <a name="M000006"></a>
-
-        <div class="method-heading">
-          <a href="gdeploy_rb.src/M000006.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000006.html');return false;">
-          <span class="method-name">conf_bdii</span><span class="method-args">(bdii, sname, cehost)</span>
+          <span class="method-name">conf_cehost</span><span class="method-args">(sname, cehost, batch, se)</span>
           </a>
         </div>
       
@@ -197,20 +256,6 @@ Autres <a href="gdeploy_rb.html#M000005">clusters</a> dans la vo
         <div class="method-heading">
           <a href="gdeploy_rb.src/M000009.html" target="Code" class="method-signature"
             onclick="popupCode('gdeploy_rb.src/M000009.html');return false;">
-          <span class="method-name">conf_cehost</span><span class="method-args">(sname, cehost, batch, se)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-        </div>
-      </div>
-
-      <div id="method-M000011" class="method-detail">
-        <a name="M000011"></a>
-
-        <div class="method-heading">
-          <a href="gdeploy_rb.src/M000011.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000011.html');return false;">
           <span class="method-name">conf_groups</span><span class="method-args">(sname)</span>
           </a>
         </div>
@@ -224,12 +269,12 @@ Autres <a href="gdeploy_rb.html#M000005">clusters</a> dans la vo
         </div>
       </div>
 
-      <div id="method-M000010" class="method-detail">
-        <a name="M000010"></a>
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
 
         <div class="method-heading">
-          <a href="gdeploy_rb.src/M000010.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000010.html');return false;">
+          <a href="gdeploy_rb.src/M000008.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000008.html');return false;">
           <span class="method-name">conf_users</span><span class="method-args">(group,sname)</span>
           </a>
         </div>
@@ -241,27 +286,13 @@ Autres <a href="gdeploy_rb.html#M000005">clusters</a> dans la vo
         </div>
       </div>
 
-      <div id="method-M000008" class="method-detail">
-        <a name="M000008"></a>
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
 
         <div class="method-heading">
-          <a href="gdeploy_rb.src/M000008.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000008.html');return false;">
+          <a href="gdeploy_rb.src/M000006.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000006.html');return false;">
           <span class="method-name">conf_wn</span><span class="method-args">(bdii, se, sname, batch, cehost)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-        </div>
-      </div>
-
-      <div id="method-M000015" class="method-detail">
-        <a name="M000015"></a>
-
-        <div class="method-heading">
-          <a href="gdeploy_rb.src/M000015.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000015.html');return false;">
-          <span class="method-name">create_conf</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -275,11 +306,57 @@ Autres <a href="gdeploy_rb.html#M000005">clusters</a> dans la vo
         <div class="method-heading">
           <a href="gdeploy_rb.src/M000013.html" target="Code" class="method-signature"
             onclick="popupCode('gdeploy_rb.src/M000013.html');return false;">
+          <span class="method-name">create_conf</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="gdeploy_rb.src/M000011.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000011.html');return false;">
           <span class="method-name">export_nfs</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="gdeploy_rb.src/M000010.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000010.html');return false;">
+          <span class="method-name">list_wn</span><span class="method-args">(wn)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="gdeploy_rb.src/M000001.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000001.html');return false;">
+          <span class="method-name">nodes_file</span><span class="method-args">(file)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Récupération d&#8216;une liste de noeuds en fonction de la méthode de
+collecte choisie.
+</p>
         </div>
       </div>
 
@@ -289,56 +366,33 @@ Autres <a href="gdeploy_rb.html#M000005">clusters</a> dans la vo
         <div class="method-heading">
           <a href="gdeploy_rb.src/M000012.html" target="Code" class="method-signature"
             onclick="popupCode('gdeploy_rb.src/M000012.html');return false;">
-          <span class="method-name">list_wn</span><span class="method-args">(wn)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-        </div>
-      </div>
-
-      <div id="method-M000003" class="method-detail">
-        <a name="M000003"></a>
-
-        <div class="method-heading">
-          <a href="gdeploy_rb.src/M000003.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000003.html');return false;">
-          <span class="method-name">nodes_file</span><span class="method-args">(file)</span>
+          <span class="method-name">queue_config</span><span class="method-args">(batch, cehost)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Nodes from file
+{$nodes.each do |node| &quot;set server acl_host += #{node}&quot;end}
 </p>
         </div>
       </div>
 
-      <div id="method-M000014" class="method-detail">
-        <a name="M000014"></a>
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
 
         <div class="method-heading">
-          <a href="gdeploy_rb.src/M000014.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000014.html');return false;">
-          <span class="method-name">queue_config</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-        </div>
-      </div>
-
-      <div id="method-M000004" class="method-detail">
-        <a name="M000004"></a>
-
-        <div class="method-heading">
-          <a href="gdeploy_rb.src/M000004.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000004.html');return false;">
+          <a href="gdeploy_rb.src/M000002.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000002.html');return false;">
           <span class="method-name">send_jabber</span><span class="method-args">(message)</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+Permet l&#8216;interaction avec l&#8216;api afin d&#8216;utiliser xmpp.
+Pour le moment inutilisé, du fait de la dépendance à restfully et
+rubygems.
+</p>
         </div>
       </div>
 
