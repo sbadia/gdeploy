@@ -1,15 +1,15 @@
 Legende:
   + : à faire
   * : fait, en test
-  . : terminé
+  ± : terminé
 
 I]- FIXME/BUGS
-  + VOMS_CA_DN/VOMSES dans la conf CE.
+  * VOMS_CA_DN/VOMSES dans la conf CE.
   + hostkey.pem
   + Certificats dans /etc/grid-security/hostkey.pem.
   * Erreur java lors de l'install des wn et du ce.
-  . Mise en place nfs sur batch pour partage avec ce.
-  * Gestion multiclusters (un ce/batch pour deux clusters).
+  ± Mise en place nfs sur batch pour partage avec ce.
+  ± Gestion multiclusters (un ce/batch pour deux clusters).
 
 II]- FEATURES
   + Gestion 2 nodes (un service/un wn et écrasement conf).
