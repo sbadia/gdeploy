@@ -2,7 +2,31 @@
 
 # = gDeploy
 # :title: Glite Deployment on Grid'5000
-# https://www.grid5000.fr/
+#
+# == Description
+# gDeploy est un petit script écrit en ruby, dans le but de déployer
+#  et de configurer les services de base du midelware de grilles de
+#  calcul gLite.
+#
+# gDeploy utilise les classes ruby net/ssh,scp.
+# L'environnement utilisé pour le déploiement est un système Scientific
+# Linux 5.5, et la version de gLite est la 3.2
+#
+# == Licence
+# Ce script est sous licence GPLv2.
+#
+# == Contacts
+# - Lucas Nussbaum <lucas.nussbaum@loria.fr>
+# - Sebastien Badia <sebastien.badia@inria.fr>
+#
+# == Liens
+# - http://sbadia.github.com/gdeploy/
+# - http://github.com/sbadia/gdeploy/
+#
+# - https://www.grid5000.fr/
+# - http://www.scientificlinux.org/
+# - http://glite.cern.fr/
+
 
 begin
   require 'yaml'
@@ -15,7 +39,8 @@ begin
 rescue LoadError
 end
 
-### Global
+# Configuration globale au script
+#
 $cfg = OpenStruct::new
 $cfg.confnodes = []
 $cfg.gnodes = []
@@ -33,7 +58,9 @@ $tstart = Time::now
 DIR = File.expand_path(File.dirname(__FILE__))
 
 
-# Nodes from file
+# Récupération d'une liste de noeuds en fonction de la méthode
+# de collecte choisie.
+#
 def nodes_file(file)
   begin
     return IO::read(file).split("\n").sort.uniq
@@ -48,6 +75,12 @@ else
   progname = "gdeploy"
 end
 
+# Options
+# pour une utilisation standard lancer
+# $ ruby gdeploy.rb -vcs
+# Le script fetch alors la variable $OAR_NODE_FILE, crée la configuration (c),
+# l'envoie sur les nodes (s) et affiche les résultats (v).
+#
 opts = OptionParser::new do |opts|
   opts.version = "#{progname} v0.2 2011-03-07 12:02:09 sbadia"
   opts.release = nil
@@ -74,10 +107,11 @@ rescue OptionParser::ParseError => pe
   exit 1
 end
 
+# Pour intercepter une commande d'extinction et afficher le message.
+#
 extinction = Proc.new{
   puts "Received extinction request..."
 }
-
 %w{INT TERM}.each do |signal|
   Signal.trap( signal ) do
       extinction.call
@@ -85,6 +119,9 @@ extinction = Proc.new{
   end
 end
 
+# Permet l'interaction avec l'api afin d'utiliser xmpp.
+# Pour le moment inutilisé, du fait de la dépendance à restfully et rubygems.
+#
 def send_jabber(message)
   Restfully::Session.new(:base_uri => "https://api.grid5000.fr/2.0/grid5000") do |root, session|
   session.post("/sid/notifications",
@@ -113,10 +150,12 @@ if $nodes.empty?
   exit(1)
 end
 
-# Site name
+# Nom du site à traiter.
+#
 sname = $nodes.first.split('.').fetch(1)
 
-# Autres clusters dans la vo
+# Autres clusters dans la VO et dans la réservation passée.
+#
 def clusters(nodes)
   cluster = []
   nodes.each do |n|
@@ -126,7 +165,8 @@ end
   return cluster.uniq
 end
 
-# Attribution des noeuds
+# Attribution des noeuds, le mini est deux (une machine de services, et un worker-node)
+#
 if $nodes.length < 4 :
   if $nodes.length < 2 :
     puts "Min 2 nodes"
@@ -161,6 +201,8 @@ end
 serv = { "bdii" => bdii, "batch" => batch, "cehost" => cehost, "se" => se }
 utils = [ 'users', 'groups', 'wn-list' ]
 
+# Création du répertoire de configuration
+#
 if $cfg.config == true :
 begin
  Dir::mkdir("#{DIR}/conf/", 0755)
@@ -168,6 +210,8 @@ rescue
 end
 end
 
+# Configuration de la brique Bdii, Site-Bdii, annuaire de la Vo.
+#
 def conf_bdii(bdii, sname, cehost)
   f = File.new("#{DIR}/conf/site-info-bdii.def", "w")
   f.puts <<-EOF
