@@ -132,6 +132,20 @@ def send_jabber(message)
   end
 end
 
+# Affiche le message passé en paramètre avec l'output Ok de couleur verte.
+# Exemple:
+#   ok("Installation Bdii")
+def ok(msg)
+  puts "#{msg}:\t\033[1;32mOk\033[0m\n"
+end
+
+# Affiche le message passé en paramètre avec l'output Ko de couleur rouge.
+# Exemple:
+#   ko("Installation Batch")
+def ko(msg)
+  puts "#{msg}:\t\033[1;31mKo\033[0m\n"
+end
+
 ## Go!
 if $cfg.confnodes.empty?
   if ENV['OAR_NODE_FILE'].nil?
