@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf8"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html 
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <title>File: gdeploy.rb</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Sun Apr 10 00:18:40 +0200 2011</td>
+      <td>Wed Apr 13 00:41:52 +0200 2011</td>
     </tr>
     </table>
   </div>
@@ -137,18 +137,20 @@ Ce script est sous licence GPLv2.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000003">clusters</a>&nbsp;&nbsp;
-      <a href="#M000005">conf_batch</a>&nbsp;&nbsp;
-      <a href="#M000004">conf_bdii</a>&nbsp;&nbsp;
-      <a href="#M000007">conf_cehost</a>&nbsp;&nbsp;
-      <a href="#M000009">conf_groups</a>&nbsp;&nbsp;
-      <a href="#M000008">conf_users</a>&nbsp;&nbsp;
-      <a href="#M000006">conf_wn</a>&nbsp;&nbsp;
-      <a href="#M000013">create_conf</a>&nbsp;&nbsp;
-      <a href="#M000011">export_nfs</a>&nbsp;&nbsp;
-      <a href="#M000010">list_wn</a>&nbsp;&nbsp;
+      <a href="#M000005">clusters</a>&nbsp;&nbsp;
+      <a href="#M000007">conf_batch</a>&nbsp;&nbsp;
+      <a href="#M000006">conf_bdii</a>&nbsp;&nbsp;
+      <a href="#M000009">conf_cehost</a>&nbsp;&nbsp;
+      <a href="#M000011">conf_groups</a>&nbsp;&nbsp;
+      <a href="#M000010">conf_users</a>&nbsp;&nbsp;
+      <a href="#M000008">conf_wn</a>&nbsp;&nbsp;
+      <a href="#M000015">create_conf</a>&nbsp;&nbsp;
+      <a href="#M000013">export_nfs</a>&nbsp;&nbsp;
+      <a href="#M000004">ko</a>&nbsp;&nbsp;
+      <a href="#M000012">list_wn</a>&nbsp;&nbsp;
       <a href="#M000001">nodes_file</a>&nbsp;&nbsp;
-      <a href="#M000012">queue_config</a>&nbsp;&nbsp;
+      <a href="#M000003">ok</a>&nbsp;&nbsp;
+      <a href="#M000014">queue_config</a>&nbsp;&nbsp;
       <a href="#M000002">send_jabber</a>&nbsp;&nbsp;
       </div>
     </div>
@@ -184,30 +186,30 @@ Ce script est sous licence GPLv2.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000003" class="method-detail">
-        <a name="M000003"></a>
-
-        <div class="method-heading">
-          <a href="gdeploy_rb.src/M000003.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000003.html');return false;">
-          <span class="method-name">clusters</span><span class="method-args">(nodes)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Autres <a href="gdeploy_rb.html#M000003">clusters</a> dans la VO et dans la
-réservation passée.
-</p>
-        </div>
-      </div>
-
       <div id="method-M000005" class="method-detail">
         <a name="M000005"></a>
 
         <div class="method-heading">
           <a href="gdeploy_rb.src/M000005.html" target="Code" class="method-signature"
             onclick="popupCode('gdeploy_rb.src/M000005.html');return false;">
+          <span class="method-name">clusters</span><span class="method-args">(nodes)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Autres <a href="gdeploy_rb.html#M000005">clusters</a> dans la VO et dans la
+réservation passée.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="gdeploy_rb.src/M000007.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000007.html');return false;">
           <span class="method-name">conf_batch</span><span class="method-args">(batch, cehost, sname)</span>
           </a>
         </div>
@@ -219,12 +221,12 @@ réservation passée.
         </div>
       </div>
 
-      <div id="method-M000004" class="method-detail">
-        <a name="M000004"></a>
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
 
         <div class="method-heading">
-          <a href="gdeploy_rb.src/M000004.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000004.html');return false;">
+          <a href="gdeploy_rb.src/M000006.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000006.html');return false;">
           <span class="method-name">conf_bdii</span><span class="method-args">(bdii, sname, cehost)</span>
           </a>
         </div>
@@ -236,77 +238,13 @@ Configuration de la brique Bdii, Site-Bdii, annuaire de la Vo.
         </div>
       </div>
 
-      <div id="method-M000007" class="method-detail">
-        <a name="M000007"></a>
-
-        <div class="method-heading">
-          <a href="gdeploy_rb.src/M000007.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000007.html');return false;">
-          <span class="method-name">conf_cehost</span><span class="method-args">(sname, cehost, batch, se)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-        </div>
-      </div>
-
       <div id="method-M000009" class="method-detail">
         <a name="M000009"></a>
 
         <div class="method-heading">
           <a href="gdeploy_rb.src/M000009.html" target="Code" class="method-signature"
             onclick="popupCode('gdeploy_rb.src/M000009.html');return false;">
-          <span class="method-name">conf_groups</span><span class="method-args">(sname)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-&quot;/&lt;vo&gt;&quot;:::: &quot;/&lt;vo&gt;/&lt;group&gt;&quot;::::
-&quot;/&lt;vo&gt;/&lt;group&gt;/ROLE=&lt;role&gt;::::
-&quot;/&lt;vo&gt;/&lt;group&gt;/ROLE=&lt;role&gt;:::&lt;special_user_type&gt;:
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000008" class="method-detail">
-        <a name="M000008"></a>
-
-        <div class="method-heading">
-          <a href="gdeploy_rb.src/M000008.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000008.html');return false;">
-          <span class="method-name">conf_users</span><span class="method-args">(group,sname)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-&lt;user_id&gt;:&lt;username&gt;:&lt;group_id&gt;:&lt;group_name&gt;:&lt;vo_name&gt;:&lt;special_user_type&gt;:
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000006" class="method-detail">
-        <a name="M000006"></a>
-
-        <div class="method-heading">
-          <a href="gdeploy_rb.src/M000006.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000006.html');return false;">
-          <span class="method-name">conf_wn</span><span class="method-args">(bdii, se, sname, batch, cehost)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-        </div>
-      </div>
-
-      <div id="method-M000013" class="method-detail">
-        <a name="M000013"></a>
-
-        <div class="method-heading">
-          <a href="gdeploy_rb.src/M000013.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000013.html');return false;">
-          <span class="method-name">create_conf</span><span class="method-args">()</span>
+          <span class="method-name">conf_cehost</span><span class="method-args">(sname, cehost, batch, se)</span>
           </a>
         </div>
       
@@ -320,11 +258,16 @@ Configuration de la brique Bdii, Site-Bdii, annuaire de la Vo.
         <div class="method-heading">
           <a href="gdeploy_rb.src/M000011.html" target="Code" class="method-signature"
             onclick="popupCode('gdeploy_rb.src/M000011.html');return false;">
-          <span class="method-name">export_nfs</span><span class="method-args">()</span>
+          <span class="method-name">conf_groups</span><span class="method-args">(sname)</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+&quot;/&lt;vo&gt;&quot;:::: &quot;/&lt;vo&gt;/&lt;group&gt;&quot;::::
+&quot;/&lt;vo&gt;/&lt;group&gt;/ROLE=&lt;role&gt;::::
+&quot;/&lt;vo&gt;/&lt;group&gt;/ROLE=&lt;role&gt;:::&lt;special_user_type&gt;:
+</p>
         </div>
       </div>
 
@@ -334,6 +277,86 @@ Configuration de la brique Bdii, Site-Bdii, annuaire de la Vo.
         <div class="method-heading">
           <a href="gdeploy_rb.src/M000010.html" target="Code" class="method-signature"
             onclick="popupCode('gdeploy_rb.src/M000010.html');return false;">
+          <span class="method-name">conf_users</span><span class="method-args">(group,sname)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+&lt;user_id&gt;:&lt;username&gt;:&lt;group_id&gt;:&lt;group_name&gt;:&lt;vo_name&gt;:&lt;special_user_type&gt;:
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="gdeploy_rb.src/M000008.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000008.html');return false;">
+          <span class="method-name">conf_wn</span><span class="method-args">(bdii, se, sname, batch, cehost)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="gdeploy_rb.src/M000015.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000015.html');return false;">
+          <span class="method-name">create_conf</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="gdeploy_rb.src/M000013.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000013.html');return false;">
+          <span class="method-name">export_nfs</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="gdeploy_rb.src/M000004.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000004.html');return false;">
+          <span class="method-name">ko</span><span class="method-args">(msg)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Affiche le message passé en paramètre avec l&#8216;output Ko de couleur
+rouge. Exemple:
+</p>
+<pre>
+  ko(&quot;Installation Batch&quot;)
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="gdeploy_rb.src/M000012.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000012.html');return false;">
           <span class="method-name">list_wn</span><span class="method-args">(wn)</span>
           </a>
         </div>
@@ -360,12 +383,33 @@ collecte choisie.
         </div>
       </div>
 
-      <div id="method-M000012" class="method-detail">
-        <a name="M000012"></a>
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
 
         <div class="method-heading">
-          <a href="gdeploy_rb.src/M000012.html" target="Code" class="method-signature"
-            onclick="popupCode('gdeploy_rb.src/M000012.html');return false;">
+          <a href="gdeploy_rb.src/M000003.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000003.html');return false;">
+          <span class="method-name">ok</span><span class="method-args">(msg)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Affiche le message passé en paramètre avec l&#8216;output Ok de couleur
+verte. Exemple:
+</p>
+<pre>
+  ok(&quot;Installation Bdii&quot;)
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="gdeploy_rb.src/M000014.html" target="Code" class="method-signature"
+            onclick="popupCode('gdeploy_rb.src/M000014.html');return false;">
           <span class="method-name">queue_config</span><span class="method-args">(batch, cehost)</span>
           </a>
         </div>

@@ -1,20 +1,23 @@
-<?xml version="1.0" encoding="utf8"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html 
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html>
 <head>
-  <title>conf_batch (gdeploy.rb)</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <title>clusters (gdeploy.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File gdeploy.rb, line 242</span>
-<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">conf_batch</span>(<span class="ruby-identifier">batch</span>, <span class="ruby-identifier">cehost</span>, <span class="ruby-identifier">sname</span>)
-  <span class="ruby-identifier">f</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#{DIR}/conf/site-info-batch.def&quot;</span>, <span class="ruby-value str">&quot;w&quot;</span>)
-  <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;## Site-info.def Batch\nBATCH_SERVER=\&quot;\#{batch}\&quot;\nCE_HOST=\&quot;\#{cehost}\&quot;\nCE_SMPSIZE=`grep -c processor /proc/cpuinfo`\nVOS=\&quot;\#{sname}\&quot;\nQUEUES=\&quot;default\&quot;\nDEFAULT_GROUP_ENABLE=\&quot;\#{sname}\&quot;\nUSERS_CONF=/opt/glite/yaim/etc/conf/users.conf\nGROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf\nWN_LIST=/opt/glite/yaim/etc/conf/wn-list.conf\nCONFIG_MAUI=\&quot;yes\&quot;\n&quot;</span>
-  <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span>
+  <pre><span class="ruby-comment cmt"># File gdeploy.rb, line 173</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clusters</span>(<span class="ruby-identifier">nodes</span>)
+  <span class="ruby-identifier">cluster</span> = []
+  <span class="ruby-identifier">nodes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">cluster</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">n</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/-.*/</span>,<span class="ruby-value str">''</span>).<span class="ruby-identifier">upcase</span>
+    <span class="ruby-identifier">cluster</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;|&quot;</span>
+<span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">cluster</span>.<span class="ruby-identifier">uniq</span>
 <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

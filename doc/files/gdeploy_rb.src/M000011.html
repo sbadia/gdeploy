@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="utf8"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html 
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html>
 <head>
-  <title>export_nfs (gdeploy.rb)</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <title>conf_groups (gdeploy.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File gdeploy.rb, line 380</span>
-<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">export_nfs</span>()
-  <span class="ruby-identifier">f</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#{DIR}/conf/exports&quot;</span>, <span class="ruby-value str">&quot;w&quot;</span>)
-  <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;/var/spool/pbs/server_priv/accounting    *(rw,async,no_root_squash)\n/var/spool/pbs/server_logs               *(rw,async,no_root_squash)\n&quot;</span>
+  <pre><span class="ruby-comment cmt"># File gdeploy.rb, line 375</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">conf_groups</span>(<span class="ruby-identifier">sname</span>)
+  <span class="ruby-identifier">f</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#{DIR}/conf/groups.conf&quot;</span>, <span class="ruby-value str">&quot;w&quot;</span>)
+  <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;\&quot;/\#{sname}\&quot;::::\n\&quot;/\#{sname}/ROLE=\#{sname.upcase}\&quot;::::\n\&quot;/\#{sname}/ROLE=VO-Admin\&quot;:::sgm:\n&quot;</span>
   <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span>
 <span class="ruby-keyword kw">end</span></pre>
 </body>
