@@ -5,8 +5,12 @@ Legende:
 
 I]- FIXME/BUGS
   * VOMS_CA_DN/VOMSES dans la conf CE.
-  + hostkey.pem
+  + hostkey.pem sans passphrase.
+  + clées ssh/authorized_keys
   + Certificats dans /etc/grid-security/hostkey.pem.
+  + Output joli.
+  + afficher les briques dans le motd.
+  + hack fetch-crl sur ce.
   * Erreur java lors de l'install des wn et du ce.
   ± Mise en place nfs sur batch pour partage avec ce.
   ± Gestion multiclusters (un ce/batch pour deux clusters).
