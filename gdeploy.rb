@@ -528,6 +528,7 @@ if $cfg.sendconf == true :
     end
     ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_server.repo -q && yum install glite-TORQUE_server -q -y')
     ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz')
+    ssh.exec!('sh /opt/glite/yaim/etc/conf/queue.conf && /etc/init.d/maui restart')
     if $cfg.verbose == true:
       puts "*** configure"
     elsif $cfg.pbar == true:
