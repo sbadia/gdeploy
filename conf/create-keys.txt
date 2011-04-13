@@ -8,6 +8,9 @@ openssl req -new -key cle-CA.key -out demande-CA.csr
 openssl x509 -in demande-CA.csr -out certif-CA.crt -req -signkey cle-CA.key -days 365
 openssl x509 -req -in demande-ssl.csr -out certif-ssl.crt -CA certif-CA.crt -CAkey cle-CA.key -CAcreateserial -CAserial CA.srl
 
+=== Reponses
+FR - France - ø - Grid5000 - ø - *.grid5000.fr - ø - ø - ø
+FR - France - ø - CertifAuthG5k - ø - ca.grid5000.fr - ø - ø - ø
 
 == Correspondance
   hostcert.pem --> certif-ssl.crt
