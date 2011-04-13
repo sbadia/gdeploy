@@ -132,24 +132,39 @@ def send_jabber(message)
   end
 end
 
-# Affiche le message passé en paramètre avec l'output Ok de couleur verte.
+# Affiche le message passé en paramètre avec l'output de couleur verte.
 # Exemple:
-#   ok("Installation Bdii")
-def ok(msg)
-  puts "#{msg}:\t\033[1;32mOk\033[0m\n"
+#   vputs("Installation Bdii","Ok")
+def vputs(pre, msg)
+  puts "#{pre}:\t\033[1;32m#{msg}\033[0m\n"
 end
 
-# Affiche le message passé en paramètre avec l'output Ko de couleur rouge.
+# Affiche le message passé en paramètre avec l'output de couleur rouge.
 # Exemple:
-#   ko("Installation Batch")
-def ko(msg)
-  puts "#{msg}:\t\033[1;31mKo\033[0m\n"
+#   rputs("Installation Batch","Ko")
+def rputs(pre, msg)
+  puts "#{pre}:\t\033[1;31m#{msg}\033[0m\n"
 end
+
+# Affiche le message passé en paramètre avec l'output de couleur cyan.
+# Exemple:
+#   cputs("Installation Bdii","Ok")
+def cputs(pre, msg)
+  puts "#{pre}:\t\033[1;36m#{msg}\033[0m\n"
+end
+
+# Affiche le message passé en paramètre avec l'output de couleur jaune.
+# Exemple:
+#   jputs("Installation Batch","Ko")
+def jputs(pre, msg)
+  puts "#{pre}:\t\033[1;33m#{msg}\033[0m\n"
+end
+
 
 ## Go!
 if $cfg.confnodes.empty?
   if ENV['OAR_NODE_FILE'].nil?
-    puts "No nodes/$OAR_NODE_FILE ?"
+    jputs("No nodes","$OAR_NODE_FILE ?")
     exit(1)
   else
     $nodes = nodes_file(ENV['OAR_NODE_FILE'])
@@ -159,8 +174,7 @@ else
 end
 
 if $nodes.empty?
-  puts "No nodes ?"
-  puts "See help -h"
+  jputs("No nodes","See help -h")
   exit(1)
 end
 
@@ -183,7 +197,7 @@ end
 #
 if $nodes.length < 4 :
   if $nodes.length < 2 :
-    puts "Min 2 nodes"
+    rputs("Err","Min 2 nodes")
     exit(0)
   else
     bdii = cehost = batch = se = $nodes[0]
@@ -225,6 +239,7 @@ end
 end
 
 # Configuration de la brique Bdii, Site-Bdii, annuaire de la Vo.
+# sname correspond au nom de la vo, nous utiliserons le nom du site.
 #
 def conf_bdii(bdii, sname, cehost)
   f = File.new("#{DIR}/conf/site-info-bdii.def", "w")
@@ -251,7 +266,10 @@ EOF
   f.close
 end
 
+# Configuration de la brique batch, composé d'un server torque, et de maui.
 # <QUEUE_NAME>_GROUP_ENABLE=<list of vo>
+# Les users/groups sont configurés plus loin.
+#
 def conf_batch(batch, cehost, sname)
   f = File.new("#{DIR}/conf/site-info-batch.def", "w")
   f.puts <<-EOF
@@ -270,6 +288,9 @@ EOF
   f.close
 end
 
+# Configuration des workers sous scientificlinux 5.5
+# La partie de déclaration de vo est très important elle détermine la vo/certif des noeuds.
+#
 def conf_wn(bdii, se, sname, batch, cehost)
   f = File.new("#{DIR}/conf/site-info-wn.def", "w")
   f.puts <<-EOF
@@ -291,6 +312,9 @@ EOF
   f.close
 end
 
+# Computing element, surcouche au batch server
+# intègre une couche proxy, nous utilisons cream.
+#
 def conf_cehost(sname, cehost, batch, se)
   f = File.new("#{DIR}/conf/site-info-ce.def", "w")
   f.puts <<-EOF
@@ -356,7 +380,10 @@ EOF
   f.close
 end
 
+# Utilisateurs pour la vo de test
+# 3 admin et 9 utilisateurs, en fonction du nom de la vo.
 # <user_id>:<username>:<group_id>:<group_name>:<vo_name>:<special_user_type>:
+#
 def conf_users(group,sname)
   f = File.new("#{DIR}/conf/users.conf", "w")
   3.times { |a| f.write "#{a + 10410}:sgm#{sname}#{a +1}:1390,1395:#{group}sgm,#{group}:#{sname}:sgm:\n" }
@@ -364,10 +391,12 @@ def conf_users(group,sname)
   f.close
 end
 
+# Groupes de la vo.
 # "/<vo>"::::
 # "/<vo>/<group>"::::
 # "/<vo>/<group>/ROLE=<role>::::
 # "/<vo>/<group>/ROLE=<role>:::<special_user_type>:
+#
 def conf_groups(sname)
   f = File.new("#{DIR}/conf/groups.conf", "w")
   f.puts <<-EOF
@@ -378,6 +407,8 @@ EOF
   f.close
 end
 
+# Simple liste de workers, partagés entre le ce/batch et wn.
+#
 def list_wn(wn)
   f = File.new("#{DIR}/conf/wn-list.conf", "w")
     for i in wn
@@ -386,6 +417,8 @@ def list_wn(wn)
   f.close
 end
 
+# Export nfs entre le batch et le ce pour les logs et les infos de la queue
+#
 def export_nfs()
   f = File.new("#{DIR}/conf/exports", "w")
   f.puts <<-EOF
@@ -395,7 +428,9 @@ EOF
   f.close
 end
 
+# Configuration plus fine de la queue par défaut
 #{$nodes.each do |node| "set server acl_host += #{node}"end}
+#
 def queue_config(batch, cehost)
   f = File.new("#{DIR}/conf/queue.conf", "w")
   f.puts <<-EOF
