@@ -410,7 +410,12 @@ set server scheduler_iteration = 600
 set server node_check_rate = 150
 set server tcp_timeout = 12
 set server poll_jobs = False
-set server log_level = 3\nEOF
+set server log_level = 3
+set queue default Priority = 100
+set queue default max_queuable = 100
+set queue default max_running = 100
+set queue default resources_max.nodect = 1
+set queue default resources_default.nodes = nodes=1:ppn=1\nEOF
 EOF
   f.close
 end
