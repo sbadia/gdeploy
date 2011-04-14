@@ -431,13 +431,13 @@ end
 # Configuration plus fine de la queue par défaut
 #{$nodes.each do |node| "set server acl_host += #{node}"end}
 #
-def queue_config(batch, cehost)
+def queue_config(sname)
   f = File.new("#{DIR}/conf/queue.conf", "w")
   f.puts <<-EOF
 #!/bin/sh
 qmgr << EOF
 set server scheduling = True
-set server acl_hosts = #{batch},#{cehost}
+set server acl_hosts = *.#{sname}.grid5000.fr
 set server managers = root@`hostname -f`
 set server operators = root@`hostname -f`
 set server default_queue = default
@@ -450,6 +450,12 @@ set queue default Priority = 100
 set queue default max_queuable = 100
 set queue default max_running = 100
 set queue default resources_max.nodect = 1
+set server query_other_jobs = True
+set server resources_default.cput = 01:00:00
+set server resources_default.neednodes = 1
+set server resources_default.nodect = 1
+set server resources_default.nodes = 1
+set server default_node = 1#shared
 set queue default resources_default.nodes = nodes=1:ppn=1\nEOF
 EOF
   f.close
@@ -498,7 +504,7 @@ if $cfg.config == true :
        list_wn(wn)
        conf_cehost(sname, cehost, batch, se)
        export_nfs()
-       queue_config(batch, cehost)
+       queue_config(sname)
     end
   end
 else
