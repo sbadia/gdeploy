@@ -1,0 +1,200 @@
+\documentclass[slidetop,11pt]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[frenchb]{babel}
+% pour un pdf lisible à l'écran si on ne dispose pas
+% des fontes cmsuper ou lmodern
+%\usepackage{lmodern}
+\usepackage{aeguill}
+%\hypersetup{pdfpagemode=FullScreen}
+
+% ------------------------------------------------
+%-----------   styles pour beamer   --------------
+% ------------------------------------------------
+\definecolor{fondtitre}{HTML}{336E17}
+\definecolor{coultitre}{RGB}{105,13,13}
+\xdefinecolor{fondtexte}{rgb}{1,0.95,0.86}     % ivoire
+% -------------- Fioritures de style -------------
+\beamertemplatetransparentcovered
+% Mettre les icones de navigation en mode vertical (pour projection)
+%\setbeamertemplate{navigation symbols}[vertical]
+% ------------ Choix des thèmes ------------------
+\usecolortheme{crane}
+\setbeamercolor{bas}{fg=coultitre, bg=fondtitre!40}
+\setbeamercolor{haut}{fg=fondtitre!40, bg=coultitre}
+\beamerboxesdeclarecolorscheme{clair}{fondtitre!70}{coultitre!20}
+\beamerboxesdeclarecolorscheme{compar}{coultitre!70}{fondtitre!20}
+% insérer le nombre de pages
+\logo{\insertframenumber/\inserttotalframenumber}
+%------------ fin style beamer -------------------
+
+% ----------- Contenu de la page de titre --------
+\title{Grid in a Grid}
+\subtitle{Deployment of a gLite Grid inside Grid'5000}
+\author{Lucas Nussbaum - Sébastien Badia}
+\institute{Grid'5000 - INRIA Grand-Est}
+\date{g5ks \oldstylenums{Avril 2011}}
+% ------------------------------------------------
+\begin{document}
+\frame{\titlepage}
+%------------------ Sommaire ---------------
+% 1 Intro
+% 2 gLite Midelware
+% 3 Demo
+% 4 Next steps \LaTeX{}
+\begin{frame}{Table of contents}
+	\tableofcontents%[hideallsubsections]
+\end{frame}
+
+\section{Introduction}
+\subsection{gLite}
+\begin{frame}
+\frametitle{Introduction}
+\framesubtitle{gLite}
+	\begin{block}{gLite (from wikipédia)}
+gLite is the middleware stack for grid computing used by the CERN LHC experiments and a very large variety of scientific domains. gLite is a part of the EGEE Project, gLite provides a complete set of services for building a production grid infrastructure.
+	\end{block}
+	\begin{center}
+	  \includegraphics[width=4cm]{img/glite.png}
+	\end{center}
+\end{frame}
+
+\subsection{Scientific Linux}
+\begin{frame}
+\frametitle{Introduction}
+\framesubtitle{Scientific Linux}
+	\begin{block}{Operating System}
+		\begin{itemize}
+			\item Scientific Linux 5.5 (Boron), based on RHEL
+			\item Kadeploy3 use for deployment on Grid'5000
+		\end{itemize}
+	\end{block}
+	\begin{center}
+	  \includegraphics[width=8cm]{img/sl.jpg}
+	\end{center}
+\end{frame}
+
+\subsection{Grid'5000}
+\begin{frame}
+\frametitle{Introduction}
+\framesubtitle{Grid'5000}
+	\begin{center}
+	  \includegraphics[width=3cm]{img/g5k.png}
+	\end{center}
+	\begin{block}{Topologie}
+		\begin{itemize}
+			\item Multi-sites, Multi-Vo
+			\item One Virtual Organisation per site.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\subsection{gDeploy Script}
+\begin{frame}
+\frametitle{Introduction}
+\framesubtitle{gDeploy Script}
+	\begin{block}{Goal}
+		\begin{itemize}
+			\item Deploy a minimalist gLite site.
+			\item composed by :
+			\begin{itemize}
+				\item a BDII element.
+			  \item a Batch scheduler.
+			  \item a Computing element.
+			  \item Workers nodes.
+			\end{itemize}
+		\end{itemize}
+	\end{block}
+	\begin{block}{Script}
+	  \begin{itemize}
+			\item Written in ruby.
+			\item avaliable on \url{http://sbadia.github.com/gdeploy/}
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\section{gLite Middleware}
+\subsection{Information Service}
+\begin{frame}
+\frametitle{gLite Middleware}
+\framesubtitle{Information Service}
+  \begin{block}{gLite BDII}
+	\begin{itemize}
+		\item Information Service is a BDII (Berkley Database Information Index).
+		\item BDII provide information about the grid ressources and their status.
+	\end{itemize}
+		\begin{beamerboxesrounded}[scheme=clair]{}
+		  IS is a simple OpenLDAP server.
+		\end{beamerboxesrounded}
+	\end{block}
+\end{frame}
+
+\subsection{CE - Batch}
+\begin{frame}
+\frametitle{gLite Middleware}
+\framesubtitle{CE - Batch}
+  \begin{block}{Computing Element}
+	\begin{itemize}
+		\item Store information about workers nodes.
+		\item Interface with cluster (wn).
+	\end{itemize}
+		\begin{beamerboxesrounded}[scheme=clair]{}
+	    Cream computing element (torque client, mysql, tomcat).
+		\end{beamerboxesrounded}
+	\end{block}
+  \begin{block}{gLite Batch}
+	\begin{itemize}
+		\item Batch scheduler.
+		\item Queue manager.
+   \end{itemize}
+		\begin{beamerboxesrounded}[scheme=clair]{}
+		 Batch is a Torque server and a Maui scheduler.
+		\end{beamerboxesrounded}
+	\end{block}
+\end{frame}
+
+\subsection{Workers Nodes}
+\begin{frame}
+\frametitle{gLite Middleware}
+\framesubtitle{Workers Nodes}
+  \begin{block}{Workers}
+	\begin{itemize}
+		\item Cluster on Scientific Linux 5.5
+		\item belong to a Virtual Organisation.
+	\end{itemize}
+	\end{block}
+	\begin{center}
+	  \includegraphics[width=3cm]{img/wn.jpg}
+	\end{center}
+\end{frame}
+
+\section{Demonstration}
+\subsection{Deploy Scientific Linux}
+\begin{frame}
+\frametitle{Demonstration}
+\framesubtitle{gDeploy}
+	\begin{exampleblock}{Demo}
+	  \begin{itemize}
+	    \item Reserve and deploy Scientific Linux on nodes.
+	    \item Launch gdeploy script.
+	    \item Test your gLite site.
+	  \end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\section{Conclusion}
+\subsection{Next Steps}
+\begin{frame}
+\frametitle{Conclusion}
+\framesubtitle{Next steps}
+Future work for gLite on Grid'5000.
+	\begin{alertblock}{To do}
+		\begin{itemize}
+    	\item Generic sl image.
+			\item SE element and Lfc.
+			\item Inter Vo communications.
+			 \item Wms and Ui.
+		\end{itemize}
+  \end{alertblock}
+\end{frame}
+\end{document}
