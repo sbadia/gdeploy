@@ -557,7 +557,7 @@ if $cfg.sendconf == true :
     elsif $cfg.pbar == true :
       pbarb.inc
     end
-    ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1')
+    ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1 && echo -e "\ngLite Bdii - (Ldap Berkley database index)\n" >> /etc/motd')
   end
    if $cfg.pbar == true:
     pbarb.finish
@@ -593,7 +593,7 @@ if $cfg.sendconf == true :
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-TORQUE_server -d 1')
     ssh.exec!('cat /opt/glite/yaim/etc/conf/exports >> /etc/exports && /etc/init.d/nfs restart')
     ssh.exec!('/opt/glite/yaim/bin/yaim -r -s /root/yaim/site-info.def -f config_maui_cfg')
-    ssh.exec!('sh /opt/glite/yaim/etc/conf/queue.conf && /etc/init.d/maui restart')
+    ssh.exec!('sh /opt/glite/yaim/etc/conf/queue.conf && /etc/init.d/maui restart && echo -e "\ngLite Batch\n" >> /etc/motd')
   end
 
   if $cfg.pbar == true:
@@ -641,7 +641,7 @@ if $cfg.sendconf == true :
     wn.each do |node|
       session.use "root@#{node}"
     end
-    session.exec('mv /opt/glite/yaim/etc/conf/site-info-wn.def /root/yaim/site-info.def && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1')
+    session.exec('mv /opt/glite/yaim/etc/conf/site-info-wn.def /root/yaim/site-info.def && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 && echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
   end
   if $cfg.verbose == true:
    puts "*** intall wn ok."
@@ -676,7 +676,7 @@ if $cfg.sendconf == true :
     ssh.exec!("mount #{serv.fetch("batch")}:/var/spool/pbs/server_priv/accounting /var/spool/pbs/server_priv/accounting")
     ssh.exec!("mount #{serv.fetch("batch")}:/var/spool/pbs/server_logs /var/spool/pbs/server_logs")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-creamCE -n glite-TORQUE_utils -d 1')
-    ssh.exec!('/opt/glite/yaim/bin/yaim -f -s /root/yaim/site-info.def -f config_cream_blparser -d 1')
+    ssh.exec!('/opt/glite/yaim/bin/yaim -f -s /root/yaim/site-info.def -f config_cream_blparser -d 1 && echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
   end
 
   if $cfg.pbar == true:
