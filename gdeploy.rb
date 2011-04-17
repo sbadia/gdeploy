@@ -213,18 +213,18 @@ else
   wn = $nodes.first($nodes.length - 1)
   bdii = cehost = batch = se = $nodes.last
 end
-
+# vputs("Installation Bdii","Ok")
 def display_dep(bdii, batch, cehost, se, wn)
   if $cfg.verbose == true :
-    puts "Nodes :\t#{$nodes.length}"
-    puts "Bdii host :\t#{bdii}"
-    puts "Batch server :\t#{batch}"
-    puts "Ce host :\t#{cehost}"
-    puts "Se host :\t#{se}"
+    vputs("Nodes","\t#{$nodes.length}")
+    vputs("Bdii host","#{bdii}")
+    vputs("Batch server","#{batch}")
+    vputs("Ce host","#{cehost}")
+    vputs("Se host","#{se}")
     puts "Workers Nodes:"
     wn.each{|n| puts "\t\t#{n}\n" }
   else
-    puts "\tNo visual"
+    rputs("Assign.","No visual")
   end
 end
 display_dep(bdii, batch, cehost, se, wn)
@@ -490,7 +490,7 @@ if $cfg.config == true :
     list_wn(wn)
     pbar.finish
   elsif $cfg.verbose == true :
-    puts "\t\tgLite conf\t->\t[Ok]\n\n"
+    #puts "\t\tgLite conf\t->\t[Ok]\n\n"
     if $cfg.gnodes.include?("bdii") == true:
       conf_bdii(bdii, sname, cehost)
     elsif $cfg.gnodes.include?("batch") == true:
@@ -511,27 +511,26 @@ if $cfg.config == true :
     end
   end
 else
-  puts "\tNo config created\n"
+  rputs("Config.","Not created")
 end
 
 if $cfg.sendconf == true :
   if $cfg.pbar == true:
     pbarc = ProgressBar.new("Maj", 5)
   end
-
   #puts $nodes
   Net::SSH::Multi.start do |session|
-    session.on_error = :warn
+    #session.on_error = :warn
     $nodes.each do |node|
       session.use "root@#{node}" #if $nodes[node].nil?
       if $cfg.verbose == true:
-        puts "*** Update #{node}"
+        puts "*** Install dag repo and update on #{node}"
       elsif $cfg.pbar == true :
         pbarc.inc
       end
     end
     session.exec('mkdir -p /root/yaim && rm -f /etc/yum.repos.d/dag.repo* && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/dag.repo -q && yum update -q -y')
-    session.exec("uptime")
+    session.exec("echo 'ok'")
     session.loop
   end
 
@@ -544,7 +543,7 @@ if $cfg.sendconf == true :
 #
   Net::SSH.start(serv.fetch("bdii"), 'root') do |ssh|
     if $cfg.verbose == true:
-      puts "*** intall bdii"
+      puts "*** Intall bdii server on #{serv.fetch("bdii")}"
     elsif $cfg.pbar == true :
       pbarb.inc
     end
@@ -556,7 +555,7 @@ if $cfg.sendconf == true :
       #print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
     end
     if $cfg.verbose == true:
-      puts "*** configure"
+      puts "*** Configure bdii server on #{serv.fetch("bdii")}"
     elsif $cfg.pbar == true :
       pbarb.inc
     end
@@ -566,7 +565,7 @@ if $cfg.sendconf == true :
     pbarb.finish
     pbaro = ProgressBar.new("Batch", 9)
    elsif $cfg.verbose == true:
-     puts "*** intall batch"
+     puts "*** Intall batch server on #{serv.fetch("batch")}"
    end
 
 #### Batch
@@ -578,7 +577,7 @@ if $cfg.sendconf == true :
     ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_server.repo -q && yum install glite-TORQUE_server -q -y')
     ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz')
     if $cfg.verbose == true:
-      puts "*** configure"
+      puts "*** Configure batch server on #{serv.fetch("batch")}"
     elsif $cfg.pbar == true:
       pbaro.inc
     end
@@ -588,8 +587,7 @@ if $cfg.sendconf == true :
       scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
     end
   rescue
-    puts "Erreur scp conf batch"
-    puts serv.fetch("batch")
+    puts "Erreur scp confifuraton batch on #{serv.fetch("batch")}"
   end
   Net::SSH.start(serv.fetch("batch"), 'root') do |ssh|
     ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-batch.def /root/yaim/site-info.def')
@@ -608,17 +606,17 @@ if $cfg.sendconf == true :
 
   puts wn
   Net::SSH::Multi.start do |session|
-    session.on_error = :warn
+    #session.on_error = :warn
     wn.each do |node|
       session.use "root@#{node}" #if $nodes[node].nil?
       if $cfg.verbose == true:
-        puts "*** Install #{node}"
+        puts "*** Install worker node on #{node}"
       elsif $cfg.pbar == true :
         pbarc.inc
       end
     end
     session.exec("wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-WN.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_client.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q  && yum groupinstall glite-WN -q -y && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
-    session.exec("uptime")
+    session.exec("echo 'ok'")
     # Hack immonde pour la fct_crl (certif revocation leak)
     #session.exec("sed '1iexit 0' -i /usr/sbin/fetch-crl")
     session.loop
@@ -629,25 +627,26 @@ if $cfg.sendconf == true :
       pbaro.inc
     end
     if $cfg.verbose == true:
-      puts "*** configure"
+      puts "*** Configure worker node on #{wo}"
     end
     begin
       Net::SCP.start("#{wo}", 'root') do |scp|
         scp.upload!("#{DIR}/conf/", "/opt/glite/yaim/etc/", :recursive => true)
       end
     rescue
-      puts "Erreur scp conf wn : #{wo}"
+      puts "Erreur scp confifuration wn on #{wo}"
     end
   end
   Net::SSH::Multi.start do |session|
-    session.on_error = :warn
+    #session.on_error = :warn
     wn.each do |node|
       session.use "root@#{node}"
     end
     session.exec('mv /opt/glite/yaim/etc/conf/site-info-wn.def /root/yaim/site-info.def && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 && echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
   end
   if $cfg.verbose == true:
-   puts "*** intall wn ok."
+   puts "*** All worker nodes ok."
+   puts "*** Install Computing element on #{serv.fetch("cehost")}"
   end
 
 ### Computing element
@@ -659,7 +658,7 @@ if $cfg.sendconf == true :
     ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-CREAM.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_utils.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q')
     ssh.exec!("yum install glite-CREAM glite-TORQUE_utils lcg-CA -q -y --nogpgcheck && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
     if $cfg.verbose == true:
-      puts "*** configure"
+      puts "*** Configure Computing element on #{serv.fetch("cehost")}"
     elsif $cfg.pbar == true:
       pbaro.inc
     end
@@ -669,8 +668,7 @@ if $cfg.sendconf == true :
       scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
     end
   rescue
-    puts "Erreur scp conf Ce"
-    puts serv.fetch("cehost")
+    puts "Erreur scp configuration CE on #{serv.fetch("cehost")}"
   end
   Net::SSH.start(serv.fetch("cehost"), 'root') do |ssh|
     ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-ce.def /root/yaim/site-info.def && mkdir -p /etc/grid-security/')
@@ -693,7 +691,6 @@ if $cfg.sendconf == true :
 #
 
 display_dep(bdii, batch, cehost, se, wn)
-
 else
-  puts "\tNo send\n"
+  rputs("Send conf.","Not send")
 end
