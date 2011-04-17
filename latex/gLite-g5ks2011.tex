@@ -120,19 +120,37 @@ gLite is the middleware stack for grid computing used by the CERN LHC experiment
 \framesubtitle{Information Service}
   \begin{block}{gLite BDII}
 	\begin{itemize}
-		\item Information Service is a BDII (Berkley Database Information Index).
+		\item Information Service is a BDII (Berkley Database Information Index), OpenLDAP Server.
 		\item BDII provide information about the grid ressources and their status.
 	\end{itemize}
-		\begin{beamerboxesrounded}[scheme=clair]{}
-		  IS is a simple OpenLDAP server.
-		\end{beamerboxesrounded}
 	\end{block}
+	\begin{center}
+          \includegraphics[width=6cm]{img/bdii.png}
+        \end{center}
 \end{frame}
 
-\subsection{CE - Batch}
+\subsection{Batch}
 \begin{frame}
 \frametitle{gLite Middleware}
-\framesubtitle{CE - Batch}
+\framesubtitle{Batch}
+  \begin{block}{gLite Batch}
+	\begin{itemize}
+		\item Batch scheduler.
+		\item Queue manager.
+   	\end{itemize}
+		\begin{beamerboxesrounded}[scheme=clair]{}
+		 Batch is a Torque server and a Maui scheduler.
+		\end{beamerboxesrounded}
+	\end{block}
+	\begin{center}
+		\includegraphics[width=3.5cm]{img/batch.png}
+	\end{center}
+\end{frame}
+
+\subsection{Computing Element}
+\begin{frame}
+\frametitle{gLite Middleware}
+\framesubtitle{Computing Element}
   \begin{block}{Computing Element}
 	\begin{itemize}
 		\item Store information about workers nodes.
@@ -142,15 +160,9 @@ gLite is the middleware stack for grid computing used by the CERN LHC experiment
 	    Cream computing element (torque client, mysql, tomcat).
 		\end{beamerboxesrounded}
 	\end{block}
-  \begin{block}{gLite Batch}
-	\begin{itemize}
-		\item Batch scheduler.
-		\item Queue manager.
-   \end{itemize}
-		\begin{beamerboxesrounded}[scheme=clair]{}
-		 Batch is a Torque server and a Maui scheduler.
-		\end{beamerboxesrounded}
-	\end{block}
+        \begin{center}
+                \includegraphics[width=4.5cm]{img/ce.png}
+        \end{center}
 \end{frame}
 
 \subsection{Workers Nodes}
@@ -197,4 +209,18 @@ Future work for gLite on Grid'5000.
 		\end{itemize}
   \end{alertblock}
 \end{frame}
+
+\subsection{Sources}
+\begin{frame}
+\frametitle{Sources}
+  \begin{block}{Sources - Links}
+    \begin{itemize}
+      \item \url{http://glite.web.cern.ch/glite/}
+      \item \url{http://en.wikipedia.org/wiki/GLite}
+      \item \url{http://www.sysadmin.hep.ac.uk/}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\frame{\titlepage}
 \end{document}
