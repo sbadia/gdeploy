@@ -5,11 +5,11 @@ Legende:
 
 I]- FIXME/BUGS
   - VOMS_CA_DN/VOMSES dans la conf CE.
-  + hostkey.pem sans passphrase.
+  - hostkey.pem sans passphrase.
   - clées ssh/authorized_keys
   - Certificats dans /etc/grid-security/hostkey.pem.
   + Output joli.
-  + afficher les briques dans le motd.
+  - afficher les briques dans le motd.
   - hack fetch-crl sur ce.
   - verif maui (/etc/init.d/maui & pbs_server start)
   - config queue.
