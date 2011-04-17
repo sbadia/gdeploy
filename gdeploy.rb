@@ -214,17 +214,20 @@ else
   bdii = cehost = batch = se = $nodes.last
 end
 
-if $cfg.verbose == true :
-  puts "Nodes :\t#{$nodes.length}"
-  puts "Bdii host :\t#{bdii}"
-  puts "Batch server :\t#{batch}"
-  puts "Ce host :\t#{cehost}"
-  puts "Se host :\t#{se}"
-  puts "Workers Nodes:"
-  wn.each{|n| puts "\t\t#{n}\n" }
-else
-  puts "\tNo visual"
+def display_dep(bdii, batch, cehost, se, wn)
+  if $cfg.verbose == true :
+    puts "Nodes :\t#{$nodes.length}"
+    puts "Bdii host :\t#{bdii}"
+    puts "Batch server :\t#{batch}"
+    puts "Ce host :\t#{cehost}"
+    puts "Se host :\t#{se}"
+    puts "Workers Nodes:"
+    wn.each{|n| puts "\t\t#{n}\n" }
+  else
+    puts "\tNo visual"
+  end
 end
+display_dep(bdii, batch, cehost, se, wn)
 
 serv = { "bdii" => bdii, "batch" => batch, "cehost" => cehost, "se" => se }
 utils = [ 'users', 'groups', 'wn-list' ]
@@ -232,10 +235,10 @@ utils = [ 'users', 'groups', 'wn-list' ]
 # Création du répertoire de configuration
 #
 if $cfg.config == true :
-begin
- Dir::mkdir("#{DIR}/conf/", 0755)
-rescue
-end
+  begin
+   Dir::mkdir("#{DIR}/conf/", 0755)
+  rescue
+  end
 end
 
 # Configuration de la brique Bdii, Site-Bdii, annuaire de la Vo.
@@ -688,6 +691,8 @@ if $cfg.sendconf == true :
 
 ### Lfc se
 #
+
+display_dep(bdii, batch, cehost, se, wn)
 
 else
   puts "\tNo send\n"
