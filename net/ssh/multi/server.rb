@@ -134,7 +134,8 @@ module Net; module SSH; module Multi
     #
     #   assert_equal server, server.session[:server]
     def session(require_session=false)
-      return @session if @session || !require_session
+      #return @session if @session || !require_session
+      !require_session
       @session ||= master.next_session(self)
     end
 
