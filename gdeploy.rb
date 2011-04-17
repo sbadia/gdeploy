@@ -227,7 +227,7 @@ def display_dep(bdii, batch, cehost, se, wn)
     rputs("Assign.","No visual")
   end
 end
-display_dep(bdii, batch, cehost, se, wn)
+#display_dep(bdii, batch, cehost, se, wn)
 
 serv = { "bdii" => bdii, "batch" => batch, "cehost" => cehost, "se" => se }
 utils = [ 'users', 'groups', 'wn-list' ]
@@ -640,7 +640,7 @@ if $cfg.sendconf == true :
     wn.each do |node|
       session.use "root@#{node}"
     end
-    session.exec('mv /opt/glite/yaim/etc/conf/site-info-wn.def /root/yaim/site-info.def && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 && echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
+    session.exec('mv /opt/glite/yaim/etc/conf/site-info-wn.def /root/yaim/site-info.def && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 > /dev/null 2>&1 && echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
   end
   if $cfg.verbose == true:
    puts "*** All worker nodes ok."
