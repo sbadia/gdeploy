@@ -1,4 +1,4 @@
-\documentclass[slidetop,11pt]{beamer}
+\documentclass[slidetop,12pt]{beamer}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
 \usepackage[frenchb]{babel}
@@ -33,7 +33,7 @@
 \subtitle{Deployment of a gLite Grid inside Grid'5000}
 \author{Sébastien Badia -- Lucas Nussbaum }
 \institute{LORIA - INRIA Nancy -- Grand-Est}
-\date{Grid'5000 Spring School -- \oldstylenums{Avril 2011}}
+\date{Grid'5000 Spring School -- April 2011}
 % ------------------------------------------------
 
 % enlarge your beamer
@@ -53,9 +53,13 @@
 \subsection{gLite}
 \begin{frame}
 \frametitle{Introduction}
-\framesubtitle{gLite}
-	\begin{block}{gLite (from wikipédia)}
-gLite is the middleware stack for grid computing used by the CERN LHC experiments and a very large variety of scientific domains. gLite is a part of the EGEE Project, gLite provides a complete set of services for building a production grid infrastructure.
+	\begin{block}{gLite}
+		\begin{itemize}
+			\item Middleware stack for Grid Computing
+			\item Developed and used by the EGI production grid\\
+				{\small e.g for CERN LHC experiments}
+			\item Provides a complete set of services for building a production grid
+		\end{itemize}
 	\end{block}
 	\begin{center}
 	  \includegraphics[width=4cm]{img/glite.png}
@@ -65,11 +69,11 @@ gLite is the middleware stack for grid computing used by the CERN LHC experiment
 \subsection{Scientific Linux}
 \begin{frame}
 \frametitle{Introduction}
-\framesubtitle{Scientific Linux}
-	\begin{block}{Operating System}
+	\begin{block}{Scientific Linux}
 		\begin{itemize}
-			\item Scientific Linux 5.5 (Boron), based on RHEL
-			\item Kadeploy3 use for deployment on Grid'5000
+			\item Based on RedHat Enterprise Linux (RHEL)
+			\item Version used in that experiment: Scientific Linux 5.5 (Boron)
+			\item Kadeploy3 used for deployment on Grid'5000
 		\end{itemize}
 	\end{block}
 	\begin{center}
@@ -77,41 +81,25 @@ gLite is the middleware stack for grid computing used by the CERN LHC experiment
 	\end{center}
 \end{frame}
 
-\subsection{Grid'5000}
-\begin{frame}
-\frametitle{Introduction}
-\framesubtitle{Grid'5000}
-	\begin{center}
-	  \includegraphics[width=3cm]{img/g5k.png}
-	\end{center}
-	\begin{block}{Topologie}
-		\begin{itemize}
-			\item Multi-sites, Multi-Vo
-			\item One Virtual Organisation per site.
-		\end{itemize}
-	\end{block}
-\end{frame}
-
 \subsection{gDeploy Script}
 \begin{frame}
-\frametitle{Introduction}
-\framesubtitle{gDeploy Script}
+\frametitle{Introduction: gDeploy Script}
 	\begin{block}{Goal}
 		\begin{itemize}
-			\item Deploy a minimalist gLite site.
-			\item composed by :
+			\item Deploy a gLite site
+			\item composed of :
 			\begin{itemize}
-				\item a BDII element.
-			  \item a Batch scheduler.
-			  \item a Computing element.
-			  \item Workers nodes.
+				\item a BDII element
+			  \item a Batch scheduler
+			  \item a Computing element
+			  \item Workers nodes
 			\end{itemize}
 		\end{itemize}
 	\end{block}
 	\begin{block}{Script}
 	  \begin{itemize}
-			\item Written in ruby.
-			\item avaliable on \url{http://sbadia.github.com/gdeploy/}
+			\item Written in ruby
+			\item available on \url{http://sbadia.github.com/gdeploy/}
 		\end{itemize}
 	\end{block}
 \end{frame}
@@ -120,11 +108,10 @@ gLite is the middleware stack for grid computing used by the CERN LHC experiment
 \subsection{Information Service}
 \begin{frame}
 \frametitle{gLite Middleware}
-\framesubtitle{Information Service}
-  \begin{block}{gLite BDII}
+  \begin{block}{Information Service -- gLite BDII}
 	\begin{itemize}
-		\item Information Service is a BDII (Berkley Database Information Index), OpenLDAP Server.
-		\item BDII provide information about the grid ressources and their status.
+		\item Information Service is a BDII (Berkley Database Information Index), OpenLDAP Server
+		\item BDII provide information about the grid ressources and their status
 	\end{itemize}
 	\end{block}
 	\begin{center}
@@ -135,14 +122,13 @@ gLite is the middleware stack for grid computing used by the CERN LHC experiment
 \subsection{Batch}
 \begin{frame}
 \frametitle{gLite Middleware}
-\framesubtitle{Batch}
   \begin{block}{gLite Batch}
 	\begin{itemize}
-		\item Batch scheduler.
-		\item Queue manager.
+		\item Batch scheduler
+		\item Queue manager
    	\end{itemize}
 		\begin{beamerboxesrounded}[scheme=clair]{}
-		 Batch is a Torque server and a Maui scheduler.
+		 = Torque server + Maui scheduler
 		\end{beamerboxesrounded}
 	\end{block}
 	\begin{center}
@@ -153,14 +139,13 @@ gLite is the middleware stack for grid computing used by the CERN LHC experiment
 \subsection{Computing Element}
 \begin{frame}
 \frametitle{gLite Middleware}
-\framesubtitle{Computing Element}
   \begin{block}{Computing Element}
 	\begin{itemize}
-		\item Store information about workers nodes.
-		\item Interface with cluster (wn).
+		\item Store information about workers nodes
+		\item Interface with cluster (WN)
 	\end{itemize}
 		\begin{beamerboxesrounded}[scheme=clair]{}
-	    Cream computing element (torque client, mysql, tomcat).
+	    Cream computing element (torque client, mysql, tomcat)
 		\end{beamerboxesrounded}
 	\end{block}
         \begin{center}
@@ -171,11 +156,10 @@ gLite is the middleware stack for grid computing used by the CERN LHC experiment
 \subsection{Workers Nodes}
 \begin{frame}
 \frametitle{gLite Middleware}
-\framesubtitle{Workers Nodes}
-  \begin{block}{Workers}
+  \begin{block}{Worker nodes}
 	\begin{itemize}
 		\item Cluster on Scientific Linux 5.5
-		\item belong to a Virtual Organisation.
+		\item Belong to a Virtual Organisation
 	\end{itemize}
 	\end{block}
 	\begin{center}
@@ -183,16 +167,15 @@ gLite is the middleware stack for grid computing used by the CERN LHC experiment
 	\end{center}
 \end{frame}
 
-\section{Demonstration}
+\section{Demo}
 \subsection{Deploy Scientific Linux}
 \begin{frame}
-\frametitle{Demonstration}
-\framesubtitle{gDeploy}
+\frametitle{Demo}
 	\begin{exampleblock}{Demo}
 	  \begin{itemize}
-	    \item Reserve and deploy Scientific Linux on nodes.
-	    \item Launch gdeploy script.
-	    \item Test your gLite site.
+	    \item Reserve nodes and deploy Scientific Linux (using Grid'5000 API)
+	    \item Launch gdeploy script
+	    \item Test your gLite site
 	  \end{itemize}
 	\end{exampleblock}
 \end{frame}
@@ -202,13 +185,13 @@ gLite is the middleware stack for grid computing used by the CERN LHC experiment
 \begin{frame}
 \frametitle{Conclusion}
 \framesubtitle{Next steps}
-Future work for gLite on Grid'5000.
-	\begin{alertblock}{To do}
+Future work for gLite on Grid'5000
+	\begin{alertblock}{TODO}
 		\begin{itemize}
-    	\item Generic sl image.
-			\item SE element and Lfc.
-			\item Inter Vo communications.
-			 \item Wms and Ui.
+    	\item Generic SL image that works on all clusters
+			\item Storage: SE, LFC
+			 \item WMS and UI
+			\item Multi-VO, inter-VO communications
 		\end{itemize}
   \end{alertblock}
 \end{frame}
