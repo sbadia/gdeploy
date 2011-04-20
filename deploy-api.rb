@@ -12,7 +12,7 @@ logger.level = Logger::WARN
 Restfully::Session.new(:logger => logger, :base_uri => 'https://localhost:3443/sid/grid5000') do |root, session|
   begin
     job_to_submit = {
-      :resources => "nodes=10,walltime=01:00:00",
+      :resources => "nodes=144,walltime=01:30:00",
       :command => "sleep 3600",
       :properties => "cluster='graphene'",
       :types => ["deploy"],

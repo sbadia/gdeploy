@@ -57,12 +57,33 @@
 		\begin{itemize}
 			\item Middleware stack for Grid Computing
 			\item Developed and used by the EGI production grid\\
-				{\small e.g for CERN LHC experiments}
-			\item Provides a complete set of services for building a production grid
+				{\small e.g for CERN LHC experiments\\
+				330 sites, 200000 CPUs}
+			\item Provides a complete \& complex set of services  for production grids
 		\end{itemize}
 	\end{block}
 	\begin{center}
-	  \includegraphics[width=4cm]{img/glite.png}
+	\includegraphics[height=1.8cm]{img/glite.png}~~~ 
+	\includegraphics[height=2.4cm]{GRIDmap.jpg}~~~ 
+	\includegraphics[height=2.4cm]{lhc.jpg}~~~ 
+	\end{center}
+\end{frame}
+\begin{frame}{Introduction}
+	\begin{block}{Improving and testing gLite}
+		\begin{itemize}
+
+			\item Difficult to improve:
+				\begin{itemize}
+					\item No large scale test infrastructure
+					\item Cannot test on real infrastructure\\{\small risk of breaking it, low reproductibility, waste of resources}
+				\end{itemize}
+		\end{itemize}
+		Goal of this challenge: deploy the gLite middleware on Grid'5000
+		\begin{itemize}
+		\item First step towards experiments on the middleware itself
+		\end{itemize}
+	\end{block}
+	\begin{center}
 	\end{center}
 \end{frame}
 
@@ -98,7 +119,7 @@
 	\end{block}
 	\begin{block}{Script}
 	  \begin{itemize}
-			\item Written in ruby
+		  \item Written in ruby, leverages the G5K API and \textsl{net-ssh-multi}
 			\item available on \url{http://sbadia.github.com/gdeploy/}
 		\end{itemize}
 	\end{block}
