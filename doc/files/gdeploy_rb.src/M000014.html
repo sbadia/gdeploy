@@ -5,15 +5,15 @@
 
 <html>
 <head>
-  <title>queue_config (gdeploy.rb)</title>
+  <title>conf_wn (gdeploy.rb)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File gdeploy.rb, line 405</span>
-<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">queue_config</span>(<span class="ruby-identifier">batch</span>, <span class="ruby-identifier">cehost</span>)
-  <span class="ruby-identifier">f</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#{DIR}/conf/queue.conf&quot;</span>, <span class="ruby-value str">&quot;w&quot;</span>)
-  <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;#!/bin/sh\nqmgr &lt;&lt; EOF\nset server scheduling = True\nset server acl_hosts = \#{batch},\#{cehost}\nset server managers = root@`hostname -f`\nset server operators = root@`hostname -f`\nset server default_queue = default\nset server scheduler_iteration = 600\nset server node_check_rate = 150\nset server tcp_timeout = 12\nset server poll_jobs = False\nset server log_level = 3\\nEOF\n&quot;</span>
+  <pre><span class="ruby-comment cmt"># File gdeploy.rb, line 296</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">conf_wn</span>(<span class="ruby-identifier">bdii</span>, <span class="ruby-identifier">se</span>, <span class="ruby-identifier">sname</span>, <span class="ruby-identifier">batch</span>, <span class="ruby-identifier">cehost</span>)
+  <span class="ruby-identifier">f</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#{DIR}/conf/site-info-wn.def&quot;</span>, <span class="ruby-value str">&quot;w&quot;</span>)
+  <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;## Site-info.def Batch\nBDII_HOST=\&quot;\#{bdii}\&quot;\nSE_LIST=\&quot;\#{se}\&quot;\nSITE_NAME=\#{sname}\nUSERS_CONF=/opt/glite/yaim/etc/conf/users.conf\nGROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf\nWN_LIST=/opt/glite/yaim/etc/conf/wn-list.conf\nVOS=\#{sname}\nBATCH_SERVER=\#{batch}\nCE_HOST=\#{cehost}\nCE_SMPSIZE=`grep -c processor /proc/cpuinfo`\nVO_\#{sname.upcase}_SW_DIR=/opt/vo_software/\#{sname}\nVO_\#{sname.upcase}_VOMS_CA_DN=\&quot;/C=FR/O=Grid5000/CN=G5k-CA\&quot;\nVO_\#{sname.upcase}_VOMSES=\&quot;\#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=\#{sname} SCAI/CN=host/glite-io.grid5000.fr \#{sname}\&quot;\n&quot;</span>
   <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span>
 <span class="ruby-keyword kw">end</span></pre>
 </body>

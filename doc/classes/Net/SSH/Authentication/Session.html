@@ -87,7 +87,7 @@ user over an established connection (the &quot;transport&quot; object, see
 <p>
 The use of an authentication session to manage user authentication is
 internal to <a href="../../SSH.html">Net::SSH</a> (specifically <a
-href="../../SSH.html#M000045">Net::SSH.start</a>). Consumers of the <a
+href="../../SSH.html#M000051">Net::SSH.start</a>). Consumers of the <a
 href="../../SSH.html">Net::SSH</a> library will never need to access this
 class directly.
 </p>
@@ -101,10 +101,10 @@ class directly.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000152">authenticate</a>&nbsp;&nbsp;
-      <a href="#M000154">expect_message</a>&nbsp;&nbsp;
-      <a href="#M000151">new</a>&nbsp;&nbsp;
-      <a href="#M000153">next_message</a>&nbsp;&nbsp;
+      <a href="#M000158">authenticate</a>&nbsp;&nbsp;
+      <a href="#M000160">expect_message</a>&nbsp;&nbsp;
+      <a href="#M000157">new</a>&nbsp;&nbsp;
+      <a href="#M000159">next_message</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -175,19 +175,19 @@ transport layer abstraction
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000151" class="method-detail">
-        <a name="M000151"></a>
+      <div id="method-M000157" class="method-detail">
+        <a name="M000157"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000151.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000151.html');return false;">
+          <a href="Session.src/M000157.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000157.html');return false;">
           <span class="method-name">new</span><span class="method-args">(transport, options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Instantiates a <a href="Session.html#M000151">new</a> <a
+Instantiates a <a href="Session.html#M000157">new</a> <a
 href="Session.html">Authentication::Session</a> object over the given
 transport layer abstraction.
 </p>
@@ -196,19 +196,19 @@ transport layer abstraction.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000152" class="method-detail">
-        <a name="M000152"></a>
+      <div id="method-M000158" class="method-detail">
+        <a name="M000158"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000152.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000152.html');return false;">
+          <a href="Session.src/M000158.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000158.html');return false;">
           <span class="method-name">authenticate</span><span class="method-args">(next_service, username, password=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Attempts to <a href="Session.html#M000152">authenticate</a> the given user,
+Attempts to <a href="Session.html#M000158">authenticate</a> the given user,
 in preparation for the next service request. Returns true if an
 authentication method succeeds in authenticating the user, and false
 otherwise.
@@ -216,12 +216,12 @@ otherwise.
         </div>
       </div>
 
-      <div id="method-M000154" class="method-detail">
-        <a name="M000154"></a>
+      <div id="method-M000160" class="method-detail">
+        <a name="M000160"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000154.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000154.html');return false;">
+          <a href="Session.src/M000160.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000160.html');return false;">
           <span class="method-name">expect_message</span><span class="method-args">(type)</span>
           </a>
         </div>
@@ -234,12 +234,12 @@ type. If it is not, an exception is raised.
         </div>
       </div>
 
-      <div id="method-M000153" class="method-detail">
-        <a name="M000153"></a>
+      <div id="method-M000159" class="method-detail">
+        <a name="M000159"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000153.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000153.html');return false;">
+          <a href="Session.src/M000159.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000159.html');return false;">
           <span class="method-name">next_message</span><span class="method-args">()</span>
           </a>
         </div>

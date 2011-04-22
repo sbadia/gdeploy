@@ -92,8 +92,8 @@ host, and from thence logging into the restricted ones.
 This class makes it easy to programmatically connect to these restricted
 hosts via <a href="../SSH.html">SSH</a>. You can either simply forward a
 port from the local host to the remote host, or you can <a
-href="Gateway.html#M000409">open</a> a <a
-href="Gateway.html#M000406">new</a> <a href="../SSH.html">Net::SSH</a>
+href="Gateway.html#M000413">open</a> a <a
+href="Gateway.html#M000410">new</a> <a href="../SSH.html">Net::SSH</a>
 connection to the remote host via a forwarded port.
 </p>
 <pre>
@@ -113,7 +113,7 @@ connection to the remote host via a forwarded port.
 </pre>
 <p>
 Port numbers are allocated automatically, beginning at MAX_PORT and
-decrementing on each request for a <a href="Gateway.html#M000406">new</a>
+decrementing on each request for a <a href="Gateway.html#M000410">new</a>
 port until MIN_PORT is reached. If a port is already in use, this is
 detected and a different port will be assigned.
 </p>
@@ -127,12 +127,12 @@ detected and a different port will be assigned.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000407">active?</a>&nbsp;&nbsp;
-      <a href="#M000410">close</a>&nbsp;&nbsp;
-      <a href="#M000406">new</a>&nbsp;&nbsp;
-      <a href="#M000409">open</a>&nbsp;&nbsp;
-      <a href="#M000408">shutdown!</a>&nbsp;&nbsp;
-      <a href="#M000411">ssh</a>&nbsp;&nbsp;
+      <a href="#M000411">active?</a>&nbsp;&nbsp;
+      <a href="#M000414">close</a>&nbsp;&nbsp;
+      <a href="#M000410">new</a>&nbsp;&nbsp;
+      <a href="#M000413">open</a>&nbsp;&nbsp;
+      <a href="#M000412">shutdown!</a>&nbsp;&nbsp;
+      <a href="#M000415">ssh</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -190,22 +190,22 @@ connections from.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000406" class="method-detail">
-        <a name="M000406"></a>
+      <div id="method-M000410" class="method-detail">
+        <a name="M000410"></a>
 
         <div class="method-heading">
-          <a href="Gateway.src/M000406.html" target="Code" class="method-signature"
-            onclick="popupCode('Gateway.src/M000406.html');return false;">
+          <a href="Gateway.src/M000410.html" target="Code" class="method-signature"
+            onclick="popupCode('Gateway.src/M000410.html');return false;">
           <span class="method-name">new</span><span class="method-args">(host, user, options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Instantiate a <a href="Gateway.html#M000406">new</a> <a
+Instantiate a <a href="Gateway.html#M000410">new</a> <a
 href="Gateway.html">Gateway</a> object, using the given remote host as the
 tunnel. The arguments here are identical to those for <a
-href="../SSH.html#M000045">Net::SSH.start</a>, and are passed as given to
+href="../SSH.html#M000051">Net::SSH.start</a>, and are passed as given to
 that method to start up the gateway connection.
 </p>
 <pre>
@@ -216,12 +216,12 @@ that method to start up the gateway connection.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000407" class="method-detail">
-        <a name="M000407"></a>
+      <div id="method-M000411" class="method-detail">
+        <a name="M000411"></a>
 
         <div class="method-heading">
-          <a href="Gateway.src/M000407.html" target="Code" class="method-signature"
-            onclick="popupCode('Gateway.src/M000407.html');return false;">
+          <a href="Gateway.src/M000411.html" target="Code" class="method-signature"
+            onclick="popupCode('Gateway.src/M000411.html');return false;">
           <span class="method-name">active?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -229,50 +229,50 @@ that method to start up the gateway connection.
         <div class="method-description">
           <p>
 Returns <tt>true</tt> if the gateway is currently <a
-href="Gateway.html#M000409">open</a> and accepting connections. This will
+href="Gateway.html#M000413">open</a> and accepting connections. This will
 be the case unless shutdown! has been invoked.
 </p>
         </div>
       </div>
 
-      <div id="method-M000410" class="method-detail">
-        <a name="M000410"></a>
+      <div id="method-M000414" class="method-detail">
+        <a name="M000414"></a>
 
         <div class="method-heading">
-          <a href="Gateway.src/M000410.html" target="Code" class="method-signature"
-            onclick="popupCode('Gateway.src/M000410.html');return false;">
+          <a href="Gateway.src/M000414.html" target="Code" class="method-signature"
+            onclick="popupCode('Gateway.src/M000414.html');return false;">
           <span class="method-name">close</span><span class="method-args">(port)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Cancels port-forwarding over an <a href="Gateway.html#M000409">open</a>
+Cancels port-forwarding over an <a href="Gateway.html#M000413">open</a>
 port that was previously opened via <a
-href="Gateway.html#M000409">open</a>.
+href="Gateway.html#M000413">open</a>.
 </p>
         </div>
       </div>
 
-      <div id="method-M000409" class="method-detail">
-        <a name="M000409"></a>
+      <div id="method-M000413" class="method-detail">
+        <a name="M000413"></a>
 
         <div class="method-heading">
-          <a href="Gateway.src/M000409.html" target="Code" class="method-signature"
-            onclick="popupCode('Gateway.src/M000409.html');return false;">
+          <a href="Gateway.src/M000413.html" target="Code" class="method-signature"
+            onclick="popupCode('Gateway.src/M000413.html');return false;">
           <span class="method-name">open</span><span class="method-args">(host, port, local_port=nil) {|actual_local_port| ...}</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Opens a <a href="Gateway.html#M000406">new</a> port on the local host and
+Opens a <a href="Gateway.html#M000410">new</a> port on the local host and
 forwards it to the given host/port via the gateway host. If a block is
 given, the newly allocated port number will be yielded to the block, and
 the port automatically closed (see <a
-href="Gateway.html#M000410">close</a>) when the block finishes. Otherwise,
+href="Gateway.html#M000414">close</a>) when the block finishes. Otherwise,
 the port number will be returned, and the caller is responsible for closing
-the port (<a href="Gateway.html#M000410">close</a>).
+the port (<a href="Gateway.html#M000414">close</a>).
 </p>
 <pre>
   gateway.open('host', 80) do |port|
@@ -290,12 +290,12 @@ used.
         </div>
       </div>
 
-      <div id="method-M000408" class="method-detail">
-        <a name="M000408"></a>
+      <div id="method-M000412" class="method-detail">
+        <a name="M000412"></a>
 
         <div class="method-heading">
-          <a href="Gateway.src/M000408.html" target="Code" class="method-signature"
-            onclick="popupCode('Gateway.src/M000408.html');return false;">
+          <a href="Gateway.src/M000412.html" target="Code" class="method-signature"
+            onclick="popupCode('Gateway.src/M000412.html');return false;">
           <span class="method-name">shutdown!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -308,25 +308,25 @@ gateway&#8216;s <a href="../SSH.html">SSH</a> session.
         </div>
       </div>
 
-      <div id="method-M000411" class="method-detail">
-        <a name="M000411"></a>
+      <div id="method-M000415" class="method-detail">
+        <a name="M000415"></a>
 
         <div class="method-heading">
-          <a href="Gateway.src/M000411.html" target="Code" class="method-signature"
-            onclick="popupCode('Gateway.src/M000411.html');return false;">
+          <a href="Gateway.src/M000415.html" target="Code" class="method-signature"
+            onclick="popupCode('Gateway.src/M000415.html');return false;">
           <span class="method-name">ssh</span><span class="method-args">(host, user, options={}, &amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Forwards a <a href="Gateway.html#M000406">new</a> connection to the given
-<tt>host</tt> and opens a <a href="Gateway.html#M000406">new</a> <a
+Forwards a <a href="Gateway.html#M000410">new</a> connection to the given
+<tt>host</tt> and opens a <a href="Gateway.html#M000410">new</a> <a
 href="../SSH.html">Net::SSH</a> connection to that host over the forwarded
-port. If a block is given, the <a href="Gateway.html#M000406">new</a> <a
+port. If a block is given, the <a href="Gateway.html#M000410">new</a> <a
 href="../SSH.html">SSH</a> connection will be yielded to the block, and
 autoclosed when the block terminates. The forwarded port will be autoclosed
-as well. If no block was given, the <a href="Gateway.html#M000406">new</a>
+as well. If no block was given, the <a href="Gateway.html#M000410">new</a>
 <a href="../SSH.html">SSH</a> connection will be returned, and it is up to
 the caller to terminate both the connection and the forwarded port when
 done.

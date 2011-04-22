@@ -90,17 +90,17 @@ polling packets, to allow for both blocking and non-blocking reads.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000062">available_for_read?</a>&nbsp;&nbsp;
-      <a href="#M000066">cleanup</a>&nbsp;&nbsp;
-      <a href="#M000060">client_name</a>&nbsp;&nbsp;
-      <a href="#M000065">enqueue_packet</a>&nbsp;&nbsp;
-      <a href="#M000059">extended</a>&nbsp;&nbsp;
-      <a href="#M000067">if_needs_rekey?</a>&nbsp;&nbsp;
-      <a href="#M000068">initialize_ssh</a>&nbsp;&nbsp;
-      <a href="#M000063">next_packet</a>&nbsp;&nbsp;
-      <a href="#M000061">peer_ip</a>&nbsp;&nbsp;
-      <a href="#M000069">poll_next_packet</a>&nbsp;&nbsp;
-      <a href="#M000064">send_packet</a>&nbsp;&nbsp;
+      <a href="#M000070">available_for_read?</a>&nbsp;&nbsp;
+      <a href="#M000074">cleanup</a>&nbsp;&nbsp;
+      <a href="#M000068">client_name</a>&nbsp;&nbsp;
+      <a href="#M000073">enqueue_packet</a>&nbsp;&nbsp;
+      <a href="#M000067">extended</a>&nbsp;&nbsp;
+      <a href="#M000075">if_needs_rekey?</a>&nbsp;&nbsp;
+      <a href="#M000076">initialize_ssh</a>&nbsp;&nbsp;
+      <a href="#M000071">next_packet</a>&nbsp;&nbsp;
+      <a href="#M000069">peer_ip</a>&nbsp;&nbsp;
+      <a href="#M000077">poll_next_packet</a>&nbsp;&nbsp;
+      <a href="#M000072">send_packet</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -167,12 +167,12 @@ interpret packets coming from the server.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000059" class="method-detail">
-        <a name="M000059"></a>
+      <div id="method-M000067" class="method-detail">
+        <a name="M000067"></a>
 
         <div class="method-heading">
-          <a href="PacketStream.src/M000059.html" target="Code" class="method-signature"
-            onclick="popupCode('PacketStream.src/M000059.html');return false;">
+          <a href="PacketStream.src/M000067.html" target="Code" class="method-signature"
+            onclick="popupCode('PacketStream.src/M000067.html');return false;">
           <span class="method-name">extended</span><span class="method-args">(object)</span>
           </a>
         </div>
@@ -183,12 +183,12 @@ interpret packets coming from the server.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000062" class="method-detail">
-        <a name="M000062"></a>
+      <div id="method-M000070" class="method-detail">
+        <a name="M000070"></a>
 
         <div class="method-heading">
-          <a href="PacketStream.src/M000062.html" target="Code" class="method-signature"
-            onclick="popupCode('PacketStream.src/M000062.html');return false;">
+          <a href="PacketStream.src/M000070.html" target="Code" class="method-signature"
+            onclick="popupCode('PacketStream.src/M000070.html');return false;">
           <span class="method-name">available_for_read?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -200,31 +200,31 @@ Returns true if the IO is available for reading, and false otherwise.
         </div>
       </div>
 
-      <div id="method-M000066" class="method-detail">
-        <a name="M000066"></a>
+      <div id="method-M000074" class="method-detail">
+        <a name="M000074"></a>
 
         <div class="method-heading">
-          <a href="PacketStream.src/M000066.html" target="Code" class="method-signature"
-            onclick="popupCode('PacketStream.src/M000066.html');return false;">
+          <a href="PacketStream.src/M000074.html" target="Code" class="method-signature"
+            onclick="popupCode('PacketStream.src/M000074.html');return false;">
           <span class="method-name">cleanup</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Performs any pending <a href="PacketStream.html#M000066">cleanup</a>
+Performs any pending <a href="PacketStream.html#M000074">cleanup</a>
 necessary on the IO and its associated state objects. (See <a
-href="State.html#M000113">State#cleanup</a>).
+href="State.html#M000121">State#cleanup</a>).
 </p>
         </div>
       </div>
 
-      <div id="method-M000060" class="method-detail">
-        <a name="M000060"></a>
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
 
         <div class="method-heading">
-          <a href="PacketStream.src/M000060.html" target="Code" class="method-signature"
-            onclick="popupCode('PacketStream.src/M000060.html');return false;">
+          <a href="PacketStream.src/M000068.html" target="Code" class="method-signature"
+            onclick="popupCode('PacketStream.src/M000068.html');return false;">
           <span class="method-name">client_name</span><span class="method-args">()</span>
           </a>
         </div>
@@ -237,12 +237,12 @@ socket.
         </div>
       </div>
 
-      <div id="method-M000065" class="method-detail">
-        <a name="M000065"></a>
+      <div id="method-M000073" class="method-detail">
+        <a name="M000073"></a>
 
         <div class="method-heading">
-          <a href="PacketStream.src/M000065.html" target="Code" class="method-signature"
-            onclick="popupCode('PacketStream.src/M000065.html');return false;">
+          <a href="PacketStream.src/M000073.html" target="Code" class="method-signature"
+            onclick="popupCode('PacketStream.src/M000073.html');return false;">
           <span class="method-name">enqueue_packet</span><span class="method-args">(payload)</span>
           </a>
         </div>
@@ -256,12 +256,12 @@ client state (compression, cipher, and hmac).
         </div>
       </div>
 
-      <div id="method-M000067" class="method-detail">
-        <a name="M000067"></a>
+      <div id="method-M000075" class="method-detail">
+        <a name="M000075"></a>
 
         <div class="method-heading">
-          <a href="PacketStream.src/M000067.html" target="Code" class="method-signature"
-            onclick="popupCode('PacketStream.src/M000067.html');return false;">
+          <a href="PacketStream.src/M000075.html" target="Code" class="method-signature"
+            onclick="popupCode('PacketStream.src/M000075.html');return false;">
           <span class="method-name">if_needs_rekey?</span><span class="method-args">() {|| ...}</span>
           </a>
         </div>
@@ -275,12 +275,12 @@ Otherwise, this does nothing.
         </div>
       </div>
 
-      <div id="method-M000063" class="method-detail">
-        <a name="M000063"></a>
+      <div id="method-M000071" class="method-detail">
+        <a name="M000071"></a>
 
         <div class="method-heading">
-          <a href="PacketStream.src/M000063.html" target="Code" class="method-signature"
-            onclick="popupCode('PacketStream.src/M000063.html');return false;">
+          <a href="PacketStream.src/M000071.html" target="Code" class="method-signature"
+            onclick="popupCode('PacketStream.src/M000071.html');return false;">
           <span class="method-name">next_packet</span><span class="method-args">(mode=:nonblock)</span>
           </a>
         </div>
@@ -296,12 +296,12 @@ available.
         </div>
       </div>
 
-      <div id="method-M000061" class="method-detail">
-        <a name="M000061"></a>
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
 
         <div class="method-heading">
-          <a href="PacketStream.src/M000061.html" target="Code" class="method-signature"
-            onclick="popupCode('PacketStream.src/M000061.html');return false;">
+          <a href="PacketStream.src/M000069.html" target="Code" class="method-signature"
+            onclick="popupCode('PacketStream.src/M000069.html');return false;">
           <span class="method-name">peer_ip</span><span class="method-args">()</span>
           </a>
         </div>
@@ -314,12 +314,12 @@ socket.
         </div>
       </div>
 
-      <div id="method-M000064" class="method-detail">
-        <a name="M000064"></a>
+      <div id="method-M000072" class="method-detail">
+        <a name="M000072"></a>
 
         <div class="method-heading">
-          <a href="PacketStream.src/M000064.html" target="Code" class="method-signature"
-            onclick="popupCode('PacketStream.src/M000064.html');return false;">
+          <a href="PacketStream.src/M000072.html" target="Code" class="method-signature"
+            onclick="popupCode('PacketStream.src/M000072.html');return false;">
           <span class="method-name">send_packet</span><span class="method-args">(payload)</span>
           </a>
         </div>
@@ -333,12 +333,12 @@ Enqueues a packet to be sent, and blocks until the entire packet is sent.
 
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000068" class="method-detail">
-        <a name="M000068"></a>
+      <div id="method-M000076" class="method-detail">
+        <a name="M000076"></a>
 
         <div class="method-heading">
-          <a href="PacketStream.src/M000068.html" target="Code" class="method-signature"
-            onclick="popupCode('PacketStream.src/M000068.html');return false;">
+          <a href="PacketStream.src/M000076.html" target="Code" class="method-signature"
+            onclick="popupCode('PacketStream.src/M000076.html');return false;">
           <span class="method-name">initialize_ssh</span><span class="method-args">()</span>
           </a>
         </div>
@@ -351,12 +351,12 @@ states and generally prepares the object for use as a packet stream.
         </div>
       </div>
 
-      <div id="method-M000069" class="method-detail">
-        <a name="M000069"></a>
+      <div id="method-M000077" class="method-detail">
+        <a name="M000077"></a>
 
         <div class="method-heading">
-          <a href="PacketStream.src/M000069.html" target="Code" class="method-signature"
-            onclick="popupCode('PacketStream.src/M000069.html');return false;">
+          <a href="PacketStream.src/M000077.html" target="Code" class="method-signature"
+            onclick="popupCode('PacketStream.src/M000077.html');return false;">
           <span class="method-name">poll_next_packet</span><span class="method-args">()</span>
           </a>
         </div>

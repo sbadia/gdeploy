@@ -92,13 +92,13 @@ this module.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000186">busy?</a>&nbsp;&nbsp;
-      <a href="#M000185">connect!</a>&nbsp;&nbsp;
-      <a href="#M000190">exec</a>&nbsp;&nbsp;
-      <a href="#M000184">master</a>&nbsp;&nbsp;
-      <a href="#M000189">open_channel</a>&nbsp;&nbsp;
-      <a href="#M000188">send_global_request</a>&nbsp;&nbsp;
-      <a href="#M000187">sessions</a>&nbsp;&nbsp;
+      <a href="#M000189">busy?</a>&nbsp;&nbsp;
+      <a href="#M000188">connect!</a>&nbsp;&nbsp;
+      <a href="#M000193">exec</a>&nbsp;&nbsp;
+      <a href="#M000187">master</a>&nbsp;&nbsp;
+      <a href="#M000192">open_channel</a>&nbsp;&nbsp;
+      <a href="#M000191">send_global_request</a>&nbsp;&nbsp;
+      <a href="#M000190">sessions</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -120,12 +120,12 @@ this module.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000186" class="method-detail">
-        <a name="M000186"></a>
+      <div id="method-M000189" class="method-detail">
+        <a name="M000189"></a>
 
         <div class="method-heading">
-          <a href="SessionActions.src/M000186.html" target="Code" class="method-signature"
-            onclick="popupCode('SessionActions.src/M000186.html');return false;">
+          <a href="SessionActions.src/M000189.html" target="Code" class="method-signature"
+            onclick="popupCode('SessionActions.src/M000189.html');return false;">
           <span class="method-name">busy?</span><span class="method-args">(include_invisible=false)</span>
           </a>
         </div>
@@ -141,12 +141,12 @@ be counted; otherwise, they will be.
         </div>
       </div>
 
-      <div id="method-M000185" class="method-detail">
-        <a name="M000185"></a>
+      <div id="method-M000188" class="method-detail">
+        <a name="M000188"></a>
 
         <div class="method-heading">
-          <a href="SessionActions.src/M000185.html" target="Code" class="method-signature"
-            onclick="popupCode('SessionActions.src/M000185.html');return false;">
+          <a href="SessionActions.src/M000188.html" target="Code" class="method-signature"
+            onclick="popupCode('SessionActions.src/M000188.html');return false;">
           <span class="method-name">connect!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -161,12 +161,12 @@ been made.
         </div>
       </div>
 
-      <div id="method-M000190" class="method-detail">
-        <a name="M000190"></a>
+      <div id="method-M000193" class="method-detail">
+        <a name="M000193"></a>
 
         <div class="method-heading">
-          <a href="SessionActions.src/M000190.html" target="Code" class="method-signature"
-            onclick="popupCode('SessionActions.src/M000190.html');return false;">
+          <a href="SessionActions.src/M000193.html" target="Code" class="method-signature"
+            onclick="popupCode('SessionActions.src/M000193.html');return false;">
           <span class="method-name">exec</span><span class="method-args">(command, &amp;block)</span>
           </a>
         </div>
@@ -175,10 +175,10 @@ been made.
           <p>
 A convenience method for executing a command on multiple hosts and either
 displaying or capturing the output. It opens a channel on all active <a
-href="SessionActions.html#M000187">sessions</a> (see <a
-href="SessionActions.html#M000189">open_channel</a> and active_sessions),
+href="SessionActions.html#M000190">sessions</a> (see <a
+href="SessionActions.html#M000192">open_channel</a> and active_sessions),
 and then executes a command on each channel (<a
-href="Channel.html#M000205">Net::SSH::Connection::Channel#exec</a>).
+href="Channel.html#M000208">Net::SSH::Connection::Channel#exec</a>).
 </p>
 <p>
 If a block is given, it will be invoked whenever data is received across
@@ -196,9 +196,9 @@ If no block is given, all output will be written to +$stdout+ or +$stderr+,
 as appropriate.
 </p>
 <p>
-Note that <a href="SessionActions.html#M000190">exec</a> will also capture
+Note that <a href="SessionActions.html#M000193">exec</a> will also capture
 the exit status of the process in the +:exit_status+ property of each
-channel. Since <a href="SessionActions.html#M000190">exec</a> returns all
+channel. Since <a href="SessionActions.html#M000193">exec</a> returns all
 of the channels in a <a href="Channel.html">Net::SSH::Multi::Channel</a>
 object, you can check for the exit status like this:
 </p>
@@ -213,12 +213,12 @@ object, you can check for the exit status like this:
         </div>
       </div>
 
-      <div id="method-M000184" class="method-detail">
-        <a name="M000184"></a>
+      <div id="method-M000187" class="method-detail">
+        <a name="M000187"></a>
 
         <div class="method-heading">
-          <a href="SessionActions.src/M000184.html" target="Code" class="method-signature"
-            onclick="popupCode('SessionActions.src/M000184.html');return false;">
+          <a href="SessionActions.src/M000187.html" target="Code" class="method-signature"
+            onclick="popupCode('SessionActions.src/M000187.html');return false;">
           <span class="method-name">master</span><span class="method-args">()</span>
           </a>
         </div>
@@ -226,28 +226,28 @@ object, you can check for the exit status like this:
         <div class="method-description">
           <p>
 Returns the session that is the &quot;<a
-href="SessionActions.html#M000184">master</a>&quot;. This defaults to
+href="SessionActions.html#M000187">master</a>&quot;. This defaults to
 <tt>self</tt>, but classes that include this module may wish to change this
 if they are subsessions that depend on a <a
-href="SessionActions.html#M000184">master</a> session.
+href="SessionActions.html#M000187">master</a> session.
 </p>
         </div>
       </div>
 
-      <div id="method-M000189" class="method-detail">
-        <a name="M000189"></a>
+      <div id="method-M000192" class="method-detail">
+        <a name="M000192"></a>
 
         <div class="method-heading">
-          <a href="SessionActions.src/M000189.html" target="Code" class="method-signature"
-            onclick="popupCode('SessionActions.src/M000189.html');return false;">
+          <a href="SessionActions.src/M000192.html" target="Code" class="method-signature"
+            onclick="popupCode('SessionActions.src/M000192.html');return false;">
           <span class="method-name">open_channel</span><span class="method-args">(type=&quot;session&quot;, *extra, &amp;on_confirm)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Asks all <a href="SessionActions.html#M000187">sessions</a> for all
-contained servers (see <a href="SessionActions.html#M000187">sessions</a>)
+Asks all <a href="SessionActions.html#M000190">sessions</a> for all
+contained servers (see <a href="SessionActions.html#M000190">sessions</a>)
 to open a new channel. When each server responds, the <tt>on_confirm</tt>
 block will be invoked with a single argument, the channel object for that
 server. This means that the block will be invoked one time for each
@@ -287,12 +287,12 @@ data was received from:
         </div>
       </div>
 
-      <div id="method-M000188" class="method-detail">
-        <a name="M000188"></a>
+      <div id="method-M000191" class="method-detail">
+        <a name="M000191"></a>
 
         <div class="method-heading">
-          <a href="SessionActions.src/M000188.html" target="Code" class="method-signature"
-            onclick="popupCode('SessionActions.src/M000188.html');return false;">
+          <a href="SessionActions.src/M000191.html" target="Code" class="method-signature"
+            onclick="popupCode('SessionActions.src/M000191.html');return false;">
           <span class="method-name">send_global_request</span><span class="method-args">(type, *extra, &amp;callback)</span>
           </a>
         </div>
@@ -300,8 +300,8 @@ data was received from:
         <div class="method-description">
           <p>
 Sends a global request to the <a
-href="SessionActions.html#M000187">sessions</a> for all contained servers
-(see <a href="SessionActions.html#M000187">sessions</a>). This can be used
+href="SessionActions.html#M000190">sessions</a> for all contained servers
+(see <a href="SessionActions.html#M000190">sessions</a>). This can be used
 to (e.g.) ping the remote servers to prevent them from timing out.
 </p>
 <pre>
@@ -315,12 +315,12 @@ responding, and a boolean indicating whether the request succeeded or not.
         </div>
       </div>
 
-      <div id="method-M000187" class="method-detail">
-        <a name="M000187"></a>
+      <div id="method-M000190" class="method-detail">
+        <a name="M000190"></a>
 
         <div class="method-heading">
-          <a href="SessionActions.src/M000187.html" target="Code" class="method-signature"
-            onclick="popupCode('SessionActions.src/M000187.html');return false;">
+          <a href="SessionActions.src/M000190.html" target="Code" class="method-signature"
+            onclick="popupCode('SessionActions.src/M000190.html');return false;">
           <span class="method-name">sessions</span><span class="method-args">()</span>
           </a>
         </div>
@@ -328,8 +328,8 @@ responding, and a boolean indicating whether the request succeeded or not.
         <div class="method-description">
           <p>
 Returns an array of all <a href="../../SSH.html">SSH</a> <a
-href="SessionActions.html#M000187">sessions</a>, blocking until all <a
-href="SessionActions.html#M000187">sessions</a> have connected.
+href="SessionActions.html#M000190">sessions</a>, blocking until all <a
+href="SessionActions.html#M000190">sessions</a> have connected.
 </p>
         </div>
       </div>

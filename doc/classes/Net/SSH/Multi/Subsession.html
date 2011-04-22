@@ -97,9 +97,9 @@ for restricting operations to a subset of all defined servers.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000238">first</a>&nbsp;&nbsp;
-      <a href="#M000236">new</a>&nbsp;&nbsp;
-      <a href="#M000237">slice</a>&nbsp;&nbsp;
+      <a href="#M000230">first</a>&nbsp;&nbsp;
+      <a href="#M000228">new</a>&nbsp;&nbsp;
+      <a href="#M000229">slice</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -152,19 +152,19 @@ The list of servers that this subsession can operate on.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000236" class="method-detail">
-        <a name="M000236"></a>
+      <div id="method-M000228" class="method-detail">
+        <a name="M000228"></a>
 
         <div class="method-heading">
-          <a href="Subsession.src/M000236.html" target="Code" class="method-signature"
-            onclick="popupCode('Subsession.src/M000236.html');return false;">
+          <a href="Subsession.src/M000228.html" target="Code" class="method-signature"
+            onclick="popupCode('Subsession.src/M000228.html');return false;">
           <span class="method-name">new</span><span class="method-args">(master, server_list)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Create a <a href="Subsession.html#M000236">new</a> subsession of the given
+Create a <a href="Subsession.html#M000228">new</a> subsession of the given
 <tt>master</tt> session, that operates on the given <tt>server_list</tt>.
 </p>
         </div>
@@ -172,20 +172,20 @@ Create a <a href="Subsession.html#M000236">new</a> subsession of the given
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000238" class="method-detail">
-        <a name="M000238"></a>
+      <div id="method-M000230" class="method-detail">
+        <a name="M000230"></a>
 
         <div class="method-heading">
-          <a href="Subsession.src/M000238.html" target="Code" class="method-signature"
-            onclick="popupCode('Subsession.src/M000238.html');return false;">
+          <a href="Subsession.src/M000230.html" target="Code" class="method-signature"
+            onclick="popupCode('Subsession.src/M000230.html');return false;">
           <span class="method-name">first</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns a <a href="Subsession.html#M000236">new</a> subsession that
-consists of only the <a href="Subsession.html#M000238">first</a> server in
+Returns a <a href="Subsession.html#M000228">new</a> subsession that
+consists of only the <a href="Subsession.html#M000230">first</a> server in
 the server list of the current subsession. This is just convenience for
 slice(0):
 </p>
@@ -195,12 +195,12 @@ slice(0):
         </div>
       </div>
 
-      <div id="method-M000237" class="method-detail">
-        <a name="M000237"></a>
+      <div id="method-M000229" class="method-detail">
+        <a name="M000229"></a>
 
         <div class="method-heading">
-          <a href="Subsession.src/M000237.html" target="Code" class="method-signature"
-            onclick="popupCode('Subsession.src/M000237.html');return false;">
+          <a href="Subsession.src/M000229.html" target="Code" class="method-signature"
+            onclick="popupCode('Subsession.src/M000229.html');return false;">
           <span class="method-name">slice</span><span class="method-args">(*args)</span>
           </a>
         </div>
@@ -208,9 +208,9 @@ slice(0):
         <div class="method-description">
           <p>
 Works as Array#slice, but returns a <a
-href="Subsession.html#M000236">new</a> subsession consisting of the given
-<a href="Subsession.html#M000237">slice</a> of servers in this subsession.
-The <a href="Subsession.html#M000236">new</a> subsession will have the same
+href="Subsession.html#M000228">new</a> subsession consisting of the given
+<a href="Subsession.html#M000229">slice</a> of servers in this subsession.
+The <a href="Subsession.html#M000228">new</a> subsession will have the same
 master session as this subsession does.
 </p>
 <pre>

@@ -90,7 +90,7 @@ channels.
 <p>
 Channels are intended to be used asynchronously. You request that one be
 opened (via <a
-href="Session.html#M000376">Connection::Session#open_channel</a>), and when
+href="Session.html#M000383">Connection::Session#open_channel</a>), and when
 it is opened, your callback is invoked. Then, you set various other
 callbacks on the newly opened channel, which are called in response to the
 corresponding events. Programming with <a
@@ -147,35 +147,35 @@ attributes for those values.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000335">[]</a>&nbsp;&nbsp;
-      <a href="#M000336">[]=</a>&nbsp;&nbsp;
-      <a href="#M000342">active?</a>&nbsp;&nbsp;
-      <a href="#M000345">close</a>&nbsp;&nbsp;
-      <a href="#M000344">closing?</a>&nbsp;&nbsp;
-      <a href="#M000360">do_close</a>&nbsp;&nbsp;
-      <a href="#M000359">do_eof</a>&nbsp;&nbsp;
-      <a href="#M000358">do_extended_data</a>&nbsp;&nbsp;
-      <a href="#M000361">do_failure</a>&nbsp;&nbsp;
-      <a href="#M000357">do_open_failed</a>&nbsp;&nbsp;
-      <a href="#M000362">do_success</a>&nbsp;&nbsp;
-      <a href="#M000339">env</a>&nbsp;&nbsp;
-      <a href="#M000347">eof!</a>&nbsp;&nbsp;
-      <a href="#M000346">eof?</a>&nbsp;&nbsp;
-      <a href="#M000337">exec</a>&nbsp;&nbsp;
-      <a href="#M000334">new</a>&nbsp;&nbsp;
-      <a href="#M000352">on_close</a>&nbsp;&nbsp;
-      <a href="#M000349">on_data</a>&nbsp;&nbsp;
-      <a href="#M000353">on_eof</a>&nbsp;&nbsp;
-      <a href="#M000350">on_extended_data</a>&nbsp;&nbsp;
-      <a href="#M000354">on_open_failed</a>&nbsp;&nbsp;
-      <a href="#M000351">on_process</a>&nbsp;&nbsp;
-      <a href="#M000355">on_request</a>&nbsp;&nbsp;
-      <a href="#M000348">process</a>&nbsp;&nbsp;
-      <a href="#M000340">request_pty</a>&nbsp;&nbsp;
-      <a href="#M000356">send_channel_request</a>&nbsp;&nbsp;
-      <a href="#M000341">send_data</a>&nbsp;&nbsp;
-      <a href="#M000338">subsystem</a>&nbsp;&nbsp;
-      <a href="#M000343">wait</a>&nbsp;&nbsp;
+      <a href="#M000341">[]</a>&nbsp;&nbsp;
+      <a href="#M000342">[]=</a>&nbsp;&nbsp;
+      <a href="#M000348">active?</a>&nbsp;&nbsp;
+      <a href="#M000351">close</a>&nbsp;&nbsp;
+      <a href="#M000350">closing?</a>&nbsp;&nbsp;
+      <a href="#M000366">do_close</a>&nbsp;&nbsp;
+      <a href="#M000365">do_eof</a>&nbsp;&nbsp;
+      <a href="#M000364">do_extended_data</a>&nbsp;&nbsp;
+      <a href="#M000367">do_failure</a>&nbsp;&nbsp;
+      <a href="#M000363">do_open_failed</a>&nbsp;&nbsp;
+      <a href="#M000368">do_success</a>&nbsp;&nbsp;
+      <a href="#M000345">env</a>&nbsp;&nbsp;
+      <a href="#M000353">eof!</a>&nbsp;&nbsp;
+      <a href="#M000352">eof?</a>&nbsp;&nbsp;
+      <a href="#M000343">exec</a>&nbsp;&nbsp;
+      <a href="#M000340">new</a>&nbsp;&nbsp;
+      <a href="#M000358">on_close</a>&nbsp;&nbsp;
+      <a href="#M000355">on_data</a>&nbsp;&nbsp;
+      <a href="#M000359">on_eof</a>&nbsp;&nbsp;
+      <a href="#M000356">on_extended_data</a>&nbsp;&nbsp;
+      <a href="#M000360">on_open_failed</a>&nbsp;&nbsp;
+      <a href="#M000357">on_process</a>&nbsp;&nbsp;
+      <a href="#M000361">on_request</a>&nbsp;&nbsp;
+      <a href="#M000354">process</a>&nbsp;&nbsp;
+      <a href="#M000346">request_pty</a>&nbsp;&nbsp;
+      <a href="#M000362">send_channel_request</a>&nbsp;&nbsp;
+      <a href="#M000347">send_data</a>&nbsp;&nbsp;
+      <a href="#M000344">subsystem</a>&nbsp;&nbsp;
+      <a href="#M000349">wait</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -207,7 +207,7 @@ attributes for those values.
           <td width="3em">&nbsp;</td>
           <td class="context-item-desc">
 A hash of the valid PTY options (see <a
-href="Channel.html#M000340">request_pty</a>).
+href="Channel.html#M000346">request_pty</a>).
 
 </td>
         </tr>
@@ -327,19 +327,19 @@ The type of this channel, usually &quot;session&quot;.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000334" class="method-detail">
-        <a name="M000334"></a>
+      <div id="method-M000340" class="method-detail">
+        <a name="M000340"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000334.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000334.html');return false;">
+          <a href="Channel.src/M000340.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000340.html');return false;">
           <span class="method-name">new</span><span class="method-args">(connection, type, local_id, &amp;on_confirm_open)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Instantiates a <a href="Channel.html#M000334">new</a> channel on the given
+Instantiates a <a href="Channel.html#M000340">new</a> channel on the given
 connection, of the given type, and with the given id. If a block is given,
 it will be remembered until the channel is confirmed open by the server,
 and will be invoked at that time (see do_open_confirmation).
@@ -352,12 +352,12 @@ This also sets the default maximum packet size and maximum window size.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000335" class="method-detail">
-        <a name="M000335"></a>
+      <div id="method-M000341" class="method-detail">
+        <a name="M000341"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000335.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000335.html');return false;">
+          <a href="Channel.src/M000341.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000341.html');return false;">
           <span class="method-name">[]</span><span class="method-args">(name)</span>
           </a>
         </div>
@@ -369,12 +369,12 @@ A shortcut for accessing properties of the channel (see properties).
         </div>
       </div>
 
-      <div id="method-M000336" class="method-detail">
-        <a name="M000336"></a>
+      <div id="method-M000342" class="method-detail">
+        <a name="M000342"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000336.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000336.html');return false;">
+          <a href="Channel.src/M000342.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000342.html');return false;">
           <span class="method-name">[]=</span><span class="method-args">(name, value)</span>
           </a>
         </div>
@@ -386,12 +386,12 @@ A shortcut for setting properties of the channel (see properties).
         </div>
       </div>
 
-      <div id="method-M000342" class="method-detail">
-        <a name="M000342"></a>
+      <div id="method-M000348" class="method-detail">
+        <a name="M000348"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000342.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000342.html');return false;">
+          <a href="Channel.src/M000348.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000348.html');return false;">
           <span class="method-name">active?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -408,12 +408,12 @@ closed or not.
         </div>
       </div>
 
-      <div id="method-M000345" class="method-detail">
-        <a name="M000345"></a>
+      <div id="method-M000351" class="method-detail">
+        <a name="M000351"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000345.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000345.html');return false;">
+          <a href="Channel.src/M000351.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000351.html');return false;">
           <span class="method-name">close</span><span class="method-args">()</span>
           </a>
         </div>
@@ -428,12 +428,12 @@ CHANNEL_CLOSE message and marks the channel as closing.
         </div>
       </div>
 
-      <div id="method-M000344" class="method-detail">
-        <a name="M000344"></a>
+      <div id="method-M000350" class="method-detail">
+        <a name="M000350"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000344.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000344.html');return false;">
+          <a href="Channel.src/M000350.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000350.html');return false;">
           <span class="method-name">closing?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -442,62 +442,62 @@ CHANNEL_CLOSE message and marks the channel as closing.
           <p>
 Returns true if the channel is currently closing, but not actually closed.
 A channel is closing when, for instance, <a
-href="Channel.html#M000345">close</a> has been invoked, but the server has
+href="Channel.html#M000351">close</a> has been invoked, but the server has
 not yet responded with a CHANNEL_CLOSE packet of its own.
 </p>
         </div>
       </div>
 
-      <div id="method-M000360" class="method-detail">
-        <a name="M000360"></a>
+      <div id="method-M000366" class="method-detail">
+        <a name="M000366"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000360.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000360.html');return false;">
+          <a href="Channel.src/M000366.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000366.html');return false;">
           <span class="method-name">do_close</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Invokes the <a href="Channel.html#M000352">on_close</a> callback when the
+Invokes the <a href="Channel.html#M000358">on_close</a> callback when the
 server closes a channel. The channel is the only argument.
 </p>
         </div>
       </div>
 
-      <div id="method-M000359" class="method-detail">
-        <a name="M000359"></a>
+      <div id="method-M000365" class="method-detail">
+        <a name="M000365"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000359.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000359.html');return false;">
+          <a href="Channel.src/M000365.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000365.html');return false;">
           <span class="method-name">do_eof</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Invokes the <a href="Channel.html#M000353">on_eof</a> callback when the
+Invokes the <a href="Channel.html#M000359">on_eof</a> callback when the
 server indicates that no further data is forthcoming. The callback is
 invoked with the channel as the argument.
 </p>
         </div>
       </div>
 
-      <div id="method-M000358" class="method-detail">
-        <a name="M000358"></a>
+      <div id="method-M000364" class="method-detail">
+        <a name="M000364"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000358.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000358.html');return false;">
+          <a href="Channel.src/M000364.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000364.html');return false;">
           <span class="method-name">do_extended_data</span><span class="method-args">(type, data)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Invokes the <a href="Channel.html#M000350">on_extended_data</a> callback
+Invokes the <a href="Channel.html#M000356">on_extended_data</a> callback
 when the server sends extended data to the channel. This will reduce the
 available window size on the local end. The callback is invoked with the
 channel, type, and data.
@@ -505,12 +505,12 @@ channel, type, and data.
         </div>
       </div>
 
-      <div id="method-M000361" class="method-detail">
-        <a name="M000361"></a>
+      <div id="method-M000367" class="method-detail">
+        <a name="M000367"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000361.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000361.html');return false;">
+          <a href="Channel.src/M000367.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000367.html');return false;">
           <span class="method-name">do_failure</span><span class="method-args">()</span>
           </a>
         </div>
@@ -523,12 +523,12 @@ argument.
         </div>
       </div>
 
-      <div id="method-M000357" class="method-detail">
-        <a name="M000357"></a>
+      <div id="method-M000363" class="method-detail">
+        <a name="M000363"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000357.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000357.html');return false;">
+          <a href="Channel.src/M000363.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000363.html');return false;">
           <span class="method-name">do_open_failed</span><span class="method-args">(reason_code, description)</span>
           </a>
         </div>
@@ -536,7 +536,7 @@ argument.
         <div class="method-description">
           <p>
 Invoked when the server failed to open the channel. If an <a
-href="Channel.html#M000354">on_open_failed</a> callback was specified, it
+href="Channel.html#M000360">on_open_failed</a> callback was specified, it
 will be invoked with the channel, reason code, and description as
 arguments. Otherwise, a <a
 href="../ChannelOpenFailed.html">ChannelOpenFailed</a> exception will be
@@ -545,12 +545,12 @@ raised.
         </div>
       </div>
 
-      <div id="method-M000362" class="method-detail">
-        <a name="M000362"></a>
+      <div id="method-M000368" class="method-detail">
+        <a name="M000368"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000362.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000362.html');return false;">
+          <a href="Channel.src/M000368.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000368.html');return false;">
           <span class="method-name">do_success</span><span class="method-args">()</span>
           </a>
         </div>
@@ -563,12 +563,12 @@ argument.
         </div>
       </div>
 
-      <div id="method-M000339" class="method-detail">
-        <a name="M000339"></a>
+      <div id="method-M000345" class="method-detail">
+        <a name="M000345"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000339.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000339.html');return false;">
+          <a href="Channel.src/M000345.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000345.html');return false;">
           <span class="method-name">env</span><span class="method-args">(variable_name, variable_value, &amp;block)</span>
           </a>
         </div>
@@ -576,7 +576,7 @@ argument.
         <div class="method-description">
           <p>
 Syntactic sugar for setting an environment variable in the remote <a
-href="Channel.html#M000348">process</a>&#8217; environment. Note that for
+href="Channel.html#M000354">process</a>&#8217; environment. Note that for
 security reasons, the server may refuse to set certain environment
 variables, or all, at the server&#8216;s discretion. If you are connecting
 to an OpenSSH server, you will need to update the AcceptEnv setting in the
@@ -588,12 +588,12 @@ sshd_config to include the environment variables you want to send.
         </div>
       </div>
 
-      <div id="method-M000347" class="method-detail">
-        <a name="M000347"></a>
+      <div id="method-M000353" class="method-detail">
+        <a name="M000353"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000347.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000347.html');return false;">
+          <a href="Channel.src/M000353.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000353.html');return false;">
           <span class="method-name">eof!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -607,12 +607,12 @@ CHANNEL_EOF packet will be sent once the output buffer is empty.
         </div>
       </div>
 
-      <div id="method-M000346" class="method-detail">
-        <a name="M000346"></a>
+      <div id="method-M000352" class="method-detail">
+        <a name="M000352"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000346.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000346.html');return false;">
+          <a href="Channel.src/M000352.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000352.html');return false;">
           <span class="method-name">eof?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -621,18 +621,18 @@ CHANNEL_EOF packet will be sent once the output buffer is empty.
           <p>
 Returns true if the local end of the channel has declared that no more data
 is forthcoming (see eof!). Trying to send data via <a
-href="Channel.html#M000341">send_data</a> when this is true will result in
+href="Channel.html#M000347">send_data</a> when this is true will result in
 an exception being raised.
 </p>
         </div>
       </div>
 
-      <div id="method-M000337" class="method-detail">
-        <a name="M000337"></a>
+      <div id="method-M000343" class="method-detail">
+        <a name="M000343"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000337.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000337.html');return false;">
+          <a href="Channel.src/M000343.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000343.html');return false;">
           <span class="method-name">exec</span><span class="method-args">(command, &amp;block)</span>
           </a>
         </div>
@@ -660,12 +660,12 @@ to be executed.
         </div>
       </div>
 
-      <div id="method-M000352" class="method-detail">
-        <a name="M000352"></a>
+      <div id="method-M000358" class="method-detail">
+        <a name="M000358"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000352.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000352.html');return false;">
+          <a href="Channel.src/M000358.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000358.html');return false;">
           <span class="method-name">on_close</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
@@ -683,12 +683,12 @@ channel is closed. This is invoked with the channel as the sole argument.
         </div>
       </div>
 
-      <div id="method-M000349" class="method-detail">
-        <a name="M000349"></a>
+      <div id="method-M000355" class="method-detail">
+        <a name="M000355"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000349.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000349.html');return false;">
+          <a href="Channel.src/M000355.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000355.html');return false;">
           <span class="method-name">on_data</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
@@ -706,17 +706,17 @@ the data as the second.
 </pre>
 <p>
 Data received this way is typically the data written by the remote <a
-href="Channel.html#M000348">process</a> to its <tt>stdout</tt> stream.
+href="Channel.html#M000354">process</a> to its <tt>stdout</tt> stream.
 </p>
         </div>
       </div>
 
-      <div id="method-M000353" class="method-detail">
-        <a name="M000353"></a>
+      <div id="method-M000359" class="method-detail">
+        <a name="M000359"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000353.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000353.html');return false;">
+          <a href="Channel.src/M000359.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000359.html');return false;">
           <span class="method-name">on_eof</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
@@ -735,12 +735,12 @@ to the server). The channel is the sole argument to the callback.
         </div>
       </div>
 
-      <div id="method-M000350" class="method-detail">
-        <a name="M000350"></a>
+      <div id="method-M000356" class="method-detail">
+        <a name="M000356"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000350.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000350.html');return false;">
+          <a href="Channel.src/M000356.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000356.html');return false;">
           <span class="method-name">on_extended_data</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
@@ -762,12 +762,12 @@ data (<tt>type</tt> == 1). Other extended data types are not defined by the
         </div>
       </div>
 
-      <div id="method-M000354" class="method-detail">
-        <a name="M000354"></a>
+      <div id="method-M000360" class="method-detail">
+        <a name="M000360"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000354.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000354.html');return false;">
+          <a href="Channel.src/M000360.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000360.html');return false;">
           <span class="method-name">on_open_failed</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
@@ -789,12 +789,12 @@ description of the failure from the server.
         </div>
       </div>
 
-      <div id="method-M000351" class="method-detail">
-        <a name="M000351"></a>
+      <div id="method-M000357" class="method-detail">
+        <a name="M000357"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000351.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000351.html');return false;">
+          <a href="Channel.src/M000357.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000357.html');return false;">
           <span class="method-name">on_process</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
@@ -829,12 +829,12 @@ time when the channel is processed:
         </div>
       </div>
 
-      <div id="method-M000355" class="method-detail">
-        <a name="M000355"></a>
+      <div id="method-M000361" class="method-detail">
+        <a name="M000361"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000355.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000355.html');return false;">
+          <a href="Channel.src/M000361.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000361.html');return false;">
           <span class="method-name">on_request</span><span class="method-args">(type, &amp;block)</span>
           </a>
         </div>
@@ -861,12 +861,12 @@ are:
 </p>
 <ul>
 <li>&quot;exit-status&quot; : the exit status of the remote <a
-href="Channel.html#M000348">process</a> will be reported as a long integer
+href="Channel.html#M000354">process</a> will be reported as a long integer
 in the data buffer, which you can grab via data.read_long.
 
 </li>
 <li>&quot;exit-signal&quot; : if the remote <a
-href="Channel.html#M000348">process</a> died as a result of a signal being
+href="Channel.html#M000354">process</a> died as a result of a signal being
 sent to it, the signal will be reported as a string in the data, via
 data.read_string. (Not all <a href="../../SSH.html">SSH</a> servers support
 this channel request type.)
@@ -885,19 +885,19 @@ end
         </div>
       </div>
 
-      <div id="method-M000348" class="method-detail">
-        <a name="M000348"></a>
+      <div id="method-M000354" class="method-detail">
+        <a name="M000354"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000348.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000348.html');return false;">
+          <a href="Channel.src/M000354.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000354.html');return false;">
           <span class="method-name">process</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-If an <a href="Channel.html#M000351">on_process</a> handler has been set
+If an <a href="Channel.html#M000357">on_process</a> handler has been set
 up, this will cause it to be invoked (passing the channel itself as an
 argument). It also causes all pending output to be enqueued as CHANNEL_DATA
 packets (see enqueue_pending_output).
@@ -905,12 +905,12 @@ packets (see enqueue_pending_output).
         </div>
       </div>
 
-      <div id="method-M000340" class="method-detail">
-        <a name="M000340"></a>
+      <div id="method-M000346" class="method-detail">
+        <a name="M000346"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000340.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000340.html');return false;">
+          <a href="Channel.src/M000346.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000346.html');return false;">
           <span class="method-name">request_pty</span><span class="method-args">(opts={}, &amp;block)</span>
           </a>
         </div>
@@ -943,22 +943,22 @@ when a pty is not present.
         </div>
       </div>
 
-      <div id="method-M000356" class="method-detail">
-        <a name="M000356"></a>
+      <div id="method-M000362" class="method-detail">
+        <a name="M000362"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000356.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000356.html');return false;">
+          <a href="Channel.src/M000362.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000362.html');return false;">
           <span class="method-name">send_channel_request</span><span class="method-args">(request_name, *data, &amp;callback)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Sends a <a href="Channel.html#M000334">new</a> channel request with the
+Sends a <a href="Channel.html#M000340">new</a> channel request with the
 given name. The extra <tt>data</tt> parameter must either be empty, or
 consist of an even number of arguments. See <a
-href="../Buffer.html#M000428">Net::SSH::Buffer.from</a> for a description
+href="../Buffer.html#M000434">Net::SSH::Buffer.from</a> for a description
 of their format. If a block is given, it is registered as a callback for a
 pending request, and the packet will be flagged so that the server knows a
 reply is required. If no block is given, the server will send no response
@@ -979,18 +979,18 @@ on the specific request that was sent.
 </pre>
 <p>
 Most channel requests you&#8216;ll want to send are already wrapped in more
-convenient helper methods (see <a href="Channel.html#M000337">exec</a> and
-<a href="Channel.html#M000338">subsystem</a>).
+convenient helper methods (see <a href="Channel.html#M000343">exec</a> and
+<a href="Channel.html#M000344">subsystem</a>).
 </p>
         </div>
       </div>
 
-      <div id="method-M000341" class="method-detail">
-        <a name="M000341"></a>
+      <div id="method-M000347" class="method-detail">
+        <a name="M000347"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000341.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000341.html');return false;">
+          <a href="Channel.src/M000347.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000347.html');return false;">
           <span class="method-name">send_data</span><span class="method-args">(data)</span>
           </a>
         </div>
@@ -999,7 +999,7 @@ convenient helper methods (see <a href="Channel.html#M000337">exec</a> and
           <p>
 Sends data to the channel&#8216;s remote endpoint. This usually has the
 effect of sending the given string to the remote <a
-href="Channel.html#M000348">process</a>&#8217; stdin stream. Note that it
+href="Channel.html#M000354">process</a>&#8217; stdin stream. Note that it
 does not immediately send the data across the channel, but instead merely
 appends the given data to the channel&#8216;s output buffer, preparatory to
 being packaged up and sent out the next time the connection is accepting
@@ -1017,12 +1017,12 @@ more data will be sent (see eof!).
         </div>
       </div>
 
-      <div id="method-M000338" class="method-detail">
-        <a name="M000338"></a>
+      <div id="method-M000344" class="method-detail">
+        <a name="M000344"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000338.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000338.html');return false;">
+          <a href="Channel.src/M000344.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000344.html');return false;">
           <span class="method-name">subsystem</span><span class="method-args">(subsystem, &amp;block)</span>
           </a>
         </div>
@@ -1030,12 +1030,12 @@ more data will be sent (see eof!).
         <div class="method-description">
           <p>
 Syntactic sugar for requesting that a <a
-href="Channel.html#M000338">subsystem</a> be started. Subsystems are a way
+href="Channel.html#M000344">subsystem</a> be started. Subsystems are a way
 for other protocols (like SFTP) to be run, using <a
 href="../../SSH.html">SSH</a> as the transport. Generally, you&#8216;ll
 never need to call this directly unless you are the implementor of
 something that consumes an <a href="../../SSH.html">SSH</a> <a
-href="Channel.html#M000338">subsystem</a>, like SFTP.
+href="Channel.html#M000344">subsystem</a>, like SFTP.
 </p>
 <pre>
   channel.subsystem(&quot;sftp&quot;) do |ch, success|
@@ -1049,12 +1049,12 @@ href="Channel.html#M000338">subsystem</a>, like SFTP.
         </div>
       </div>
 
-      <div id="method-M000343" class="method-detail">
-        <a name="M000343"></a>
+      <div id="method-M000349" class="method-detail">
+        <a name="M000349"></a>
 
         <div class="method-heading">
-          <a href="Channel.src/M000343.html" target="Code" class="method-signature"
-            onclick="popupCode('Channel.src/M000343.html');return false;">
+          <a href="Channel.src/M000349.html" target="Code" class="method-signature"
+            onclick="popupCode('Channel.src/M000349.html');return false;">
           <span class="method-name">wait</span><span class="method-args">()</span>
           </a>
         </div>
@@ -1063,7 +1063,7 @@ href="Channel.html#M000338">subsystem</a>, like SFTP.
           <p>
 Runs the <a href="../../SSH.html">SSH</a> event loop until the channel is
 no longer active. This is handy for blocking while you <a
-href="Channel.html#M000343">wait</a> for some channel to finish.
+href="Channel.html#M000349">wait</a> for some channel to finish.
 </p>
 <pre>
   channel.exec(&quot;grep ...&quot;) { ... }

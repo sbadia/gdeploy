@@ -5,14 +5,14 @@
 
 <html>
 <head>
-  <title>closing? (Net::SSH::Connection::Channel)</title>
+  <title>subsystem (Net::SSH::Connection::Channel)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/connection/channel.rb, line 276</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">closing?</span>
-      <span class="ruby-ivar">@closing</span>
+  <pre><span class="ruby-comment cmt"># File net/ssh/connection/channel.rb, line 175</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">subsystem</span>(<span class="ruby-identifier">subsystem</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-identifier">send_channel_request</span>(<span class="ruby-value str">&quot;subsystem&quot;</span>, <span class="ruby-identifier">:string</span>, <span class="ruby-identifier">subsystem</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

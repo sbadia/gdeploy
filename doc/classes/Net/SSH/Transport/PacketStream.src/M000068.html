@@ -5,18 +5,30 @@
 
 <html>
 <head>
-  <title>initialize_ssh (Net::SSH::Transport::PacketStream)</title>
+  <title>client_name (Net::SSH::Transport::PacketStream)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/transport/packet_stream.rb, line 175</span>
-      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_ssh</span>
-        <span class="ruby-ivar">@hints</span>  = {}
-        <span class="ruby-ivar">@server</span> = <span class="ruby-constant">State</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:server</span>)
-        <span class="ruby-ivar">@client</span> = <span class="ruby-constant">State</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:client</span>)
-        <span class="ruby-ivar">@packet</span> = <span class="ruby-keyword kw">nil</span>
-        <span class="ruby-identifier">initialize_buffered_io</span>
-      <span class="ruby-keyword kw">end</span></pre>
+  <pre><span class="ruby-comment cmt"># File net/ssh/transport/packet_stream.rb, line 39</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">client_name</span>
+      <span class="ruby-ivar">@client_name</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">begin</span>
+        <span class="ruby-identifier">sockaddr</span> = <span class="ruby-identifier">getsockname</span>
+        <span class="ruby-keyword kw">begin</span>
+          <span class="ruby-constant">Socket</span>.<span class="ruby-identifier">getnameinfo</span>(<span class="ruby-identifier">sockaddr</span>, <span class="ruby-constant">Socket</span><span class="ruby-operator">::</span><span class="ruby-constant">NI_NAMEREQD</span>).<span class="ruby-identifier">first</span>
+        <span class="ruby-keyword kw">rescue</span>
+          <span class="ruby-keyword kw">begin</span>
+            <span class="ruby-constant">Socket</span>.<span class="ruby-identifier">getnameinfo</span>(<span class="ruby-identifier">sockaddr</span>).<span class="ruby-identifier">first</span>
+          <span class="ruby-keyword kw">rescue</span>
+            <span class="ruby-keyword kw">begin</span>
+              <span class="ruby-constant">Socket</span>.<span class="ruby-identifier">gethostbyname</span>(<span class="ruby-constant">Socket</span>.<span class="ruby-identifier">gethostname</span>).<span class="ruby-identifier">first</span>
+            <span class="ruby-keyword kw">rescue</span>
+              <span class="ruby-identifier">lwarn</span> { <span class="ruby-value str">&quot;the client ipaddr/name could not be determined&quot;</span> }
+              <span class="ruby-value str">&quot;unknown&quot;</span>
+            <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

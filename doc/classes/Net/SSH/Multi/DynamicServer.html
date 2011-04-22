@@ -82,7 +82,7 @@
       <p>
 Represents a lazily evaluated collection of servers. This will usually be
 created via <a
-href="Session.html#M000222">Net::SSH::Multi::Session#use</a>(&amp;block),
+href="Session.html#M000234">Net::SSH::Multi::Session#use</a>(&amp;block),
 and is useful for creating server definitions where the name or address of
 the servers are not known until run-time.
 </p>
@@ -96,7 +96,7 @@ result cached.
 </p>
 <p>
 The callback should return either <tt>nil</tt> (in which case no <a
-href="DynamicServer.html#M000230">new</a> servers are instantiated), a <a
+href="DynamicServer.html#M000222">new</a> servers are instantiated), a <a
 href="../../../String.html">String</a> (representing a connection
 specification), an array of Strings, or an array of <a
 href="Server.html">Net::SSH::Multi::Server</a> instances.
@@ -111,12 +111,12 @@ href="Server.html">Net::SSH::Multi::Server</a> instances.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000231">[]</a>&nbsp;&nbsp;
-      <a href="#M000232">[]=</a>&nbsp;&nbsp;
-      <a href="#M000233">each</a>&nbsp;&nbsp;
-      <a href="#M000234">evaluate!</a>&nbsp;&nbsp;
-      <a href="#M000230">new</a>&nbsp;&nbsp;
-      <a href="#M000235">to_ary</a>&nbsp;&nbsp;
+      <a href="#M000223">[]</a>&nbsp;&nbsp;
+      <a href="#M000224">[]=</a>&nbsp;&nbsp;
+      <a href="#M000225">each</a>&nbsp;&nbsp;
+      <a href="#M000226">evaluate!</a>&nbsp;&nbsp;
+      <a href="#M000222">new</a>&nbsp;&nbsp;
+      <a href="#M000227">to_ary</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -171,19 +171,19 @@ The hash of options that will be used to initialize the server records.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000230" class="method-detail">
-        <a name="M000230"></a>
+      <div id="method-M000222" class="method-detail">
+        <a name="M000222"></a>
 
         <div class="method-heading">
-          <a href="DynamicServer.src/M000230.html" target="Code" class="method-signature"
-            onclick="popupCode('DynamicServer.src/M000230.html');return false;">
+          <a href="DynamicServer.src/M000222.html" target="Code" class="method-signature"
+            onclick="popupCode('DynamicServer.src/M000222.html');return false;">
           <span class="method-name">new</span><span class="method-args">(master, options, callback)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Create a <a href="DynamicServer.html#M000230">new</a> <a
+Create a <a href="DynamicServer.html#M000222">new</a> <a
 href="DynamicServer.html">DynamicServer</a> record, owned by the given <a
 href="Session.html">Net::SSH::Multi::Session</a> <tt>master</tt>, with the
 given hash of <tt>options</tt>, and using the given Proc <tt>callback</tt>
@@ -194,12 +194,12 @@ to lazily evaluate the actual server instances.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000231" class="method-detail">
-        <a name="M000231"></a>
+      <div id="method-M000223" class="method-detail">
+        <a name="M000223"></a>
 
         <div class="method-heading">
-          <a href="DynamicServer.src/M000231.html" target="Code" class="method-signature"
-            onclick="popupCode('DynamicServer.src/M000231.html');return false;">
+          <a href="DynamicServer.src/M000223.html" target="Code" class="method-signature"
+            onclick="popupCode('DynamicServer.src/M000223.html');return false;">
           <span class="method-name">[]</span><span class="method-args">(key)</span>
           </a>
         </div>
@@ -213,12 +213,12 @@ returns <tt>nil</tt>.
         </div>
       </div>
 
-      <div id="method-M000232" class="method-detail">
-        <a name="M000232"></a>
+      <div id="method-M000224" class="method-detail">
+        <a name="M000224"></a>
 
         <div class="method-heading">
-          <a href="DynamicServer.src/M000232.html" target="Code" class="method-signature"
-            onclick="popupCode('DynamicServer.src/M000232.html');return false;">
+          <a href="DynamicServer.src/M000224.html" target="Code" class="method-signature"
+            onclick="popupCode('DynamicServer.src/M000224.html');return false;">
           <span class="method-name">[]=</span><span class="method-args">(key, value)</span>
           </a>
         </div>
@@ -231,12 +231,12 @@ If the options hash has no :properties key, it will be created.
         </div>
       </div>
 
-      <div id="method-M000233" class="method-detail">
-        <a name="M000233"></a>
+      <div id="method-M000225" class="method-detail">
+        <a name="M000225"></a>
 
         <div class="method-heading">
-          <a href="DynamicServer.src/M000233.html" target="Code" class="method-signature"
-            onclick="popupCode('DynamicServer.src/M000233.html');return false;">
+          <a href="DynamicServer.src/M000225.html" target="Code" class="method-signature"
+            onclick="popupCode('DynamicServer.src/M000225.html');return false;">
           <span class="method-name">each</span><span class="method-args">() {|server| ...}</span>
           </a>
         </div>
@@ -250,12 +250,12 @@ does <em>not</em> automatically invoke evaluate!).
         </div>
       </div>
 
-      <div id="method-M000234" class="method-detail">
-        <a name="M000234"></a>
+      <div id="method-M000226" class="method-detail">
+        <a name="M000226"></a>
 
         <div class="method-heading">
-          <a href="DynamicServer.src/M000234.html" target="Code" class="method-signature"
-            onclick="popupCode('DynamicServer.src/M000234.html');return false;">
+          <a href="DynamicServer.src/M000226.html" target="Code" class="method-signature"
+            onclick="popupCode('DynamicServer.src/M000226.html');return false;">
           <span class="method-name">evaluate!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -269,8 +269,8 @@ servers.
         </div>
       </div>
 
-      <div id="method-M000235" class="method-detail">
-        <a name="M000235"></a>
+      <div id="method-M000227" class="method-detail">
+        <a name="M000227"></a>
 
         <div class="method-heading">
           <span class="method-name">to_ary</span><span class="method-args">()</span>

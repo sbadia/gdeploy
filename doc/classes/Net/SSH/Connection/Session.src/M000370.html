@@ -5,18 +5,25 @@
 
 <html>
 <head>
-  <title>busy? (Net::SSH::Connection::Session)</title>
+  <title>new (Net::SSH::Connection::Session)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/connection/session.rb, line 134</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">busy?</span>(<span class="ruby-identifier">include_invisible</span>=<span class="ruby-keyword kw">false</span>)
-      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">include_invisible</span>
-        <span class="ruby-identifier">channels</span>.<span class="ruby-identifier">any?</span>
-      <span class="ruby-keyword kw">else</span>
-        <span class="ruby-identifier">channels</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">id</span>, <span class="ruby-identifier">ch</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">ch</span>[<span class="ruby-identifier">:invisible</span>] }
-      <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File net/ssh/connection/session.rb, line 62</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">transport</span>, <span class="ruby-identifier">options</span>={})
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">logger</span> = <span class="ruby-identifier">transport</span>.<span class="ruby-identifier">logger</span>
+
+      <span class="ruby-ivar">@transport</span> = <span class="ruby-identifier">transport</span>
+      <span class="ruby-ivar">@options</span> = <span class="ruby-identifier">options</span>
+
+      <span class="ruby-ivar">@channel_id_counter</span> = <span class="ruby-value">-1</span>
+      <span class="ruby-ivar">@channels</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">NilChannel</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>))
+      <span class="ruby-ivar">@listeners</span> = { <span class="ruby-identifier">transport</span>.<span class="ruby-identifier">socket</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span> }
+      <span class="ruby-ivar">@pending_requests</span> = []
+      <span class="ruby-ivar">@channel_open_handlers</span> = {}
+      <span class="ruby-ivar">@on_global_request</span> = {}
+      <span class="ruby-ivar">@properties</span> = (<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:properties</span>] <span class="ruby-operator">||</span> {}).<span class="ruby-identifier">dup</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

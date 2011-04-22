@@ -5,42 +5,16 @@
 
 <html>
 <head>
-  <title>exec (Net::SSH::Multi::SessionActions)</title>
+  <title>sessions (Net::SSH::Multi::SessionActions)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/multi/session_actions.rb, line 119</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exec</span>(<span class="ruby-identifier">command</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-      <span class="ruby-identifier">open_channel</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">channel</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">exec</span>(<span class="ruby-identifier">command</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ch</span>, <span class="ruby-identifier">success</span><span class="ruby-operator">|</span>
-          <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;could not execute command: #{command.inspect} (#{ch[:host]})&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">success</span>
-
-          <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">on_data</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ch</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">|</span>
-            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>
-              <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">ch</span>, <span class="ruby-identifier">:stdout</span>, <span class="ruby-identifier">data</span>)
-            <span class="ruby-keyword kw">else</span>
-              <span class="ruby-identifier">data</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">each_line</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
-                <span class="ruby-identifier">$stdout</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;[#{ch[:host]}] #{line}&quot;</span>)
-              <span class="ruby-keyword kw">end</span>
-            <span class="ruby-keyword kw">end</span>
-          <span class="ruby-keyword kw">end</span>
-
-          <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">on_extended_data</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ch</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">|</span>
-            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>
-              <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">ch</span>, <span class="ruby-identifier">:stderr</span>, <span class="ruby-identifier">data</span>)
-            <span class="ruby-keyword kw">else</span>
-              <span class="ruby-identifier">data</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">each_line</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
-                <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;[#{ch[:host]}] #{line}&quot;</span>)
-              <span class="ruby-keyword kw">end</span>
-            <span class="ruby-keyword kw">end</span>
-          <span class="ruby-keyword kw">end</span>
-
-          <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">on_request</span>(<span class="ruby-value str">&quot;exit-status&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ch</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">|</span>
-            <span class="ruby-identifier">ch</span>[<span class="ruby-identifier">:exit_status</span>] = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">read_long</span>
-          <span class="ruby-keyword kw">end</span>
-        <span class="ruby-keyword kw">end</span>
-      <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File net/ssh/multi/session_actions.rb, line 35</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sessions</span>
+      <span class="ruby-identifier">threads</span> = <span class="ruby-identifier">servers</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">server</span><span class="ruby-operator">|</span> <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">server</span>.<span class="ruby-identifier">session</span>(<span class="ruby-keyword kw">true</span>) } <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">server</span>.<span class="ruby-identifier">session</span>.<span class="ruby-identifier">nil?</span> }
+      <span class="ruby-identifier">threads</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">thread</span><span class="ruby-operator">|</span> <span class="ruby-identifier">thread</span>.<span class="ruby-identifier">join</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">thread</span> }
+      <span class="ruby-identifier">servers</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">server</span><span class="ruby-operator">|</span> <span class="ruby-identifier">server</span>.<span class="ruby-identifier">session</span> }.<span class="ruby-identifier">compact</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

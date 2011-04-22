@@ -85,8 +85,8 @@ href="../../SSH.html">SSH</a> protocol, and implements basic message
 exchanging and protocol initialization. It will never be instantiated
 directly (unless you really know what you&#8216;re about), but will instead
 be created for you automatically when you create a <a
-href="Session.html#M000076">new</a> <a href="../../SSH.html">SSH</a>
-session via <a href="../../SSH.html#M000045">Net::SSH.start</a>.
+href="Session.html#M000084">new</a> <a href="../../SSH.html">SSH</a>
+session via <a href="../../SSH.html#M000051">Net::SSH.start</a>.
 </p>
 
     </div>
@@ -98,24 +98,24 @@ session via <a href="../../SSH.html#M000045">Net::SSH.start</a>.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000079">close</a>&nbsp;&nbsp;
-      <a href="#M000078">closed?</a>&nbsp;&nbsp;
-      <a href="#M000091">configure_client</a>&nbsp;&nbsp;
-      <a href="#M000092">configure_server</a>&nbsp;&nbsp;
-      <a href="#M000090">enqueue_message</a>&nbsp;&nbsp;
-      <a href="#M000093">hint</a>&nbsp;&nbsp;
-      <a href="#M000077">host_as_string</a>&nbsp;&nbsp;
-      <a href="#M000076">new</a>&nbsp;&nbsp;
-      <a href="#M000085">next_message</a>&nbsp;&nbsp;
-      <a href="#M000084">peer</a>&nbsp;&nbsp;
-      <a href="#M000086">poll_message</a>&nbsp;&nbsp;
-      <a href="#M000088">push</a>&nbsp;&nbsp;
-      <a href="#M000082">rekey!</a>&nbsp;&nbsp;
-      <a href="#M000083">rekey_as_needed</a>&nbsp;&nbsp;
-      <a href="#M000089">send_message</a>&nbsp;&nbsp;
-      <a href="#M000081">service_request</a>&nbsp;&nbsp;
-      <a href="#M000080">shutdown!</a>&nbsp;&nbsp;
-      <a href="#M000087">wait</a>&nbsp;&nbsp;
+      <a href="#M000087">close</a>&nbsp;&nbsp;
+      <a href="#M000086">closed?</a>&nbsp;&nbsp;
+      <a href="#M000099">configure_client</a>&nbsp;&nbsp;
+      <a href="#M000100">configure_server</a>&nbsp;&nbsp;
+      <a href="#M000098">enqueue_message</a>&nbsp;&nbsp;
+      <a href="#M000101">hint</a>&nbsp;&nbsp;
+      <a href="#M000085">host_as_string</a>&nbsp;&nbsp;
+      <a href="#M000084">new</a>&nbsp;&nbsp;
+      <a href="#M000093">next_message</a>&nbsp;&nbsp;
+      <a href="#M000092">peer</a>&nbsp;&nbsp;
+      <a href="#M000094">poll_message</a>&nbsp;&nbsp;
+      <a href="#M000096">push</a>&nbsp;&nbsp;
+      <a href="#M000090">rekey!</a>&nbsp;&nbsp;
+      <a href="#M000091">rekey_as_needed</a>&nbsp;&nbsp;
+      <a href="#M000097">send_message</a>&nbsp;&nbsp;
+      <a href="#M000089">service_request</a>&nbsp;&nbsp;
+      <a href="#M000088">shutdown!</a>&nbsp;&nbsp;
+      <a href="#M000095">wait</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -232,19 +232,19 @@ host.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000076" class="method-detail">
-        <a name="M000076"></a>
+      <div id="method-M000084" class="method-detail">
+        <a name="M000084"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000076.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000076.html');return false;">
+          <a href="Session.src/M000084.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000084.html');return false;">
           <span class="method-name">new</span><span class="method-args">(host, options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Instantiates a <a href="Session.html#M000076">new</a> transport layer
+Instantiates a <a href="Session.html#M000084">new</a> transport layer
 abstraction. This will block until the initial key exchange completes,
 leaving you with a ready-to-use transport session.
 </p>
@@ -253,12 +253,12 @@ leaving you with a ready-to-use transport session.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000079" class="method-detail">
-        <a name="M000079"></a>
+      <div id="method-M000087" class="method-detail">
+        <a name="M000087"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000079.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000079.html');return false;">
+          <a href="Session.src/M000087.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000087.html');return false;">
           <span class="method-name">close</span><span class="method-args">()</span>
           </a>
         </div>
@@ -266,18 +266,18 @@ leaving you with a ready-to-use transport session.
         <div class="method-description">
           <p>
 Cleans up (see <a
-href="PacketStream.html#M000066">PacketStream#cleanup</a>) and closes the
+href="PacketStream.html#M000074">PacketStream#cleanup</a>) and closes the
 underlying socket.
 </p>
         </div>
       </div>
 
-      <div id="method-M000078" class="method-detail">
-        <a name="M000078"></a>
+      <div id="method-M000086" class="method-detail">
+        <a name="M000086"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000078.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000078.html');return false;">
+          <a href="Session.src/M000086.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000086.html');return false;">
           <span class="method-name">closed?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -289,12 +289,12 @@ Returns true if the underlying socket has been closed.
         </div>
       </div>
 
-      <div id="method-M000091" class="method-detail">
-        <a name="M000091"></a>
+      <div id="method-M000099" class="method-detail">
+        <a name="M000099"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000091.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000091.html');return false;">
+          <a href="Session.src/M000099.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000099.html');return false;">
           <span class="method-name">configure_client</span><span class="method-args">(options={})</span>
           </a>
         </div>
@@ -308,12 +308,12 @@ hmac algorithms to use when sending packets to the server.
         </div>
       </div>
 
-      <div id="method-M000092" class="method-detail">
-        <a name="M000092"></a>
+      <div id="method-M000100" class="method-detail">
+        <a name="M000100"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000092.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000092.html');return false;">
+          <a href="Session.src/M000100.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000100.html');return false;">
           <span class="method-name">configure_server</span><span class="method-args">(options={})</span>
           </a>
         </div>
@@ -327,12 +327,12 @@ hmac algorithms to use when reading packets from the server.
         </div>
       </div>
 
-      <div id="method-M000090" class="method-detail">
-        <a name="M000090"></a>
+      <div id="method-M000098" class="method-detail">
+        <a name="M000098"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000090.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000090.html');return false;">
+          <a href="Session.src/M000098.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000098.html');return false;">
           <span class="method-name">enqueue_message</span><span class="method-args">(message)</span>
           </a>
         </div>
@@ -345,31 +345,31 @@ opportunity. This does not block, but returns immediately.
         </div>
       </div>
 
-      <div id="method-M000093" class="method-detail">
-        <a name="M000093"></a>
+      <div id="method-M000101" class="method-detail">
+        <a name="M000101"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000093.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000093.html');return false;">
+          <a href="Session.src/M000101.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000101.html');return false;">
           <span class="method-name">hint</span><span class="method-args">(which, value=true)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Sets a <a href="Session.html#M000076">new</a> <a
-href="Session.html#M000093">hint</a> for the packet stream, which the
+Sets a <a href="Session.html#M000084">new</a> <a
+href="Session.html#M000101">hint</a> for the packet stream, which the
 packet stream may use to change its behavior. (See PacketStream#hints).
 </p>
         </div>
       </div>
 
-      <div id="method-M000077" class="method-detail">
-        <a name="M000077"></a>
+      <div id="method-M000085" class="method-detail">
+        <a name="M000085"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000077.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000077.html');return false;">
+          <a href="Session.src/M000085.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000085.html');return false;">
           <span class="method-name">host_as_string</span><span class="method-args">()</span>
           </a>
         </div>
@@ -382,31 +382,31 @@ href="../../SSH.html">SSH</a> known-host files.
         </div>
       </div>
 
-      <div id="method-M000085" class="method-detail">
-        <a name="M000085"></a>
+      <div id="method-M000093" class="method-detail">
+        <a name="M000093"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000085.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000085.html');return false;">
+          <a href="Session.src/M000093.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000093.html');return false;">
           <span class="method-name">next_message</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Blocks until a <a href="Session.html#M000076">new</a> packet is available
+Blocks until a <a href="Session.html#M000084">new</a> packet is available
 to be read, and returns that packet. See <a
-href="Session.html#M000086">poll_message</a>.
+href="Session.html#M000094">poll_message</a>.
 </p>
         </div>
       </div>
 
-      <div id="method-M000084" class="method-detail">
-        <a name="M000084"></a>
+      <div id="method-M000092" class="method-detail">
+        <a name="M000092"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000084.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000084.html');return false;">
+          <a href="Session.src/M000092.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000092.html');return false;">
           <span class="method-name">peer</span><span class="method-args">()</span>
           </a>
         </div>
@@ -414,19 +414,19 @@ href="Session.html#M000086">poll_message</a>.
         <div class="method-description">
           <p>
 Returns a hash of information about the <a
-href="Session.html#M000084">peer</a> (remote) side of the socket, including
+href="Session.html#M000092">peer</a> (remote) side of the socket, including
 :ip, :port, :host, and :canonized (see <a
-href="Session.html#M000077">host_as_string</a>).
+href="Session.html#M000085">host_as_string</a>).
 </p>
         </div>
       </div>
 
-      <div id="method-M000086" class="method-detail">
-        <a name="M000086"></a>
+      <div id="method-M000094" class="method-detail">
+        <a name="M000094"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000086.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000086.html');return false;">
+          <a href="Session.src/M000094.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000094.html');return false;">
           <span class="method-name">poll_message</span><span class="method-args">(mode=:nonblock, consume_queue=true)</span>
           </a>
         </div>
@@ -448,12 +448,12 @@ queue before the socket is queried.
         </div>
       </div>
 
-      <div id="method-M000088" class="method-detail">
-        <a name="M000088"></a>
+      <div id="method-M000096" class="method-detail">
+        <a name="M000096"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000088.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000088.html');return false;">
+          <a href="Session.src/M000096.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000096.html');return false;">
           <span class="method-name">push</span><span class="method-args">(packet)</span>
           </a>
         </div>
@@ -461,18 +461,18 @@ queue before the socket is queried.
         <div class="method-description">
           <p>
 Adds the given packet to the packet queue. If the queue is non-empty, <a
-href="Session.html#M000086">poll_message</a> will return packets from the
+href="Session.html#M000094">poll_message</a> will return packets from the
 queue in the order they were received.
 </p>
         </div>
       </div>
 
-      <div id="method-M000082" class="method-detail">
-        <a name="M000082"></a>
+      <div id="method-M000090" class="method-detail">
+        <a name="M000090"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000082.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000082.html');return false;">
+          <a href="Session.src/M000090.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000090.html');return false;">
           <span class="method-name">rekey!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -485,12 +485,12 @@ rekey is already pending, this returns immediately, having no effect.
         </div>
       </div>
 
-      <div id="method-M000083" class="method-detail">
-        <a name="M000083"></a>
+      <div id="method-M000091" class="method-detail">
+        <a name="M000091"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000083.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000083.html');return false;">
+          <a href="Session.src/M000091.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000091.html');return false;">
           <span class="method-name">rekey_as_needed</span><span class="method-args">()</span>
           </a>
         </div>
@@ -504,12 +504,12 @@ one is performed, causing this method to block until it completes.
         </div>
       </div>
 
-      <div id="method-M000089" class="method-detail">
-        <a name="M000089"></a>
+      <div id="method-M000097" class="method-detail">
+        <a name="M000097"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000089.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000089.html');return false;">
+          <a href="Session.src/M000097.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000097.html');return false;">
           <span class="method-name">send_message</span><span class="method-args">(message)</span>
           </a>
         </div>
@@ -522,31 +522,31 @@ message has been sent.
         </div>
       </div>
 
-      <div id="method-M000081" class="method-detail">
-        <a name="M000081"></a>
+      <div id="method-M000089" class="method-detail">
+        <a name="M000089"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000081.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000081.html');return false;">
+          <a href="Session.src/M000089.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000089.html');return false;">
           <span class="method-name">service_request</span><span class="method-args">(service)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns a <a href="Session.html#M000076">new</a> <a
-href="Session.html#M000081">service_request</a> packet for the given
+Returns a <a href="Session.html#M000084">new</a> <a
+href="Session.html#M000089">service_request</a> packet for the given
 service name, ready for sending to the server.
 </p>
         </div>
       </div>
 
-      <div id="method-M000080" class="method-detail">
-        <a name="M000080"></a>
+      <div id="method-M000088" class="method-detail">
+        <a name="M000088"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000080.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000080.html');return false;">
+          <a href="Session.src/M000088.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000088.html');return false;">
           <span class="method-name">shutdown!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -556,18 +556,18 @@ service name, ready for sending to the server.
 Performs a &quot;hard&quot; shutdown of the connection. In general, this
 should never be done, but it might be necessary (in a rescue clause, for
 instance, when the connection needs to <a
-href="Session.html#M000079">close</a> but you don&#8216;t know the status
+href="Session.html#M000087">close</a> but you don&#8216;t know the status
 of the underlying protocol&#8216;s state).
 </p>
         </div>
       </div>
 
-      <div id="method-M000087" class="method-detail">
-        <a name="M000087"></a>
+      <div id="method-M000095" class="method-detail">
+        <a name="M000095"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000087.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000087.html');return false;">
+          <a href="Session.src/M000095.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000095.html');return false;">
           <span class="method-name">wait</span><span class="method-args">() {|| ...}</span>
           </a>
         </div>
@@ -576,7 +576,7 @@ of the underlying protocol&#8216;s state).
           <p>
 Waits (blocks) until the given block returns true. If no block is given,
 this just waits long enough to see if there are any pending packets. Any
-packets read are enqueued (see <a href="Session.html#M000088">push</a>).
+packets read are enqueued (see <a href="Session.html#M000096">push</a>).
 </p>
         </div>
       </div>

@@ -82,9 +82,9 @@
       <p>
 Encapsulates the connection information for a single remote server, as well
 as the <a href="../../SSH.html">Net::SSH</a> <a
-href="Server.html#M000249">session</a> corresponding to that information.
+href="Server.html#M000252">session</a> corresponding to that information.
 You&#8216;ll rarely need to instantiate one of these directly: instead, you
-should use <a href="Session.html#M000222">Net::SSH::Multi::Session#use</a>.
+should use <a href="Session.html#M000234">Net::SSH::Multi::Session#use</a>.
 </p>
 
     </div>
@@ -96,19 +96,19 @@ should use <a href="Session.html#M000222">Net::SSH::Multi::Session#use</a>.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000243">&lt;=&gt;</a>&nbsp;&nbsp;
-      <a href="#M000240">[]</a>&nbsp;&nbsp;
-      <a href="#M000241">[]=</a>&nbsp;&nbsp;
-      <a href="#M000250">busy?</a>&nbsp;&nbsp;
-      <a href="#M000251">close</a>&nbsp;&nbsp;
-      <a href="#M000248">fail!</a>&nbsp;&nbsp;
-      <a href="#M000247">failed?</a>&nbsp;&nbsp;
-      <a href="#M000244">hash</a>&nbsp;&nbsp;
-      <a href="#M000246">inspect</a>&nbsp;&nbsp;
-      <a href="#M000239">new</a>&nbsp;&nbsp;
-      <a href="#M000242">port</a>&nbsp;&nbsp;
-      <a href="#M000249">session</a>&nbsp;&nbsp;
-      <a href="#M000245">to_s</a>&nbsp;&nbsp;
+      <a href="#M000246">&lt;=&gt;</a>&nbsp;&nbsp;
+      <a href="#M000243">[]</a>&nbsp;&nbsp;
+      <a href="#M000244">[]=</a>&nbsp;&nbsp;
+      <a href="#M000253">busy?</a>&nbsp;&nbsp;
+      <a href="#M000254">close</a>&nbsp;&nbsp;
+      <a href="#M000251">fail!</a>&nbsp;&nbsp;
+      <a href="#M000250">failed?</a>&nbsp;&nbsp;
+      <a href="#M000247">hash</a>&nbsp;&nbsp;
+      <a href="#M000249">inspect</a>&nbsp;&nbsp;
+      <a href="#M000242">new</a>&nbsp;&nbsp;
+      <a href="#M000245">port</a>&nbsp;&nbsp;
+      <a href="#M000252">session</a>&nbsp;&nbsp;
+      <a href="#M000248">to_s</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -203,24 +203,24 @@ The user name to use when logging into the server.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000239" class="method-detail">
-        <a name="M000239"></a>
+      <div id="method-M000242" class="method-detail">
+        <a name="M000242"></a>
 
         <div class="method-heading">
-          <a href="Server.src/M000239.html" target="Code" class="method-signature"
-            onclick="popupCode('Server.src/M000239.html');return false;">
+          <a href="Server.src/M000242.html" target="Code" class="method-signature"
+            onclick="popupCode('Server.src/M000242.html');return false;">
           <span class="method-name">new</span><span class="method-args">(master, host, options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Creates a <a href="Server.html#M000239">new</a> <a
+Creates a <a href="Server.html#M000242">new</a> <a
 href="Server.html">Server</a> instance with the given connection
 information. The <tt>master</tt> argument must be a reference to the <a
 href="Session.html">Net::SSH::Multi::Session</a> instance that will manage
 this server reference. The <tt>options</tt> <a
-href="Server.html#M000244">hash</a> must conform to the options described
+href="Server.html#M000247">hash</a> must conform to the options described
 for Net::SSH::start, with two additions:
 </p>
 <ul>
@@ -234,7 +234,7 @@ use when establishing a connection to this server.
 </ul>
 <p>
 The <tt>host</tt> argument may include the username and <a
-href="Server.html#M000242">port</a> number, in which case those values take
+href="Server.html#M000245">port</a> number, in which case those values take
 precedence over similar values given in the <tt>options</tt>:
 </p>
 <pre>
@@ -247,12 +247,12 @@ precedence over similar values given in the <tt>options</tt>:
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000243" class="method-detail">
-        <a name="M000243"></a>
+      <div id="method-M000246" class="method-detail">
+        <a name="M000246"></a>
 
         <div class="method-heading">
-          <a href="Server.src/M000243.html" target="Code" class="method-signature"
-            onclick="popupCode('Server.src/M000243.html');return false;">
+          <a href="Server.src/M000246.html" target="Code" class="method-signature"
+            onclick="popupCode('Server.src/M000246.html');return false;">
           <span class="method-name">&lt;=&gt;</span><span class="method-args">(server)</span>
           </a>
         </div>
@@ -264,12 +264,12 @@ Gives server definitions a sort order, and allows comparison.
         </div>
       </div>
 
-      <div id="method-M000240" class="method-detail">
-        <a name="M000240"></a>
+      <div id="method-M000243" class="method-detail">
+        <a name="M000243"></a>
 
         <div class="method-heading">
-          <a href="Server.src/M000240.html" target="Code" class="method-signature"
-            onclick="popupCode('Server.src/M000240.html');return false;">
+          <a href="Server.src/M000243.html" target="Code" class="method-signature"
+            onclick="popupCode('Server.src/M000243.html');return false;">
           <span class="method-name">[]</span><span class="method-args">(key)</span>
           </a>
         </div>
@@ -278,18 +278,18 @@ Gives server definitions a sort order, and allows comparison.
           <p>
 Returns the value of the server property with the given <tt>key</tt>. <a
 href="Server.html">Server</a> properties are described via the
-+:properties+ key in the options <a href="Server.html#M000244">hash</a>
++:properties+ key in the options <a href="Server.html#M000247">hash</a>
 when defining the <a href="Server.html">Server</a>.
 </p>
         </div>
       </div>
 
-      <div id="method-M000241" class="method-detail">
-        <a name="M000241"></a>
+      <div id="method-M000244" class="method-detail">
+        <a name="M000244"></a>
 
         <div class="method-heading">
-          <a href="Server.src/M000241.html" target="Code" class="method-signature"
-            onclick="popupCode('Server.src/M000241.html');return false;">
+          <a href="Server.src/M000244.html" target="Code" class="method-signature"
+            onclick="popupCode('Server.src/M000244.html');return false;">
           <span class="method-name">[]=</span><span class="method-args">(key, value)</span>
           </a>
         </div>
@@ -297,28 +297,47 @@ when defining the <a href="Server.html">Server</a>.
         <div class="method-description">
           <p>
 Sets the given key/value pair in the +:properties+ key in the options <a
-href="Server.html#M000244">hash</a>. If the options <a
-href="Server.html#M000244">hash</a> has no :properties key, it will be
+href="Server.html#M000247">hash</a>. If the options <a
+href="Server.html#M000247">hash</a> has no :properties key, it will be
 created.
 </p>
         </div>
       </div>
 
-      <div id="method-M000250" class="method-detail">
-        <a name="M000250"></a>
+      <div id="method-M000253" class="method-detail">
+        <a name="M000253"></a>
 
         <div class="method-heading">
-          <a href="Server.src/M000250.html" target="Code" class="method-signature"
-            onclick="popupCode('Server.src/M000250.html');return false;">
+          <a href="Server.src/M000253.html" target="Code" class="method-signature"
+            onclick="popupCode('Server.src/M000253.html');return false;">
           <span class="method-name">busy?</span><span class="method-args">(include_invisible=false)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns <tt>true</tt> if the <a href="Server.html#M000249">session</a> has
-been opened, and the <a href="Server.html#M000249">session</a> is currently
+Returns <tt>true</tt> if the <a href="Server.html#M000252">session</a> has
+been opened, and the <a href="Server.html#M000252">session</a> is currently
 busy (as defined by Net::SSH::Connection::Session#busy?).
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000254" class="method-detail">
+        <a name="M000254"></a>
+
+        <div class="method-heading">
+          <a href="Server.src/M000254.html" target="Code" class="method-signature"
+            onclick="popupCode('Server.src/M000254.html');return false;">
+          <span class="method-name">close</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Closes this server&#8216;s <a href="Server.html#M000252">session</a>. If
+the <a href="Server.html#M000252">session</a> has not yet been opened, this
+does nothing.
 </p>
         </div>
       </div>
@@ -329,25 +348,6 @@ busy (as defined by Net::SSH::Connection::Session#busy?).
         <div class="method-heading">
           <a href="Server.src/M000251.html" target="Code" class="method-signature"
             onclick="popupCode('Server.src/M000251.html');return false;">
-          <span class="method-name">close</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Closes this server&#8216;s <a href="Server.html#M000249">session</a>. If
-the <a href="Server.html#M000249">session</a> has not yet been opened, this
-does nothing.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000248" class="method-detail">
-        <a name="M000248"></a>
-
-        <div class="method-heading">
-          <a href="Server.src/M000248.html" target="Code" class="method-signature"
-            onclick="popupCode('Server.src/M000248.html');return false;">
           <span class="method-name">fail!</span><span class="method-args">(flag=true)</span>
           </a>
         </div>
@@ -361,12 +361,12 @@ flag so that a retry may be attempted.
         </div>
       </div>
 
-      <div id="method-M000247" class="method-detail">
-        <a name="M000247"></a>
+      <div id="method-M000250" class="method-detail">
+        <a name="M000250"></a>
 
         <div class="method-heading">
-          <a href="Server.src/M000247.html" target="Code" class="method-signature"
-            onclick="popupCode('Server.src/M000247.html');return false;">
+          <a href="Server.src/M000250.html" target="Code" class="method-signature"
+            onclick="popupCode('Server.src/M000250.html');return false;">
           <span class="method-name">failed?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -378,34 +378,34 @@ Returns <tt>true</tt> if this server has ever failed a connection attempt.
         </div>
       </div>
 
-      <div id="method-M000244" class="method-detail">
-        <a name="M000244"></a>
+      <div id="method-M000247" class="method-detail">
+        <a name="M000247"></a>
 
         <div class="method-heading">
-          <a href="Server.src/M000244.html" target="Code" class="method-signature"
-            onclick="popupCode('Server.src/M000244.html');return false;">
+          <a href="Server.src/M000247.html" target="Code" class="method-signature"
+            onclick="popupCode('Server.src/M000247.html');return false;">
           <span class="method-name">hash</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Generates a <tt>Fixnum</tt> <a href="Server.html#M000244">hash</a> value
+Generates a <tt>Fixnum</tt> <a href="Server.html#M000247">hash</a> value
 for this object. This function has the property that +a.eql?(b)+ implies
-+a.hash == b.hash+. The <a href="Server.html#M000244">hash</a> value is
-used by class <tt>Hash</tt>. Any <a href="Server.html#M000244">hash</a>
++a.hash == b.hash+. The <a href="Server.html#M000247">hash</a> value is
+used by class <tt>Hash</tt>. Any <a href="Server.html#M000247">hash</a>
 value that exceeds the capacity of a <tt>Fixnum</tt> will be truncated
 before being used.
 </p>
         </div>
       </div>
 
-      <div id="method-M000246" class="method-detail">
-        <a name="M000246"></a>
+      <div id="method-M000249" class="method-detail">
+        <a name="M000249"></a>
 
         <div class="method-heading">
-          <a href="Server.src/M000246.html" target="Code" class="method-signature"
-            onclick="popupCode('Server.src/M000246.html');return false;">
+          <a href="Server.src/M000249.html" target="Code" class="method-signature"
+            onclick="popupCode('Server.src/M000249.html');return false;">
           <span class="method-name">inspect</span><span class="method-args">()</span>
           </a>
         </div>
@@ -417,30 +417,30 @@ Returns a human-readable representation of this server instance.
         </div>
       </div>
 
-      <div id="method-M000242" class="method-detail">
-        <a name="M000242"></a>
+      <div id="method-M000245" class="method-detail">
+        <a name="M000245"></a>
 
         <div class="method-heading">
-          <a href="Server.src/M000242.html" target="Code" class="method-signature"
-            onclick="popupCode('Server.src/M000242.html');return false;">
+          <a href="Server.src/M000245.html" target="Code" class="method-signature"
+            onclick="popupCode('Server.src/M000245.html');return false;">
           <span class="method-name">port</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the <a href="Server.html#M000242">port</a> number to use for this
+Returns the <a href="Server.html#M000245">port</a> number to use for this
 connection.
 </p>
         </div>
       </div>
 
-      <div id="method-M000249" class="method-detail">
-        <a name="M000249"></a>
+      <div id="method-M000252" class="method-detail">
+        <a name="M000252"></a>
 
         <div class="method-heading">
-          <a href="Server.src/M000249.html" target="Code" class="method-signature"
-            onclick="popupCode('Server.src/M000249.html');return false;">
+          <a href="Server.src/M000252.html" target="Code" class="method-signature"
+            onclick="popupCode('Server.src/M000252.html');return false;">
           <span class="method-name">session</span><span class="method-args">(require_session=false)</span>
           </a>
         </div>
@@ -448,11 +448,11 @@ connection.
         <div class="method-description">
           <p>
 Returns the <a href="../../SSH.html">Net::SSH</a> <a
-href="Server.html#M000249">session</a> object for this server. If
+href="Server.html#M000252">session</a> object for this server. If
 <tt>require_session</tt> is false and the <a
-href="Server.html#M000249">session</a> has not previously been created,
+href="Server.html#M000252">session</a> has not previously been created,
 this will return <tt>nil</tt>. If <tt>require_session</tt> is true, the <a
-href="Server.html#M000249">session</a> will be instantiated if it has not
+href="Server.html#M000252">session</a> will be instantiated if it has not
 already been instantiated, via the <tt>gateway</tt> if one is given, or
 directly (via Net::SSH::start) otherwise.
 </p>
@@ -465,7 +465,7 @@ directly (via Net::SSH::start) otherwise.
 <p>
 Note that the sessions returned by this are &quot;enhanced&quot; slightly,
 to make them easier to deal with in a multi-<a
-href="Server.html#M000249">session</a> environment: they have a :server
+href="Server.html#M000252">session</a> environment: they have a :server
 property automatically set on them, that refers to this object (the <a
 href="Server.html">Server</a> instance that spawned them).
 </p>
@@ -475,12 +475,12 @@ href="Server.html">Server</a> instance that spawned them).
         </div>
       </div>
 
-      <div id="method-M000245" class="method-detail">
-        <a name="M000245"></a>
+      <div id="method-M000248" class="method-detail">
+        <a name="M000248"></a>
 
         <div class="method-heading">
-          <a href="Server.src/M000245.html" target="Code" class="method-signature"
-            onclick="popupCode('Server.src/M000245.html');return false;">
+          <a href="Server.src/M000248.html" target="Code" class="method-signature"
+            onclick="popupCode('Server.src/M000248.html');return false;">
           <span class="method-name">to_s</span><span class="method-args">()</span>
           </a>
         </div>

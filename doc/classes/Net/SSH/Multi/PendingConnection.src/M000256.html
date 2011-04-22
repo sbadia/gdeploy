@@ -5,14 +5,15 @@
 
 <html>
 <head>
-  <title>busy? (Net::SSH::Multi::PendingConnection)</title>
+  <title>replace_with (Net::SSH::Multi::PendingConnection)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/multi/pending_connection.rb, line 82</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">busy?</span>(<span class="ruby-identifier">include_invisible</span>=<span class="ruby-keyword kw">false</span>)
-      <span class="ruby-keyword kw">true</span>
+  <pre><span class="ruby-comment cmt"># File net/ssh/multi/pending_connection.rb, line 59</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">replace_with</span>(<span class="ruby-identifier">session</span>)
+      <span class="ruby-ivar">@recordings</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">recording</span><span class="ruby-operator">|</span> <span class="ruby-identifier">recording</span>.<span class="ruby-identifier">replay_on</span>(<span class="ruby-identifier">session</span>) }
+      <span class="ruby-ivar">@server</span>.<span class="ruby-identifier">replace_session</span>(<span class="ruby-identifier">session</span>)
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

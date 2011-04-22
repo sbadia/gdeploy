@@ -92,7 +92,7 @@ Essentially, it is spawned by a <a
 href="PendingConnection.html">Net::SSH::Multi::PendingConnection</a> when
 the pending connection is asked to open a channel. Any actions performed on
 the channel proxy will then be recorded, until a real channel is set as the
-delegate (see <a href="ChannelProxy.html#M000192">delegate_to</a>). At that
+delegate (see <a href="ChannelProxy.html#M000195">delegate_to</a>). At that
 point, all recorded actions will be replayed on the channel, and any
 subsequent actions will be immediately delegated to the channel.
 </p>
@@ -106,9 +106,9 @@ subsequent actions will be immediately delegated to the channel.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000192">delegate_to</a>&nbsp;&nbsp;
-      <a href="#M000193">method_missing</a>&nbsp;&nbsp;
-      <a href="#M000191">new</a>&nbsp;&nbsp;
+      <a href="#M000195">delegate_to</a>&nbsp;&nbsp;
+      <a href="#M000196">method_missing</a>&nbsp;&nbsp;
+      <a href="#M000194">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -147,19 +147,19 @@ channel is opened.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000191" class="method-detail">
-        <a name="M000191"></a>
+      <div id="method-M000194" class="method-detail">
+        <a name="M000194"></a>
 
         <div class="method-heading">
-          <a href="ChannelProxy.src/M000191.html" target="Code" class="method-signature"
-            onclick="popupCode('ChannelProxy.src/M000191.html');return false;">
+          <a href="ChannelProxy.src/M000194.html" target="Code" class="method-signature"
+            onclick="popupCode('ChannelProxy.src/M000194.html');return false;">
           <span class="method-name">new</span><span class="method-args">(&amp;on_confirm)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Instantiates a <a href="ChannelProxy.html#M000191">new</a> channel proxy
+Instantiates a <a href="ChannelProxy.html#M000194">new</a> channel proxy
 with the given <tt>on_confirm</tt> callback.
 </p>
         </div>
@@ -167,12 +167,12 @@ with the given <tt>on_confirm</tt> callback.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000192" class="method-detail">
-        <a name="M000192"></a>
+      <div id="method-M000195" class="method-detail">
+        <a name="M000195"></a>
 
         <div class="method-heading">
-          <a href="ChannelProxy.src/M000192.html" target="Code" class="method-signature"
-            onclick="popupCode('ChannelProxy.src/M000192.html');return false;">
+          <a href="ChannelProxy.src/M000195.html" target="Code" class="method-signature"
+            onclick="popupCode('ChannelProxy.src/M000195.html');return false;">
           <span class="method-name">delegate_to</span><span class="method-args">(channel)</span>
           </a>
         </div>
@@ -188,12 +188,12 @@ channel.
         </div>
       </div>
 
-      <div id="method-M000193" class="method-detail">
-        <a name="M000193"></a>
+      <div id="method-M000196" class="method-detail">
+        <a name="M000196"></a>
 
         <div class="method-heading">
-          <a href="ChannelProxy.src/M000193.html" target="Code" class="method-signature"
-            onclick="popupCode('ChannelProxy.src/M000193.html');return false;">
+          <a href="ChannelProxy.src/M000196.html" target="Code" class="method-signature"
+            onclick="popupCode('ChannelProxy.src/M000196.html');return false;">
           <span class="method-name">method_missing</span><span class="method-args">(sym, *args, &amp;block)</span>
           </a>
         </div>
@@ -201,7 +201,7 @@ channel.
         <div class="method-description">
           <p>
 If a channel delegate has been specified (see <a
-href="ChannelProxy.html#M000192">delegate_to</a>), the method will be
+href="ChannelProxy.html#M000195">delegate_to</a>), the method will be
 immediately sent to the delegate. Otherwise, the call is added to the list
 of recorded method calls, to be played back when a delegate is specified.
 </p>

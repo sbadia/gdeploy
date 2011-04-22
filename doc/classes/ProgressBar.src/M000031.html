@@ -5,17 +5,16 @@
 
 <html>
 <head>
-  <title>inc (ProgressBar)</title>
+  <title>finish (ProgressBar)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File misc/progressbar.rb, line 211</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inc</span> (<span class="ruby-identifier">step</span> = <span class="ruby-value">1</span>)
-    <span class="ruby-ivar">@current</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">step</span>
-    <span class="ruby-ivar">@current</span> = <span class="ruby-ivar">@total</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@current</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@total</span>
-    <span class="ruby-identifier">show_if_needed</span>
-    <span class="ruby-ivar">@previous</span> = <span class="ruby-ivar">@current</span>
+  <pre><span class="ruby-comment cmt"># File misc/progressbar.rb, line 184</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">finish</span>
+    <span class="ruby-ivar">@current</span> = <span class="ruby-ivar">@total</span>
+    <span class="ruby-ivar">@finished_p</span> = <span class="ruby-keyword kw">true</span>
+    <span class="ruby-identifier">show</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

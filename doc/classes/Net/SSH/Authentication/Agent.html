@@ -98,13 +98,13 @@ SSH2 functionality (like signing data).
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000160">close</a>&nbsp;&nbsp;
-      <a href="#M000155">connect</a>&nbsp;&nbsp;
-      <a href="#M000157">connect!</a>&nbsp;&nbsp;
-      <a href="#M000159">identities</a>&nbsp;&nbsp;
-      <a href="#M000158">negotiate!</a>&nbsp;&nbsp;
-      <a href="#M000156">new</a>&nbsp;&nbsp;
-      <a href="#M000161">sign</a>&nbsp;&nbsp;
+      <a href="#M000166">close</a>&nbsp;&nbsp;
+      <a href="#M000161">connect</a>&nbsp;&nbsp;
+      <a href="#M000163">connect!</a>&nbsp;&nbsp;
+      <a href="#M000165">identities</a>&nbsp;&nbsp;
+      <a href="#M000164">negotiate!</a>&nbsp;&nbsp;
+      <a href="#M000162">new</a>&nbsp;&nbsp;
+      <a href="#M000167">sign</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -224,38 +224,38 @@ href="../../SSH.html">SSH</a> agent.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000155" class="method-detail">
-        <a name="M000155"></a>
+      <div id="method-M000161" class="method-detail">
+        <a name="M000161"></a>
 
         <div class="method-heading">
-          <a href="Agent.src/M000155.html" target="Code" class="method-signature"
-            onclick="popupCode('Agent.src/M000155.html');return false;">
+          <a href="Agent.src/M000161.html" target="Code" class="method-signature"
+            onclick="popupCode('Agent.src/M000161.html');return false;">
           <span class="method-name">connect</span><span class="method-args">(logger=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Instantiates a <a href="Agent.html#M000156">new</a> agent object, connects
+Instantiates a <a href="Agent.html#M000162">new</a> agent object, connects
 to a running <a href="../../SSH.html">SSH</a> agent, negotiates the agent
 protocol version, and returns the agent object.
 </p>
         </div>
       </div>
 
-      <div id="method-M000156" class="method-detail">
-        <a name="M000156"></a>
+      <div id="method-M000162" class="method-detail">
+        <a name="M000162"></a>
 
         <div class="method-heading">
-          <a href="Agent.src/M000156.html" target="Code" class="method-signature"
-            onclick="popupCode('Agent.src/M000156.html');return false;">
+          <a href="Agent.src/M000162.html" target="Code" class="method-signature"
+            onclick="popupCode('Agent.src/M000162.html');return false;">
           <span class="method-name">new</span><span class="method-args">(logger=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Creates a <a href="Agent.html#M000156">new</a> <a
+Creates a <a href="Agent.html#M000162">new</a> <a
 href="Agent.html">Agent</a> object, using the optional logger instance to
 report status.
 </p>
@@ -264,12 +264,12 @@ report status.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000160" class="method-detail">
-        <a name="M000160"></a>
+      <div id="method-M000166" class="method-detail">
+        <a name="M000166"></a>
 
         <div class="method-heading">
-          <a href="Agent.src/M000160.html" target="Code" class="method-signature"
-            onclick="popupCode('Agent.src/M000160.html');return false;">
+          <a href="Agent.src/M000166.html" target="Code" class="method-signature"
+            onclick="popupCode('Agent.src/M000166.html');return false;">
           <span class="method-name">close</span><span class="method-args">()</span>
           </a>
         </div>
@@ -282,12 +282,12 @@ agent.
         </div>
       </div>
 
-      <div id="method-M000157" class="method-detail">
-        <a name="M000157"></a>
+      <div id="method-M000163" class="method-detail">
+        <a name="M000163"></a>
 
         <div class="method-heading">
-          <a href="Agent.src/M000157.html" target="Code" class="method-signature"
-            onclick="popupCode('Agent.src/M000157.html');return false;">
+          <a href="Agent.src/M000163.html" target="Code" class="method-signature"
+            onclick="popupCode('Agent.src/M000163.html');return false;">
           <span class="method-name">connect!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -302,19 +302,19 @@ supports the ssh-agent distributed by OpenSSH).
         </div>
       </div>
 
-      <div id="method-M000159" class="method-detail">
-        <a name="M000159"></a>
+      <div id="method-M000165" class="method-detail">
+        <a name="M000165"></a>
 
         <div class="method-heading">
-          <a href="Agent.src/M000159.html" target="Code" class="method-signature"
-            onclick="popupCode('Agent.src/M000159.html');return false;">
+          <a href="Agent.src/M000165.html" target="Code" class="method-signature"
+            onclick="popupCode('Agent.src/M000165.html');return false;">
           <span class="method-name">identities</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Return an array of all <a href="Agent.html#M000159">identities</a> (public
+Return an array of all <a href="Agent.html#M000165">identities</a> (public
 keys) known to the agent. Each key returned is augmented with a
 <tt>comment</tt> property which is set to the comment returned by the agent
 for that key.
@@ -322,12 +322,12 @@ for that key.
         </div>
       </div>
 
-      <div id="method-M000158" class="method-detail">
-        <a name="M000158"></a>
+      <div id="method-M000164" class="method-detail">
+        <a name="M000164"></a>
 
         <div class="method-heading">
-          <a href="Agent.src/M000158.html" target="Code" class="method-signature"
-            onclick="popupCode('Agent.src/M000158.html');return false;">
+          <a href="Agent.src/M000164.html" target="Code" class="method-signature"
+            onclick="popupCode('Agent.src/M000164.html');return false;">
           <span class="method-name">negotiate!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -341,12 +341,12 @@ successfully.
         </div>
       </div>
 
-      <div id="method-M000161" class="method-detail">
-        <a name="M000161"></a>
+      <div id="method-M000167" class="method-detail">
+        <a name="M000167"></a>
 
         <div class="method-heading">
-          <a href="Agent.src/M000161.html" target="Code" class="method-signature"
-            onclick="popupCode('Agent.src/M000161.html');return false;">
+          <a href="Agent.src/M000167.html" target="Code" class="method-signature"
+            onclick="popupCode('Agent.src/M000167.html');return false;">
           <span class="method-name">sign</span><span class="method-args">(key, data)</span>
           </a>
         </div>
@@ -354,7 +354,7 @@ successfully.
         <div class="method-description">
           <p>
 Using the agent and the given public key, <a
-href="Agent.html#M000161">sign</a> the given data. The signature is
+href="Agent.html#M000167">sign</a> the given data. The signature is
 returned in SSH2 format.
 </p>
         </div>

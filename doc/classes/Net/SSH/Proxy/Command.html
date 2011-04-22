@@ -82,7 +82,7 @@
       <p>
 An implementation of a command proxy. To use it, instantiate it, then pass
 the instantiated object via the :proxy key to <a
-href="../../SSH.html#M000045">Net::SSH.start</a>:
+href="../../SSH.html#M000051">Net::SSH.start</a>:
 </p>
 <pre>
   require 'net/ssh/proxy/command'
@@ -102,8 +102,8 @@ href="../../SSH.html#M000045">Net::SSH.start</a>:
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000162">new</a>&nbsp;&nbsp;
-      <a href="#M000163">open</a>&nbsp;&nbsp;
+      <a href="#M000168">new</a>&nbsp;&nbsp;
+      <a href="#M000169">open</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -149,19 +149,19 @@ The command line template
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000162" class="method-detail">
-        <a name="M000162"></a>
+      <div id="method-M000168" class="method-detail">
+        <a name="M000168"></a>
 
         <div class="method-heading">
-          <a href="Command.src/M000162.html" target="Code" class="method-signature"
-            onclick="popupCode('Command.src/M000162.html');return false;">
+          <a href="Command.src/M000168.html" target="Code" class="method-signature"
+            onclick="popupCode('Command.src/M000168.html');return false;">
           <span class="method-name">new</span><span class="method-args">(command_line_template)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Create a <a href="Command.html#M000162">new</a> socket factory that tunnels
+Create a <a href="Command.html#M000168">new</a> socket factory that tunnels
 via a command executed with the user&#8216;s shell, which is composed from
 the given command template. In the command template, `%h&#8217; will be
 substituted by the host name to connect and `%p&#8217; by the port.
@@ -171,19 +171,19 @@ substituted by the host name to connect and `%p&#8217; by the port.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000163" class="method-detail">
-        <a name="M000163"></a>
+      <div id="method-M000169" class="method-detail">
+        <a name="M000169"></a>
 
         <div class="method-heading">
-          <a href="Command.src/M000163.html" target="Code" class="method-signature"
-            onclick="popupCode('Command.src/M000163.html');return false;">
+          <a href="Command.src/M000169.html" target="Code" class="method-signature"
+            onclick="popupCode('Command.src/M000169.html');return false;">
           <span class="method-name">open</span><span class="method-args">(host, port)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Return a <a href="Command.html#M000162">new</a> socket connected to the
+Return a <a href="Command.html#M000168">new</a> socket connected to the
 given host and port via the proxy that was requested when the socket
 factory was instantiated.
 </p>

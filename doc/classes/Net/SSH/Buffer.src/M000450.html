@@ -5,15 +5,16 @@
 
 <html>
 <head>
-  <title>read_key (Net::SSH::Buffer)</title>
+  <title>read_int64 (Net::SSH::Buffer)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/buffer.rb, line 237</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read_key</span>
-      <span class="ruby-identifier">type</span> = <span class="ruby-identifier">read_string</span>
-      <span class="ruby-keyword kw">return</span> (<span class="ruby-identifier">type</span> <span class="ruby-value">? </span><span class="ruby-identifier">read_keyblob</span>(<span class="ruby-identifier">type</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>)
+  <pre><span class="ruby-comment cmt"># File net/ssh/buffer.rb, line 189</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read_int64</span>
+      <span class="ruby-identifier">hi</span> = <span class="ruby-identifier">read_long</span> <span class="ruby-keyword kw">or</span> <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-identifier">lo</span> = <span class="ruby-identifier">read_long</span> <span class="ruby-keyword kw">or</span> <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">return</span> (<span class="ruby-identifier">hi</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">32</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">lo</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

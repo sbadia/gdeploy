@@ -5,15 +5,14 @@
 
 <html>
 <head>
-  <title>on_extended_data (Net::SSH::Connection::Channel)</title>
+  <title>closing? (Net::SSH::Connection::Channel)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/connection/channel.rb, line 345</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">on_extended_data</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-      <span class="ruby-identifier">old</span>, <span class="ruby-ivar">@on_extended_data</span> = <span class="ruby-ivar">@on_extended_data</span>, <span class="ruby-identifier">block</span>
-      <span class="ruby-identifier">old</span>
+  <pre><span class="ruby-comment cmt"># File net/ssh/connection/channel.rb, line 276</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">closing?</span>
+      <span class="ruby-ivar">@closing</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

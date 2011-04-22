@@ -152,7 +152,7 @@ Only a subset of OpenSSH configuration options are understood:
 <p>
 Note that you will never need to use this class directly&#8212;you can
 control whether the OpenSSH configuration files are read by passing the
-:config option to <a href="../SSH.html#M000045">Net::SSH.start</a>. (They
+:config option to <a href="../SSH.html#M000051">Net::SSH.start</a>. (They
 are, by default.)
 </p>
 
@@ -165,10 +165,10 @@ are, by default.)
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000417">default_files</a>&nbsp;&nbsp;
-      <a href="#M000418">for</a>&nbsp;&nbsp;
-      <a href="#M000419">load</a>&nbsp;&nbsp;
-      <a href="#M000420">translate</a>&nbsp;&nbsp;
+      <a href="#M000423">default_files</a>&nbsp;&nbsp;
+      <a href="#M000424">for</a>&nbsp;&nbsp;
+      <a href="#M000425">load</a>&nbsp;&nbsp;
+      <a href="#M000426">translate</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -190,12 +190,12 @@ are, by default.)
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000417" class="method-detail">
-        <a name="M000417"></a>
+      <div id="method-M000423" class="method-detail">
+        <a name="M000423"></a>
 
         <div class="method-heading">
-          <a href="Config.src/M000417.html" target="Code" class="method-signature"
-            onclick="popupCode('Config.src/M000417.html');return false;">
+          <a href="Config.src/M000423.html" target="Code" class="method-signature"
+            onclick="popupCode('Config.src/M000423.html');return false;">
           <span class="method-name">default_files</span><span class="method-args">()</span>
           </a>
         </div>
@@ -208,33 +208,33 @@ default.
         </div>
       </div>
 
-      <div id="method-M000418" class="method-detail">
-        <a name="M000418"></a>
+      <div id="method-M000424" class="method-detail">
+        <a name="M000424"></a>
 
         <div class="method-heading">
-          <a href="Config.src/M000418.html" target="Code" class="method-signature"
-            onclick="popupCode('Config.src/M000418.html');return false;">
+          <a href="Config.src/M000424.html" target="Code" class="method-signature"
+            onclick="popupCode('Config.src/M000424.html');return false;">
           <span class="method-name">for</span><span class="method-args">(host, files=default_files)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Loads the configuration data <a href="Config.html#M000418">for</a> the
+Loads the configuration data <a href="Config.html#M000424">for</a> the
 given <tt>host</tt> from all of the given <tt>files</tt> (defaulting to the
-list of files returned by <a href="Config.html#M000417">default_files</a>),
+list of files returned by <a href="Config.html#M000423">default_files</a>),
 translates the resulting hash into the options recognized by <a
 href="../SSH.html">Net::SSH</a>, and returns them.
 </p>
         </div>
       </div>
 
-      <div id="method-M000419" class="method-detail">
-        <a name="M000419"></a>
+      <div id="method-M000425" class="method-detail">
+        <a name="M000425"></a>
 
         <div class="method-heading">
-          <a href="Config.src/M000419.html" target="Code" class="method-signature"
-            onclick="popupCode('Config.src/M000419.html');return false;">
+          <a href="Config.src/M000425.html" target="Code" class="method-signature"
+            onclick="popupCode('Config.src/M000425.html');return false;">
           <span class="method-name">load</span><span class="method-args">(path, host, settings={})</span>
           </a>
         </div>
@@ -242,23 +242,23 @@ href="../SSH.html">Net::SSH</a>, and returns them.
         <div class="method-description">
           <p>
 Load the OpenSSH configuration settings in the given <tt>file</tt> <a
-href="Config.html#M000418">for</a> the given <tt>host</tt>. If
+href="Config.html#M000424">for</a> the given <tt>host</tt>. If
 <tt>settings</tt> is given, the options are merged into that hash, with
 existing values taking precedence over newly parsed ones. Returns a hash
 containing the OpenSSH options. (See <a
-href="Config.html#M000420">translate</a> <a
-href="Config.html#M000418">for</a> how to convert the OpenSSH options into
+href="Config.html#M000426">translate</a> <a
+href="Config.html#M000424">for</a> how to convert the OpenSSH options into
 <a href="../SSH.html">Net::SSH</a> options.)
 </p>
         </div>
       </div>
 
-      <div id="method-M000420" class="method-detail">
-        <a name="M000420"></a>
+      <div id="method-M000426" class="method-detail">
+        <a name="M000426"></a>
 
         <div class="method-heading">
-          <a href="Config.src/M000420.html" target="Code" class="method-signature"
-            onclick="popupCode('Config.src/M000420.html');return false;">
+          <a href="Config.src/M000426.html" target="Code" class="method-signature"
+            onclick="popupCode('Config.src/M000426.html');return false;">
           <span class="method-name">translate</span><span class="method-args">(settings)</span>
           </a>
         </div>
@@ -268,8 +268,8 @@ href="Config.html#M000418">for</a> how to convert the OpenSSH options into
 Given a hash of OpenSSH configuration options, converts them into a hash of
 <a href="../SSH.html">Net::SSH</a> options. Unrecognized options are
 ignored. The <tt>settings</tt> hash must have Strings <a
-href="Config.html#M000418">for</a> keys, all downcased, and the returned
-hash will have Symbols <a href="Config.html#M000418">for</a> keys.
+href="Config.html#M000424">for</a> keys, all downcased, and the returned
+hash will have Symbols <a href="Config.html#M000424">for</a> keys.
 </p>
         </div>
       </div>

@@ -82,15 +82,15 @@
       <p>
 <a href="Buffer.html">Net::SSH::Buffer</a> is a flexible class for building
 and parsing binary data packets. It provides a stream-like interface for
-sequentially reading data items <a href="Buffer.html#M000428">from</a> the
+sequentially reading data items <a href="Buffer.html#M000434">from</a> the
 buffer, as well as a useful helper method for building binary packets given
 a signature.
 </p>
 <p>
 Writing to a buffer always appends to the end, regardless of where the <a
-href="Buffer.html#M000442">read</a> cursor is. Reading, on the other hand,
+href="Buffer.html#M000448">read</a> cursor is. Reading, on the other hand,
 always begins at the first byte of the buffer and increments the <a
-href="Buffer.html#M000442">read</a> cursor, with subsequent reads taking up
+href="Buffer.html#M000448">read</a> cursor, with subsequent reads taking up
 where the last left off.
 </p>
 <p>
@@ -110,39 +110,39 @@ handy.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000433">==</a>&nbsp;&nbsp;
-      <a href="#M000439">append</a>&nbsp;&nbsp;
-      <a href="#M000431">available</a>&nbsp;&nbsp;
-      <a href="#M000437">clear!</a>&nbsp;&nbsp;
-      <a href="#M000438">consume!</a>&nbsp;&nbsp;
-      <a href="#M000434">empty?</a>&nbsp;&nbsp;
-      <a href="#M000436">eof?</a>&nbsp;&nbsp;
-      <a href="#M000428">from</a>&nbsp;&nbsp;
-      <a href="#M000430">length</a>&nbsp;&nbsp;
-      <a href="#M000429">new</a>&nbsp;&nbsp;
-      <a href="#M000442">read</a>&nbsp;&nbsp;
-      <a href="#M000443">read!</a>&nbsp;&nbsp;
-      <a href="#M000449">read_bignum</a>&nbsp;&nbsp;
-      <a href="#M000448">read_bool</a>&nbsp;&nbsp;
-      <a href="#M000452">read_buffer</a>&nbsp;&nbsp;
-      <a href="#M000446">read_byte</a>&nbsp;&nbsp;
-      <a href="#M000444">read_int64</a>&nbsp;&nbsp;
-      <a href="#M000450">read_key</a>&nbsp;&nbsp;
-      <a href="#M000451">read_keyblob</a>&nbsp;&nbsp;
-      <a href="#M000445">read_long</a>&nbsp;&nbsp;
-      <a href="#M000447">read_string</a>&nbsp;&nbsp;
-      <a href="#M000441">read_to</a>&nbsp;&nbsp;
-      <a href="#M000440">remainder_as_buffer</a>&nbsp;&nbsp;
-      <a href="#M000435">reset!</a>&nbsp;&nbsp;
-      <a href="#M000432">to_s</a>&nbsp;&nbsp;
-      <a href="#M000453">write</a>&nbsp;&nbsp;
-      <a href="#M000459">write_bignum</a>&nbsp;&nbsp;
-      <a href="#M000458">write_bool</a>&nbsp;&nbsp;
-      <a href="#M000456">write_byte</a>&nbsp;&nbsp;
-      <a href="#M000454">write_int64</a>&nbsp;&nbsp;
-      <a href="#M000460">write_key</a>&nbsp;&nbsp;
-      <a href="#M000455">write_long</a>&nbsp;&nbsp;
-      <a href="#M000457">write_string</a>&nbsp;&nbsp;
+      <a href="#M000439">==</a>&nbsp;&nbsp;
+      <a href="#M000445">append</a>&nbsp;&nbsp;
+      <a href="#M000437">available</a>&nbsp;&nbsp;
+      <a href="#M000443">clear!</a>&nbsp;&nbsp;
+      <a href="#M000444">consume!</a>&nbsp;&nbsp;
+      <a href="#M000440">empty?</a>&nbsp;&nbsp;
+      <a href="#M000442">eof?</a>&nbsp;&nbsp;
+      <a href="#M000434">from</a>&nbsp;&nbsp;
+      <a href="#M000436">length</a>&nbsp;&nbsp;
+      <a href="#M000435">new</a>&nbsp;&nbsp;
+      <a href="#M000448">read</a>&nbsp;&nbsp;
+      <a href="#M000449">read!</a>&nbsp;&nbsp;
+      <a href="#M000455">read_bignum</a>&nbsp;&nbsp;
+      <a href="#M000454">read_bool</a>&nbsp;&nbsp;
+      <a href="#M000458">read_buffer</a>&nbsp;&nbsp;
+      <a href="#M000452">read_byte</a>&nbsp;&nbsp;
+      <a href="#M000450">read_int64</a>&nbsp;&nbsp;
+      <a href="#M000456">read_key</a>&nbsp;&nbsp;
+      <a href="#M000457">read_keyblob</a>&nbsp;&nbsp;
+      <a href="#M000451">read_long</a>&nbsp;&nbsp;
+      <a href="#M000453">read_string</a>&nbsp;&nbsp;
+      <a href="#M000447">read_to</a>&nbsp;&nbsp;
+      <a href="#M000446">remainder_as_buffer</a>&nbsp;&nbsp;
+      <a href="#M000441">reset!</a>&nbsp;&nbsp;
+      <a href="#M000438">to_s</a>&nbsp;&nbsp;
+      <a href="#M000459">write</a>&nbsp;&nbsp;
+      <a href="#M000465">write_bignum</a>&nbsp;&nbsp;
+      <a href="#M000464">write_bool</a>&nbsp;&nbsp;
+      <a href="#M000462">write_byte</a>&nbsp;&nbsp;
+      <a href="#M000460">write_int64</a>&nbsp;&nbsp;
+      <a href="#M000466">write_key</a>&nbsp;&nbsp;
+      <a href="#M000461">write_long</a>&nbsp;&nbsp;
+      <a href="#M000463">write_string</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -188,12 +188,12 @@ the current position of the pointer in the buffer
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000428" class="method-detail">
-        <a name="M000428"></a>
+      <div id="method-M000434" class="method-detail">
+        <a name="M000434"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000428.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000428.html');return false;">
+          <a href="Buffer.src/M000434.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000434.html');return false;">
           <span class="method-name">from</span><span class="method-args">(*args)</span>
           </a>
         </div>
@@ -201,9 +201,9 @@ the current position of the pointer in the buffer
         <div class="method-description">
           <p>
 This is a convenience method for creating and populating a <a
-href="Buffer.html#M000429">new</a> buffer <a
-href="Buffer.html#M000428">from</a> a single command. The arguments must be
-even in <a href="Buffer.html#M000430">length</a>, with the first of each
+href="Buffer.html#M000435">new</a> buffer <a
+href="Buffer.html#M000434">from</a> a single command. The arguments must be
+even in <a href="Buffer.html#M000436">length</a>, with the first of each
 pair of arguments being a symbol naming the type of the data that follows.
 If the type is :raw, the value is written directly to the hash.
 </p>
@@ -215,64 +215,64 @@ If the type is :raw, the value is written directly to the hash.
 The supported data types are:
 </p>
 <ul>
-<li>:raw =&gt; <a href="Buffer.html#M000453">write</a> the next value verbatim
-(<a href="Buffer.html#M000453">write</a>)
+<li>:raw =&gt; <a href="Buffer.html#M000459">write</a> the next value verbatim
+(<a href="Buffer.html#M000459">write</a>)
 
 </li>
-<li>:int64 =&gt; <a href="Buffer.html#M000453">write</a> an 8-byte integer (<a
-href="Buffer.html#M000454">write_int64</a>)
+<li>:int64 =&gt; <a href="Buffer.html#M000459">write</a> an 8-byte integer (<a
+href="Buffer.html#M000460">write_int64</a>)
 
 </li>
-<li>:long =&gt; <a href="Buffer.html#M000453">write</a> a 4-byte integer (<a
-href="Buffer.html#M000455">write_long</a>)
+<li>:long =&gt; <a href="Buffer.html#M000459">write</a> a 4-byte integer (<a
+href="Buffer.html#M000461">write_long</a>)
 
 </li>
-<li>:byte =&gt; <a href="Buffer.html#M000453">write</a> a single byte (<a
-href="Buffer.html#M000456">write_byte</a>)
+<li>:byte =&gt; <a href="Buffer.html#M000459">write</a> a single byte (<a
+href="Buffer.html#M000462">write_byte</a>)
 
 </li>
-<li>:string =&gt; <a href="Buffer.html#M000453">write</a> a 4-byte <a
-href="Buffer.html#M000430">length</a> followed by character data (<a
-href="Buffer.html#M000457">write_string</a>)
+<li>:string =&gt; <a href="Buffer.html#M000459">write</a> a 4-byte <a
+href="Buffer.html#M000436">length</a> followed by character data (<a
+href="Buffer.html#M000463">write_string</a>)
 
 </li>
-<li>:bool =&gt; <a href="Buffer.html#M000453">write</a> a single byte,
-interpreted as a boolean (<a href="Buffer.html#M000458">write_bool</a>)
+<li>:bool =&gt; <a href="Buffer.html#M000459">write</a> a single byte,
+interpreted as a boolean (<a href="Buffer.html#M000464">write_bool</a>)
 
 </li>
-<li>:bignum =&gt; <a href="Buffer.html#M000453">write</a> an <a
+<li>:bignum =&gt; <a href="Buffer.html#M000459">write</a> an <a
 href="../SSH.html">SSH</a>-encoded bignum (<a
-href="Buffer.html#M000459">write_bignum</a>)
+href="Buffer.html#M000465">write_bignum</a>)
 
 </li>
-<li>:key =&gt; <a href="Buffer.html#M000453">write</a> an <a
+<li>:key =&gt; <a href="Buffer.html#M000459">write</a> an <a
 href="../SSH.html">SSH</a>-encoded key value (<a
-href="Buffer.html#M000460">write_key</a>)
+href="Buffer.html#M000466">write_key</a>)
 
 </li>
 </ul>
 <p>
 Any of these, except for :raw, accepts an <a
 href="../../Array.html">Array</a> argument, to make it easier to <a
-href="Buffer.html#M000453">write</a> multiple values of the same type in a
+href="Buffer.html#M000459">write</a> multiple values of the same type in a
 briefer manner.
 </p>
         </div>
       </div>
 
-      <div id="method-M000429" class="method-detail">
-        <a name="M000429"></a>
+      <div id="method-M000435" class="method-detail">
+        <a name="M000435"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000429.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000429.html');return false;">
+          <a href="Buffer.src/M000435.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000435.html');return false;">
           <span class="method-name">new</span><span class="method-args">(content=&quot;&quot;)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Creates a <a href="Buffer.html#M000429">new</a> buffer, initialized to the
+Creates a <a href="Buffer.html#M000435">new</a> buffer, initialized to the
 given content. The position is initialized to the beginning of the buffer.
 </p>
         </div>
@@ -280,12 +280,12 @@ given content. The position is initialized to the beginning of the buffer.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000433" class="method-detail">
-        <a name="M000433"></a>
+      <div id="method-M000439" class="method-detail">
+        <a name="M000439"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000433.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000433.html');return false;">
+          <a href="Buffer.src/M000439.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000439.html');return false;">
           <span class="method-name">==</span><span class="method-args">(buffer)</span>
           </a>
         </div>
@@ -298,12 +298,12 @@ they are identical in size and content.
         </div>
       </div>
 
-      <div id="method-M000439" class="method-detail">
-        <a name="M000439"></a>
+      <div id="method-M000445" class="method-detail">
+        <a name="M000445"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000439.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000439.html');return false;">
+          <a href="Buffer.src/M000445.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000445.html');return false;">
           <span class="method-name">append</span><span class="method-args">(text)</span>
           </a>
         </div>
@@ -311,27 +311,8 @@ they are identical in size and content.
         <div class="method-description">
           <p>
 Appends the given text to the end of the buffer. Does not alter the <a
-href="Buffer.html#M000442">read</a> position. Returns the buffer object
+href="Buffer.html#M000448">read</a> position. Returns the buffer object
 itself.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000431" class="method-detail">
-        <a name="M000431"></a>
-
-        <div class="method-heading">
-          <a href="Buffer.src/M000431.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000431.html');return false;">
-          <span class="method-name">available</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Returns the number of bytes <a href="Buffer.html#M000431">available</a> to
-be <a href="Buffer.html#M000442">read</a> (e.g., how many bytes remain
-between the current position and the end of the buffer).
 </p>
         </div>
       </div>
@@ -342,6 +323,25 @@ between the current position and the end of the buffer).
         <div class="method-heading">
           <a href="Buffer.src/M000437.html" target="Code" class="method-signature"
             onclick="popupCode('Buffer.src/M000437.html');return false;">
+          <span class="method-name">available</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the number of bytes <a href="Buffer.html#M000437">available</a> to
+be <a href="Buffer.html#M000448">read</a> (e.g., how many bytes remain
+between the current position and the end of the buffer).
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000443" class="method-detail">
+        <a name="M000443"></a>
+
+        <div class="method-heading">
+          <a href="Buffer.src/M000443.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000443.html');return false;">
           <span class="method-name">clear!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -349,27 +349,27 @@ between the current position and the end of the buffer).
         <div class="method-description">
           <p>
 Resets the buffer, making it empty. Also, resets the <a
-href="Buffer.html#M000442">read</a> position to 0.
+href="Buffer.html#M000448">read</a> position to 0.
 </p>
         </div>
       </div>
 
-      <div id="method-M000438" class="method-detail">
-        <a name="M000438"></a>
+      <div id="method-M000444" class="method-detail">
+        <a name="M000444"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000438.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000438.html');return false;">
+          <a href="Buffer.src/M000444.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000444.html');return false;">
           <span class="method-name">consume!</span><span class="method-args">(n=position)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Consumes n bytes <a href="Buffer.html#M000428">from</a> the buffer, where n
+Consumes n bytes <a href="Buffer.html#M000434">from</a> the buffer, where n
 is the current position unless otherwise specified. This is useful for
-removing data <a href="Buffer.html#M000428">from</a> the buffer that has
-previously been <a href="Buffer.html#M000442">read</a>, when you are
+removing data <a href="Buffer.html#M000434">from</a> the buffer that has
+previously been <a href="Buffer.html#M000448">read</a>, when you are
 expecting more data to be appended. It helps to keep the size of buffers
 down when they would otherwise tend to grow without bound.
 </p>
@@ -379,12 +379,12 @@ Returns the buffer object itself.
         </div>
       </div>
 
-      <div id="method-M000434" class="method-detail">
-        <a name="M000434"></a>
+      <div id="method-M000440" class="method-detail">
+        <a name="M000440"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000434.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000434.html');return false;">
+          <a href="Buffer.src/M000440.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000440.html');return false;">
           <span class="method-name">empty?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -392,17 +392,17 @@ Returns the buffer object itself.
         <div class="method-description">
           <p>
 Returns <tt>true</tt> if the buffer contains no data (e.g., it is of zero
-<a href="Buffer.html#M000430">length</a>).
+<a href="Buffer.html#M000436">length</a>).
 </p>
         </div>
       </div>
 
-      <div id="method-M000436" class="method-detail">
-        <a name="M000436"></a>
+      <div id="method-M000442" class="method-detail">
+        <a name="M000442"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000436.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000436.html');return false;">
+          <a href="Buffer.src/M000442.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000442.html');return false;">
           <span class="method-name">eof?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -415,83 +415,20 @@ will return nil, in this case.
         </div>
       </div>
 
-      <div id="method-M000430" class="method-detail">
-        <a name="M000430"></a>
+      <div id="method-M000436" class="method-detail">
+        <a name="M000436"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000430.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000430.html');return false;">
+          <a href="Buffer.src/M000436.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000436.html');return false;">
           <span class="method-name">length</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the <a href="Buffer.html#M000430">length</a> of the buffer&#8216;s
+Returns the <a href="Buffer.html#M000436">length</a> of the buffer&#8216;s
 content.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000442" class="method-detail">
-        <a name="M000442"></a>
-
-        <div class="method-heading">
-          <a href="Buffer.src/M000442.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000442.html');return false;">
-          <span class="method-name">read</span><span class="method-args">(count=nil)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Reads and returns the next <tt>count</tt> bytes <a
-href="Buffer.html#M000428">from</a> the buffer, starting <a
-href="Buffer.html#M000428">from</a> the <a
-href="Buffer.html#M000442">read</a> position. If <tt>count</tt> is
-<tt>nil</tt>, this will return all remaining text in the buffer. This
-method will increment the pointer.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000443" class="method-detail">
-        <a name="M000443"></a>
-
-        <div class="method-heading">
-          <a href="Buffer.src/M000443.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000443.html');return false;">
-          <span class="method-name">read!</span><span class="method-args">(count=nil)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Reads (as <a href="Buffer.html#M000442">read</a>) and returns the given
-number of bytes <a href="Buffer.html#M000428">from</a> the buffer, and then
-consumes (as consume!) all data up to the <a
-href="Buffer.html#M000429">new</a> <a href="Buffer.html#M000442">read</a>
-position.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000449" class="method-detail">
-        <a name="M000449"></a>
-
-        <div class="method-heading">
-          <a href="Buffer.src/M000449.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000449.html');return false;">
-          <span class="method-name">read_bignum</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Read a bignum (<a href="../../OpenSSL/BN.html">OpenSSL::BN</a>) <a
-href="Buffer.html#M000428">from</a> the buffer, in SSH2 format. It is
-essentially just a string, which is reinterpreted to be a bignum in binary
-format.
 </p>
         </div>
       </div>
@@ -502,6 +439,69 @@ format.
         <div class="method-heading">
           <a href="Buffer.src/M000448.html" target="Code" class="method-signature"
             onclick="popupCode('Buffer.src/M000448.html');return false;">
+          <span class="method-name">read</span><span class="method-args">(count=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Reads and returns the next <tt>count</tt> bytes <a
+href="Buffer.html#M000434">from</a> the buffer, starting <a
+href="Buffer.html#M000434">from</a> the <a
+href="Buffer.html#M000448">read</a> position. If <tt>count</tt> is
+<tt>nil</tt>, this will return all remaining text in the buffer. This
+method will increment the pointer.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000449" class="method-detail">
+        <a name="M000449"></a>
+
+        <div class="method-heading">
+          <a href="Buffer.src/M000449.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000449.html');return false;">
+          <span class="method-name">read!</span><span class="method-args">(count=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Reads (as <a href="Buffer.html#M000448">read</a>) and returns the given
+number of bytes <a href="Buffer.html#M000434">from</a> the buffer, and then
+consumes (as consume!) all data up to the <a
+href="Buffer.html#M000435">new</a> <a href="Buffer.html#M000448">read</a>
+position.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000455" class="method-detail">
+        <a name="M000455"></a>
+
+        <div class="method-heading">
+          <a href="Buffer.src/M000455.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000455.html');return false;">
+          <span class="method-name">read_bignum</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Read a bignum (<a href="../../OpenSSL/BN.html">OpenSSL::BN</a>) <a
+href="Buffer.html#M000434">from</a> the buffer, in SSH2 format. It is
+essentially just a string, which is reinterpreted to be a bignum in binary
+format.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000454" class="method-detail">
+        <a name="M000454"></a>
+
+        <div class="method-heading">
+          <a href="Buffer.src/M000454.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000454.html');return false;">
           <span class="method-name">read_bool</span><span class="method-args">()</span>
           </a>
         </div>
@@ -514,31 +514,31 @@ rules (i.e., zero is false, non-zero is true).
         </div>
       </div>
 
-      <div id="method-M000452" class="method-detail">
-        <a name="M000452"></a>
+      <div id="method-M000458" class="method-detail">
+        <a name="M000458"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000452.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000452.html');return false;">
+          <a href="Buffer.src/M000458.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000458.html');return false;">
           <span class="method-name">read_buffer</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Reads the next string <a href="Buffer.html#M000428">from</a> the buffer,
-and returns a <a href="Buffer.html#M000429">new</a> <a
+Reads the next string <a href="Buffer.html#M000434">from</a> the buffer,
+and returns a <a href="Buffer.html#M000435">new</a> <a
 href="Buffer.html">Buffer</a> object that wraps it.
 </p>
         </div>
       </div>
 
-      <div id="method-M000446" class="method-detail">
-        <a name="M000446"></a>
+      <div id="method-M000452" class="method-detail">
+        <a name="M000452"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000446.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000446.html');return false;">
+          <a href="Buffer.src/M000452.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000452.html');return false;">
           <span class="method-name">read_byte</span><span class="method-args">()</span>
           </a>
         </div>
@@ -551,12 +551,12 @@ end of the buffer.
         </div>
       </div>
 
-      <div id="method-M000444" class="method-detail">
-        <a name="M000444"></a>
+      <div id="method-M000450" class="method-detail">
+        <a name="M000450"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000444.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000444.html');return false;">
+          <a href="Buffer.src/M000450.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000450.html');return false;">
           <span class="method-name">read_int64</span><span class="method-args">()</span>
           </a>
         </div>
@@ -565,26 +565,44 @@ end of the buffer.
           <p>
 Return the next 8 bytes as a 64-bit integer (in network byte order).
 Returns nil if there are less than 8 bytes remaining to be <a
-href="Buffer.html#M000442">read</a> in the buffer.
+href="Buffer.html#M000448">read</a> in the buffer.
 </p>
         </div>
       </div>
 
-      <div id="method-M000450" class="method-detail">
-        <a name="M000450"></a>
+      <div id="method-M000456" class="method-detail">
+        <a name="M000456"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000450.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000450.html');return false;">
+          <a href="Buffer.src/M000456.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000456.html');return false;">
           <span class="method-name">read_key</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Read a key <a href="Buffer.html#M000428">from</a> the buffer. The key will
+Read a key <a href="Buffer.html#M000434">from</a> the buffer. The key will
 start with a string describing its type. The remainder of the key is
-defined by the type that was <a href="Buffer.html#M000442">read</a>.
+defined by the type that was <a href="Buffer.html#M000448">read</a>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000457" class="method-detail">
+        <a name="M000457"></a>
+
+        <div class="method-heading">
+          <a href="Buffer.src/M000457.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000457.html');return false;">
+          <span class="method-name">read_keyblob</span><span class="method-args">(type)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Read a keyblob of the given type <a href="Buffer.html#M000434">from</a> the
+buffer, and return it as a key. Only RSA and DSA keys are supported.
 </p>
         </div>
       </div>
@@ -595,24 +613,6 @@ defined by the type that was <a href="Buffer.html#M000442">read</a>.
         <div class="method-heading">
           <a href="Buffer.src/M000451.html" target="Code" class="method-signature"
             onclick="popupCode('Buffer.src/M000451.html');return false;">
-          <span class="method-name">read_keyblob</span><span class="method-args">(type)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Read a keyblob of the given type <a href="Buffer.html#M000428">from</a> the
-buffer, and return it as a key. Only RSA and DSA keys are supported.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000445" class="method-detail">
-        <a name="M000445"></a>
-
-        <div class="method-heading">
-          <a href="Buffer.src/M000445.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000445.html');return false;">
           <span class="method-name">read_long</span><span class="method-args">()</span>
           </a>
         </div>
@@ -621,17 +621,17 @@ buffer, and return it as a key. Only RSA and DSA keys are supported.
           <p>
 Return the next four bytes as a long integer (in network byte order).
 Returns nil if there are less than 4 bytes remaining to be <a
-href="Buffer.html#M000442">read</a> in the buffer.
+href="Buffer.html#M000448">read</a> in the buffer.
 </p>
         </div>
       </div>
 
-      <div id="method-M000447" class="method-detail">
-        <a name="M000447"></a>
+      <div id="method-M000453" class="method-detail">
+        <a name="M000453"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000447.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000447.html');return false;">
+          <a href="Buffer.src/M000453.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000453.html');return false;">
           <span class="method-name">read_string</span><span class="method-args">()</span>
           </a>
         </div>
@@ -645,12 +645,12 @@ nil if there are not enough bytes to satisfy the request.
         </div>
       </div>
 
-      <div id="method-M000441" class="method-detail">
-        <a name="M000441"></a>
+      <div id="method-M000447" class="method-detail">
+        <a name="M000447"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000441.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000441.html');return false;">
+          <a href="Buffer.src/M000447.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000447.html');return false;">
           <span class="method-name">read_to</span><span class="method-args">(pattern)</span>
           </a>
         </div>
@@ -666,31 +666,31 @@ Returns all data up to and including the text that matched the pattern.
         </div>
       </div>
 
-      <div id="method-M000440" class="method-detail">
-        <a name="M000440"></a>
+      <div id="method-M000446" class="method-detail">
+        <a name="M000446"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000440.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000440.html');return false;">
+          <a href="Buffer.src/M000446.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000446.html');return false;">
           <span class="method-name">remainder_as_buffer</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns all text <a href="Buffer.html#M000428">from</a> the current pointer
-to the end of the buffer as a <a href="Buffer.html#M000429">new</a> <a
+Returns all text <a href="Buffer.html#M000434">from</a> the current pointer
+to the end of the buffer as a <a href="Buffer.html#M000435">new</a> <a
 href="Buffer.html">Net::SSH::Buffer</a> object.
 </p>
         </div>
       </div>
 
-      <div id="method-M000435" class="method-detail">
-        <a name="M000435"></a>
+      <div id="method-M000441" class="method-detail">
+        <a name="M000441"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000435.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000435.html');return false;">
+          <a href="Buffer.src/M000441.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000441.html');return false;">
           <span class="method-name">reset!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -703,12 +703,12 @@ at position 0.
         </div>
       </div>
 
-      <div id="method-M000432" class="method-detail">
-        <a name="M000432"></a>
+      <div id="method-M000438" class="method-detail">
+        <a name="M000438"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000432.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000432.html');return false;">
+          <a href="Buffer.src/M000438.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000438.html');return false;">
           <span class="method-name">to_s</span><span class="method-args">()</span>
           </a>
         </div>
@@ -720,12 +720,12 @@ Returns a copy of the buffer&#8216;s content.
         </div>
       </div>
 
-      <div id="method-M000453" class="method-detail">
-        <a name="M000453"></a>
+      <div id="method-M000459" class="method-detail">
+        <a name="M000459"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000453.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000453.html');return false;">
+          <a href="Buffer.src/M000459.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000459.html');return false;">
           <span class="method-name">write</span><span class="method-args">(*data)</span>
           </a>
         </div>
@@ -733,17 +733,17 @@ Returns a copy of the buffer&#8216;s content.
         <div class="method-description">
           <p>
 Writes the given data literally into the string. Does not alter the <a
-href="Buffer.html#M000442">read</a> position. Returns the buffer object.
+href="Buffer.html#M000448">read</a> position. Returns the buffer object.
 </p>
         </div>
       </div>
 
-      <div id="method-M000459" class="method-detail">
-        <a name="M000459"></a>
+      <div id="method-M000465" class="method-detail">
+        <a name="M000465"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000459.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000459.html');return false;">
+          <a href="Buffer.src/M000465.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000465.html');return false;">
           <span class="method-name">write_bignum</span><span class="method-args">(*n)</span>
           </a>
         </div>
@@ -752,17 +752,17 @@ href="Buffer.html#M000442">read</a> position. Returns the buffer object.
           <p>
 Writes each argument to the buffer as a bignum (SSH2-style). No checking is
 done to ensure that the arguments are, in fact, bignums. Does not alter the
-<a href="Buffer.html#M000442">read</a> position. Returns the buffer object.
+<a href="Buffer.html#M000448">read</a> position. Returns the buffer object.
 </p>
         </div>
       </div>
 
-      <div id="method-M000458" class="method-detail">
-        <a name="M000458"></a>
+      <div id="method-M000464" class="method-detail">
+        <a name="M000464"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000458.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000458.html');return false;">
+          <a href="Buffer.src/M000464.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000464.html');return false;">
           <span class="method-name">write_bool</span><span class="method-args">(*b)</span>
           </a>
         </div>
@@ -771,17 +771,17 @@ done to ensure that the arguments are, in fact, bignums. Does not alter the
           <p>
 Writes each argument to the buffer as a (C-style) boolean, with 1 meaning
 true, and 0 meaning false. Does not alter the <a
-href="Buffer.html#M000442">read</a> position. Returns the buffer object.
+href="Buffer.html#M000448">read</a> position. Returns the buffer object.
 </p>
         </div>
       </div>
 
-      <div id="method-M000456" class="method-detail">
-        <a name="M000456"></a>
+      <div id="method-M000462" class="method-detail">
+        <a name="M000462"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000456.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000456.html');return false;">
+          <a href="Buffer.src/M000462.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000462.html');return false;">
           <span class="method-name">write_byte</span><span class="method-args">(*n)</span>
           </a>
         </div>
@@ -789,26 +789,7 @@ href="Buffer.html#M000442">read</a> position. Returns the buffer object.
         <div class="method-description">
           <p>
 Writes each argument to the buffer as a byte. Does not alter the <a
-href="Buffer.html#M000442">read</a> position. Returns the buffer object.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000454" class="method-detail">
-        <a name="M000454"></a>
-
-        <div class="method-heading">
-          <a href="Buffer.src/M000454.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000454.html');return false;">
-          <span class="method-name">write_int64</span><span class="method-args">(*n)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Writes each argument to the buffer as a network-byte-order-encoded 64-bit
-integer (8 bytes). Does not alter the <a
-href="Buffer.html#M000442">read</a> position. Returns the buffer object.
+href="Buffer.html#M000448">read</a> position. Returns the buffer object.
 </p>
         </div>
       </div>
@@ -819,6 +800,25 @@ href="Buffer.html#M000442">read</a> position. Returns the buffer object.
         <div class="method-heading">
           <a href="Buffer.src/M000460.html" target="Code" class="method-signature"
             onclick="popupCode('Buffer.src/M000460.html');return false;">
+          <span class="method-name">write_int64</span><span class="method-args">(*n)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Writes each argument to the buffer as a network-byte-order-encoded 64-bit
+integer (8 bytes). Does not alter the <a
+href="Buffer.html#M000448">read</a> position. Returns the buffer object.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000466" class="method-detail">
+        <a name="M000466"></a>
+
+        <div class="method-heading">
+          <a href="Buffer.src/M000466.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000466.html');return false;">
           <span class="method-name">write_key</span><span class="method-args">(*key)</span>
           </a>
         </div>
@@ -826,18 +826,18 @@ href="Buffer.html#M000442">read</a> position. Returns the buffer object.
         <div class="method-description">
           <p>
 Writes the given arguments to the buffer as SSH2-encoded keys. Does not
-alter the <a href="Buffer.html#M000442">read</a> position. Returns the
+alter the <a href="Buffer.html#M000448">read</a> position. Returns the
 buffer object.
 </p>
         </div>
       </div>
 
-      <div id="method-M000455" class="method-detail">
-        <a name="M000455"></a>
+      <div id="method-M000461" class="method-detail">
+        <a name="M000461"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000455.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000455.html');return false;">
+          <a href="Buffer.src/M000461.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000461.html');return false;">
           <span class="method-name">write_long</span><span class="method-args">(*n)</span>
           </a>
         </div>
@@ -845,18 +845,18 @@ buffer object.
         <div class="method-description">
           <p>
 Writes each argument to the buffer as a network-byte-order-encoded long
-(4-byte) integer. Does not alter the <a href="Buffer.html#M000442">read</a>
+(4-byte) integer. Does not alter the <a href="Buffer.html#M000448">read</a>
 position. Returns the buffer object.
 </p>
         </div>
       </div>
 
-      <div id="method-M000457" class="method-detail">
-        <a name="M000457"></a>
+      <div id="method-M000463" class="method-detail">
+        <a name="M000463"></a>
 
         <div class="method-heading">
-          <a href="Buffer.src/M000457.html" target="Code" class="method-signature"
-            onclick="popupCode('Buffer.src/M000457.html');return false;">
+          <a href="Buffer.src/M000463.html" target="Code" class="method-signature"
+            onclick="popupCode('Buffer.src/M000463.html');return false;">
           <span class="method-name">write_string</span><span class="method-args">(*text)</span>
           </a>
         </div>
@@ -864,9 +864,9 @@ position. Returns the buffer object.
         <div class="method-description">
           <p>
 Writes each argument to the buffer as an SSH2-encoded string. Each string
-is prefixed by its <a href="Buffer.html#M000430">length</a>, encoded as a
+is prefixed by its <a href="Buffer.html#M000436">length</a>, encoded as a
 4-byte long integer. Does not alter the <a
-href="Buffer.html#M000442">read</a> position. Returns the buffer object.
+href="Buffer.html#M000448">read</a> position. Returns the buffer object.
 </p>
         </div>
       </div>

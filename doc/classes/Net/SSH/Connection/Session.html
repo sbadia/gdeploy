@@ -55,12 +55,12 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../../files/net/ssh/connection/session_rb.html">
-                net/ssh/connection/session.rb
-                </a>
-        <br />
                 <a href="../../../../files/net/scp_rb.html">
                 net/scp.rb
+                </a>
+        <br />
+                <a href="../../../../files/net/ssh/connection/session_rb.html">
+                net/ssh/connection/session.rb
                 </a>
         <br />
             </td>
@@ -86,12 +86,12 @@
       <p>
 A session class representing the connection service running on top of the
 <a href="../../SSH.html">SSH</a> transport layer. It manages the creation
-of channels (see <a href="Session.html#M000376">open_channel</a>), and the
+of channels (see <a href="Session.html#M000383">open_channel</a>), and the
 dispatching of messages to the various channels. It also encapsulates the
 <a href="../../SSH.html">SSH</a> event <a
-href="Session.html#M000371">loop</a> (via <a
-href="Session.html#M000371">loop</a> and <a
-href="Session.html#M000372">process</a>), and serves as a central
+href="Session.html#M000378">loop</a> (via <a
+href="Session.html#M000378">loop</a> and <a
+href="Session.html#M000379">process</a>), and serves as a central
 point-of-reference for all <a href="../../SSH.html">SSH</a>-related
 services (e.g. port forwarding, SFTP, <a href="../../SCP.html">SCP</a>,
 etc.).
@@ -99,9 +99,9 @@ etc.).
 <p>
 You will rarely (if ever) need to instantiate this class directly; rather,
 you&#8216;ll almost always use <a
-href="../../SSH.html#M000045">Net::SSH.start</a> to initialize a <a
-href="Session.html#M000363">new</a> network connection, authenticate a
-user, and return a <a href="Session.html#M000363">new</a> connection
+href="../../SSH.html#M000051">Net::SSH.start</a> to initialize a <a
+href="Session.html#M000370">new</a> network connection, authenticate a
+user, and return a <a href="Session.html#M000370">new</a> connection
 session, all in one call.
 </p>
 <pre>
@@ -120,29 +120,29 @@ session, all in one call.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000364">[]</a>&nbsp;&nbsp;
-      <a href="#M000365">[]=</a>&nbsp;&nbsp;
-      <a href="#M000370">busy?</a>&nbsp;&nbsp;
-      <a href="#M000368">close</a>&nbsp;&nbsp;
-      <a href="#M000367">closed?</a>&nbsp;&nbsp;
-      <a href="#M000377">exec</a>&nbsp;&nbsp;
-      <a href="#M000378">exec!</a>&nbsp;&nbsp;
-      <a href="#M000382">forward</a>&nbsp;&nbsp;
-      <a href="#M000366">host</a>&nbsp;&nbsp;
-      <a href="#M000380">listen_to</a>&nbsp;&nbsp;
-      <a href="#M000371">loop</a>&nbsp;&nbsp;
-      <a href="#M000363">new</a>&nbsp;&nbsp;
-      <a href="#M000384">on_global_request</a>&nbsp;&nbsp;
-      <a href="#M000383">on_open_channel</a>&nbsp;&nbsp;
-      <a href="#M000376">open_channel</a>&nbsp;&nbsp;
-      <a href="#M000374">postprocess</a>&nbsp;&nbsp;
-      <a href="#M000373">preprocess</a>&nbsp;&nbsp;
-      <a href="#M000372">process</a>&nbsp;&nbsp;
-      <a href="#M000385">scp</a>&nbsp;&nbsp;
-      <a href="#M000375">send_global_request</a>&nbsp;&nbsp;
-      <a href="#M000379">send_message</a>&nbsp;&nbsp;
-      <a href="#M000369">shutdown!</a>&nbsp;&nbsp;
-      <a href="#M000381">stop_listening_to</a>&nbsp;&nbsp;
+      <a href="#M000371">[]</a>&nbsp;&nbsp;
+      <a href="#M000372">[]=</a>&nbsp;&nbsp;
+      <a href="#M000377">busy?</a>&nbsp;&nbsp;
+      <a href="#M000375">close</a>&nbsp;&nbsp;
+      <a href="#M000374">closed?</a>&nbsp;&nbsp;
+      <a href="#M000384">exec</a>&nbsp;&nbsp;
+      <a href="#M000385">exec!</a>&nbsp;&nbsp;
+      <a href="#M000389">forward</a>&nbsp;&nbsp;
+      <a href="#M000373">host</a>&nbsp;&nbsp;
+      <a href="#M000387">listen_to</a>&nbsp;&nbsp;
+      <a href="#M000378">loop</a>&nbsp;&nbsp;
+      <a href="#M000370">new</a>&nbsp;&nbsp;
+      <a href="#M000391">on_global_request</a>&nbsp;&nbsp;
+      <a href="#M000390">on_open_channel</a>&nbsp;&nbsp;
+      <a href="#M000383">open_channel</a>&nbsp;&nbsp;
+      <a href="#M000381">postprocess</a>&nbsp;&nbsp;
+      <a href="#M000380">preprocess</a>&nbsp;&nbsp;
+      <a href="#M000379">process</a>&nbsp;&nbsp;
+      <a href="#M000369">scp</a>&nbsp;&nbsp;
+      <a href="#M000382">send_global_request</a>&nbsp;&nbsp;
+      <a href="#M000386">send_message</a>&nbsp;&nbsp;
+      <a href="#M000376">shutdown!</a>&nbsp;&nbsp;
+      <a href="#M000388">stop_listening_to</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -244,19 +244,19 @@ href="../Transport/Session.html">Net::SSH::Transport::Session</a>).
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000363" class="method-detail">
-        <a name="M000363"></a>
+      <div id="method-M000370" class="method-detail">
+        <a name="M000370"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000363.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000363.html');return false;">
+          <a href="Session.src/M000370.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000370.html');return false;">
           <span class="method-name">new</span><span class="method-args">(transport, options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Create a <a href="Session.html#M000363">new</a> connection service instance
+Create a <a href="Session.html#M000370">new</a> connection service instance
 atop the given transport layer. Initializes the listeners to be only the
 underlying socket object.
 </p>
@@ -265,12 +265,12 @@ underlying socket object.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000364" class="method-detail">
-        <a name="M000364"></a>
+      <div id="method-M000371" class="method-detail">
+        <a name="M000371"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000364.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000364.html');return false;">
+          <a href="Session.src/M000371.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000371.html');return false;">
           <span class="method-name">[]</span><span class="method-args">(key)</span>
           </a>
         </div>
@@ -284,12 +284,12 @@ href="../../SSH.html">SSH</a> connections.
         </div>
       </div>
 
-      <div id="method-M000365" class="method-detail">
-        <a name="M000365"></a>
+      <div id="method-M000372" class="method-detail">
+        <a name="M000372"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000365.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000365.html');return false;">
+          <a href="Session.src/M000372.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000372.html');return false;">
           <span class="method-name">[]=</span><span class="method-args">(key, value)</span>
           </a>
         </div>
@@ -301,12 +301,12 @@ Sets a custom property for this instance.
         </div>
       </div>
 
-      <div id="method-M000370" class="method-detail">
-        <a name="M000370"></a>
+      <div id="method-M000377" class="method-detail">
+        <a name="M000377"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000370.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000370.html');return false;">
+          <a href="Session.src/M000377.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000377.html');return false;">
           <span class="method-name">busy?</span><span class="method-args">(include_invisible=false)</span>
           </a>
         </div>
@@ -321,7 +321,7 @@ counted.
 </p>
 <p>
 This can be useful for determining whether the event <a
-href="Session.html#M000371">loop</a> should continue to be run.
+href="Session.html#M000378">loop</a> should continue to be run.
 </p>
 <pre>
   ssh.loop { ssh.busy? }
@@ -329,12 +329,12 @@ href="Session.html#M000371">loop</a> should continue to be run.
         </div>
       </div>
 
-      <div id="method-M000368" class="method-detail">
-        <a name="M000368"></a>
+      <div id="method-M000375" class="method-detail">
+        <a name="M000375"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000368.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000368.html');return false;">
+          <a href="Session.src/M000375.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000375.html');return false;">
           <span class="method-name">close</span><span class="method-args">()</span>
           </a>
         </div>
@@ -348,12 +348,12 @@ connection.
         </div>
       </div>
 
-      <div id="method-M000367" class="method-detail">
-        <a name="M000367"></a>
+      <div id="method-M000374" class="method-detail">
+        <a name="M000374"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000367.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000367.html');return false;">
+          <a href="Session.src/M000374.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000374.html');return false;">
           <span class="method-name">closed?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -369,12 +369,12 @@ just want to know if <em>you</em> have closed the connection.
         </div>
       </div>
 
-      <div id="method-M000377" class="method-detail">
-        <a name="M000377"></a>
+      <div id="method-M000384" class="method-detail">
+        <a name="M000384"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000377.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000377.html');return false;">
+          <a href="Session.src/M000384.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000384.html');return false;">
           <span class="method-name">exec</span><span class="method-args">(command, &amp;block)</span>
           </a>
         </div>
@@ -389,14 +389,14 @@ or :stderr), and the data (as a string).
 </p>
 <p>
 Note that this method returns immediately, and requires an event <a
-href="Session.html#M000371">loop</a> (see <a
-href="Session.html#M000371">Session#loop</a>) in order for the command to
+href="Session.html#M000378">loop</a> (see <a
+href="Session.html#M000378">Session#loop</a>) in order for the command to
 actually execute.
 </p>
 <p>
 This is effectively identical to calling <a
-href="Session.html#M000376">open_channel</a>, and then <a
-href="Channel.html#M000337">Net::SSH::Connection::Channel#exec</a>, and
+href="Session.html#M000383">open_channel</a>, and then <a
+href="Channel.html#M000343">Net::SSH::Connection::Channel#exec</a>, and
 then setting up the channel callbacks. However, for most uses, this will be
 sufficient.
 </p>
@@ -412,19 +412,19 @@ sufficient.
         </div>
       </div>
 
-      <div id="method-M000378" class="method-detail">
-        <a name="M000378"></a>
+      <div id="method-M000385" class="method-detail">
+        <a name="M000385"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000378.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000378.html');return false;">
+          <a href="Session.src/M000385.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000385.html');return false;">
           <span class="method-name">exec!</span><span class="method-args">(command, &amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Same as <a href="Session.html#M000377">exec</a>, except this will block
+Same as <a href="Session.html#M000384">exec</a>, except this will block
 until the command finishes. Also, if a block is not given, this will return
 all output (stdout and stderr) as a single string.
 </p>
@@ -434,12 +434,12 @@ all output (stdout and stderr) as a single string.
         </div>
       </div>
 
-      <div id="method-M000382" class="method-detail">
-        <a name="M000382"></a>
+      <div id="method-M000389" class="method-detail">
+        <a name="M000389"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000382.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000382.html');return false;">
+          <a href="Session.src/M000389.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000389.html');return false;">
           <span class="method-name">forward</span><span class="method-args">()</span>
           </a>
         </div>
@@ -454,37 +454,37 @@ href="../../SSH.html">SSH</a>.
         </div>
       </div>
 
-      <div id="method-M000366" class="method-detail">
-        <a name="M000366"></a>
+      <div id="method-M000373" class="method-detail">
+        <a name="M000373"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000366.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000366.html');return false;">
+          <a href="Session.src/M000373.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000373.html');return false;">
           <span class="method-name">host</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the name of the <a href="Session.html#M000366">host</a> that was
+Returns the name of the <a href="Session.html#M000373">host</a> that was
 given to the transport layer to connect to.
 </p>
         </div>
       </div>
 
-      <div id="method-M000380" class="method-detail">
-        <a name="M000380"></a>
+      <div id="method-M000387" class="method-detail">
+        <a name="M000387"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000380.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000380.html');return false;">
+          <a href="Session.src/M000387.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000387.html');return false;">
           <span class="method-name">listen_to</span><span class="method-args">(io, &amp;callback)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Adds an IO object for the event <a href="Session.html#M000371">loop</a> to
+Adds an IO object for the event <a href="Session.html#M000378">loop</a> to
 listen to. If a callback is given, it will be invoked when the io is ready
 to be read, otherwise, the io will merely have its fill method invoked.
 </p>
@@ -494,9 +494,9 @@ it the <a href="../BufferedIo.html">Net::SSH::BufferedIo</a> functionality,
 typically by calling extend on the object.
 </p>
 <p>
-The following example executes a <a href="Session.html#M000372">process</a>
+The following example executes a <a href="Session.html#M000379">process</a>
 on the remote server, opens a socket to somewhere, and then pipes data from
-that socket to the remote <a href="Session.html#M000372">process</a>&#8217;
+that socket to the remote <a href="Session.html#M000379">process</a>&#8217;
 stdin stream:
 </p>
 <pre>
@@ -526,25 +526,25 @@ stdin stream:
         </div>
       </div>
 
-      <div id="method-M000371" class="method-detail">
-        <a name="M000371"></a>
+      <div id="method-M000378" class="method-detail">
+        <a name="M000378"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000371.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000371.html');return false;">
+          <a href="Session.src/M000378.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000378.html');return false;">
           <span class="method-name">loop</span><span class="method-args">(wait=nil, &amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-The main event <a href="Session.html#M000371">loop</a>. Calls <a
-href="Session.html#M000372">process</a> until <a
-href="Session.html#M000372">process</a> returns false. If a block is given,
-it is passed to <a href="Session.html#M000372">process</a>, otherwise a
+The main event <a href="Session.html#M000378">loop</a>. Calls <a
+href="Session.html#M000379">process</a> until <a
+href="Session.html#M000379">process</a> returns false. If a block is given,
+it is passed to <a href="Session.html#M000379">process</a>, otherwise a
 default proc is used that just returns true if there are any channels
 active (see busy?). The # <tt>wait</tt> parameter is also passed through to
-<a href="Session.html#M000372">process</a> (where it is interpreted as the
+<a href="Session.html#M000379">process</a> (where it is interpreted as the
 maximum number of seconds to wait for IO.select to return).
 </p>
 <pre>
@@ -563,12 +563,12 @@ maximum number of seconds to wait for IO.select to return).
         </div>
       </div>
 
-      <div id="method-M000384" class="method-detail">
-        <a name="M000384"></a>
+      <div id="method-M000391" class="method-detail">
+        <a name="M000391"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000384.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000384.html');return false;">
+          <a href="Session.src/M000391.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000391.html');return false;">
           <span class="method-name">on_global_request</span><span class="method-args">(type, &amp;block)</span>
           </a>
         </div>
@@ -585,12 +585,12 @@ returns false, REQUEST_FAILURE will be sent.
         </div>
       </div>
 
-      <div id="method-M000383" class="method-detail">
-        <a name="M000383"></a>
+      <div id="method-M000390" class="method-detail">
+        <a name="M000390"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000383.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000383.html');return false;">
+          <a href="Session.src/M000390.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000390.html');return false;">
           <span class="method-name">on_open_channel</span><span class="method-args">(type, &amp;block)</span>
           </a>
         </div>
@@ -599,7 +599,7 @@ returns false, REQUEST_FAILURE will be sent.
           <p>
 Registers a handler to be invoked when the server wants to open a channel
 on the client. The callback receives the connection object, the <a
-href="Session.html#M000363">new</a> channel object, and the packet itself
+href="Session.html#M000370">new</a> channel object, and the packet itself
 as arguments, and should raise <a
 href="../ChannelOpenFailed.html">ChannelOpenFailed</a> if it is unable to
 open the channel for some reason. Otherwise, the channel will be opened and
@@ -614,32 +614,32 @@ you are welcome to register handlers for other channel types, as needed.
         </div>
       </div>
 
-      <div id="method-M000376" class="method-detail">
-        <a name="M000376"></a>
+      <div id="method-M000383" class="method-detail">
+        <a name="M000383"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000376.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000376.html');return false;">
+          <a href="Session.src/M000383.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000383.html');return false;">
           <span class="method-name">open_channel</span><span class="method-args">(type=&quot;session&quot;, *extra, &amp;on_confirm)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Requests that a <a href="Session.html#M000363">new</a> channel be opened.
+Requests that a <a href="Session.html#M000370">new</a> channel be opened.
 By default, the channel will be of type &quot;session&quot;, but if you
 know what you&#8216;re doing you can select any of the channel types
 supported by the <a href="../../SSH.html">SSH</a> protocol. The
 <tt>extra</tt> parameters must be even in number and conform to the same
 format as described for <a
-href="../Buffer.html#M000428">Net::SSH::Buffer.from</a>. If a callback is
+href="../Buffer.html#M000434">Net::SSH::Buffer.from</a>. If a callback is
 given, it will be invoked when the server confirms that the channel opened
 successfully. The sole parameter for the callback is the channel object
 itself.
 </p>
 <p>
 In general, you&#8216;ll use <a
-href="Session.html#M000376">open_channel</a> without any arguments; the
+href="Session.html#M000383">open_channel</a> without any arguments; the
 only time you&#8216;d want to set the channel type or pass additional
 initialization data is if you were implementing an <a
 href="../../SSH.html">SSH</a> extension.
@@ -656,12 +656,12 @@ href="../../SSH.html">SSH</a> extension.
         </div>
       </div>
 
-      <div id="method-M000374" class="method-detail">
-        <a name="M000374"></a>
+      <div id="method-M000381" class="method-detail">
+        <a name="M000381"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000374.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000374.html');return false;">
+          <a href="Session.src/M000381.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000381.html');return false;">
           <span class="method-name">postprocess</span><span class="method-args">(readers, writers)</span>
           </a>
         </div>
@@ -669,7 +669,7 @@ href="../../SSH.html">SSH</a> extension.
         <div class="method-description">
           <p>
 This is called internally as part of <a
-href="Session.html#M000372">process</a>. It loops over the given arrays of
+href="Session.html#M000379">process</a>. It loops over the given arrays of
 reader IO&#8216;s and writer IO&#8216;s, processing them as needed, and
 then calls Net::SSH::Transport::Session#rekey_as_needed to allow the
 transport layer to rekey. Then returns true.
@@ -677,12 +677,12 @@ transport layer to rekey. Then returns true.
         </div>
       </div>
 
-      <div id="method-M000373" class="method-detail">
-        <a name="M000373"></a>
+      <div id="method-M000380" class="method-detail">
+        <a name="M000380"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000373.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000373.html');return false;">
+          <a href="Session.src/M000380.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000380.html');return false;">
           <span class="method-name">preprocess</span><span class="method-args">() {|self| ...}</span>
           </a>
         </div>
@@ -690,9 +690,9 @@ transport layer to rekey. Then returns true.
         <div class="method-description">
           <p>
 This is called internally as part of <a
-href="Session.html#M000372">process</a>. It dispatches any available
+href="Session.html#M000379">process</a>. It dispatches any available
 incoming packets, and then runs <a
-href="Channel.html#M000348">Net::SSH::Connection::Channel#process</a> for
+href="Channel.html#M000354">Net::SSH::Connection::Channel#process</a> for
 any active channels. If a block is given, it is invoked at the start of the
 method and again at the end, and if the block ever returns false, this
 method returns false. Otherwise, it returns true.
@@ -700,23 +700,23 @@ method returns false. Otherwise, it returns true.
         </div>
       </div>
 
-      <div id="method-M000372" class="method-detail">
-        <a name="M000372"></a>
+      <div id="method-M000379" class="method-detail">
+        <a name="M000379"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000372.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000372.html');return false;">
+          <a href="Session.src/M000379.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000379.html');return false;">
           <span class="method-name">process</span><span class="method-args">(wait=nil, &amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-The core of the event <a href="Session.html#M000371">loop</a>. It processes
-a single iteration of the event <a href="Session.html#M000371">loop</a>. If
+The core of the event <a href="Session.html#M000378">loop</a>. It processes
+a single iteration of the event <a href="Session.html#M000378">loop</a>. If
 a block is given, it should return false when the processing should abort,
-which causes <a href="Session.html#M000372">process</a> to return false.
-Otherwise, <a href="Session.html#M000372">process</a> returns true. The
+which causes <a href="Session.html#M000379">process</a> to return false.
+Otherwise, <a href="Session.html#M000379">process</a> returns true. The
 session itself is yielded to the block as its only argument.
 </p>
 <p>
@@ -729,7 +729,7 @@ frequently it can make your CPU quite busy!
 </p>
 <p>
 This will also cause all active channels to be processed once each (see <a
-href="Channel.html#M000351">Net::SSH::Connection::Channel#on_process</a>).
+href="Channel.html#M000357">Net::SSH::Connection::Channel#on_process</a>).
 </p>
 <pre>
   # process multiple Net::SSH connections in parallel
@@ -752,12 +752,12 @@ href="Channel.html#M000351">Net::SSH::Connection::Channel#on_process</a>).
         </div>
       </div>
 
-      <div id="method-M000385" class="method-detail">
-        <a name="M000385"></a>
+      <div id="method-M000369" class="method-detail">
+        <a name="M000369"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000385.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000385.html');return false;">
+          <a href="Session.src/M000369.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000369.html');return false;">
           <span class="method-name">scp</span><span class="method-args">()</span>
           </a>
         </div>
@@ -771,12 +771,12 @@ session given a <a href="../../SSH.html">Net::SSH</a> session. Returns the
         </div>
       </div>
 
-      <div id="method-M000375" class="method-detail">
-        <a name="M000375"></a>
+      <div id="method-M000382" class="method-detail">
+        <a name="M000382"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000375.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000375.html');return false;">
+          <a href="Session.src/M000382.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000382.html');return false;">
           <span class="method-name">send_global_request</span><span class="method-args">(type, *extra, &amp;callback)</span>
           </a>
         </div>
@@ -785,7 +785,7 @@ session given a <a href="../../SSH.html">Net::SSH</a> session. Returns the
           <p>
 Send a global request of the given type. The <tt>extra</tt> parameters must
 be even in number, and conform to the same format as described for <a
-href="../Buffer.html#M000428">Net::SSH::Buffer.from</a>. If a callback is
+href="../Buffer.html#M000434">Net::SSH::Buffer.from</a>. If a callback is
 not specified, the request will not require a response from the server,
 otherwise the server is required to respond and indicate whether the
 request was successful or not. This success or failure is indicated by the
@@ -795,7 +795,7 @@ callback being invoked, with the first parameter being true or false
 <p>
 Generally, <a href="../../SSH.html">Net::SSH</a> will manage global
 requests that need to be sent (e.g. port <a
-href="Session.html#M000382">forward</a> requests and such are handled in
+href="Session.html#M000389">forward</a> requests and such are handled in
 the <a href="../Service/Forward.html">Net::SSH::Service::Forward</a> class,
 for instance). However, there may be times when you need to send a global
 request that isn&#8216;t explicitly handled by <a
@@ -807,12 +807,12 @@ href="../../SSH.html">Net::SSH</a>, and so this method is available to you.
         </div>
       </div>
 
-      <div id="method-M000379" class="method-detail">
-        <a name="M000379"></a>
+      <div id="method-M000386" class="method-detail">
+        <a name="M000386"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000379.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000379.html');return false;">
+          <a href="Session.src/M000386.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000386.html');return false;">
           <span class="method-name">send_message</span><span class="method-args">(message)</span>
           </a>
         </div>
@@ -832,12 +832,12 @@ this to send it.
         </div>
       </div>
 
-      <div id="method-M000369" class="method-detail">
-        <a name="M000369"></a>
+      <div id="method-M000376" class="method-detail">
+        <a name="M000376"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000369.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000369.html');return false;">
+          <a href="Session.src/M000376.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000376.html');return false;">
           <span class="method-name">shutdown!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -847,18 +847,18 @@ this to send it.
 Performs a &quot;hard&quot; shutdown of the connection. In general, this
 should never be done, but it might be necessary (in a rescue clause, for
 instance, when the connection needs to <a
-href="Session.html#M000368">close</a> but you don&#8216;t know the status
+href="Session.html#M000375">close</a> but you don&#8216;t know the status
 of the underlying protocol&#8216;s state).
 </p>
         </div>
       </div>
 
-      <div id="method-M000381" class="method-detail">
-        <a name="M000381"></a>
+      <div id="method-M000388" class="method-detail">
+        <a name="M000388"></a>
 
         <div class="method-heading">
-          <a href="Session.src/M000381.html" target="Code" class="method-signature"
-            onclick="popupCode('Session.src/M000381.html');return false;">
+          <a href="Session.src/M000388.html" target="Code" class="method-signature"
+            onclick="popupCode('Session.src/M000388.html');return false;">
           <span class="method-name">stop_listening_to</span><span class="method-args">(io)</span>
           </a>
         </div>
@@ -866,7 +866,7 @@ of the underlying protocol&#8216;s state).
         <div class="method-description">
           <p>
 Removes the given io object from the listeners collection, so that the
-event <a href="Session.html#M000371">loop</a> will no longer monitor it.
+event <a href="Session.html#M000378">loop</a> will no longer monitor it.
 </p>
         </div>
       </div>

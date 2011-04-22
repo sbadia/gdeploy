@@ -5,14 +5,28 @@
 
 <html>
 <head>
-  <title>format_arguments= (ProgressBar)</title>
+  <title>new (ProgressBar)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File misc/progressbar.rb, line 202</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">format_arguments=</span> (<span class="ruby-identifier">arguments</span>)
-    <span class="ruby-ivar">@format_arguments</span> = <span class="ruby-identifier">arguments</span>
+  <pre><span class="ruby-comment cmt"># File misc/progressbar.rb, line 15</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">title</span>, <span class="ruby-identifier">total</span>, <span class="ruby-identifier">out</span> = <span class="ruby-constant">STDERR</span>)
+    <span class="ruby-ivar">@title</span> = <span class="ruby-identifier">title</span>
+    <span class="ruby-ivar">@total</span> = <span class="ruby-identifier">total</span>
+    <span class="ruby-ivar">@out</span> = <span class="ruby-identifier">out</span>
+    <span class="ruby-ivar">@terminal_width</span> = <span class="ruby-value">80</span>
+    <span class="ruby-ivar">@bar_mark</span> = <span class="ruby-value str">&quot;o&quot;</span>
+    <span class="ruby-ivar">@current</span> = <span class="ruby-value">0</span>
+    <span class="ruby-ivar">@previous</span> = <span class="ruby-value">0</span>
+    <span class="ruby-ivar">@finished_p</span> = <span class="ruby-keyword kw">false</span>
+    <span class="ruby-ivar">@start_time</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+    <span class="ruby-ivar">@previous_time</span> = <span class="ruby-ivar">@start_time</span>
+    <span class="ruby-ivar">@title_width</span> = <span class="ruby-value">14</span>
+    <span class="ruby-ivar">@format</span> = <span class="ruby-node">&quot;%-#{@title_width}s %3d%% %s %s&quot;</span>
+    <span class="ruby-ivar">@format_arguments</span> = [<span class="ruby-identifier">:title</span>, <span class="ruby-identifier">:percentage</span>, <span class="ruby-identifier">:bar</span>, <span class="ruby-identifier">:stat</span>]
+    <span class="ruby-identifier">clear</span>
+    <span class="ruby-identifier">show</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -5,18 +5,14 @@
 
 <html>
 <head>
-  <title>if_needs_rekey? (Net::SSH::Transport::PacketStream)</title>
+  <title>extended (Net::SSH::Transport::PacketStream)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/transport/packet_stream.rb, line 163</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">if_needs_rekey?</span>
-      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">client</span>.<span class="ruby-identifier">needs_rekey?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">server</span>.<span class="ruby-identifier">needs_rekey?</span>
-        <span class="ruby-keyword kw">yield</span>
-        <span class="ruby-identifier">client</span>.<span class="ruby-identifier">reset!</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">client</span>.<span class="ruby-identifier">needs_rekey?</span>
-        <span class="ruby-identifier">server</span>.<span class="ruby-identifier">reset!</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">server</span>.<span class="ruby-identifier">needs_rekey?</span>
-      <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File net/ssh/transport/packet_stream.rb, line 19</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">extended</span>(<span class="ruby-identifier">object</span>)
+      <span class="ruby-identifier">object</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">:initialize_ssh</span>)
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

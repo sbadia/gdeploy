@@ -5,14 +5,15 @@
 
 <html>
 <head>
-  <title>active? (Net::SSH::Multi::Channel)</title>
+  <title>exec (Net::SSH::Multi::Channel)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/multi/channel.rb, line 112</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">active?</span>
-      <span class="ruby-identifier">channels</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">channel</span><span class="ruby-operator">|</span> <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">active?</span> }
+  <pre><span class="ruby-comment cmt"># File net/ssh/multi/channel.rb, line 77</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exec</span>(<span class="ruby-identifier">command</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-identifier">channels</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">channel</span><span class="ruby-operator">|</span> <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">exec</span>(<span class="ruby-identifier">command</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) }
+      <span class="ruby-keyword kw">self</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

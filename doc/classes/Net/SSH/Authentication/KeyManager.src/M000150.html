@@ -5,18 +5,15 @@
 
 <html>
 <head>
-  <title>agent (Net::SSH::Authentication::KeyManager)</title>
+  <title>add_key_data (Net::SSH::Authentication::KeyManager)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/authentication/key_manager.rb, line 182</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">agent</span>
-          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">use_agent?</span>
-          <span class="ruby-ivar">@agent</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Agent</span>.<span class="ruby-identifier">connect</span>(<span class="ruby-identifier">logger</span>)
-        <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">AgentNotAvailable</span>
-          <span class="ruby-ivar">@use_agent</span> = <span class="ruby-keyword kw">false</span>
-          <span class="ruby-keyword kw">nil</span>
+  <pre><span class="ruby-comment cmt"># File net/ssh/authentication/key_manager.rb, line 69</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_key_data</span>(<span class="ruby-identifier">key_data_</span>)
+          <span class="ruby-identifier">key_data</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">key_data_</span>).<span class="ruby-identifier">uniq!</span>
+          <span class="ruby-keyword kw">self</span>
         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

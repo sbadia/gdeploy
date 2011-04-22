@@ -99,15 +99,15 @@ returned by Connection::Session#forward:
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000328">active_locals</a>&nbsp;&nbsp;
-      <a href="#M000332">active_remotes</a>&nbsp;&nbsp;
-      <a href="#M000333">agent</a>&nbsp;&nbsp;
-      <a href="#M000327">cancel_local</a>&nbsp;&nbsp;
-      <a href="#M000331">cancel_remote</a>&nbsp;&nbsp;
-      <a href="#M000326">local</a>&nbsp;&nbsp;
-      <a href="#M000325">new</a>&nbsp;&nbsp;
-      <a href="#M000329">remote</a>&nbsp;&nbsp;
-      <a href="#M000330">remote_to</a>&nbsp;&nbsp;
+      <a href="#M000334">active_locals</a>&nbsp;&nbsp;
+      <a href="#M000338">active_remotes</a>&nbsp;&nbsp;
+      <a href="#M000339">agent</a>&nbsp;&nbsp;
+      <a href="#M000333">cancel_local</a>&nbsp;&nbsp;
+      <a href="#M000337">cancel_remote</a>&nbsp;&nbsp;
+      <a href="#M000332">local</a>&nbsp;&nbsp;
+      <a href="#M000331">new</a>&nbsp;&nbsp;
+      <a href="#M000335">remote</a>&nbsp;&nbsp;
+      <a href="#M000336">remote_to</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -153,21 +153,21 @@ services employ.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000325" class="method-detail">
-        <a name="M000325"></a>
+      <div id="method-M000331" class="method-detail">
+        <a name="M000331"></a>
 
         <div class="method-heading">
-          <a href="Forward.src/M000325.html" target="Code" class="method-signature"
-            onclick="popupCode('Forward.src/M000325.html');return false;">
+          <a href="Forward.src/M000331.html" target="Code" class="method-signature"
+            onclick="popupCode('Forward.src/M000331.html');return false;">
           <span class="method-name">new</span><span class="method-args">(session)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Instantiates a <a href="Forward.html#M000325">new</a> <a
+Instantiates a <a href="Forward.html#M000331">new</a> <a
 href="Forward.html">Forward</a> service instance atop the given connection
-service session. This will register <a href="Forward.html#M000325">new</a>
+service session. This will register <a href="Forward.html#M000331">new</a>
 channel open handlers to handle the specialized channels that the <a
 href="../../SSH.html">SSH</a> port forwarding protocols employ.
 </p>
@@ -176,12 +176,12 @@ href="../../SSH.html">SSH</a> port forwarding protocols employ.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000328" class="method-detail">
-        <a name="M000328"></a>
+      <div id="method-M000334" class="method-detail">
+        <a name="M000334"></a>
 
         <div class="method-heading">
-          <a href="Forward.src/M000328.html" target="Code" class="method-signature"
-            onclick="popupCode('Forward.src/M000328.html');return false;">
+          <a href="Forward.src/M000334.html" target="Code" class="method-signature"
+            onclick="popupCode('Forward.src/M000334.html');return false;">
           <span class="method-name">active_locals</span><span class="method-args">()</span>
           </a>
         </div>
@@ -190,38 +190,38 @@ href="../../SSH.html">SSH</a> port forwarding protocols employ.
           <p>
 Returns a list of all active locally forwarded ports. The returned value is
 an array of arrays, where each element is a two-element tuple consisting of
-the <a href="Forward.html#M000326">local</a> port and bind address
+the <a href="Forward.html#M000332">local</a> port and bind address
 corresponding to the forwarding port.
 </p>
         </div>
       </div>
 
-      <div id="method-M000332" class="method-detail">
-        <a name="M000332"></a>
+      <div id="method-M000338" class="method-detail">
+        <a name="M000338"></a>
 
         <div class="method-heading">
-          <a href="Forward.src/M000332.html" target="Code" class="method-signature"
-            onclick="popupCode('Forward.src/M000332.html');return false;">
+          <a href="Forward.src/M000338.html" target="Code" class="method-signature"
+            onclick="popupCode('Forward.src/M000338.html');return false;">
           <span class="method-name">active_remotes</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns all active forwarded <a href="Forward.html#M000329">remote</a>
+Returns all active forwarded <a href="Forward.html#M000335">remote</a>
 ports. The returned value is an array of two-element tuples, where the
-first element is the port on the <a href="Forward.html#M000329">remote</a>
+first element is the port on the <a href="Forward.html#M000335">remote</a>
 host and the second is the bind address.
 </p>
         </div>
       </div>
 
-      <div id="method-M000333" class="method-detail">
-        <a name="M000333"></a>
+      <div id="method-M000339" class="method-detail">
+        <a name="M000339"></a>
 
         <div class="method-heading">
-          <a href="Forward.src/M000333.html" target="Code" class="method-signature"
-            onclick="popupCode('Forward.src/M000333.html');return false;">
+          <a href="Forward.src/M000339.html" target="Code" class="method-signature"
+            onclick="popupCode('Forward.src/M000339.html');return false;">
           <span class="method-name">agent</span><span class="method-args">(channel)</span>
           </a>
         </div>
@@ -229,8 +229,8 @@ host and the second is the bind address.
         <div class="method-description">
           <p>
 Enables <a href="../../SSH.html">SSH</a> <a
-href="Forward.html#M000333">agent</a> forwarding on the given channel. The
-forwarded <a href="Forward.html#M000333">agent</a> will remain active even
+href="Forward.html#M000339">agent</a> forwarding on the given channel. The
+forwarded <a href="Forward.html#M000339">agent</a> will remain active even
 after the channel closes&#8212;the channel is only used as the transport
 for enabling the forwarded connection. You should never need to call this
 directly&#8212;it is called automatically the first time a session channel
@@ -247,19 +247,19 @@ is opened, when the connection was created with :forward_agent set to true:
         </div>
       </div>
 
-      <div id="method-M000327" class="method-detail">
-        <a name="M000327"></a>
+      <div id="method-M000333" class="method-detail">
+        <a name="M000333"></a>
 
         <div class="method-heading">
-          <a href="Forward.src/M000327.html" target="Code" class="method-signature"
-            onclick="popupCode('Forward.src/M000327.html');return false;">
+          <a href="Forward.src/M000333.html" target="Code" class="method-signature"
+            onclick="popupCode('Forward.src/M000333.html');return false;">
           <span class="method-name">cancel_local</span><span class="method-args">(port, bind_address=&quot;127.0.0.1&quot;)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Terminates an active <a href="Forward.html#M000326">local</a> forwarded
+Terminates an active <a href="Forward.html#M000332">local</a> forwarded
 port. If no such forwarded port exists, this will raise an exception.
 Otherwise, the forwarded connection is terminated.
 </p>
@@ -270,29 +270,29 @@ Otherwise, the forwarded connection is terminated.
         </div>
       </div>
 
-      <div id="method-M000331" class="method-detail">
-        <a name="M000331"></a>
+      <div id="method-M000337" class="method-detail">
+        <a name="M000337"></a>
 
         <div class="method-heading">
-          <a href="Forward.src/M000331.html" target="Code" class="method-signature"
-            onclick="popupCode('Forward.src/M000331.html');return false;">
+          <a href="Forward.src/M000337.html" target="Code" class="method-signature"
+            onclick="popupCode('Forward.src/M000337.html');return false;">
           <span class="method-name">cancel_remote</span><span class="method-args">(port, host=&quot;127.0.0.1&quot;)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Requests that a <a href="Forward.html#M000329">remote</a> forwarded port be
-cancelled. The <a href="Forward.html#M000329">remote</a> forwarded port on
-the <a href="Forward.html#M000329">remote</a> host, bound to the given
-address on the <a href="Forward.html#M000329">remote</a> host, will be
+Requests that a <a href="Forward.html#M000335">remote</a> forwarded port be
+cancelled. The <a href="Forward.html#M000335">remote</a> forwarded port on
+the <a href="Forward.html#M000335">remote</a> host, bound to the given
+address on the <a href="Forward.html#M000335">remote</a> host, will be
 terminated, but not immediately. This method returns immediately after
 queueing the request to be sent to the server. If for some reason the port
 cannot be cancelled, an exception will be raised (asynchronously).
 </p>
 <p>
 If you want to know when the connection has been cancelled, it will no
-longer be present in the <a href="Forward.html#M000332">active_remotes</a>
+longer be present in the <a href="Forward.html#M000338">active_remotes</a>
 list. If you want to block until the port is no longer active, you could do
 something like this:
 </p>
@@ -303,12 +303,12 @@ something like this:
         </div>
       </div>
 
-      <div id="method-M000326" class="method-detail">
-        <a name="M000326"></a>
+      <div id="method-M000332" class="method-detail">
+        <a name="M000332"></a>
 
         <div class="method-heading">
-          <a href="Forward.src/M000326.html" target="Code" class="method-signature"
-            onclick="popupCode('Forward.src/M000326.html');return false;">
+          <a href="Forward.src/M000332.html" target="Code" class="method-signature"
+            onclick="popupCode('Forward.src/M000332.html');return false;">
           <span class="method-name">local</span><span class="method-args">(*args)</span>
           </a>
         </div>
@@ -316,30 +316,30 @@ something like this:
         <div class="method-description">
           <p>
 Starts listening for connections on the <a
-href="Forward.html#M000326">local</a> host, and forwards them to the
-specified <a href="Forward.html#M000329">remote</a> host/port via the <a
+href="Forward.html#M000332">local</a> host, and forwards them to the
+specified <a href="Forward.html#M000335">remote</a> host/port via the <a
 href="../../SSH.html">SSH</a> connection. This method accepts either three
 or four arguments. When four arguments are given, they are:
 </p>
 <ul>
-<li>the <a href="Forward.html#M000326">local</a> address to bind to
+<li>the <a href="Forward.html#M000332">local</a> address to bind to
 
 </li>
-<li>the <a href="Forward.html#M000326">local</a> port to listen on
+<li>the <a href="Forward.html#M000332">local</a> port to listen on
 
 </li>
-<li>the <a href="Forward.html#M000329">remote</a> host to forward connections
+<li>the <a href="Forward.html#M000335">remote</a> host to forward connections
 to
 
 </li>
-<li>the port on the <a href="Forward.html#M000329">remote</a> host to connect
+<li>the port on the <a href="Forward.html#M000335">remote</a> host to connect
 to
 
 </li>
 </ul>
 <p>
 If three arguments are given, it is as if the <a
-href="Forward.html#M000326">local</a> bind address is
+href="Forward.html#M000332">local</a> bind address is
 &quot;127.0.0.1&quot;, and the rest are applied as above.
 </p>
 <pre>
@@ -349,12 +349,12 @@ href="Forward.html#M000326">local</a> bind address is
         </div>
       </div>
 
-      <div id="method-M000329" class="method-detail">
-        <a name="M000329"></a>
+      <div id="method-M000335" class="method-detail">
+        <a name="M000335"></a>
 
         <div class="method-heading">
-          <a href="Forward.src/M000329.html" target="Code" class="method-signature"
-            onclick="popupCode('Forward.src/M000329.html');return false;">
+          <a href="Forward.src/M000335.html" target="Code" class="method-signature"
+            onclick="popupCode('Forward.src/M000335.html');return false;">
           <span class="method-name">remote</span><span class="method-args">(port, host, remote_port, remote_host=&quot;127.0.0.1&quot;)</span>
           </a>
         </div>
@@ -362,20 +362,20 @@ href="Forward.html#M000326">local</a> bind address is
         <div class="method-description">
           <p>
 Requests that all connections on the given <a
-href="Forward.html#M000329">remote</a>-port be forwarded via the <a
-href="Forward.html#M000326">local</a> host to the given port/host. The last
+href="Forward.html#M000335">remote</a>-port be forwarded via the <a
+href="Forward.html#M000332">local</a> host to the given port/host. The last
 argument describes the bind address on the <a
-href="Forward.html#M000329">remote</a> host, and defaults to 127.0.0.1.
+href="Forward.html#M000335">remote</a> host, and defaults to 127.0.0.1.
 </p>
 <p>
 This method will return immediately, but the port will not actually be
-forwarded immediately. If the <a href="Forward.html#M000329">remote</a>
+forwarded immediately. If the <a href="Forward.html#M000335">remote</a>
 server is not able to begin the listener for this request, an exception
 will be raised asynchronously.
 </p>
 <p>
 If you want to know when the connection is active, it will show up in the
-<a href="Forward.html#M000332">active_remotes</a> list. If you want to
+<a href="Forward.html#M000338">active_remotes</a> list. If you want to
 block until the port is active, you could do something like this:
 </p>
 <pre>
@@ -385,8 +385,8 @@ block until the port is active, you could do something like this:
         </div>
       </div>
 
-      <div id="method-M000330" class="method-detail">
-        <a name="M000330"></a>
+      <div id="method-M000336" class="method-detail">
+        <a name="M000336"></a>
 
         <div class="method-heading">
           <span class="method-name">remote_to</span><span class="method-args">(port, host, remote_port, remote_host=&quot;127.0.0.1&quot;)</span>
@@ -394,7 +394,7 @@ block until the port is active, you could do something like this:
       
         <div class="method-description">
           <p>
-Alias for <a href="Forward.html#M000329">remote</a>
+Alias for <a href="Forward.html#M000335">remote</a>
 </p>
         </div>
       </div>

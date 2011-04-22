@@ -5,14 +5,14 @@
 
 <html>
 <head>
-  <title>remember_host! (Net::SSH::HostKeyMismatch)</title>
+  <title>[] (Net::SSH::HostKeyMismatch)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/errors.rb, line 81</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remember_host!</span>
-      <span class="ruby-ivar">@callback</span>.<span class="ruby-identifier">call</span>
+  <pre><span class="ruby-comment cmt"># File net/ssh/errors.rb, line 49</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>)
+      <span class="ruby-ivar">@data</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">key</span>]
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

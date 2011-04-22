@@ -55,48 +55,48 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../files/net/ssh/multi_rb.html">
-                net/ssh/multi.rb
-                </a>
-        <br />
-                <a href="../../../files/net/ssh/multi/session_actions_rb.html">
-                net/ssh/multi/session_actions.rb
-                </a>
-        <br />
-                <a href="../../../files/net/ssh/multi/pending_connection_rb.html">
-                net/ssh/multi/pending_connection.rb
-                </a>
-        <br />
-                <a href="../../../files/net/ssh/multi/channel_rb.html">
-                net/ssh/multi/channel.rb
+                <a href="../../../files/net/ssh/multi/server_rb.html">
+                net/ssh/multi/server.rb
                 </a>
         <br />
                 <a href="../../../files/net/ssh/multi/version_rb.html">
                 net/ssh/multi/version.rb
                 </a>
         <br />
+                <a href="../../../files/net/ssh/multi/pending_connection_rb.html">
+                net/ssh/multi/pending_connection.rb
+                </a>
+        <br />
+                <a href="../../../files/net/ssh/multi/session_rb.html">
+                net/ssh/multi/session.rb
+                </a>
+        <br />
                 <a href="../../../files/net/ssh/multi/channel_proxy_rb.html">
                 net/ssh/multi/channel_proxy.rb
-                </a>
-        <br />
-                <a href="../../../files/net/ssh/multi/subsession_rb.html">
-                net/ssh/multi/subsession.rb
-                </a>
-        <br />
-                <a href="../../../files/net/ssh/multi/server_rb.html">
-                net/ssh/multi/server.rb
-                </a>
-        <br />
-                <a href="../../../files/net/ssh/multi/dynamic_server_rb.html">
-                net/ssh/multi/dynamic_server.rb
                 </a>
         <br />
                 <a href="../../../files/net/ssh/multi/server_list_rb.html">
                 net/ssh/multi/server_list.rb
                 </a>
         <br />
-                <a href="../../../files/net/ssh/multi/session_rb.html">
-                net/ssh/multi/session.rb
+                <a href="../../../files/net/ssh/multi/subsession_rb.html">
+                net/ssh/multi/subsession.rb
+                </a>
+        <br />
+                <a href="../../../files/net/ssh/multi/dynamic_server_rb.html">
+                net/ssh/multi/dynamic_server.rb
+                </a>
+        <br />
+                <a href="../../../files/net/ssh/multi/channel_rb.html">
+                net/ssh/multi/channel.rb
+                </a>
+        <br />
+                <a href="../../../files/net/ssh/multi/session_actions_rb.html">
+                net/ssh/multi/session_actions.rb
+                </a>
+        <br />
+                <a href="../../../files/net/ssh/multi_rb.html">
+                net/ssh/multi.rb
                 </a>
         <br />
             </td>
@@ -169,7 +169,7 @@ documentation.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000183">start</a>&nbsp;&nbsp;
+      <a href="#M000186">start</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -206,12 +206,12 @@ Class <a href="Multi/Version.html" class="link">Net::SSH::Multi::Version</a><br 
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000183" class="method-detail">
-        <a name="M000183"></a>
+      <div id="method-M000186" class="method-detail">
+        <a name="M000186"></a>
 
         <div class="method-heading">
-          <a href="Multi.src/M000183.html" target="Code" class="method-signature"
-            onclick="popupCode('Multi.src/M000183.html');return false;">
+          <a href="Multi.src/M000186.html" target="Code" class="method-signature"
+            onclick="popupCode('Multi.src/M000186.html');return false;">
           <span class="method-name">start</span><span class="method-args">(options={}) {|session| ...}</span>
           </a>
         </div>
@@ -221,7 +221,7 @@ Class <a href="Multi/Version.html" class="link">Net::SSH::Multi::Version</a><br 
 This is a convenience method for instantiating a new <a
 href="Multi/Session.html">Net::SSH::Multi::Session</a>. If a block is
 given, the session will be yielded to the block automatically closed (see
-<a href="Multi/Session.html#M000227">Net::SSH::Multi::Session#close</a>)
+<a href="Multi/Session.html#M000239">Net::SSH::Multi::Session#close</a>)
 when the block finishes. Otherwise, the new session will be returned.
 </p>
 <pre>
@@ -235,7 +235,7 @@ when the block finishes. Otherwise, the new session will be returned.
 </pre>
 <p>
 Any options are passed directly to <a
-href="Multi/Session.html#M000219">Net::SSH::Multi::Session.new</a> (q.v.).
+href="Multi/Session.html#M000231">Net::SSH::Multi::Session.new</a> (q.v.).
 </p>
         </div>
       </div>

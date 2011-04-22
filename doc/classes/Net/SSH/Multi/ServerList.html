@@ -97,13 +97,13 @@ href="../../../Array.html">Array</a>, though it is Enumerable.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000195">add</a>&nbsp;&nbsp;
-      <a href="#M000196">concat</a>&nbsp;&nbsp;
-      <a href="#M000197">each</a>&nbsp;&nbsp;
-      <a href="#M000199">flatten</a>&nbsp;&nbsp;
-      <a href="#M000194">new</a>&nbsp;&nbsp;
-      <a href="#M000198">select</a>&nbsp;&nbsp;
-      <a href="#M000200">to_ary</a>&nbsp;&nbsp;
+      <a href="#M000198">add</a>&nbsp;&nbsp;
+      <a href="#M000199">concat</a>&nbsp;&nbsp;
+      <a href="#M000200">each</a>&nbsp;&nbsp;
+      <a href="#M000202">flatten</a>&nbsp;&nbsp;
+      <a href="#M000197">new</a>&nbsp;&nbsp;
+      <a href="#M000201">select</a>&nbsp;&nbsp;
+      <a href="#M000203">to_ary</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -132,19 +132,19 @@ href="../../../Array.html">Array</a>, though it is Enumerable.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000194" class="method-detail">
-        <a name="M000194"></a>
+      <div id="method-M000197" class="method-detail">
+        <a name="M000197"></a>
 
         <div class="method-heading">
-          <a href="ServerList.src/M000194.html" target="Code" class="method-signature"
-            onclick="popupCode('ServerList.src/M000194.html');return false;">
+          <a href="ServerList.src/M000197.html" target="Code" class="method-signature"
+            onclick="popupCode('ServerList.src/M000197.html');return false;">
           <span class="method-name">new</span><span class="method-args">(list=[])</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Create a <a href="ServerList.html#M000194">new</a> <a
+Create a <a href="ServerList.html#M000197">new</a> <a
 href="ServerList.html">ServerList</a> that wraps the given server list.
 Duplicate entries will be discarded.
 </p>
@@ -153,12 +153,12 @@ Duplicate entries will be discarded.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000195" class="method-detail">
-        <a name="M000195"></a>
+      <div id="method-M000198" class="method-detail">
+        <a name="M000198"></a>
 
         <div class="method-heading">
-          <a href="ServerList.src/M000195.html" target="Code" class="method-signature"
-            onclick="popupCode('ServerList.src/M000195.html');return false;">
+          <a href="ServerList.src/M000198.html" target="Code" class="method-signature"
+            onclick="popupCode('ServerList.src/M000198.html');return false;">
           <span class="method-name">add</span><span class="method-args">(server)</span>
           </a>
         </div>
@@ -172,12 +172,12 @@ is <em>not</em> added, and the existing server record is returned instead.
         </div>
       </div>
 
-      <div id="method-M000196" class="method-detail">
-        <a name="M000196"></a>
+      <div id="method-M000199" class="method-detail">
+        <a name="M000199"></a>
 
         <div class="method-heading">
-          <a href="ServerList.src/M000196.html" target="Code" class="method-signature"
-            onclick="popupCode('ServerList.src/M000196.html');return false;">
+          <a href="ServerList.src/M000199.html" target="Code" class="method-signature"
+            onclick="popupCode('ServerList.src/M000199.html');return false;">
           <span class="method-name">concat</span><span class="method-args">(servers)</span>
           </a>
         </div>
@@ -185,25 +185,25 @@ is <em>not</em> added, and the existing server record is returned instead.
         <div class="method-description">
           <p>
 Adds an array (or otherwise Enumerable list) of servers to this list, by
-calling <a href="ServerList.html#M000195">add</a> for <a
-href="ServerList.html#M000197">each</a> argument. Returns <tt>self</tt>.
+calling <a href="ServerList.html#M000198">add</a> for <a
+href="ServerList.html#M000200">each</a> argument. Returns <tt>self</tt>.
 </p>
         </div>
       </div>
 
-      <div id="method-M000197" class="method-detail">
-        <a name="M000197"></a>
+      <div id="method-M000200" class="method-detail">
+        <a name="M000200"></a>
 
         <div class="method-heading">
-          <a href="ServerList.src/M000197.html" target="Code" class="method-signature"
-            onclick="popupCode('ServerList.src/M000197.html');return false;">
+          <a href="ServerList.src/M000200.html" target="Code" class="method-signature"
+            onclick="popupCode('ServerList.src/M000200.html');return false;">
           <span class="method-name">each</span><span class="method-args">() {|server| ...}</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Iterates over <a href="ServerList.html#M000197">each</a> distinct server
+Iterates over <a href="ServerList.html#M000200">each</a> distinct server
 record in the collection. This will correctly iterate over server records
 instantiated by a <a href="DynamicServer.html">DynamicServer</a> as well,
 but only if the dynamic server has been &quot;evaluated&quot; (see
@@ -212,12 +212,12 @@ Net::SSH::Multi::DynamicServer#evaluate!).
         </div>
       </div>
 
-      <div id="method-M000199" class="method-detail">
-        <a name="M000199"></a>
+      <div id="method-M000202" class="method-detail">
+        <a name="M000202"></a>
 
         <div class="method-heading">
-          <a href="ServerList.src/M000199.html" target="Code" class="method-signature"
-            onclick="popupCode('ServerList.src/M000199.html');return false;">
+          <a href="ServerList.src/M000202.html" target="Code" class="method-signature"
+            onclick="popupCode('ServerList.src/M000202.html');return false;">
           <span class="method-name">flatten</span><span class="method-args">()</span>
           </a>
         </div>
@@ -231,12 +231,12 @@ removed from the result).
         </div>
       </div>
 
-      <div id="method-M000198" class="method-detail">
-        <a name="M000198"></a>
+      <div id="method-M000201" class="method-detail">
+        <a name="M000201"></a>
 
         <div class="method-heading">
-          <a href="ServerList.src/M000198.html" target="Code" class="method-signature"
-            onclick="popupCode('ServerList.src/M000198.html');return false;">
+          <a href="ServerList.src/M000201.html" target="Code" class="method-signature"
+            onclick="popupCode('ServerList.src/M000201.html');return false;">
           <span class="method-name">select</span><span class="method-args">() {|i| ...}</span>
           </a>
         </div>
@@ -244,14 +244,14 @@ removed from the result).
         <div class="method-description">
           <p>
 Works exactly as Enumerable#select, but returns the result as a <a
-href="ServerList.html#M000194">new</a> <a
+href="ServerList.html#M000197">new</a> <a
 href="ServerList.html">ServerList</a> instance.
 </p>
         </div>
       </div>
 
-      <div id="method-M000200" class="method-detail">
-        <a name="M000200"></a>
+      <div id="method-M000203" class="method-detail">
+        <a name="M000203"></a>
 
         <div class="method-heading">
           <span class="method-name">to_ary</span><span class="method-args">()</span>
@@ -259,7 +259,7 @@ href="ServerList.html">ServerList</a> instance.
       
         <div class="method-description">
           <p>
-Alias for <a href="ServerList.html#M000199">flatten</a>
+Alias for <a href="ServerList.html#M000202">flatten</a>
 </p>
         </div>
       </div>

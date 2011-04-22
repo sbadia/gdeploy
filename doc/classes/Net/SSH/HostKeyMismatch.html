@@ -82,15 +82,15 @@
 
     <div id="description">
       <p>
-Raised when the cached <a href="HostKeyMismatch.html#M000426">key</a> for a
-particular <a href="HostKeyMismatch.html#M000423">host</a> does not match
-the <a href="HostKeyMismatch.html#M000426">key</a> given by the <a
-href="HostKeyMismatch.html#M000423">host</a>, which can be indicative of a
+Raised when the cached <a href="HostKeyMismatch.html#M000432">key</a> for a
+particular <a href="HostKeyMismatch.html#M000429">host</a> does not match
+the <a href="HostKeyMismatch.html#M000432">key</a> given by the <a
+href="HostKeyMismatch.html#M000429">host</a>, which can be indicative of a
 man-in-the-middle attack. When rescuing this exception, you can inspect the
-<a href="HostKeyMismatch.html#M000426">key</a> <a
-href="HostKeyMismatch.html#M000422">fingerprint</a> and, if you want to
+<a href="HostKeyMismatch.html#M000432">key</a> <a
+href="HostKeyMismatch.html#M000428">fingerprint</a> and, if you want to
 proceed anyway, simply call the <a
-href="HostKeyMismatch.html#M000427">remember_host!</a> method on the
+href="HostKeyMismatch.html#M000433">remember_host!</a> method on the
 exception, and then retry.
 </p>
 
@@ -103,13 +103,13 @@ exception, and then retry.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000421">[]</a>&nbsp;&nbsp;
-      <a href="#M000422">fingerprint</a>&nbsp;&nbsp;
-      <a href="#M000423">host</a>&nbsp;&nbsp;
-      <a href="#M000425">ip</a>&nbsp;&nbsp;
-      <a href="#M000426">key</a>&nbsp;&nbsp;
-      <a href="#M000424">port</a>&nbsp;&nbsp;
-      <a href="#M000427">remember_host!</a>&nbsp;&nbsp;
+      <a href="#M000427">[]</a>&nbsp;&nbsp;
+      <a href="#M000428">fingerprint</a>&nbsp;&nbsp;
+      <a href="#M000429">host</a>&nbsp;&nbsp;
+      <a href="#M000431">ip</a>&nbsp;&nbsp;
+      <a href="#M000432">key</a>&nbsp;&nbsp;
+      <a href="#M000430">port</a>&nbsp;&nbsp;
+      <a href="#M000433">remember_host!</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -131,12 +131,12 @@ exception, and then retry.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000421" class="method-detail">
-        <a name="M000421"></a>
+      <div id="method-M000427" class="method-detail">
+        <a name="M000427"></a>
 
         <div class="method-heading">
-          <a href="HostKeyMismatch.src/M000421.html" target="Code" class="method-signature"
-            onclick="popupCode('HostKeyMismatch.src/M000421.html');return false;">
+          <a href="HostKeyMismatch.src/M000427.html" target="Code" class="method-signature"
+            onclick="popupCode('HostKeyMismatch.src/M000427.html');return false;">
           <span class="method-name">[]</span><span class="method-args">(key)</span>
           </a>
         </div>
@@ -144,61 +144,61 @@ exception, and then retry.
         <div class="method-description">
           <p>
 An accessor for getting at the data that was used to look up the <a
-href="HostKeyMismatch.html#M000423">host</a> (see also <a
-href="HostKeyMismatch.html#M000422">fingerprint</a>, <a
-href="HostKeyMismatch.html#M000423">host</a>, <a
-href="HostKeyMismatch.html#M000424">port</a>, <a
-href="HostKeyMismatch.html#M000425">ip</a>, and <a
-href="HostKeyMismatch.html#M000426">key</a>).
+href="HostKeyMismatch.html#M000429">host</a> (see also <a
+href="HostKeyMismatch.html#M000428">fingerprint</a>, <a
+href="HostKeyMismatch.html#M000429">host</a>, <a
+href="HostKeyMismatch.html#M000430">port</a>, <a
+href="HostKeyMismatch.html#M000431">ip</a>, and <a
+href="HostKeyMismatch.html#M000432">key</a>).
 </p>
         </div>
       </div>
 
-      <div id="method-M000422" class="method-detail">
-        <a name="M000422"></a>
+      <div id="method-M000428" class="method-detail">
+        <a name="M000428"></a>
 
         <div class="method-heading">
-          <a href="HostKeyMismatch.src/M000422.html" target="Code" class="method-signature"
-            onclick="popupCode('HostKeyMismatch.src/M000422.html');return false;">
+          <a href="HostKeyMismatch.src/M000428.html" target="Code" class="method-signature"
+            onclick="popupCode('HostKeyMismatch.src/M000428.html');return false;">
           <span class="method-name">fingerprint</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the <a href="HostKeyMismatch.html#M000422">fingerprint</a> of the
-<a href="HostKeyMismatch.html#M000426">key</a> for the <a
-href="HostKeyMismatch.html#M000423">host</a>, which either was not found or
+Returns the <a href="HostKeyMismatch.html#M000428">fingerprint</a> of the
+<a href="HostKeyMismatch.html#M000432">key</a> for the <a
+href="HostKeyMismatch.html#M000429">host</a>, which either was not found or
 did not match.
 </p>
         </div>
       </div>
 
-      <div id="method-M000423" class="method-detail">
-        <a name="M000423"></a>
+      <div id="method-M000429" class="method-detail">
+        <a name="M000429"></a>
 
         <div class="method-heading">
-          <a href="HostKeyMismatch.src/M000423.html" target="Code" class="method-signature"
-            onclick="popupCode('HostKeyMismatch.src/M000423.html');return false;">
+          <a href="HostKeyMismatch.src/M000429.html" target="Code" class="method-signature"
+            onclick="popupCode('HostKeyMismatch.src/M000429.html');return false;">
           <span class="method-name">host</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the <a href="HostKeyMismatch.html#M000423">host</a> name for the
-remote <a href="HostKeyMismatch.html#M000423">host</a>, as reported by the
+Returns the <a href="HostKeyMismatch.html#M000429">host</a> name for the
+remote <a href="HostKeyMismatch.html#M000429">host</a>, as reported by the
 socket.
 </p>
         </div>
       </div>
 
-      <div id="method-M000425" class="method-detail">
-        <a name="M000425"></a>
+      <div id="method-M000431" class="method-detail">
+        <a name="M000431"></a>
 
         <div class="method-heading">
-          <a href="HostKeyMismatch.src/M000425.html" target="Code" class="method-signature"
-            onclick="popupCode('HostKeyMismatch.src/M000425.html');return false;">
+          <a href="HostKeyMismatch.src/M000431.html" target="Code" class="method-signature"
+            onclick="popupCode('HostKeyMismatch.src/M000431.html');return false;">
           <span class="method-name">ip</span><span class="method-args">()</span>
           </a>
         </div>
@@ -206,54 +206,54 @@ socket.
         <div class="method-description">
           <p>
 Returns the IP address of the remote <a
-href="HostKeyMismatch.html#M000423">host</a>, as reported by the socket.
+href="HostKeyMismatch.html#M000429">host</a>, as reported by the socket.
 </p>
         </div>
       </div>
 
-      <div id="method-M000426" class="method-detail">
-        <a name="M000426"></a>
+      <div id="method-M000432" class="method-detail">
+        <a name="M000432"></a>
 
         <div class="method-heading">
-          <a href="HostKeyMismatch.src/M000426.html" target="Code" class="method-signature"
-            onclick="popupCode('HostKeyMismatch.src/M000426.html');return false;">
+          <a href="HostKeyMismatch.src/M000432.html" target="Code" class="method-signature"
+            onclick="popupCode('HostKeyMismatch.src/M000432.html');return false;">
           <span class="method-name">key</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the <a href="HostKeyMismatch.html#M000426">key</a> itself, as
-reported by the remote <a href="HostKeyMismatch.html#M000423">host</a>.
+Returns the <a href="HostKeyMismatch.html#M000432">key</a> itself, as
+reported by the remote <a href="HostKeyMismatch.html#M000429">host</a>.
 </p>
         </div>
       </div>
 
-      <div id="method-M000424" class="method-detail">
-        <a name="M000424"></a>
+      <div id="method-M000430" class="method-detail">
+        <a name="M000430"></a>
 
         <div class="method-heading">
-          <a href="HostKeyMismatch.src/M000424.html" target="Code" class="method-signature"
-            onclick="popupCode('HostKeyMismatch.src/M000424.html');return false;">
+          <a href="HostKeyMismatch.src/M000430.html" target="Code" class="method-signature"
+            onclick="popupCode('HostKeyMismatch.src/M000430.html');return false;">
           <span class="method-name">port</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the <a href="HostKeyMismatch.html#M000424">port</a> number for the
-remote <a href="HostKeyMismatch.html#M000423">host</a>, as reported by the
+Returns the <a href="HostKeyMismatch.html#M000430">port</a> number for the
+remote <a href="HostKeyMismatch.html#M000429">host</a>, as reported by the
 socket.
 </p>
         </div>
       </div>
 
-      <div id="method-M000427" class="method-detail">
-        <a name="M000427"></a>
+      <div id="method-M000433" class="method-detail">
+        <a name="M000433"></a>
 
         <div class="method-heading">
-          <a href="HostKeyMismatch.src/M000427.html" target="Code" class="method-signature"
-            onclick="popupCode('HostKeyMismatch.src/M000427.html');return false;">
+          <a href="HostKeyMismatch.src/M000433.html" target="Code" class="method-signature"
+            onclick="popupCode('HostKeyMismatch.src/M000433.html');return false;">
           <span class="method-name">remember_host!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -261,8 +261,8 @@ socket.
         <div class="method-description">
           <p>
 Tell <a href="../SSH.html">Net::SSH</a> to record this <a
-href="HostKeyMismatch.html#M000423">host</a> and <a
-href="HostKeyMismatch.html#M000426">key</a> in the known hosts file, so
+href="HostKeyMismatch.html#M000429">host</a> and <a
+href="HostKeyMismatch.html#M000432">key</a> in the known hosts file, so
 that subsequent connections will remember them.
 </p>
         </div>

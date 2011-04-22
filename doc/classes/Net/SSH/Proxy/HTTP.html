@@ -82,7 +82,7 @@
       <p>
 An implementation of an <a href="HTTP.html">HTTP</a> proxy. To use it,
 instantiate it, then pass the instantiated object via the :proxy key to <a
-href="../../SSH.html#M000045">Net::SSH.start</a>:
+href="../../SSH.html#M000051">Net::SSH.start</a>:
 </p>
 <pre>
   require 'net/ssh/proxy/http'
@@ -114,8 +114,8 @@ supported; Basic only at this point.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000168">new</a>&nbsp;&nbsp;
-      <a href="#M000169">open</a>&nbsp;&nbsp;
+      <a href="#M000174">new</a>&nbsp;&nbsp;
+      <a href="#M000175">open</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -170,19 +170,19 @@ The port number of the proxy.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000168" class="method-detail">
-        <a name="M000168"></a>
+      <div id="method-M000174" class="method-detail">
+        <a name="M000174"></a>
 
         <div class="method-heading">
-          <a href="HTTP.src/M000168.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M000168.html');return false;">
+          <a href="HTTP.src/M000174.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M000174.html');return false;">
           <span class="method-name">new</span><span class="method-args">(proxy_host, proxy_port=80, options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Create a <a href="HTTP.html#M000168">new</a> socket factory that tunnels
+Create a <a href="HTTP.html#M000174">new</a> socket factory that tunnels
 via the given host and port. The <tt>options</tt> parameter is a hash of
 additional settings that can be used to tweak this proxy connection.
 Specifically, the following options are supported:
@@ -200,19 +200,19 @@ Specifically, the following options are supported:
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000169" class="method-detail">
-        <a name="M000169"></a>
+      <div id="method-M000175" class="method-detail">
+        <a name="M000175"></a>
 
         <div class="method-heading">
-          <a href="HTTP.src/M000169.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M000169.html');return false;">
+          <a href="HTTP.src/M000175.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M000175.html');return false;">
           <span class="method-name">open</span><span class="method-args">(host, port)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Return a <a href="HTTP.html#M000168">new</a> socket connected to the given
+Return a <a href="HTTP.html#M000174">new</a> socket connected to the given
 host and port via the proxy that was requested when the socket factory was
 instantiated.
 </p>

@@ -5,14 +5,16 @@
 
 <html>
 <head>
-  <title>[]= (Net::SSH::Multi::Channel)</title>
+  <title>new (Net::SSH::Multi::Channel)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/multi/channel.rb, line 61</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
-      <span class="ruby-ivar">@properties</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>
+  <pre><span class="ruby-comment cmt"># File net/ssh/multi/channel.rb, line 38</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">connection</span>, <span class="ruby-identifier">channels</span>)
+      <span class="ruby-ivar">@connection</span> = <span class="ruby-identifier">connection</span>
+      <span class="ruby-ivar">@channels</span> = <span class="ruby-identifier">channels</span>
+      <span class="ruby-ivar">@properties</span> = {}
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

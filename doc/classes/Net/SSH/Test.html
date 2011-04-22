@@ -55,8 +55,28 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
+                <a href="../../../files/net/ssh/test_rb.html">
+                net/ssh/test.rb
+                </a>
+        <br />
+                <a href="../../../files/net/ssh/test/script_rb.html">
+                net/ssh/test/script.rb
+                </a>
+        <br />
                 <a href="../../../files/net/ssh/test/packet_rb.html">
                 net/ssh/test/packet.rb
+                </a>
+        <br />
+                <a href="../../../files/net/ssh/test/socket_rb.html">
+                net/ssh/test/socket.rb
+                </a>
+        <br />
+                <a href="../../../files/net/ssh/test/kex_rb.html">
+                net/ssh/test/kex.rb
+                </a>
+        <br />
+                <a href="../../../files/net/ssh/test/local_packet_rb.html">
+                net/ssh/test/local_packet.rb
                 </a>
         <br />
                 <a href="../../../files/net/ssh/test/channel_rb.html">
@@ -67,28 +87,8 @@
                 net/ssh/test/extensions.rb
                 </a>
         <br />
-                <a href="../../../files/net/ssh/test/local_packet_rb.html">
-                net/ssh/test/local_packet.rb
-                </a>
-        <br />
                 <a href="../../../files/net/ssh/test/remote_packet_rb.html">
                 net/ssh/test/remote_packet.rb
-                </a>
-        <br />
-                <a href="../../../files/net/ssh/test/kex_rb.html">
-                net/ssh/test/kex.rb
-                </a>
-        <br />
-                <a href="../../../files/net/ssh/test/socket_rb.html">
-                net/ssh/test/socket.rb
-                </a>
-        <br />
-                <a href="../../../files/net/ssh/test/script_rb.html">
-                net/ssh/test/script.rb
-                </a>
-        <br />
-                <a href="../../../files/net/ssh/test_rb.html">
-                net/ssh/test.rb
                 </a>
         <br />
             </td>
@@ -110,7 +110,7 @@ This module may be used in unit tests, for when you want to test that your
 <a href="../SSH.html">SSH</a> state machines are really doing what you
 expect they are doing. You will typically include this module in your unit
 test class, and then build a &quot;<a
-href="Test.html#M000267">story</a>&quot; of expected sends and receives:
+href="Test.html#M000273">story</a>&quot; of expected sends and receives:
 </p>
 <pre>
   require 'test/unit'
@@ -163,11 +163,11 @@ for improvement will be welcome!
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000271">assert_scripted</a>&nbsp;&nbsp;
-      <a href="#M000269">connection</a>&nbsp;&nbsp;
-      <a href="#M000268">socket</a>&nbsp;&nbsp;
-      <a href="#M000267">story</a>&nbsp;&nbsp;
-      <a href="#M000270">transport</a>&nbsp;&nbsp;
+      <a href="#M000277">assert_scripted</a>&nbsp;&nbsp;
+      <a href="#M000275">connection</a>&nbsp;&nbsp;
+      <a href="#M000274">socket</a>&nbsp;&nbsp;
+      <a href="#M000273">story</a>&nbsp;&nbsp;
+      <a href="#M000276">transport</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -202,74 +202,74 @@ Class <a href="Test/Socket.html" class="link">Net::SSH::Test::Socket</a><br />
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000271" class="method-detail">
-        <a name="M000271"></a>
+      <div id="method-M000277" class="method-detail">
+        <a name="M000277"></a>
 
         <div class="method-heading">
-          <a href="Test.src/M000271.html" target="Code" class="method-signature"
-            onclick="popupCode('Test.src/M000271.html');return false;">
+          <a href="Test.src/M000277.html" target="Code" class="method-signature"
+            onclick="popupCode('Test.src/M000277.html');return false;">
           <span class="method-name">assert_scripted</span><span class="method-args">() {|| ...}</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-First asserts that a <a href="Test.html#M000267">story</a> has been
-described (see <a href="Test.html#M000267">story</a>). Then yields, and
+First asserts that a <a href="Test.html#M000273">story</a> has been
+described (see <a href="Test.html#M000273">story</a>). Then yields, and
 then asserts that all items described in the script have been processed.
 Typically, this is called immediately after a <a
-href="Test.html#M000267">story</a> has been built, and the <a
+href="Test.html#M000273">story</a> has been built, and the <a
 href="../SSH.html">SSH</a> commands being tested are then executed within
 the block passed to this assertion.
 </p>
         </div>
       </div>
 
-      <div id="method-M000269" class="method-detail">
-        <a name="M000269"></a>
+      <div id="method-M000275" class="method-detail">
+        <a name="M000275"></a>
 
         <div class="method-heading">
-          <a href="Test.src/M000269.html" target="Code" class="method-signature"
-            onclick="popupCode('Test.src/M000269.html');return false;">
+          <a href="Test.src/M000275.html" target="Code" class="method-signature"
+            onclick="popupCode('Test.src/M000275.html');return false;">
           <span class="method-name">connection</span><span class="method-args">(options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the <a href="Test.html#M000269">connection</a> session (<a
+Returns the <a href="Test.html#M000275">connection</a> session (<a
 href="Connection/Session.html">Net::SSH::Connection::Session</a>) for use
 in these tests. It is a fully functional <a href="../SSH.html">SSH</a>
-session, operating over a mock <a href="Test.html#M000268">socket</a> (<a
-href="Test.html#M000268">socket</a>).
+session, operating over a mock <a href="Test.html#M000274">socket</a> (<a
+href="Test.html#M000274">socket</a>).
 </p>
         </div>
       </div>
 
-      <div id="method-M000268" class="method-detail">
-        <a name="M000268"></a>
+      <div id="method-M000274" class="method-detail">
+        <a name="M000274"></a>
 
         <div class="method-heading">
-          <a href="Test.src/M000268.html" target="Code" class="method-signature"
-            onclick="popupCode('Test.src/M000268.html');return false;">
+          <a href="Test.src/M000274.html" target="Code" class="method-signature"
+            onclick="popupCode('Test.src/M000274.html');return false;">
           <span class="method-name">socket</span><span class="method-args">(options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the test <a href="Test.html#M000268">socket</a> instance to use for
+Returns the test <a href="Test.html#M000274">socket</a> instance to use for
 these tests (see <a href="Test/Socket.html">Net::SSH::Test::Socket</a>).
 </p>
         </div>
       </div>
 
-      <div id="method-M000267" class="method-detail">
-        <a name="M000267"></a>
+      <div id="method-M000273" class="method-detail">
+        <a name="M000273"></a>
 
         <div class="method-heading">
-          <a href="Test.src/M000267.html" target="Code" class="method-signature"
-            onclick="popupCode('Test.src/M000267.html');return false;">
+          <a href="Test.src/M000273.html" target="Code" class="method-signature"
+            onclick="popupCode('Test.src/M000273.html');return false;">
           <span class="method-name">story</span><span class="method-args">() {|socket.script if block_given?| ...}</span>
           </a>
         </div>
@@ -277,32 +277,32 @@ these tests (see <a href="Test/Socket.html">Net::SSH::Test::Socket</a>).
         <div class="method-description">
           <p>
 If a block is given, yields the script for the test <a
-href="Test.html#M000268">socket</a> (<a
-href="Test.html#M000268">socket</a>). Otherwise, simply returns the <a
-href="Test.html#M000268">socket</a>&#8216;s script. See <a
+href="Test.html#M000274">socket</a> (<a
+href="Test.html#M000274">socket</a>). Otherwise, simply returns the <a
+href="Test.html#M000274">socket</a>&#8216;s script. See <a
 href="Test/Script.html">Net::SSH::Test::Script</a>.
 </p>
         </div>
       </div>
 
-      <div id="method-M000270" class="method-detail">
-        <a name="M000270"></a>
+      <div id="method-M000276" class="method-detail">
+        <a name="M000276"></a>
 
         <div class="method-heading">
-          <a href="Test.src/M000270.html" target="Code" class="method-signature"
-            onclick="popupCode('Test.src/M000270.html');return false;">
+          <a href="Test.src/M000276.html" target="Code" class="method-signature"
+            onclick="popupCode('Test.src/M000276.html');return false;">
           <span class="method-name">transport</span><span class="method-args">(options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the <a href="Test.html#M000270">transport</a> session (<a
+Returns the <a href="Test.html#M000276">transport</a> session (<a
 href="Transport/Session.html">Net::SSH::Transport::Session</a>) for use in
 these tests. It is a fully functional <a href="../SSH.html">SSH</a> <a
-href="Test.html#M000270">transport</a> session, operating over a mock <a
-href="Test.html#M000268">socket</a> (<a
-href="Test.html#M000268">socket</a>).
+href="Test.html#M000276">transport</a> session, operating over a mock <a
+href="Test.html#M000274">socket</a> (<a
+href="Test.html#M000274">socket</a>).
 </p>
         </div>
       </div>

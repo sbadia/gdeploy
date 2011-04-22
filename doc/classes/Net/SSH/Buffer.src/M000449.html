@@ -5,16 +5,16 @@
 
 <html>
 <head>
-  <title>read_bignum (Net::SSH::Buffer)</title>
+  <title>read! (Net::SSH::Buffer)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/buffer.rb, line 228</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read_bignum</span>
-      <span class="ruby-identifier">data</span> = <span class="ruby-identifier">read_string</span>
-      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">data</span>
-      <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">BN</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">data</span>, <span class="ruby-value">2</span>)
+  <pre><span class="ruby-comment cmt"># File net/ssh/buffer.rb, line 180</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read!</span>(<span class="ruby-identifier">count</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">data</span> = <span class="ruby-identifier">read</span>(<span class="ruby-identifier">count</span>)
+      <span class="ruby-identifier">consume!</span>
+      <span class="ruby-identifier">data</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

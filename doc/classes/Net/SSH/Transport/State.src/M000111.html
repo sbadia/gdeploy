@@ -5,16 +5,17 @@
 
 <html>
 <head>
-  <title>decompress (Net::SSH::Transport::State)</title>
+  <title>set (Net::SSH::Transport::State)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/transport/state.rb, line 128</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decompress</span>(<span class="ruby-identifier">data</span>)
-      <span class="ruby-identifier">data</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">to_s</span>
-      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">data</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">compression?</span>
-      <span class="ruby-identifier">decompressor</span>.<span class="ruby-identifier">inflate</span>(<span class="ruby-identifier">data</span>)
+  <pre><span class="ruby-comment cmt"># File net/ssh/transport/state.rb, line 71</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set</span>(<span class="ruby-identifier">values</span>)
+      <span class="ruby-identifier">values</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{key}&quot;</span>, <span class="ruby-identifier">value</span>)
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">reset!</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

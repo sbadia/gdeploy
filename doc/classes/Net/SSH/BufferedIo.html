@@ -82,23 +82,23 @@ Net::SSH::Connection::Session#listen_to).
 <p>
 The general idea is that instead of calling read directly on an IO that has
 been extended with this module, you call <a
-href="BufferedIo.html#M000173">fill</a> (to add pending input to the
+href="BufferedIo.html#M000179">fill</a> (to add pending input to the
 internal read buffer), and then <a
-href="BufferedIo.html#M000174">read_available</a> (to read from that
+href="BufferedIo.html#M000180">read_available</a> (to read from that
 buffer). Likewise, you don&#8216;t call write directly, you call <a
-href="BufferedIo.html#M000176">enqueue</a> to add data to the write buffer,
-and then <a href="BufferedIo.html#M000178">send_pending</a> or <a
-href="BufferedIo.html#M000179">wait_for_pending_sends</a> to actually send
+href="BufferedIo.html#M000182">enqueue</a> to add data to the write buffer,
+and then <a href="BufferedIo.html#M000184">send_pending</a> or <a
+href="BufferedIo.html#M000185">wait_for_pending_sends</a> to actually send
 the data across the wire.
 </p>
 <p>
 In this way you can easily use the object as an argument to IO.select,
-calling <a href="BufferedIo.html#M000173">fill</a> when it is <a
-href="BufferedIo.html#M000175">available</a> for read, or <a
-href="BufferedIo.html#M000178">send_pending</a> when it is <a
-href="BufferedIo.html#M000175">available</a> for write, and then call <a
-href="BufferedIo.html#M000176">enqueue</a> and <a
-href="BufferedIo.html#M000174">read_available</a> during the idle times.
+calling <a href="BufferedIo.html#M000179">fill</a> when it is <a
+href="BufferedIo.html#M000181">available</a> for read, or <a
+href="BufferedIo.html#M000184">send_pending</a> when it is <a
+href="BufferedIo.html#M000181">available</a> for write, and then call <a
+href="BufferedIo.html#M000182">enqueue</a> and <a
+href="BufferedIo.html#M000180">read_available</a> during the idle times.
 </p>
 <pre>
   socket = TCPSocket.new(address, port)
@@ -139,13 +139,13 @@ class&#8217; initialize method:
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000175">available</a>&nbsp;&nbsp;
-      <a href="#M000176">enqueue</a>&nbsp;&nbsp;
-      <a href="#M000173">fill</a>&nbsp;&nbsp;
-      <a href="#M000177">pending_write?</a>&nbsp;&nbsp;
-      <a href="#M000174">read_available</a>&nbsp;&nbsp;
-      <a href="#M000178">send_pending</a>&nbsp;&nbsp;
-      <a href="#M000179">wait_for_pending_sends</a>&nbsp;&nbsp;
+      <a href="#M000181">available</a>&nbsp;&nbsp;
+      <a href="#M000182">enqueue</a>&nbsp;&nbsp;
+      <a href="#M000179">fill</a>&nbsp;&nbsp;
+      <a href="#M000183">pending_write?</a>&nbsp;&nbsp;
+      <a href="#M000180">read_available</a>&nbsp;&nbsp;
+      <a href="#M000184">send_pending</a>&nbsp;&nbsp;
+      <a href="#M000185">wait_for_pending_sends</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -174,31 +174,31 @@ class&#8217; initialize method:
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000175" class="method-detail">
-        <a name="M000175"></a>
+      <div id="method-M000181" class="method-detail">
+        <a name="M000181"></a>
 
         <div class="method-heading">
-          <a href="BufferedIo.src/M000175.html" target="Code" class="method-signature"
-            onclick="popupCode('BufferedIo.src/M000175.html');return false;">
+          <a href="BufferedIo.src/M000181.html" target="Code" class="method-signature"
+            onclick="popupCode('BufferedIo.src/M000181.html');return false;">
           <span class="method-name">available</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the number of bytes <a href="BufferedIo.html#M000175">available</a>
+Returns the number of bytes <a href="BufferedIo.html#M000181">available</a>
 to be read from the input buffer. (See <a
-href="BufferedIo.html#M000174">read_available</a>.)
+href="BufferedIo.html#M000180">read_available</a>.)
 </p>
         </div>
       </div>
 
-      <div id="method-M000176" class="method-detail">
-        <a name="M000176"></a>
+      <div id="method-M000182" class="method-detail">
+        <a name="M000182"></a>
 
         <div class="method-heading">
-          <a href="BufferedIo.src/M000176.html" target="Code" class="method-signature"
-            onclick="popupCode('BufferedIo.src/M000176.html');return false;">
+          <a href="BufferedIo.src/M000182.html" target="Code" class="method-signature"
+            onclick="popupCode('BufferedIo.src/M000182.html');return false;">
           <span class="method-name">enqueue</span><span class="method-args">(data)</span>
           </a>
         </div>
@@ -206,18 +206,18 @@ href="BufferedIo.html#M000174">read_available</a>.)
         <div class="method-description">
           <p>
 Enqueues data in the output buffer, to be written when <a
-href="BufferedIo.html#M000178">send_pending</a> is called. Note that the
+href="BufferedIo.html#M000184">send_pending</a> is called. Note that the
 data is <em>not</em> sent immediately by this method!
 </p>
         </div>
       </div>
 
-      <div id="method-M000173" class="method-detail">
-        <a name="M000173"></a>
+      <div id="method-M000179" class="method-detail">
+        <a name="M000179"></a>
 
         <div class="method-heading">
-          <a href="BufferedIo.src/M000173.html" target="Code" class="method-signature"
-            onclick="popupCode('BufferedIo.src/M000173.html');return false;">
+          <a href="BufferedIo.src/M000179.html" target="Code" class="method-signature"
+            onclick="popupCode('BufferedIo.src/M000179.html');return false;">
           <span class="method-name">fill</span><span class="method-args">(n=8192)</span>
           </a>
         </div>
@@ -226,18 +226,18 @@ data is <em>not</em> sent immediately by this method!
           <p>
 Tries to read up to <tt>n</tt> bytes of data from the remote end, and
 appends the data to the input buffer. It returns the number of bytes read,
-or 0 if no data was <a href="BufferedIo.html#M000175">available</a> to be
+or 0 if no data was <a href="BufferedIo.html#M000181">available</a> to be
 read.
 </p>
         </div>
       </div>
 
-      <div id="method-M000177" class="method-detail">
-        <a name="M000177"></a>
+      <div id="method-M000183" class="method-detail">
+        <a name="M000183"></a>
 
         <div class="method-heading">
-          <a href="BufferedIo.src/M000177.html" target="Code" class="method-signature"
-            onclick="popupCode('BufferedIo.src/M000177.html');return false;">
+          <a href="BufferedIo.src/M000183.html" target="Code" class="method-signature"
+            onclick="popupCode('BufferedIo.src/M000183.html');return false;">
           <span class="method-name">pending_write?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -250,12 +250,12 @@ Returns <tt>true</tt> if there is data waiting in the output buffer, and
         </div>
       </div>
 
-      <div id="method-M000174" class="method-detail">
-        <a name="M000174"></a>
+      <div id="method-M000180" class="method-detail">
+        <a name="M000180"></a>
 
         <div class="method-heading">
-          <a href="BufferedIo.src/M000174.html" target="Code" class="method-signature"
-            onclick="popupCode('BufferedIo.src/M000174.html');return false;">
+          <a href="BufferedIo.src/M000180.html" target="Code" class="method-signature"
+            onclick="popupCode('BufferedIo.src/M000180.html');return false;">
           <span class="method-name">read_available</span><span class="method-args">(length=nil)</span>
           </a>
         </div>
@@ -263,18 +263,18 @@ Returns <tt>true</tt> if there is data waiting in the output buffer, and
         <div class="method-description">
           <p>
 Read up to <tt>length</tt> bytes from the input buffer. If <tt>length</tt>
-is nil, all <a href="BufferedIo.html#M000175">available</a> data is read
-from the buffer. (See <a href="BufferedIo.html#M000175">available</a>.)
+is nil, all <a href="BufferedIo.html#M000181">available</a> data is read
+from the buffer. (See <a href="BufferedIo.html#M000181">available</a>.)
 </p>
         </div>
       </div>
 
-      <div id="method-M000178" class="method-detail">
-        <a name="M000178"></a>
+      <div id="method-M000184" class="method-detail">
+        <a name="M000184"></a>
 
         <div class="method-heading">
-          <a href="BufferedIo.src/M000178.html" target="Code" class="method-signature"
-            onclick="popupCode('BufferedIo.src/M000178.html');return false;">
+          <a href="BufferedIo.src/M000184.html" target="Code" class="method-signature"
+            onclick="popupCode('BufferedIo.src/M000184.html');return false;">
           <span class="method-name">send_pending</span><span class="method-args">()</span>
           </a>
         </div>
@@ -287,19 +287,19 @@ any data was sent, and <tt>false</tt> otherwise.
         </div>
       </div>
 
-      <div id="method-M000179" class="method-detail">
-        <a name="M000179"></a>
+      <div id="method-M000185" class="method-detail">
+        <a name="M000185"></a>
 
         <div class="method-heading">
-          <a href="BufferedIo.src/M000179.html" target="Code" class="method-signature"
-            onclick="popupCode('BufferedIo.src/M000179.html');return false;">
+          <a href="BufferedIo.src/M000185.html" target="Code" class="method-signature"
+            onclick="popupCode('BufferedIo.src/M000185.html');return false;">
           <span class="method-name">wait_for_pending_sends</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Calls <a href="BufferedIo.html#M000178">send_pending</a> repeatedly, if
+Calls <a href="BufferedIo.html#M000184">send_pending</a> repeatedly, if
 necessary, blocking until the output buffer is empty.
 </p>
         </div>

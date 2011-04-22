@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>open (Net::SSH::Proxy::Command)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File net/ssh/proxy/command.rb, line 36</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">open</span>(<span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>)
+      <span class="ruby-identifier">command_line</span> = <span class="ruby-ivar">@command_line_template</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/%(.)/</span>) {
+        <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">$1</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'h'</span>
+          <span class="ruby-identifier">host</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'p'</span>
+          <span class="ruby-identifier">port</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'%'</span>
+          <span class="ruby-value str">'%'</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;unknown key: #{$1}&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+      }
+      <span class="ruby-keyword kw">begin</span>
+        <span class="ruby-identifier">io</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">popen</span>(<span class="ruby-identifier">command_line</span>, <span class="ruby-value str">&quot;r+&quot;</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">SSH</span><span class="ruby-operator">::</span><span class="ruby-constant">Compat</span>.<span class="ruby-identifier">io_select</span>([<span class="ruby-identifier">io</span>], <span class="ruby-keyword kw">nil</span>, [<span class="ruby-identifier">io</span>], <span class="ruby-value">60</span>)
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">any?</span>
+            <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;command failed&quot;</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;command timed out&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ConnectError</span>, <span class="ruby-node">&quot;#{e}: #{command_line}&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-ivar">@command_line</span> = <span class="ruby-identifier">command_line</span>
+      <span class="ruby-keyword kw">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">io</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">data</span>, <span class="ruby-identifier">flag</span>)
+          <span class="ruby-identifier">write_nonblock</span>(<span class="ruby-identifier">data</span>)
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">recv</span>(<span class="ruby-identifier">size</span>)
+          <span class="ruby-identifier">read_nonblock</span>(<span class="ruby-identifier">size</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">io</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

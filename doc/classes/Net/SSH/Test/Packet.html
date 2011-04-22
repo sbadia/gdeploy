@@ -106,11 +106,11 @@ href="RemotePacket.html">Net::SSH::Test::RemotePacket</a>).
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000291">instantiate!</a>&nbsp;&nbsp;
-      <a href="#M000290">local?</a>&nbsp;&nbsp;
-      <a href="#M000288">new</a>&nbsp;&nbsp;
-      <a href="#M000289">remote?</a>&nbsp;&nbsp;
-      <a href="#M000292">types</a>&nbsp;&nbsp;
+      <a href="#M000297">instantiate!</a>&nbsp;&nbsp;
+      <a href="#M000296">local?</a>&nbsp;&nbsp;
+      <a href="#M000294">new</a>&nbsp;&nbsp;
+      <a href="#M000295">remote?</a>&nbsp;&nbsp;
+      <a href="#M000298">types</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -140,34 +140,34 @@ href="RemotePacket.html">Net::SSH::Test::RemotePacket</a>).
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000288" class="method-detail">
-        <a name="M000288"></a>
+      <div id="method-M000294" class="method-detail">
+        <a name="M000294"></a>
 
         <div class="method-heading">
-          <a href="Packet.src/M000288.html" target="Code" class="method-signature"
-            onclick="popupCode('Packet.src/M000288.html');return false;">
+          <a href="Packet.src/M000294.html" target="Code" class="method-signature"
+            onclick="popupCode('Packet.src/M000294.html');return false;">
           <span class="method-name">new</span><span class="method-args">(type, *args)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Ceate a <a href="Packet.html#M000288">new</a> packet of the given
+Ceate a <a href="Packet.html#M000294">new</a> packet of the given
 <tt>type</tt>, and with <tt>args</tt> being a list of data elements in the
 order expected for packets of the given <tt>type</tt> (see <a
-href="Packet.html#M000292">types</a>).
+href="Packet.html#M000298">types</a>).
 </p>
         </div>
       </div>
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000291" class="method-detail">
-        <a name="M000291"></a>
+      <div id="method-M000297" class="method-detail">
+        <a name="M000297"></a>
 
         <div class="method-heading">
-          <a href="Packet.src/M000291.html" target="Code" class="method-signature"
-            onclick="popupCode('Packet.src/M000291.html');return false;">
+          <a href="Packet.src/M000297.html" target="Code" class="method-signature"
+            onclick="popupCode('Packet.src/M000297.html');return false;">
           <span class="method-name">instantiate!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -176,58 +176,58 @@ href="Packet.html#M000292">types</a>).
           <p>
 Instantiates the packets data elements. When the packet was first defined,
 some elements may not have been fully realized, and were described as Proc
-objects rather than atomic <a href="Packet.html#M000292">types</a>. This
+objects rather than atomic <a href="Packet.html#M000298">types</a>. This
 invokes those Proc objects and replaces them with their returned values.
 This allows for values like <a
-href="Channel.html#M000309">Net::SSH::Test::Channel#remote_id</a> to be
+href="Channel.html#M000315">Net::SSH::Test::Channel#remote_id</a> to be
 used in scripts before the remote_id is known (since it is only known after
 a channel has been confirmed open).
 </p>
         </div>
       </div>
 
-      <div id="method-M000290" class="method-detail">
-        <a name="M000290"></a>
+      <div id="method-M000296" class="method-detail">
+        <a name="M000296"></a>
 
         <div class="method-heading">
-          <a href="Packet.src/M000290.html" target="Code" class="method-signature"
-            onclick="popupCode('Packet.src/M000290.html');return false;">
+          <a href="Packet.src/M000296.html" target="Code" class="method-signature"
+            onclick="popupCode('Packet.src/M000296.html');return false;">
           <span class="method-name">local?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-The default for +<a href="Packet.html#M000290">local?</a>+ is false.
+The default for +<a href="Packet.html#M000296">local?</a>+ is false.
 Subclasses should override as necessary.
 </p>
         </div>
       </div>
 
-      <div id="method-M000289" class="method-detail">
-        <a name="M000289"></a>
+      <div id="method-M000295" class="method-detail">
+        <a name="M000295"></a>
 
         <div class="method-heading">
-          <a href="Packet.src/M000289.html" target="Code" class="method-signature"
-            onclick="popupCode('Packet.src/M000289.html');return false;">
+          <a href="Packet.src/M000295.html" target="Code" class="method-signature"
+            onclick="popupCode('Packet.src/M000295.html');return false;">
           <span class="method-name">remote?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-The default for +<a href="Packet.html#M000289">remote?</a>+ is false.
+The default for +<a href="Packet.html#M000295">remote?</a>+ is false.
 Subclasses should override as necessary.
 </p>
         </div>
       </div>
 
-      <div id="method-M000292" class="method-detail">
-        <a name="M000292"></a>
+      <div id="method-M000298" class="method-detail">
+        <a name="M000298"></a>
 
         <div class="method-heading">
-          <a href="Packet.src/M000292.html" target="Code" class="method-signature"
-            onclick="popupCode('Packet.src/M000292.html');return false;">
+          <a href="Packet.src/M000298.html" target="Code" class="method-signature"
+            onclick="popupCode('Packet.src/M000298.html');return false;">
           <span class="method-name">types</span><span class="method-args">()</span>
           </a>
         </div>
@@ -235,18 +235,18 @@ Subclasses should override as necessary.
         <div class="method-description">
           <p>
 Returns an array of symbols describing the data elements for packets of the
-same type as this packet. These <a href="Packet.html#M000292">types</a> are
+same type as this packet. These <a href="Packet.html#M000298">types</a> are
 used to either validate sent packets (<a
 href="LocalPacket.html">Net::SSH::Test::LocalPacket</a>) or build received
 packets (<a href="RemotePacket.html">Net::SSH::Test::RemotePacket</a>).
 </p>
 <p>
-Not all packet <a href="Packet.html#M000292">types</a> are defined here. As
-<a href="Packet.html#M000288">new</a> packet <a
-href="Packet.html#M000292">types</a> are required (e.g., a unit test needs
+Not all packet <a href="Packet.html#M000298">types</a> are defined here. As
+<a href="Packet.html#M000294">new</a> packet <a
+href="Packet.html#M000298">types</a> are required (e.g., a unit test needs
 to test that the remote host sent a packet that is not implemented here),
 the description of that packet should be added. Unsupported packet <a
-href="Packet.html#M000292">types</a> will otherwise raise an exception.
+href="Packet.html#M000298">types</a> will otherwise raise an exception.
 </p>
         </div>
       </div>

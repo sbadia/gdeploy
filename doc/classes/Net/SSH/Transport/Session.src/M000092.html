@@ -5,14 +5,14 @@
 
 <html>
 <head>
-  <title>configure_server (Net::SSH::Transport::Session)</title>
+  <title>peer (Net::SSH::Transport::Session)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File net/ssh/transport/session.rb, line 236</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">configure_server</span>(<span class="ruby-identifier">options</span>={})
-      <span class="ruby-identifier">socket</span>.<span class="ruby-identifier">server</span>.<span class="ruby-identifier">set</span>(<span class="ruby-identifier">options</span>)
+  <pre><span class="ruby-comment cmt"># File net/ssh/transport/session.rb, line 142</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">peer</span>
+      <span class="ruby-ivar">@peer</span> <span class="ruby-operator">||=</span> { <span class="ruby-identifier">:ip</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">socket</span>.<span class="ruby-identifier">peer_ip</span>, <span class="ruby-identifier">:port</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@port</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">:host</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@host</span>, <span class="ruby-identifier">:canonized</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">host_as_string</span> }
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

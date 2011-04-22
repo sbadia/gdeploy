@@ -55,24 +55,24 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/net/scp/errors_rb.html">
-                net/scp/errors.rb
-                </a>
-        <br />
-                <a href="../../files/net/scp/version_rb.html">
-                net/scp/version.rb
-                </a>
-        <br />
-                <a href="../../files/net/scp/download_rb.html">
-                net/scp/download.rb
+                <a href="../../files/net/scp_rb.html">
+                net/scp.rb
                 </a>
         <br />
                 <a href="../../files/net/scp/upload_rb.html">
                 net/scp/upload.rb
                 </a>
         <br />
-                <a href="../../files/net/scp_rb.html">
-                net/scp.rb
+                <a href="../../files/net/scp/version_rb.html">
+                net/scp/version.rb
+                </a>
+        <br />
+                <a href="../../files/net/scp/errors_rb.html">
+                net/scp/errors.rb
+                </a>
+        <br />
+                <a href="../../files/net/scp/download_rb.html">
+                net/scp/download.rb
                 </a>
         <br />
             </td>
@@ -155,8 +155,8 @@ user the progress of the current operation.
 </p>
 <p>
 To receive progress reports for the current operation, just pass a block to
-<a href="SCP.html#M000465">upload</a> or <a
-href="SCP.html#M000467">download</a> (or one of their variants):
+<a href="SCP.html#M000471">upload</a> or <a
+href="SCP.html#M000473">download</a> (or one of their variants):
 </p>
 <pre>
   scp.upload!(&quot;/path/to/local&quot;, &quot;/path/to/remote&quot;) do |ch, name, sent, total|
@@ -164,7 +164,7 @@ href="SCP.html#M000467">download</a> (or one of their variants):
   end
 </pre>
 <p>
-Whenever a <a href="SCP.html#M000464">new</a> chunk of data is recieved for
+Whenever a <a href="SCP.html#M000470">new</a> chunk of data is recieved for
 or sent to a file, the callback will be invoked, indicating the name of the
 file (local for downloads, remote for uploads), the number of bytes that
 have been sent or received so far for the file, and the size of the file.
@@ -179,14 +179,14 @@ have been sent or received so far for the file, and the size of the file.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000467">download</a>&nbsp;&nbsp;
-      <a href="#M000468">download!</a>&nbsp;&nbsp;
-      <a href="#M000463">download!</a>&nbsp;&nbsp;
-      <a href="#M000464">new</a>&nbsp;&nbsp;
-      <a href="#M000461">start</a>&nbsp;&nbsp;
-      <a href="#M000465">upload</a>&nbsp;&nbsp;
-      <a href="#M000462">upload!</a>&nbsp;&nbsp;
-      <a href="#M000466">upload!</a>&nbsp;&nbsp;
+      <a href="#M000473">download</a>&nbsp;&nbsp;
+      <a href="#M000474">download!</a>&nbsp;&nbsp;
+      <a href="#M000469">download!</a>&nbsp;&nbsp;
+      <a href="#M000470">new</a>&nbsp;&nbsp;
+      <a href="#M000467">start</a>&nbsp;&nbsp;
+      <a href="#M000471">upload</a>&nbsp;&nbsp;
+      <a href="#M000468">upload!</a>&nbsp;&nbsp;
+      <a href="#M000472">upload!</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -243,66 +243,66 @@ transport for the <a href="SCP.html">SCP</a> packets.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000463" class="method-detail">
-        <a name="M000463"></a>
+      <div id="method-M000469" class="method-detail">
+        <a name="M000469"></a>
 
         <div class="method-heading">
-          <a href="SCP.src/M000463.html" target="Code" class="method-signature"
-            onclick="popupCode('SCP.src/M000463.html');return false;">
+          <a href="SCP.src/M000469.html" target="Code" class="method-signature"
+            onclick="popupCode('SCP.src/M000469.html');return false;">
           <span class="method-name">download!</span><span class="method-args">(host, username, remote, local=nil, options={}, &amp;progress)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Starts up a <a href="SCP.html#M000464">new</a> <a href="SSH.html">SSH</a>
+Starts up a <a href="SCP.html#M000470">new</a> <a href="SSH.html">SSH</a>
 connection using the <tt>host</tt> and <tt>username</tt> parameters,
-instantiates a <a href="SCP.html#M000464">new</a> <a
+instantiates a <a href="SCP.html#M000470">new</a> <a
 href="SCP.html">SCP</a> session on top of it, and then begins a <a
-href="SCP.html#M000467">download</a> from <tt>remote</tt> to
+href="SCP.html#M000473">download</a> from <tt>remote</tt> to
 <tt>local</tt>. If the <tt>options</tt> hash includes an :ssh key, the
 value for that will be passed to the <a href="SSH.html">SSH</a> connection
 as options (e.g., to set the password, etc.). All other options are passed
-to the <a href="SCP.html#M000467">download</a>! method. If a block is
+to the <a href="SCP.html#M000473">download</a>! method. If a block is
 given, it will be used to report progress (see &quot;Progress
 Reporting&quot;, under <a href="SCP.html">Net::SCP</a>).
 </p>
         </div>
       </div>
 
-      <div id="method-M000464" class="method-detail">
-        <a name="M000464"></a>
+      <div id="method-M000470" class="method-detail">
+        <a name="M000470"></a>
 
         <div class="method-heading">
-          <a href="SCP.src/M000464.html" target="Code" class="method-signature"
-            onclick="popupCode('SCP.src/M000464.html');return false;">
+          <a href="SCP.src/M000470.html" target="Code" class="method-signature"
+            onclick="popupCode('SCP.src/M000470.html');return false;">
           <span class="method-name">new</span><span class="method-args">(session)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Creates a <a href="SCP.html#M000464">new</a> <a
+Creates a <a href="SCP.html#M000470">new</a> <a
 href="SCP.html">Net::SCP</a> session on top of the given <a
 href="SSH.html">Net::SSH</a> <tt>session</tt> object.
 </p>
         </div>
       </div>
 
-      <div id="method-M000461" class="method-detail">
-        <a name="M000461"></a>
+      <div id="method-M000467" class="method-detail">
+        <a name="M000467"></a>
 
         <div class="method-heading">
-          <a href="SCP.src/M000461.html" target="Code" class="method-signature"
-            onclick="popupCode('SCP.src/M000461.html');return false;">
+          <a href="SCP.src/M000467.html" target="Code" class="method-signature"
+            onclick="popupCode('SCP.src/M000467.html');return false;">
           <span class="method-name">start</span><span class="method-args">(host, username, options={}) {|scp| ...}</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Starts up a <a href="SCP.html#M000464">new</a> <a href="SSH.html">SSH</a>
-connection and instantiates a <a href="SCP.html#M000464">new</a> <a
+Starts up a <a href="SCP.html#M000470">new</a> <a href="SSH.html">SSH</a>
+connection and instantiates a <a href="SCP.html#M000470">new</a> <a
 href="SCP.html">SCP</a> session on top of it. If a block is given, the <a
 href="SCP.html">SCP</a> session is yielded, and the <a
 href="SSH.html">SSH</a> session is closed automatically when the block
@@ -312,27 +312,27 @@ returned.
         </div>
       </div>
 
-      <div id="method-M000462" class="method-detail">
-        <a name="M000462"></a>
+      <div id="method-M000468" class="method-detail">
+        <a name="M000468"></a>
 
         <div class="method-heading">
-          <a href="SCP.src/M000462.html" target="Code" class="method-signature"
-            onclick="popupCode('SCP.src/M000462.html');return false;">
+          <a href="SCP.src/M000468.html" target="Code" class="method-signature"
+            onclick="popupCode('SCP.src/M000468.html');return false;">
           <span class="method-name">upload!</span><span class="method-args">(host, username, local, remote, options={}, &amp;progress)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Starts up a <a href="SCP.html#M000464">new</a> <a href="SSH.html">SSH</a>
+Starts up a <a href="SCP.html#M000470">new</a> <a href="SSH.html">SSH</a>
 connection using the <tt>host</tt> and <tt>username</tt> parameters,
-instantiates a <a href="SCP.html#M000464">new</a> <a
+instantiates a <a href="SCP.html#M000470">new</a> <a
 href="SCP.html">SCP</a> session on top of it, and then begins an <a
-href="SCP.html#M000465">upload</a> from <tt>local</tt> to <tt>remote</tt>.
+href="SCP.html#M000471">upload</a> from <tt>local</tt> to <tt>remote</tt>.
 If the <tt>options</tt> hash includes an :ssh key, the value for that will
 be passed to the <a href="SSH.html">SSH</a> connection as options (e.g., to
 set the password, etc.). All other options are passed to the <a
-href="SCP.html#M000465">upload</a>! method. If a block is given, it will be
+href="SCP.html#M000471">upload</a>! method. If a block is given, it will be
 used to report progress (see &quot;Progress Reporting&quot;, under <a
 href="SCP.html">Net::SCP</a>).
 </p>
@@ -341,12 +341,12 @@ href="SCP.html">Net::SCP</a>).
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000467" class="method-detail">
-        <a name="M000467"></a>
+      <div id="method-M000473" class="method-detail">
+        <a name="M000473"></a>
 
         <div class="method-heading">
-          <a href="SCP.src/M000467.html" target="Code" class="method-signature"
-            onclick="popupCode('SCP.src/M000467.html');return false;">
+          <a href="SCP.src/M000473.html" target="Code" class="method-signature"
+            onclick="popupCode('SCP.src/M000473.html');return false;">
           <span class="method-name">download</span><span class="method-args">(remote, local, options={}, &amp;progress)</span>
           </a>
         </div>
@@ -354,12 +354,12 @@ href="SCP.html">Net::SCP</a>).
         <div class="method-description">
           <p>
 Inititiate a synchronous (non-blocking) <a
-href="SCP.html#M000467">download</a> from <tt>remote</tt> to
+href="SCP.html#M000473">download</a> from <tt>remote</tt> to
 <tt>local</tt>. The following options are recognized:
 </p>
 <ul>
 <li>:recursive - the <tt>remote</tt> parameter refers to a remote directory,
-which should be downloaded to a <a href="SCP.html#M000464">new</a>
+which should be downloaded to a <a href="SCP.html#M000470">new</a>
 directory named <tt>local</tt> on the local machine.
 
 </li>
@@ -374,8 +374,8 @@ directory named <tt>local</tt> on the local machine.
 <p>
 This method will return immediately, returning the <a
 href="SSH/Connection/Channel.html">Net::SSH::Connection::Channel</a> object
-that will support the <a href="SCP.html#M000467">download</a>. To wait for
-the <a href="SCP.html#M000467">download</a> to finish, you can either call
+that will support the <a href="SCP.html#M000473">download</a>. To wait for
+the <a href="SCP.html#M000473">download</a> to finish, you can either call
 the wait method on the channel, or otherwise run the <a
 href="SSH.html">Net::SSH</a> event loop until the channel&#8216;s active?
 method returns false.
@@ -387,28 +387,28 @@ method returns false.
         </div>
       </div>
 
-      <div id="method-M000468" class="method-detail">
-        <a name="M000468"></a>
+      <div id="method-M000474" class="method-detail">
+        <a name="M000474"></a>
 
         <div class="method-heading">
-          <a href="SCP.src/M000468.html" target="Code" class="method-signature"
-            onclick="popupCode('SCP.src/M000468.html');return false;">
+          <a href="SCP.src/M000474.html" target="Code" class="method-signature"
+            onclick="popupCode('SCP.src/M000474.html');return false;">
           <span class="method-name">download!</span><span class="method-args">(remote, local=nil, options={}, &amp;progress)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Same as <a href="SCP.html#M000467">download</a>, but blocks until the <a
-href="SCP.html#M000467">download</a> finishes. Identical to calling <a
-href="SCP.html#M000467">download</a> and then calling the wait method on
+Same as <a href="SCP.html#M000473">download</a>, but blocks until the <a
+href="SCP.html#M000473">download</a> finishes. Identical to calling <a
+href="SCP.html#M000473">download</a> and then calling the wait method on
 the channel object that is returned.
 </p>
 <pre>
   scp.download!(&quot;/remote/path&quot;, &quot;/local/path&quot;)
 </pre>
 <p>
-If <tt>local</tt> is nil, and the <a href="SCP.html#M000467">download</a>
+If <tt>local</tt> is nil, and the <a href="SCP.html#M000473">download</a>
 is not recursive (e.g., it is downloading only a single file), the file
 will be downloaded to an in-memory buffer and the resulting string
 returned.
@@ -419,12 +419,12 @@ returned.
         </div>
       </div>
 
-      <div id="method-M000465" class="method-detail">
-        <a name="M000465"></a>
+      <div id="method-M000471" class="method-detail">
+        <a name="M000471"></a>
 
         <div class="method-heading">
-          <a href="SCP.src/M000465.html" target="Code" class="method-signature"
-            onclick="popupCode('SCP.src/M000465.html');return false;">
+          <a href="SCP.src/M000471.html" target="Code" class="method-signature"
+            onclick="popupCode('SCP.src/M000471.html');return false;">
           <span class="method-name">upload</span><span class="method-args">(local, remote, options={}, &amp;progress)</span>
           </a>
         </div>
@@ -432,12 +432,12 @@ returned.
         <div class="method-description">
           <p>
 Inititiate a synchronous (non-blocking) <a
-href="SCP.html#M000465">upload</a> from <tt>local</tt> to <tt>remote</tt>.
+href="SCP.html#M000471">upload</a> from <tt>local</tt> to <tt>remote</tt>.
 The following options are recognized:
 </p>
 <ul>
 <li>:recursive - the <tt>local</tt> parameter refers to a local directory,
-which should be uploaded to a <a href="SCP.html#M000464">new</a> directory
+which should be uploaded to a <a href="SCP.html#M000470">new</a> directory
 named <tt>remote</tt> on the remote server.
 
 </li>
@@ -457,8 +457,8 @@ of decreasing interactivity.
 <p>
 This method will return immediately, returning the <a
 href="SSH/Connection/Channel.html">Net::SSH::Connection::Channel</a> object
-that will support the <a href="SCP.html#M000465">upload</a>. To wait for
-the <a href="SCP.html#M000465">upload</a> to finish, you can either call
+that will support the <a href="SCP.html#M000471">upload</a>. To wait for
+the <a href="SCP.html#M000471">upload</a> to finish, you can either call
 the wait method on the channel, or otherwise run the <a
 href="SSH.html">Net::SSH</a> event loop until the channel&#8216;s active?
 method returns false.
@@ -470,21 +470,21 @@ method returns false.
         </div>
       </div>
 
-      <div id="method-M000466" class="method-detail">
-        <a name="M000466"></a>
+      <div id="method-M000472" class="method-detail">
+        <a name="M000472"></a>
 
         <div class="method-heading">
-          <a href="SCP.src/M000466.html" target="Code" class="method-signature"
-            onclick="popupCode('SCP.src/M000466.html');return false;">
+          <a href="SCP.src/M000472.html" target="Code" class="method-signature"
+            onclick="popupCode('SCP.src/M000472.html');return false;">
           <span class="method-name">upload!</span><span class="method-args">(local, remote, options={}, &amp;progress)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Same as <a href="SCP.html#M000465">upload</a>, but blocks until the <a
-href="SCP.html#M000465">upload</a> finishes. Identical to calling <a
-href="SCP.html#M000465">upload</a> and then calling the wait method on the
+Same as <a href="SCP.html#M000471">upload</a>, but blocks until the <a
+href="SCP.html#M000471">upload</a> finishes. Identical to calling <a
+href="SCP.html#M000471">upload</a> and then calling the wait method on the
 channel object that is returned. The return value is not defined.
 </p>
         </div>
