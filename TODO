@@ -4,18 +4,8 @@ Legende:
   - : terminé
 
 I]- FIXME/BUGS
-  - VOMS_CA_DN/VOMSES dans la conf CE.
-  - hostkey.pem sans passphrase.
-  - clées ssh/authorized_keys
   - Certificats dans /etc/grid-security/hostkey.pem.
-  + Output joli.
-  - afficher les briques dans le motd.
   - hack fetch-crl sur ce.
-  - verif maui (/etc/init.d/maui & pbs_server start)
-  - config queue.
-  - Erreur java lors de l'install des wn et du ce.
-  - Mise en place nfs sur batch pour partage avec ce.
-  - Gestion multiclusters (un ce/batch pour deux clusters).
 
 II]- FEATURES
   + Gestion 2 nodes (un service/un wn et écrasement conf).
@@ -41,3 +31,41 @@ IV]- TIPS
 - Certification.
 - Deployer la conf sur les machines de service (site-info.def et certifs).
 - Lancer les scripts en fonction de la machine visée.
+
+# Tests
+## Bdii
+cat /opt/glite/etc/gip/site-urls.conf
+
+source /root/yaim/site-info.def
+ldapsearch -xLLL -b mds-vo-name=$SITE_NAME,o=grid -p 2170 -h $SITE_BDII_HOST
+ldapsearch -xLLL -b mds-vo-name=<site name>,o=grid -p 2170 -h <site BDII hostname>
+
+## Batch
+qmgr > print server, list queue default
+pbsnodes
+qstat -q default
+showq -q default
+
+## Workers nodes
+momctl -d 3
+
+## Computing Element
+same as batch
+ldapsearch -xLLL -b mds-vo-name=<site name>,o=grid -p 2170 -h <site BDII hostname>
+Boron et desc nodes
+
+# Jobs
+## On CE
+### Passif
+cat > test.sh  <<+
+#!/bin/bash
+echo "I am \`whoami\` on host \`hostname\`."
+sleep 15
+exit 0
++
+
+qsub -q default test.sh
+
+### Interactif
+qsub -q default -I
+qsub -q default -I -l nodes=2:ppn=2

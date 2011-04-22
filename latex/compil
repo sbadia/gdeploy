@@ -1,7 +1,0 @@
-#!/bin/bash
-echo "*** Compile"
-for i in `seq 1 2`;do pdflatex gLite-g5ks2011.tex;done
-echo "*** Clean"
-rm -rf ./gLite-g5ks2011.{snm,toc,nav,out,aux,log}
-echo "*** Done"
-evince ./gLite-g5ks2011.pdf
