@@ -464,41 +464,26 @@ EOF
   f.close
 end
 
-def create_conf()
- conf_bdii(bdii, sname, cehost)
- conf_batch(batch, cehost, sname)
- conf_wn(bdii, se, sname, batch, cehost)
- conf_users(sname,sname)
- conf_groups(sname)
- list_wn(wn)
-end
+def conf_voms(sname)
+  f = File.new("#{DIR}/conf/site-info-voms.def", "w")
+  f.puts <<-EOF
+## site-info.def voms
+MYSQL_PASSWORD="superpass"
+SITE_NAME="#{sname}"
+VOS="#{sname}.mysql"
+VOMS_HOST=`hostname -f`
+VOMS_DB_HOST='localhost'
+VO_#{sname.upcase}_MYSQL_VOMS_PORT=15000
+VO_#{sname.upcase}_MYSQL_VOMS_DB_USER=#{sname}_mysql_user
+VO_#{sname.upcase}_MYSQL_VOMS_DB_PASS="superpass"
+VO_#{sname.upcase}_MYSQL_VOMS_DB_NAME=voms_#{sname}_mysql_db
+VOMS_ADMIN_SMTP_HOST=mail.#{sname}.grid5000.fr
+VOMS_ADMIN_MAIL=#{$cfg.user}@f#{sname}.#{sname}.grid5000.fr
+EOF
+  f.close
+end # def:: conf_voms(sname,voms)
 
 if $cfg.config == true :
-  if $cfg.pbar == true :
-    pbar = ProgressBar.new("Conf", 7)
-    pbar.inc
-    conf_bdii(bdii, sname, cehost)
-    pbar.inc
-    conf_batch(batch, cehost, sname)
-    pbar.inc
-    conf_wn(bdii, se, sname, batch, cehost)
-    pbar.inc
-    conf_users(sname,sname)
-    pbar.inc
-    conf_groups(sname)
-    pbar.inc
-    list_wn(wn)
-    pbar.finish
-  elsif $cfg.verbose == true :
-    #puts "\t\tgLite conf\t->\t[Ok]\n\n"
-    if $cfg.gnodes.include?("bdii") == true:
-      conf_bdii(bdii, sname, cehost)
-    elsif $cfg.gnodes.include?("batch") == true:
-      conf_batch(batch, cehost, sname)
-    elsif $cfg.gnodes.include?("wn") == true:
-      conf_wn(bdii, se, sname, batch, cehost)
-    else
-#      create_conf()
        conf_bdii(bdii, sname, cehost)
        conf_batch(batch, cehost, sname)
        conf_wn(bdii, se, sname, batch, cehost)
@@ -508,8 +493,7 @@ if $cfg.config == true :
        conf_cehost(sname, cehost, batch, se)
        export_nfs()
        queue_config(sname, wn)
-    end
-  end
+       conf_voms(sname)
 else
   rputs("Config.","Not created")
 end
@@ -518,7 +502,6 @@ if $cfg.sendconf == true :
   if $cfg.pbar == true:
     pbarc = ProgressBar.new("Maj", 5)
   end
-  #puts $nodes
   Net::SSH::Multi.start do |session|
     #session.on_error = :warn
     $nodes.each do |node|
@@ -678,8 +661,30 @@ if $cfg.sendconf == true :
     ssh.exec!('/opt/glite/yaim/bin/yaim -f -s /root/yaim/site-info.def -f config_cream_blparser -d 1 && echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
   end
 
-  if $cfg.pbar == true:
-    pbaro.finish
+### VOMS
+#
+  if $cfg.verbose == true:
+   puts "*** Install Voms server on #{serv.fetch("bdii")}"
+  end
+
+  Net::SSH.start(serv.fetch("bdii"), 'root') do |ssh|
+    ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-VOMS_mysql.repo -q')
+    ssh.exec!("yum install glite-VOMS_mysql -q -y --nogpgcheck > /dev/null 2>&1")
+    if $cfg.verbose == true:
+      puts "*** Configure Voms sever on #{serv.fetch("bdii")}"
+    end
+  end
+  begin
+    Net::SCP.start(serv.fetch("bdii"), 'root') do |scp|
+      scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
+    end
+  rescue
+    puts "Erreur scp configuration CE on #{serv.fetch("bdii")}"
+  end
+  Net::SSH.start(serv.fetch("bdii"), 'root') do |ssh|
+    ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-voms.def /root/yaim/site-info.def')
+    ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1')
+    ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
   end
 
 ### Ui
