@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+# The command line Restfully client
+
+lib_dir = File.expand_path(File.dirname(__FILE__) + '/../lib')
+$LOAD_PATH.unshift lib_dir unless $LOAD_PATH.include? lib_dir
+
+require 'restfully'
+require 'optparse'
+require 'logger'
+require 'pp'
+
+
+logger = Logger.new(STDOUT)
+logger.level = Logger::WARN
+@options = {:logger => logger}
+option_parser = OptionParser.new do |opts|
+  opts.banner = <<BANNER
+* Description
+  Restfully #{Restfully::VERSION} - Access REST APIs effortlessly
+* Usage
+  restfully [base_uri] [options]
+* Options
+BANNER
+
+  opts.on("-u=", "--username=", "Sets the username") do |u|
+    @options[:username] = u
+  end
+  opts.on("-p=", "--password=", "Sets the user password") do |p|
+    @options[:password] = p
+  end
+  opts.on("-c=", "--config=", "Sets the various options based on a custom YAML configuration file") do |v|
+    @options[:configuration_file] = v
+  end
+  opts.on("--log=", "Outputs log messages to the given file. Defaults to stdout") do |v|
+    original_logger_level = logger.level
+    logger = Logger.new(File.expand_path(v))
+    logger.level = original_logger_level
+    @options[:logger] = logger
+  end
+  opts.on("-v", "--verbose", "Run verbosely") do |v|
+    @options[:logger].level = Logger::DEBUG
+  end
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end
+  
+end
+
+option_parser.parse!
+
+@options[:base_uri] = ARGV.shift
+
+def session
+  @session ||= Restfully::Session.new(@options)
+end
+
+def root 
+  @root ||= session.root
+end
+
+puts "Restfully/#{Restfully::VERSION} - The root resource is available in the 'root' variable."
+
+require 'irb'
+require 'irb/completion'
+ARGV.clear
+IRB.start
+exit!
