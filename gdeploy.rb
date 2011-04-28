@@ -122,10 +122,10 @@ end
 # Permet l'interaction avec l'api afin d'utiliser xmpp.
 # Pour le moment inutilisé, du fait de la dépendance à restfully et rubygems.
 #
-def send_jabber(message)
+def send_jabber(sname,message)
   Restfully::Session.new(:base_uri => "https://api.grid5000.fr/2.0/grid5000") do |root, session|
   session.post("/sid/notifications",
-	{:body => "Gdeploy: on #{SITE} launched by #{$cfg.user} : #{message}",
+	{:body => "Gdeploy: on #{sname} by #{$cfg.user} : #{message}",
 	 :to => ["xmpp:#{$cfg.user}@jabber.grid5000.fr"]},
 	 :headers => {:content_type => 'application/json'}
   )
@@ -195,7 +195,7 @@ end
 
 # Attribution des noeuds, le mini est deux (une machine de services, et un worker-node)
 #
-if $nodes.length < 4 :
+if $nodes.length < 5 :
   if $nodes.length < 2 :
     rputs("Err","Min 2 nodes")
     exit(0)
@@ -203,33 +203,36 @@ if $nodes.length < 4 :
     bdii = cehost = batch = se = $nodes[0]
     wn = $nodes[1]
   end
-elsif $nodes.length > 4 :
+elsif $nodes.length > 5 :
   bdii = $nodes[0]
   cehost = $nodes[1]
   batch = $nodes[2]
   se = $nodes[3]
-  wn = $nodes.last($nodes.length - 4)
+  voms = $nodes[4]
+  wn = $nodes.last($nodes.length - 5)
 else
   wn = $nodes.first($nodes.length - 1)
   bdii = cehost = batch = se = $nodes.last
 end
 # vputs("Installation Bdii","Ok")
-def display_dep(bdii, batch, cehost, se, wn)
+def display_dep(bdii, batch, cehost, se, wn, voms)
   if $cfg.verbose == true :
     vputs("Nodes","\t#{$nodes.length}")
     vputs("Bdii host","#{bdii}")
     vputs("Batch server","#{batch}")
     vputs("Ce host","#{cehost}")
     vputs("Se host","#{se}")
+    vputs("Voms host","#{voms}")
     puts "Workers Nodes:"
     wn.each{|n| puts "\t\t#{n}\n" }
+
   else
     rputs("Assign.","No visual")
   end
 end
 #display_dep(bdii, batch, cehost, se, wn)
 
-serv = { "bdii" => bdii, "batch" => batch, "cehost" => cehost, "se" => se }
+serv = { "bdii" => bdii, "batch" => batch, "cehost" => cehost, "se" => se, "voms" => voms }
 utils = [ 'users', 'groups', 'wn-list' ]
 
 # Création du répertoire de configuration
@@ -484,16 +487,17 @@ EOF
 end # def:: conf_voms(sname,voms)
 
 if $cfg.config == true :
-       conf_bdii(bdii, sname, cehost)
-       conf_batch(batch, cehost, sname)
-       conf_wn(bdii, se, sname, batch, cehost)
-       conf_users(sname,sname)
-       conf_groups(sname)
-       list_wn(wn)
-       conf_cehost(sname, cehost, batch, se)
-       export_nfs()
-       queue_config(sname, wn)
-       conf_voms(sname)
+  conf_bdii(bdii, sname, cehost)
+  conf_batch(batch, cehost, sname)
+  conf_wn(bdii, se, sname, batch, cehost)
+  conf_users(sname,sname)
+  conf_groups(sname)
+  list_wn(wn)
+  conf_cehost(sname, cehost, batch, se)
+  export_nfs()
+  queue_config(sname, wn)
+  conf_voms(sname)
+  display_dep(bdii, batch, cehost, se, wn, voms)
 else
   rputs("Config.","Not created")
 end
@@ -664,24 +668,24 @@ if $cfg.sendconf == true :
 ### VOMS
 #
   if $cfg.verbose == true:
-   puts "*** Install Voms server on #{serv.fetch("bdii")}"
+   puts "*** Install Voms server on #{serv.fetch("voms")}"
   end
 
-  Net::SSH.start(serv.fetch("bdii"), 'root') do |ssh|
+  Net::SSH.start(serv.fetch("voms"), 'root') do |ssh|
     ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-VOMS_mysql.repo -q')
     ssh.exec!("yum install glite-VOMS_mysql -q -y --nogpgcheck > /dev/null 2>&1")
     if $cfg.verbose == true:
-      puts "*** Configure Voms sever on #{serv.fetch("bdii")}"
+      puts "*** Configure Voms sever on #{serv.fetch("voms")}"
     end
   end
   begin
-    Net::SCP.start(serv.fetch("bdii"), 'root') do |scp|
+    Net::SCP.start(serv.fetch("voms"), 'root') do |scp|
       scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
     end
   rescue
-    puts "Erreur scp configuration CE on #{serv.fetch("bdii")}"
+    puts "Erreur scp configuration Voms on #{serv.fetch("voms")}"
   end
-  Net::SSH.start(serv.fetch("bdii"), 'root') do |ssh|
+  Net::SSH.start(serv.fetch("voms"), 'root') do |ssh|
     ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-voms.def /root/yaim/site-info.def')
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1')
     ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
@@ -692,8 +696,40 @@ if $cfg.sendconf == true :
 
 ### Lfc se
 #
+# +---------------------------------+
+# |		SE		    |
+# | +-----------+     +-----------+ |
+# | | Head node | <-> | Disk node | |
+# | +-----------+     +-----------+ |
+# +---------------------------------+
 
-display_dep(bdii, batch, cehost, se, wn)
+  if $cfg.verbose == true:
+    puts "*** Install Storage element on #{serv.fetch("se")}"
+  end
+  Net::SSH.start(serv.fetch("se"), 'root') do |ssh|
+   ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-LFC_mysql.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q')
+   ssh.exec!("yum install glite-LFC_mysql lcg-CA mysql-server -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl")
+   if $cfg.verbose == true:
+     puts "*** Configure Storage element on #{serv.fetch("se")}"
+   end
+  end
+  begin
+   Net::SCP.start(serv.fetch("se"), 'root') do |scp|
+     scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
+   end
+  rescue
+   puts "Erreur scp configuration SE on #{serv.fetch("se")}"
+  end
+  Net::SSH.start(serv.fetch("se"), 'root') do |ssh|
+    ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-se.def /root/yaim/site-info.def && mkdir -p /etc/grid-security/')
+    ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm hostkeys.tgz')
+    ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-LFC_mysql -d 1')
+    ssh.exec!('echo -e "\ngLite SE - (Storage Element [LFC,DPM])\n" >> /etc/motd')
+  end
+
+### Disp
+#
+  display_dep(bdii, batch, cehost, se, wn, voms)
 else
   rputs("Send conf.","Not send")
 end
