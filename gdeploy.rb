@@ -36,6 +36,7 @@ begin
   require 'net/ssh'
   require 'net/ssh/multi'
   require 'misc/progressbar'
+  require 'net/restfully'
 rescue LoadError
 end
 
@@ -512,6 +513,7 @@ if $cfg.sendconf == true :
       session.use "root@#{node}" #if $nodes[node].nil?
       if $cfg.verbose == true:
         puts "*** Install dag repo and update on #{node}"
+        send_jabber(sname,"*** Install dag repo and update on #{node}")
       elsif $cfg.pbar == true :
         pbarc.inc
       end
@@ -531,6 +533,7 @@ if $cfg.sendconf == true :
   Net::SSH.start(serv.fetch("bdii"), 'root') do |ssh|
     if $cfg.verbose == true:
       puts "*** Intall bdii server on #{serv.fetch("bdii")}"
+      send_jabber(sname,"*** Intall bdii server on #{serv.fetch("bdii")}")
     elsif $cfg.pbar == true :
       pbarb.inc
     end
@@ -543,6 +546,7 @@ if $cfg.sendconf == true :
     end
     if $cfg.verbose == true:
       puts "*** Configure bdii server on #{serv.fetch("bdii")}"
+      send_jabber(sname,"*** Configure bdii server on #{serv.fetch("bdii")}")
     elsif $cfg.pbar == true :
       pbarb.inc
     end
@@ -553,6 +557,7 @@ if $cfg.sendconf == true :
     pbaro = ProgressBar.new("Batch", 9)
    elsif $cfg.verbose == true:
      puts "*** Intall batch server on #{serv.fetch("batch")}"
+     send_jabber(sname,"*** Intall batch server on #{serv.fetch("batch")}")
    end
 
 #### Batch
@@ -565,6 +570,7 @@ if $cfg.sendconf == true :
     ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz')
     if $cfg.verbose == true:
       puts "*** Configure batch server on #{serv.fetch("batch")}"
+      send_jabber(sname,"*** Configure batch server on #{serv.fetch("batch")}")
     elsif $cfg.pbar == true:
       pbaro.inc
     end
@@ -575,6 +581,7 @@ if $cfg.sendconf == true :
     end
   rescue
     puts "Erreur scp confifuraton batch on #{serv.fetch("batch")}"
+    send_jabber(sname,"Erreur scp confifuraton batch on #{serv.fetch("batch")}")
   end
   Net::SSH.start(serv.fetch("batch"), 'root') do |ssh|
     ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-batch.def /root/yaim/site-info.def')
@@ -596,6 +603,7 @@ if $cfg.sendconf == true :
       session.use "root@#{node}" #if $nodes[node].nil?
       if $cfg.verbose == true:
         puts "*** Install worker node on #{node}"
+        send_jabber(sname,"*** Install worker node on #{node}")
       elsif $cfg.pbar == true :
         pbarc.inc
       end
@@ -613,6 +621,7 @@ if $cfg.sendconf == true :
     end
     if $cfg.verbose == true:
       puts "*** Configure worker node on #{wo}"
+      send_jabber(sname,"*** Configure worker node on #{wo}")
     end
     begin
       Net::SCP.start("#{wo}", 'root') do |scp|
@@ -620,6 +629,7 @@ if $cfg.sendconf == true :
       end
     rescue
       puts "Erreur scp confifuration wn on #{wo}"
+      send_jabber(sname,"Erreur scp confifuration wn on #{wo}")
     end
   end
   Net::SSH::Multi.start do |session|
@@ -631,7 +641,9 @@ if $cfg.sendconf == true :
   end
   if $cfg.verbose == true:
    puts "*** All worker nodes ok."
+   send_jabber(sname,"*** All worker nodes ok.")
    puts "*** Install Computing element on #{serv.fetch("cehost")}"
+   send_jabber(sname,"*** Install Computing element on #{serv.fetch("cehost")}")
   end
 
 ### Computing element
@@ -644,6 +656,7 @@ if $cfg.sendconf == true :
     ssh.exec!("yum install glite-CREAM glite-TORQUE_utils lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
     if $cfg.verbose == true:
       puts "*** Configure Computing element on #{serv.fetch("cehost")}"
+      send_jabber(sname,"*** Configure Computing element on #{serv.fetch("cehost")}")
     elsif $cfg.pbar == true:
       pbaro.inc
     end
@@ -654,6 +667,7 @@ if $cfg.sendconf == true :
     end
   rescue
     puts "Erreur scp configuration CE on #{serv.fetch("cehost")}"
+    send_jabber(sname,"Erreur scp configuration CE on #{serv.fetch("cehost")}")
   end
   Net::SSH.start(serv.fetch("cehost"), 'root') do |ssh|
     ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-ce.def /root/yaim/site-info.def && mkdir -p /etc/grid-security/')
@@ -669,6 +683,7 @@ if $cfg.sendconf == true :
 #
   if $cfg.verbose == true:
    puts "*** Install Voms server on #{serv.fetch("voms")}"
+   send_jabber(sname,"*** Install Voms server on #{serv.fetch("voms")}")
   end
 
   Net::SSH.start(serv.fetch("voms"), 'root') do |ssh|
@@ -676,6 +691,7 @@ if $cfg.sendconf == true :
     ssh.exec!("yum install glite-VOMS_mysql -q -y --nogpgcheck > /dev/null 2>&1")
     if $cfg.verbose == true:
       puts "*** Configure Voms sever on #{serv.fetch("voms")}"
+      send_jabber(sname,"*** Configure Voms sever on #{serv.fetch("voms")}")
     end
   end
   begin
@@ -684,6 +700,7 @@ if $cfg.sendconf == true :
     end
   rescue
     puts "Erreur scp configuration Voms on #{serv.fetch("voms")}"
+    send_jabber(sname,"Erreur scp configuration Voms on #{serv.fetch("voms")}")
   end
   Net::SSH.start(serv.fetch("voms"), 'root') do |ssh|
     ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-voms.def /root/yaim/site-info.def')
@@ -705,12 +722,14 @@ if $cfg.sendconf == true :
 
   if $cfg.verbose == true:
     puts "*** Install Storage element on #{serv.fetch("se")}"
+    send_jabber(sname,"*** Install Storage element on #{serv.fetch("se")}")
   end
   Net::SSH.start(serv.fetch("se"), 'root') do |ssh|
    ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-LFC_mysql.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q')
    ssh.exec!("yum install glite-LFC_mysql lcg-CA mysql-server -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl")
    if $cfg.verbose == true:
      puts "*** Configure Storage element on #{serv.fetch("se")}"
+     send_jabber(sname,"*** Configure Storage element on #{serv.fetch("se")}")
    end
   end
   begin
@@ -719,6 +738,7 @@ if $cfg.sendconf == true :
    end
   rescue
    puts "Erreur scp configuration SE on #{serv.fetch("se")}"
+   send_jabber(sname,"Erreur scp configuration SE on #{serv.fetch("se")}")
   end
   Net::SSH.start(serv.fetch("se"), 'root') do |ssh|
     ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-se.def /root/yaim/site-info.def && mkdir -p /etc/grid-security/')
@@ -730,6 +750,7 @@ if $cfg.sendconf == true :
 ### Disp
 #
   display_dep(bdii, batch, cehost, se, wn, voms)
+  send_jabber(sname,"#{display_dep(bdii, batch, cehost, se, wn, voms)}")
 else
   rputs("Send conf.","Not send")
 end
