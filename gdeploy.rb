@@ -681,6 +681,10 @@ if $cfg.sendconf == true :
 
 ### VOMS
 #
+# /etc/init.d/mysqld start
+# /usr/bin/mysqladmin -u root password 'new-password'
+# /usr/bin/mysqladmin -u root -h graphene-94 password 'new-password'
+#
   if $cfg.verbose == true:
    puts "*** Install Voms server on #{serv.fetch("voms")}"
    #send_jabber(sname,"*** Install Voms server on #{serv.fetch("voms")}")
@@ -704,7 +708,8 @@ if $cfg.sendconf == true :
   end
   Net::SSH.start(serv.fetch("voms"), 'root') do |ssh|
     ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-voms.def /root/yaim/site-info.def')
-    ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
+    ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
+    ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root password 'superpass'")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1')
     ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
   end
