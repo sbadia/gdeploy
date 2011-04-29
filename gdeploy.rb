@@ -487,6 +487,29 @@ EOF
   f.close
 end # def:: conf_voms(sname,voms)
 
+def conf_se(sname,voms)
+  f = File.new("#{DIR}/conf/site-info-se.def", "w")
+  f.puts <<-EOF
+## site-info.def se
+SITE_NAME="#{sname}"
+USERS_CONF=/opt/glite/yaim/etc/conf/users.conf
+GROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf
+MYSQL_PASSWORD="superpass"
+LFC_DB_PASSWORD="superpass"
+LFC_DB_HOST=`hostname -f`
+LFC_DB="lfcdb"
+LFC_CENTRAL="#{sname}"
+LFC_LOCAL=
+LFC_HOST=`hostname -f`
+VOS="#{sname}"
+VO_NANCY_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5k-CA"
+VO_NANCY_VOMS_SERVERS="#{sname}"
+VO_NANCY_VOMSES="#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}"
+EOF
+  f.close
+end # def:: conf_se(sname,voms)
+
+
 if $cfg.config == true :
   conf_bdii(bdii, sname, cehost)
   conf_batch(batch, cehost, sname)
@@ -498,6 +521,7 @@ if $cfg.config == true :
   export_nfs()
   queue_config(sname, wn)
   conf_voms(sname)
+  conf_se(sname,voms)
   display_dep(bdii, batch, cehost, se, wn, voms)
 else
   rputs("Config.","Not created")
@@ -749,6 +773,7 @@ if $cfg.sendconf == true :
   Net::SSH.start(serv.fetch("se"), 'root') do |ssh|
     ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-se.def /root/yaim/site-info.def && mkdir -p /etc/grid-security/')
     ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
+    ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root password 'superpass'")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-LFC_mysql -d 1')
     ssh.exec!('echo -e "\ngLite SE - (Storage Element [LFC,DPM])\n" >> /etc/motd')
   end
