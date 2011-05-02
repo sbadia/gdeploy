@@ -509,6 +509,20 @@ EOF
   f.close
 end # def:: conf_se(sname,voms)
 
+def conf_ui(sname,bdii,px,wms)
+  f = File.new("#{DIR}/conf/site-info-ui.conf", "w")
+  f.puts <<-EOF
+## site-info.def ui
+SITE_NAME="#{sname}"
+BDII_HOST=#{bdii}
+PX_HOST=#{vms}
+RB_HOST=#{wms}
+VOS=#{sname}
+VO_#{sname.upcase}_VOMSES="#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}"
+VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5k-CA"
+EOF
+  f.close
+end # def:: conf_ui(sname,bdii,px,wms)
 
 if $cfg.config == true :
   conf_bdii(bdii, sname, cehost)
