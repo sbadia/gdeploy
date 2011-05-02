@@ -196,7 +196,7 @@ end
 
 # Attribution des noeuds, le mini est deux (une machine de services, et un worker-node)
 #
-if $nodes.length < 5 :
+if $nodes.length < 6 :
   if $nodes.length < 2 :
     rputs("Err","Min 2 nodes")
     exit(0)
@@ -204,19 +204,20 @@ if $nodes.length < 5 :
     bdii = cehost = batch = se = $nodes[0]
     wn = $nodes[1]
   end
-elsif $nodes.length > 5 :
+elsif $nodes.length > 6 :
   bdii = $nodes[0]
   cehost = $nodes[1]
   batch = $nodes[2]
   se = $nodes[3]
   voms = $nodes[4]
-  wn = $nodes.last($nodes.length - 5)
+  ui = $nodes[4]
+  wn = $nodes.last($nodes.length - 6)
 else
   wn = $nodes.first($nodes.length - 1)
   bdii = cehost = batch = se = $nodes.last
 end
 # vputs("Installation Bdii","Ok")
-def display_dep(bdii, batch, cehost, se, wn, voms)
+def display_dep(bdii, batch, cehost, se, wn, voms, ui)
   if $cfg.verbose == true :
     vputs("Nodes","\t#{$nodes.length}")
     vputs("Bdii host","#{bdii}")
@@ -224,6 +225,7 @@ def display_dep(bdii, batch, cehost, se, wn, voms)
     vputs("Ce host","#{cehost}")
     vputs("Se host","#{se}")
     vputs("Voms host","#{voms}")
+    vputs("Ui host","#{ui}")
     puts "Workers Nodes:"
     wn.each{|n| puts "\t\t#{n}\n" }
 
@@ -233,7 +235,7 @@ def display_dep(bdii, batch, cehost, se, wn, voms)
 end
 #display_dep(bdii, batch, cehost, se, wn)
 
-serv = { "bdii" => bdii, "batch" => batch, "cehost" => cehost, "se" => se, "voms" => voms }
+serv = { "bdii" => bdii, "batch" => batch, "cehost" => cehost, "se" => se, "voms" => voms, "ui" => ui }
 utils = [ 'users', 'groups', 'wn-list' ]
 
 # Création du répertoire de configuration
@@ -509,14 +511,14 @@ EOF
   f.close
 end # def:: conf_se(sname,voms)
 
-def conf_ui(sname,bdii,px,wms)
+def conf_ui(sname,bdii,voms)
   f = File.new("#{DIR}/conf/site-info-ui.conf", "w")
   f.puts <<-EOF
 ## site-info.def ui
 SITE_NAME="#{sname}"
 BDII_HOST=#{bdii}
-PX_HOST=#{vms}
-RB_HOST=#{wms}
+PX_HOST=#{voms}
+RB_HOST=#{voms}
 VOS=#{sname}
 VO_#{sname.upcase}_VOMSES="#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}"
 VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5k-CA"
@@ -536,6 +538,7 @@ if $cfg.config == true :
   queue_config(sname, wn)
   conf_voms(sname)
   conf_se(sname,voms)
+  conf_ui(sname,bdii,voms)
   display_dep(bdii, batch, cehost, se, wn, voms)
 else
   rputs("Config.","Not created")
@@ -754,6 +757,29 @@ if $cfg.sendconf == true :
 
 ### Ui
 #
+  if $cfg.verbose == true:
+  	puts "*** Install User Interface on #{serv.fetch("ui")}"
+  end
+  Net::SSH.start(serv.fetch("ui"), 'root') do |ssh|
+    ssh.exec!('wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-UI.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q')
+    ssh.exec!("yum groupinstall glite-UI -q -y && yum install lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl")
+    if $cfg.verbose == true:
+      puts "*** Configure User Interface on #{serv.fetch("ui")}"
+    end
+  end
+  begin
+    Net::SCP.start(serv.fetch("ui"), 'root') do |scp|
+       scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
+     end
+   rescue
+     puts "Erreur scp configuration UI on #{serv.fetch("ui")}"
+   end
+   Net::SSH.start(serv.fetch("ui"), 'root') do |ssh|
+     ssh.exec!('mv /opt/glite/yaim/etc/conf/site-info-ui.def /root/yaim/site-info.def && mkdir -p /etc/grid-security/')
+     ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
+     ssh.exec!('yum install gcc -q -y && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1')
+     ssh.exec!('echo -e "\ngLite UI - (User Interface)\n" >> /etc/motd')
+   end
 
 ### Lfc se
 #
@@ -794,7 +820,7 @@ if $cfg.sendconf == true :
 
 ### Disp
 #
-  display_dep(bdii, batch, cehost, se, wn, voms)
+  display_dep(bdii, batch, cehost, se, wn, voms, ui)
   #send_jabber(sname,"#{display_dep(bdii, batch, cehost, se, wn, voms)}")
 else
   rputs("Send conf.","Not send")
