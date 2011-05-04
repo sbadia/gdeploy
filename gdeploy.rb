@@ -479,9 +479,26 @@ if $cfg.sendconf == true :
         pbarc.inc
       end
     end
-    session.exec('mkdir -p /root/yaim && rm -f /etc/yum.repos.d/dag.repo* && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/dag.repo -q && yum update -q -y  > /dev/null 2>&1')
-    session.exec("echo 'ok'")
+    #session.exec('mkdir -p /root/yaim && cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-* && wget http://public.nancy.grid5000.fr/~sbadia/glite/repo.tgz -q && tar xzf repo.tgz && yum update -q -y  > /dev/null 2>&1')
+    session.exec('mkdir -p /root/yaim && mkdir -p /opt/glite/yaim/etc && cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-* && wget http://public.nancy.grid5000.fr/~sbadia/glite/repo.tgz -q && tar xzf repo.tgz && yum update -q -y')
+    session.exec("echo 'In Progress'")
     session.loop
+  end
+  $nodes.each do |node|
+    if $cfg.verbose == true:
+      Net::SSH.start(node, 'root') do |ssh|
+        ssh.scp.upload!("#{DIR}/conf/site-info.def","/root/yaim/site-info.def") do |ch, name, sent, total|
+          print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
+        end
+      end
+      begin
+        Net::SCP.start(node, 'root') do |scp|
+          scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
+        end
+      rescue
+        puts "Erreur scp config on #{node}"
+      end
+    end
   end
 
   if $cfg.pbar == true:
@@ -498,13 +515,10 @@ if $cfg.sendconf == true :
     elsif $cfg.pbar == true :
       pbarb.inc
     end
-    ssh.exec!('rm -rf /etc/yum.repos.d/glite-BDII* && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-BDII.repo -q && yum install glite-BDII -q -y')
+    ssh.exec!('yum install glite-BDII -q -y')
   if $cfg.pbar == true:
     pbarb.inc
   end
-    ssh.scp.upload!("#{DIR}/conf/site-info-bdii.def","/root/yaim/site-info.def") do |ch, name, sent, total|
-      #print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
-    end
     if $cfg.verbose == true:
       puts "*** Configure bdii server on #{serv.fetch("bdii")}"
       #send_jabber(sname,"*** Configure bdii server on #{serv.fetch("bdii")}")
@@ -527,7 +541,7 @@ if $cfg.sendconf == true :
     if $cfg.pbar == true:
       pbaro.inc
     end
-    ssh.exec!('rm -rf /etc/yum.repos.d/glite-TORQUE* && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_server.repo -q && yum install glite-TORQUE_server -q -y')
+    ssh.exec!('yum install glite-TORQUE_server -q -y')
     ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz')
     if $cfg.verbose == true:
       puts "*** Configure batch server on #{serv.fetch("batch")}"
@@ -536,16 +550,7 @@ if $cfg.sendconf == true :
       pbaro.inc
     end
   end
-  begin
-    Net::SCP.start(serv.fetch("batch"), 'root') do |scp|
-      scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
-    end
-  rescue
-    puts "Erreur scp confifuraton batch on #{serv.fetch("batch")}"
-    #send_jabber(sname,"Erreur scp confifuraton batch on #{serv.fetch("batch")}")
-  end
   Net::SSH.start(serv.fetch("batch"), 'root') do |ssh|
-    ssh.exec!('cp -pr /opt/glite/yaim/etc/conf/site-info-batch.def /root/yaim/site-info.def')
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-TORQUE_server -d 1')
     ssh.exec!('cat /opt/glite/yaim/etc/conf/exports >> /etc/exports && /etc/init.d/nfs restart')
     ssh.exec!('/opt/glite/yaim/bin/yaim -r -s /root/yaim/site-info.def -f config_maui_cfg')
@@ -569,35 +574,18 @@ if $cfg.sendconf == true :
         pbarc.inc
       end
     end
-    session.exec("rm -rf /etc/yum.repos.d/glite-* && rm -rf /etc/yum.repos.d/lcg* && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-WN.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_client.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q  && yum groupinstall glite-WN -q -y > /dev/null 2>&1 && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
+    session.exec("yum groupinstall glite-WN -q -y > /dev/null 2>&1 && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
     session.exec("echo 'ok'")
     # Hack immonde pour la fct_crl (certif revocation leak)
     session.loop
   end
 
-  wn.each do |wo|
-    if $cfg.pbar == true:
-      pbaro.inc
-    end
-    if $cfg.verbose == true:
-      puts "*** Configure worker node on #{wo}"
-      #send_jabber(sname,"*** Configure worker node on #{wo}")
-    end
-    begin
-      Net::SCP.start("#{wo}", 'root') do |scp|
-        scp.upload!("#{DIR}/conf/", "/opt/glite/yaim/etc/", :recursive => true)
-      end
-    rescue
-      puts "Erreur scp confifuration wn on #{wo}"
-      #send_jabber(sname,"Erreur scp confifuration wn on #{wo}")
-    end
-  end
   Net::SSH::Multi.start do |session|
     #session.on_error = :warn
     wn.each do |node|
       session.use "root@#{node}"
     end
-    session.exec('cp -rp /opt/glite/yaim/etc/conf/site-info-wn.def /root/yaim/site-info.def && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 > /dev/null 2>&1 && echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
+    session.exec('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 > /dev/null 2>&1 && echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
   end
   if $cfg.verbose == true:
    puts "*** All worker nodes ok."
@@ -612,7 +600,6 @@ if $cfg.sendconf == true :
     if $cfg.pbar == true:
       pbaro.inc
     end
-    ssh.exec!('rm -rf /etc/yum.repos.d/glite-* && rm -rf /etc/yum.repos.d/lcg* && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-CREAM.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-TORQUE_utils.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q')
     ssh.exec!("yum install glite-CREAM glite-TORQUE_utils lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
     if $cfg.verbose == true:
       puts "*** Configure Computing element on #{serv.fetch("cehost")}"
@@ -621,16 +608,7 @@ if $cfg.sendconf == true :
       pbaro.inc
     end
   end
-  begin
-    Net::SCP.start(serv.fetch("cehost"), 'root') do |scp|
-      scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
-    end
-  rescue
-    puts "Erreur scp configuration CE on #{serv.fetch("cehost")}"
-    #send_jabber(sname,"Erreur scp configuration CE on #{serv.fetch("cehost")}")
-  end
   Net::SSH.start(serv.fetch("cehost"), 'root') do |ssh|
-    ssh.exec!('cp -rp /opt/glite/yaim/etc/conf/site-info-ce.def /root/yaim/site-info.def && mkdir -p /etc/grid-security/')
     ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
     ssh.exec!('mkdir -p /var/spool/pbs/server_priv/accounting && mkdir -p /var/spool/pbs/server_logs')
     ssh.exec!("mount #{serv.fetch("batch")}:/var/spool/pbs/server_priv/accounting /var/spool/pbs/server_priv/accounting")
@@ -651,23 +629,13 @@ if $cfg.sendconf == true :
   end
 
   Net::SSH.start(serv.fetch("voms"), 'root') do |ssh|
-    ssh.exec!('rm -rf /etc/yum.repos.d/glite-* && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-VOMS_mysql.repo -q')
     ssh.exec!("yum install mysql-server glite-VOMS_mysql -q -y --nogpgcheck > /dev/null 2>&1")
     if $cfg.verbose == true:
       puts "*** Configure Voms sever on #{serv.fetch("voms")}"
       #send_jabber(sname,"*** Configure Voms sever on #{serv.fetch("voms")}")
     end
   end
-  begin
-    Net::SCP.start(serv.fetch("voms"), 'root') do |scp|
-      scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
-    end
-  rescue
-    puts "Erreur scp configuration Voms on #{serv.fetch("voms")}"
-    #send_jabber(sname,"Erreur scp configuration Voms on #{serv.fetch("voms")}")
-  end
   Net::SSH.start(serv.fetch("voms"), 'root') do |ssh|
-    ssh.exec!('cp -rp /opt/glite/yaim/etc/conf/site-info-voms.def /root/yaim/site-info.def')
     ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
     ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root password 'superpass'")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1')
@@ -680,21 +648,12 @@ if $cfg.sendconf == true :
   	puts "*** Install User Interface on #{serv.fetch("ui")}"
   end
   Net::SSH.start(serv.fetch("ui"), 'root') do |ssh|
-    ssh.exec!('rm -rf /etc/yum.repos.d/glite-* && rm -rf /etc/yum.repos.d/lcg* && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-UI.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q')
     ssh.exec!("yum groupinstall glite-UI -q -y && yum install lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl")
     if $cfg.verbose == true:
       puts "*** Configure User Interface on #{serv.fetch("ui")}"
     end
   end
-  begin
-    Net::SCP.start(serv.fetch("ui"), 'root') do |scp|
-       scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
-     end
-   rescue
-     puts "Erreur scp configuration UI on #{serv.fetch("ui")}"
-   end
    Net::SSH.start(serv.fetch("ui"), 'root') do |ssh|
-     ssh.exec!('cp -rp /opt/glite/yaim/etc/conf/site-info-ui.def /root/yaim/site-info.def && mkdir -p /etc/grid-security/')
      ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
      ssh.exec!('yum install gcc -q -y && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1')
      ssh.exec!('echo -e "\ngLite UI - (User Interface)\n" >> /etc/motd')
@@ -714,23 +673,13 @@ if $cfg.sendconf == true :
     #send_jabber(sname,"*** Install Storage element on #{serv.fetch("se")}")
   end
   Net::SSH.start(serv.fetch("se"), 'root') do |ssh|
-   ssh.exec!('rm -rf /etc/yum.repos.d/glite-* && rm -rf /etc/yum.repos.d/lcg* && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/glite-LFC_mysql.repo -q && wget -P /etc/yum.repos.d/ http://public.nancy.grid5000.fr/~sbadia/glite/repo/lcg-CA.repo -q')
    ssh.exec!("yum install glite-LFC_mysql lcg-CA mysql-server -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl")
    if $cfg.verbose == true:
      puts "*** Configure Storage element on #{serv.fetch("se")}"
      #send_jabber(sname,"*** Configure Storage element on #{serv.fetch("se")}")
    end
   end
-  begin
-   Net::SCP.start(serv.fetch("se"), 'root') do |scp|
-     scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
-   end
-  rescue
-   puts "Erreur scp configuration SE on #{serv.fetch("se")}"
-   #send_jabber(sname,"Erreur scp configuration SE on #{serv.fetch("se")}")
-  end
   Net::SSH.start(serv.fetch("se"), 'root') do |ssh|
-    ssh.exec!('cp -pr /opt/glite/yaim/etc/conf/site-info-se.def /root/yaim/site-info.def && mkdir -p /etc/grid-security/')
     ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
     ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root password 'superpass'")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-LFC_mysql -d 1')
