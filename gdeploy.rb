@@ -248,10 +248,16 @@ if $cfg.config == true :
 end
 
 # Configuration de la brique Bdii, Site-Bdii, annuaire de la Vo.
+# Configuration de la brique batch, composé d'un server torque, et de maui.
+# Configuration des workers sous scientificlinux 5.5
 # sname correspond au nom de la vo, nous utiliserons le nom du site.
+# Computing element, surcouche au batch server
+# intègre une couche proxy, nous utilisons cream.
+# La partie de déclaration de vo est très important elle détermine la vo/certif des noeuds.
+# <QUEUE_NAME>_GROUP_ENABLE=<list of vo>
 #
-def conf_bdii(bdii, sname, cehost)
-  f = File.new("#{DIR}/conf/site-info-bdii.def", "w")
+def conf_site(bdii, sname, cehost, batch, se, voms)
+  f = File.new("#{DIR}/conf/site-info.def", "w")
   f.puts <<-EOF
 ## Site-info.def Bdii
 SITE_BDII_HOST="#{bdii}"
@@ -265,23 +271,12 @@ SITE_SECURITY_EMAIL=sbadia@f#{sname}.#{sname}.grid5000.fr
 SITE_SUPPORT_EMAIL=sbadia@f#{sname}.#{sname}.grid5000.fr
 SITE_DESC="Grid5000 School 2011 - gLite"
 SITE_OTHER_GRID="#{clusters($nodes)}"
-CE_HOST="#{cehost}"
 BDII_REGIONS="CE SITE_BDII BDII WMS"
 BDII_CE_URL="ldap://#{cehost}:2170/mds-vo-name=resource,o=grid"
 BDII_SITE_BDII_URL="ldap://#{bdii}:2170/mds-vo-name=resource,o=grid"
 BDII_WMS_URL="ldap://#{bdii}:2170/mds-vo-name=resource,o=grid"
 BDII_BDII_URL="ldap://#{bdii}:2170/mds-vo-name=resource,o=grid"
-EOF
-  f.close
-end
 
-# Configuration de la brique batch, composé d'un server torque, et de maui.
-# <QUEUE_NAME>_GROUP_ENABLE=<list of vo>
-# Les users/groups sont configurés plus loin.
-#
-def conf_batch(batch, cehost, sname)
-  f = File.new("#{DIR}/conf/site-info-batch.def", "w")
-  f.puts <<-EOF
 ## Site-info.def Batch
 BATCH_SERVER="#{batch}"
 CE_HOST="#{cehost}"
@@ -293,47 +288,16 @@ USERS_CONF=/opt/glite/yaim/etc/conf/users.conf
 GROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf
 WN_LIST=/opt/glite/yaim/etc/conf/wn-list.conf
 CONFIG_MAUI="yes"
-EOF
-  f.close
-end
 
-# Configuration des workers sous scientificlinux 5.5
-# La partie de déclaration de vo est très important elle détermine la vo/certif des noeuds.
-#
-def conf_wn(bdii, se, sname, batch, cehost)
-  f = File.new("#{DIR}/conf/site-info-wn.def", "w")
-  f.puts <<-EOF
 ## Site-info.def Batch
 BDII_HOST="#{bdii}"
 SE_LIST="#{se}"
-SITE_NAME=#{sname}
-USERS_CONF=/opt/glite/yaim/etc/conf/users.conf
-GROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf
-WN_LIST=/opt/glite/yaim/etc/conf/wn-list.conf
-VOS=#{sname}
-BATCH_SERVER=#{batch}
-CE_HOST=#{cehost}
 CE_SMPSIZE=`grep -c processor /proc/cpuinfo`
 VO_#{sname.upcase}_SW_DIR=/opt/vo_software/#{sname}
 VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5k-CA"
 VO_#{sname.upcase}_VOMSES="#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}"
-EOF
-  f.close
-end
 
-# Computing element, surcouche au batch server
-# intègre une couche proxy, nous utilisons cream.
-#
-def conf_cehost(sname, cehost, batch, se)
-  f = File.new("#{DIR}/conf/site-info-ce.def", "w")
-  f.puts <<-EOF
 ## Site-info.def Ce
-SITE_NAME=#{sname}
-CE_HOST="#{cehost}"
-BATCH_SERVER="#{batch}"
-USERS_CONF=/opt/glite/yaim/etc/conf/users.conf
-GROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf
-WN_LIST=/opt/glite/yaim/etc/conf/wn-list.conf
 JAVA_LOCATION=/usr/java/default
 JOB_MANAGER=pbs
 CE_BATCH_SYS=pbs
@@ -370,9 +334,7 @@ CE_SMPSIZE=1      #grep -c processor /proc/cpuinfo
 CE_SI00=1592
 CE_SF00=1927
 CE_OTHER_DESCR="Cores=1, Benchmark=1.11-HEP-SPEC06"
-SE_LIST="#{se}"
 SE_MOUNT_INFO_LIST="none"
-VOS="#{sname}"
 QUEUES="default"
 DEFAULT_GROUP_ENABLE="#{sname}"
 ACCESS_BY_DOMAIN=false
@@ -382,12 +344,33 @@ BLPARSER_HOST=#{cehost}
 BLP_PORT=33333
 CREAM_PORT=56565
 CEMON_HOST=#{cehost}
-VO_#{sname.upcase}_SW_DIR=/opt/vo_software/#{sname}
-VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5k-CA"
-VO_#{sname.upcase}_VOMSES="#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}"
+
+## site-info.def voms
+MYSQL_PASSWORD="superpass"
+VOMS_HOST=`hostname -f`
+VOMS_DB_HOST='localhost'
+VO_#{sname.upcase}_MYSQL_VOMS_PORT=15000
+VO_#{sname.upcase}_MYSQL_VOMS_DB_USER=#{sname}_mysql_user
+VO_#{sname.upcase}_MYSQL_VOMS_DB_PASS="superpass"
+VO_#{sname.upcase}_MYSQL_VOMS_DB_NAME=voms_#{sname}_mysql_db
+VOMS_ADMIN_SMTP_HOST=mail.#{sname}.grid5000.fr
+VOMS_ADMIN_MAIL=#{$cfg.user}@f#{sname}.#{sname}.grid5000.fr
+
+## site-info.def se
+LFC_DB_PASSWORD="superpass"
+LFC_DB_HOST=`hostname -f`
+LFC_DB="lfcdb"
+LFC_CENTRAL="#{sname}"
+LFC_LOCAL=
+LFC_HOST=`hostname -f`
+VO_#{sname.upcase}_VOMS_SERVERS="#{voms}"
+
+## site-info.def ui
+PX_HOST=#{voms}
+RB_HOST=#{voms}
 EOF
   f.close
-end
+end # def:: conf_site(bdii, sname, cehost, batch, se, voms)
 
 # Utilisateurs pour la vo de test
 # 3 admin et 9 utilisateurs, en fonction du nom de la vo.
@@ -469,76 +452,13 @@ set queue default resources_default.nodes = nodes=1:ppn=1\nEOF
 EOF
   f.close
 end
-
-def conf_voms(sname)
-  f = File.new("#{DIR}/conf/site-info-voms.def", "w")
-  f.puts <<-EOF
-## site-info.def voms
-MYSQL_PASSWORD="superpass"
-SITE_NAME="#{sname}"
-VOS="#{sname}.mysql"
-VOMS_HOST=`hostname -f`
-VOMS_DB_HOST='localhost'
-VO_#{sname.upcase}_MYSQL_VOMS_PORT=15000
-VO_#{sname.upcase}_MYSQL_VOMS_DB_USER=#{sname}_mysql_user
-VO_#{sname.upcase}_MYSQL_VOMS_DB_PASS="superpass"
-VO_#{sname.upcase}_MYSQL_VOMS_DB_NAME=voms_#{sname}_mysql_db
-VOMS_ADMIN_SMTP_HOST=mail.#{sname}.grid5000.fr
-VOMS_ADMIN_MAIL=#{$cfg.user}@f#{sname}.#{sname}.grid5000.fr
-EOF
-  f.close
-end # def:: conf_voms(sname,voms)
-
-def conf_se(sname,voms)
-  f = File.new("#{DIR}/conf/site-info-se.def", "w")
-  f.puts <<-EOF
-## site-info.def se
-SITE_NAME="#{sname}"
-USERS_CONF=/opt/glite/yaim/etc/conf/users.conf
-GROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf
-MYSQL_PASSWORD="superpass"
-LFC_DB_PASSWORD="superpass"
-LFC_DB_HOST=`hostname -f`
-LFC_DB="lfcdb"
-LFC_CENTRAL="#{sname}"
-LFC_LOCAL=
-LFC_HOST=`hostname -f`
-VOS="#{sname}"
-VO_NANCY_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5k-CA"
-VO_NANCY_VOMS_SERVERS="#{sname}"
-VO_NANCY_VOMSES="#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}"
-EOF
-  f.close
-end # def:: conf_se(sname,voms)
-
-def conf_ui(sname,bdii,voms)
-  f = File.new("#{DIR}/conf/site-info-ui.conf", "w")
-  f.puts <<-EOF
-## site-info.def ui
-SITE_NAME="#{sname}"
-BDII_HOST=#{bdii}
-PX_HOST=#{voms}
-RB_HOST=#{voms}
-VOS=#{sname}
-VO_#{sname.upcase}_VOMSES="#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}"
-VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5k-CA"
-EOF
-  f.close
-end # def:: conf_ui(sname,bdii,px,wms)
-
 if $cfg.config == true :
-  conf_bdii(bdii, sname, cehost)
-  conf_batch(batch, cehost, sname)
-  conf_wn(bdii, se, sname, batch, cehost)
   conf_users(sname,sname)
   conf_groups(sname)
   list_wn(wn)
-  conf_cehost(sname, cehost, batch, se)
   export_nfs()
   queue_config(sname, wn)
-  conf_voms(sname)
-  conf_se(sname,voms)
-  conf_ui(sname,bdii,voms)
+  conf_site(bdii, sname, cehost, batch, se, voms)
   display_dep(bdii, batch, cehost, se, wn, voms, ui)
 else
   rputs("Config.","Not created")
