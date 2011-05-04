@@ -210,7 +210,7 @@ elsif $nodes.length > 6 :
   batch = $nodes[2]
   se = $nodes[3]
   voms = $nodes[4]
-  ui = $nodes[4]
+  ui = $nodes[5]
   wn = $nodes.last($nodes.length - 6)
 else
   wn = $nodes.first($nodes.length - 1)
