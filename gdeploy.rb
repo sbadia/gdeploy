@@ -274,7 +274,7 @@ SITE_OTHER_GRID="#{clusters($nodes)}"
 BDII_REGIONS="CE SITE_BDII BDII WMS"
 BDII_CE_URL="ldap://#{cehost}:2170/mds-vo-name=resource,o=grid"
 BDII_SITE_BDII_URL="ldap://#{bdii}:2170/mds-vo-name=resource,o=grid"
-BDII_WMS_URL="ldap://#{bdii}:2170/mds-vo-name=resource,o=grid"
+BDII_WMS_URL="ldap://#{voms}:2170/mds-vo-name=resource,o=grid"
 BDII_BDII_URL="ldap://#{bdii}:2170/mds-vo-name=resource,o=grid"
 
 ## Site-info.def Batch
@@ -292,7 +292,6 @@ CONFIG_MAUI="yes"
 ## Site-info.def Batch
 BDII_HOST="#{bdii}"
 SE_LIST="#{se}"
-CE_SMPSIZE=`grep -c processor /proc/cpuinfo`
 VO_#{sname.upcase}_SW_DIR=/opt/vo_software/#{sname}
 VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5k-CA"
 VO_#{sname.upcase}_VOMSES="#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}"
@@ -330,7 +329,6 @@ CE_CAPABILITY="none"
 CE_OTHERDESCR="Cores=4" #grep -c physical id.*: 0 /proc/cpuinfo
 CE_PHYSCPU=2      #grep -c core id.*: 0 /proc/cpuinfo
 CE_LOGCPU=1       #grep -c processor /proc/cpuinfo
-CE_SMPSIZE=1      #grep -c processor /proc/cpuinfo
 CE_SI00=1592
 CE_SF00=1927
 CE_OTHER_DESCR="Cores=1, Benchmark=1.11-HEP-SPEC06"
@@ -347,8 +345,8 @@ CEMON_HOST=#{cehost}
 
 ## site-info.def voms
 MYSQL_PASSWORD="superpass"
-VOMS_HOST=`hostname -f`
-VOMS_DB_HOST='localhost'
+VOMS_HOST=#{voms}
+VOMS_DB_HOST=#{voms}
 VO_#{sname.upcase}_MYSQL_VOMS_PORT=15000
 VO_#{sname.upcase}_MYSQL_VOMS_DB_USER=#{sname}_mysql_user
 VO_#{sname.upcase}_MYSQL_VOMS_DB_PASS="superpass"
@@ -358,11 +356,11 @@ VOMS_ADMIN_MAIL=#{$cfg.user}@f#{sname}.#{sname}.grid5000.fr
 
 ## site-info.def se
 LFC_DB_PASSWORD="superpass"
-LFC_DB_HOST=`hostname -f`
+LFC_DB_HOST=#{se}
 LFC_DB="lfcdb"
 LFC_CENTRAL="#{sname}"
 LFC_LOCAL=
-LFC_HOST=`hostname -f`
+LFC_HOST=#{se}
 VO_#{sname.upcase}_VOMS_SERVERS="#{voms}"
 
 ## site-info.def ui
