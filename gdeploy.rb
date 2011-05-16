@@ -247,13 +247,16 @@ if $cfg.config == true :
   end
 end
 
-# Configuration de la brique Bdii, Site-Bdii, annuaire de la Vo.
-# Configuration de la brique batch, composé d'un server torque, et de maui.
-# Configuration des workers sous scientificlinux 5.5
-# sname correspond au nom de la vo, nous utiliserons le nom du site.
-# Computing element, surcouche au batch server
-# intègre une couche proxy, nous utilisons cream.
-# La partie de déclaration de vo est très important elle détermine la vo/certif des noeuds.
+# Fichier de configuration pour un site gLite (site-inf.def) le fichier est
+# sourcé par yaim pour configurer les différents services (attention donc à
+# sa syntaxe bash).
+# Récapitulatif des différents services en fonction des briques.
+#   - Bdii, Site-Bdii, annuaire de la Vo.
+#   - Batch, server torque, maui.
+#   - Workers nodes on sl5.5
+#   - Computing element, surcouche au batch server (proxy), cream ce.
+#   - Woms avec rb ressource broker fifo.
+# Attention à la racine ldap de la vo... Et des certificats associés
 # <QUEUE_NAME>_GROUP_ENABLE=<list of vo>
 #
 def conf_site(bdii, sname, cehost, batch, se, voms)
@@ -464,7 +467,7 @@ end
 
 if $cfg.sendconf == true :
   if $cfg.pbar == true:
-    pbarc = ProgressBar.new("Maj", 5)
+    pbarc = ProgressBar.new("Update", $nodes.length - 1)
   end
   Net::SSH::Multi.start do |session|
     #session.on_error = :warn
@@ -501,7 +504,7 @@ if $cfg.sendconf == true :
 
   if $cfg.pbar == true:
     pbarc.finish
-    pbarb = ProgressBar.new("Bdii", 4)
+    pbarb = ProgressBar.new("Brique Bdii", 4)
   end
 
 ### Bdii
@@ -527,7 +530,7 @@ if $cfg.sendconf == true :
   end
    if $cfg.pbar == true:
     pbarb.finish
-    pbaro = ProgressBar.new("Batch", 9)
+    pbaro = ProgressBar.new("Brique Batch", 3)
    elsif $cfg.verbose == true:
      puts "*** Intall batch server on #{serv.fetch("batch")}"
      #send_jabber(sname,"*** Intall batch server on #{serv.fetch("batch")}")
@@ -658,7 +661,6 @@ if $cfg.sendconf == true :
    end
 
 ### Lfc se
-#
 # +---------------------------------+
 # |		SE		    |
 # | +-----------+     +-----------+ |
