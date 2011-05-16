@@ -567,6 +567,9 @@ if $cfg.sendconf == true :
   Net::SSH::Multi.start do |session|
     #session.on_error = :warn
     wn.each do |node|
+      if $cfg.pbar == true:
+        pbarc = ProgressBar.new("Workers nodes", wn.length)
+      end
       session.use "root@#{node}" #if $nodes[node].nil?
       if $cfg.verbose == true:
         puts "*** Install worker node on #{node}"
@@ -593,6 +596,9 @@ if $cfg.sendconf == true :
    #send_jabber(sname,"*** All worker nodes ok.")
    puts "*** Install Computing element on #{serv.fetch("cehost")}"
    #send_jabber(sname,"*** Install Computing element on #{serv.fetch("cehost")}")
+  elsif $cfg.verbose == true:
+    pbarc.finish
+    pbaro = ProgressBar.new("Computing Element", 5)
   end
 
 ### Computing element
@@ -611,13 +617,21 @@ if $cfg.sendconf == true :
   end
   Net::SSH.start(serv.fetch("cehost"), 'root') do |ssh|
     ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
+    if $cfg.verbose == true:
+      pbaro.inc
+    end
     ssh.exec!('mkdir -p /var/spool/pbs/server_priv/accounting && mkdir -p /var/spool/pbs/server_logs')
     ssh.exec!("mount #{serv.fetch("batch")}:/var/spool/pbs/server_priv/accounting /var/spool/pbs/server_priv/accounting")
+    if $cfg.verbose == true:
+      pbaro.inc
+    end
     ssh.exec!("mount #{serv.fetch("batch")}:/var/spool/pbs/server_logs /var/spool/pbs/server_logs")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-creamCE -n glite-TORQUE_utils -d 1')
     ssh.exec!('/opt/glite/yaim/bin/yaim -f -s /root/yaim/site-info.def -f config_cream_blparser -d 1 && echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
   end
-
+    if $cfg.verbose == true:
+      pbaro.finish
+    end
 ### VOMS
 #
 # /etc/init.d/mysqld start
