@@ -544,6 +544,7 @@ if $cfg.sendconf == true :
     end
     ssh.exec!('yum install glite-TORQUE_server -q -y')
     ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz')
+    ssh.exec!('mkdir -p /var/spool/pbs/server_logs && mkdir -p /var/spool/pbs/server_priv/accounting')
     if $cfg.verbose == true:
       puts "*** Configure batch server on #{serv.fetch("batch")}"
       #send_jabber(sname,"*** Configure batch server on #{serv.fetch("batch")}")
