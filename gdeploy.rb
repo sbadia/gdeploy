@@ -354,6 +354,10 @@ VO_#{sname.upcase}_MYSQL_VOMS_PORT=15000
 VO_#{sname.upcase}_MYSQL_VOMS_DB_USER=#{sname}_mysql_user
 VO_#{sname.upcase}_MYSQL_VOMS_DB_PASS="superpass"
 VO_#{sname.upcase}_MYSQL_VOMS_DB_NAME=voms_#{sname}_mysql_db
+VO_#{sname.upcase}_VOMS_PORT=3306
+VO_#{sname.upcase}_VOMS_DB_USER=#{sname}_mysql_user
+VO_#{sname.upcase}_VOMS_DB_PASS="superpass"
+VO_#{sname.upcase}_VOMS_DB_NAME=voms_#{sname}_mysql_db
 VOMS_ADMIN_SMTP_HOST=mail.#{sname}.grid5000.fr
 VOMS_ADMIN_MAIL=#{$cfg.user}@f#{sname}.#{sname}.grid5000.fr
 
@@ -640,6 +644,11 @@ if $cfg.sendconf == true :
 # /etc/init.d/mysqld start
 # /usr/bin/mysqladmin -u root password 'new-password'
 # /usr/bin/mysqladmin -u root -h graphene-94 password 'new-password'
+# [root@graphene-78 ~]# mysql --user=root --password=superpass test < toto
+# [root@graphene-78 ~]# cat toto
+# GRANT ALL PRIVILEGES ON *.*  TO 'root'@'graphene-78.nancy.grid5000.fr';
+# [root@graphene-78 ~]#
+#
 #
   if $cfg.verbose == true:
    puts "*** Install Voms server on #{serv.fetch("voms")}"
@@ -655,7 +664,7 @@ if $cfg.sendconf == true :
   end
   Net::SSH.start(serv.fetch("voms"), 'root') do |ssh|
     ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
-    ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root password 'superpass'")
+    ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root -h #{serv.fetch("voms")} password 'superpass'")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1')
     ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
   end
