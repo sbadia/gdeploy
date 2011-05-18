@@ -629,7 +629,8 @@ if $cfg.sendconf == true :
     ssh.exec!("echo '#{serv.fetch("batch")}:/var/spool/pbs/server_logs /var/spool/pbs/server_logs nfs	rw,nfsvers=3,hard,intr,async,noatime,nodev,nosuid,auto,rsize=32768,wsize=32768	0' >> /etc/fstab")
     ssh.exec!("mount -a")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-creamCE -n glite-TORQUE_utils -d 1')
-    ssh.exec!('/opt/glite/yaim/bin/yaim -f -s /root/yaim/site-info.def -f config_cream_blparser -d 1 && echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
+    #ssh.exec!('/opt/glite/yaim/bin/yaim -f -s /root/yaim/site-info.def -f config_cream_blparser -d 1 && echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
+    ssh.exec!('echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
   end
     if $cfg.pbar == true:
       pbaro.finish
