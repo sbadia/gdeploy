@@ -32,6 +32,10 @@ IV]- TIPS
 - Deployer la conf sur les machines de service (site-info.def et certifs).
 - Lancer les scripts en fonction de la machine visée.
 
+== Infos ==
+- subject=/C=FR/ST=Lorraine/O=Grid5000CA/CN=ca.grid5000.fr
+- subject=/C=FR/ST=Lorraine/O=Grid5000/CN=*.grid5000.fr/emailAddress=sebastien.badia@inria.fr
+
 # Tests
 ## Bdii
 cat /opt/glite/etc/gip/site-urls.conf
