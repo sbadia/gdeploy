@@ -617,19 +617,19 @@ if $cfg.sendconf == true :
   end
   Net::SSH.start(serv.fetch("cehost"), 'root') do |ssh|
     ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
-    if $cfg.verbose == true:
+    if $cfg.pbar == true:
       pbaro.inc
     end
     ssh.exec!('mkdir -p /var/spool/pbs/server_priv/accounting && mkdir -p /var/spool/pbs/server_logs')
     ssh.exec!("mount #{serv.fetch("batch")}:/var/spool/pbs/server_priv/accounting /var/spool/pbs/server_priv/accounting")
-    if $cfg.verbose == true:
+    if $cfg.pbar == true:
       pbaro.inc
     end
     ssh.exec!("mount #{serv.fetch("batch")}:/var/spool/pbs/server_logs /var/spool/pbs/server_logs")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-creamCE -n glite-TORQUE_utils -d 1')
     ssh.exec!('/opt/glite/yaim/bin/yaim -f -s /root/yaim/site-info.def -f config_cream_blparser -d 1 && echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
   end
-    if $cfg.verbose == true:
+    if $cfg.pbar == true:
       pbaro.finish
     end
 ### VOMS
