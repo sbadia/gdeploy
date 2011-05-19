@@ -486,6 +486,7 @@ if $cfg.sendconf == true :
     end
     #session.exec('mkdir -p /root/yaim && cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-* && wget http://public.nancy.grid5000.fr/~sbadia/glite/repo.tgz -q && tar xzf repo.tgz && yum update -q -y  > /dev/null 2>&1')
     session.exec('mkdir -p /root/yaim && mkdir -p /opt/glite/yaim/etc && cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-* && wget http://public.nancy.grid5000.fr/~sbadia/glite/repo.tgz -q && tar xzf repo.tgz && yum update -q -y')
+    session.exec("echo 'mkdir -p /root/yaim && mkdir -p /opt/glite/yaim/etc && cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-* && wget http://public.nancy.grid5000.fr/~sbadia/glite/repo.tgz -q && tar xzf repo.tgz && yum update -q -y' >> /root/install.log")
     session.exec("echo 'In Progress'")
     session.loop
   end
@@ -531,6 +532,7 @@ if $cfg.sendconf == true :
       pbarb.inc
     end
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1 && echo -e "\ngLite Bdii - (Ldap Berkley database index)\n" >> /etc/motd')
+    ssh.exec!("echo 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1' >> /root/install.log")
   end
    if $cfg.pbar == true:
     pbarb.finish
@@ -548,7 +550,9 @@ if $cfg.sendconf == true :
     end
     ssh.exec!('yum install glite-TORQUE_server -q -y')
     ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz')
+    ssh.exec!("echo 'cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz' >> /root/install.log")
     ssh.exec!('mkdir -p /var/spool/pbs/server_logs && mkdir -p /var/spool/pbs/server_priv/accounting')
+    ssh.exec!("echo 'mkdir -p /var/spool/pbs/server_logs && mkdir -p /var/spool/pbs/server_priv/accounting' >> /root/install.log")
     if $cfg.verbose == true:
       puts "*** Configure batch server on #{serv.fetch("batch")}"
       #send_jabber(sname,"*** Configure batch server on #{serv.fetch("batch")}")
@@ -558,9 +562,13 @@ if $cfg.sendconf == true :
   end
   Net::SSH.start(serv.fetch("batch"), 'root') do |ssh|
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-TORQUE_server -d 1')
+    ssh.exec!("echo 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-TORQUE_server -d 1' >> /root/install.log")
     ssh.exec!('cat /opt/glite/yaim/etc/conf/exports >> /etc/exports && /etc/init.d/nfs restart')
+    ssh.exec!("echo 'cat /opt/glite/yaim/etc/conf/exports >> /etc/exports && /etc/init.d/nfs restart' >> /root/install.log")
     ssh.exec!('/opt/glite/yaim/bin/yaim -r -s /root/yaim/site-info.def -f config_maui_cfg')
+    ssh.exec!("echo '/opt/glite/yaim/bin/yaim -r -s /root/yaim/site-info.def -f config_maui_cfg' >> /root/install.log")
     ssh.exec!('sh /opt/glite/yaim/etc/conf/queue.conf && /etc/init.d/maui restart && echo -e "\ngLite Batch\n" >> /etc/motd')
+    ssh.exec!("echo 'sh /opt/glite/yaim/etc/conf/queue.conf && /etc/init.d/maui restart' >> /root/install.log")
   end
 
   if $cfg.pbar == true:
@@ -584,6 +592,7 @@ if $cfg.sendconf == true :
       end
     end
     session.exec("yum groupinstall glite-WN -q -y > /dev/null 2>&1 && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
+    session.exec("echo 'yum groupinstall glite-WN -q -y > /dev/null 2>&1 && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz' >> /root/install.log")
     session.exec("echo 'ok'")
     # Hack immonde pour la fct_crl (certif revocation leak)
     session.loop
@@ -595,6 +604,7 @@ if $cfg.sendconf == true :
       session.use "root@#{node}"
     end
     session.exec('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 > /dev/null 2>&1 && echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
+    session.exec("echo 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 > /dev/null 2>&1' >> /root/install.log")
   end
   if $cfg.verbose == true:
    puts "*** All worker nodes ok."
@@ -613,6 +623,7 @@ if $cfg.sendconf == true :
       pbaro.inc
     end
     ssh.exec!("yum install glite-CREAM glite-TORQUE_utils lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
+    ssh.exec!("echo 'yum install glite-CREAM glite-TORQUE_utils lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz' >> /root/install.log")
     if $cfg.verbose == true:
       puts "*** Configure Computing element on #{serv.fetch("cehost")}"
       #send_jabber(sname,"*** Configure Computing element on #{serv.fetch("cehost")}")
@@ -622,6 +633,7 @@ if $cfg.sendconf == true :
   end
   Net::SSH.start(serv.fetch("cehost"), 'root') do |ssh|
     ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
+    ssh.exec("echo 'cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz' >> /root/install.log")
     if $cfg.pbar == true:
       pbaro.inc
     end
@@ -632,7 +644,9 @@ if $cfg.sendconf == true :
     end
     ssh.exec!("echo '#{serv.fetch("batch")}:/var/spool/pbs/server_logs /var/spool/pbs/server_logs nfs	rw,nfsvers=3,hard,intr,async,noatime,nodev,nosuid,auto,rsize=32768,wsize=32768	0' >> /etc/fstab")
     ssh.exec!("mount -a")
+    ssh.exec!("echo 'fstab && mount -a' >> /root/install.log")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-creamCE -n glite-TORQUE_utils -d 1')
+    ssh.exec!("echo 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-creamCE -n glite-TORQUE_utils -d 1' >> /root/install.log")
     #ssh.exec!('/opt/glite/yaim/bin/yaim -f -s /root/yaim/site-info.def -f config_cream_blparser -d 1 && echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
     ssh.exec!('echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
   end
@@ -657,6 +671,7 @@ if $cfg.sendconf == true :
 
   Net::SSH.start(serv.fetch("voms"), 'root') do |ssh|
     ssh.exec!("yum install mysql-server glite-VOMS_mysql -q -y --nogpgcheck > /dev/null 2>&1")
+    ssh.exec!("echo 'yum install mysql-server glite-VOMS_mysql -q -y --nogpgcheck > /dev/null 2>&1' >> /root/install.log")
     if $cfg.verbose == true:
       puts "*** Configure Voms sever on #{serv.fetch("voms")}"
       #send_jabber(sname,"*** Configure Voms sever on #{serv.fetch("voms")}")
@@ -664,8 +679,11 @@ if $cfg.sendconf == true :
   end
   Net::SSH.start(serv.fetch("voms"), 'root') do |ssh|
     ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
+    ssh.exec!("echo 'cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz' >> /root/install.log")
     ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root -h #{serv.fetch("voms")} password 'superpass'")
+    ssh.exec!("echo '/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root -h #{serv.fetch("voms")} password 'superpass'' >> /root/install.log")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1')
+    ssh.exec!("echo 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1' >> /root/install.log")
     ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
   end
 
@@ -676,13 +694,16 @@ if $cfg.sendconf == true :
   end
   Net::SSH.start(serv.fetch("ui"), 'root') do |ssh|
     ssh.exec!("yum groupinstall glite-UI -q -y && yum install lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl")
+    ssh.exec!("echo 'yum groupinstall glite-UI -q -y && yum install lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl' >> /root/install.log")
     if $cfg.verbose == true:
       puts "*** Configure User Interface on #{serv.fetch("ui")}"
     end
   end
    Net::SSH.start(serv.fetch("ui"), 'root') do |ssh|
      ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
+     ssh.exec("echo 'cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz' >> /root/install.log")
      ssh.exec!('yum install gcc -q -y && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1')
+     ssh.exec!("echo 'yum install gcc -q -y && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1' >> /root/install.log")
      ssh.exec!('echo -e "\ngLite UI - (User Interface)\n" >> /etc/motd')
    end
 
@@ -700,6 +721,7 @@ if $cfg.sendconf == true :
   end
   Net::SSH.start(serv.fetch("se"), 'root') do |ssh|
    ssh.exec!("yum install glite-LFC_mysql lcg-CA mysql-server -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl")
+   ssh.exec!("echo  'yum install glite-LFC_mysql lcg-CA mysql-server -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl' >> /root/install.log")
    if $cfg.verbose == true:
      puts "*** Configure Storage element on #{serv.fetch("se")}"
      #send_jabber(sname,"*** Configure Storage element on #{serv.fetch("se")}")
@@ -707,8 +729,11 @@ if $cfg.sendconf == true :
   end
   Net::SSH.start(serv.fetch("se"), 'root') do |ssh|
     ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
+    ssh.exec("echo 'cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz' >> /root/install.log")
     ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root password 'superpass'")
+    ssh.exec!("echo '/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root password 'superpass'' >> /root/install.log")
     ssh.exec!('mkdir -p /var/log/bdii/ && chown edguser:edguser /var/log/bdii/ && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-LFC_mysql -d 1')
+    ssh.exec!("echo 'mkdir -p /var/log/bdii/ && chown edguser:edguser /var/log/bdii/ && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-LFC_mysql -d 1' >> /root/install.log")
     ssh.exec!('echo -e "\ngLite SE - (Storage Element [LFC,DPM])\n" >> /etc/motd')
   end
 
