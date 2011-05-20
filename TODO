@@ -4,7 +4,6 @@ Legende:
   - : terminé
 
 I]- FIXME/BUGS
-  - Certificats dans /etc/grid-security/hostkey.pem.
   - hack fetch-crl sur ce.
 
 II]- FEATURES
