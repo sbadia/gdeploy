@@ -296,8 +296,10 @@ CONFIG_MAUI="yes"
 BDII_HOST="#{bdii}"
 SE_LIST="#{se}"
 VO_#{sname.upcase}_SW_DIR=/opt/vo_software/#{sname}
-VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5k-CA"
-VO_#{sname.upcase}_VOMSES="#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}"
+#VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5k-CA"
+VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/ST=Lorraine/O=Grid5000CA/CN=ca.grid5000.fr"
+#VO_#{sname.upcase}_VOMSES="#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}"
+VO_#{sname.upcase}_VOMSES="#{sname} *.grid5000.fr 15000 /C=FR/ST=Lorraine/O=Grid5000/CN=*.grid5000.fr/emailAddress=sebastien.badia@inria.fr"
 
 ## Site-info.def Ce
 JAVA_LOCATION=/usr/java/default
@@ -354,7 +356,7 @@ VO_#{sname.upcase}_MYSQL_VOMS_PORT=15000
 VO_#{sname.upcase}_MYSQL_VOMS_DB_USER=#{sname}_mysql_user
 VO_#{sname.upcase}_MYSQL_VOMS_DB_PASS="superpass"
 VO_#{sname.upcase}_MYSQL_VOMS_DB_NAME=voms_#{sname}_mysql_db
-VO_#{sname.upcase}_VOMS_PORT=3306
+VO_#{sname.upcase}_VOMS_PORT=15000
 VO_#{sname.upcase}_VOMS_DB_USER=#{sname}_mysql_user
 VO_#{sname.upcase}_VOMS_DB_PASS="superpass"
 VO_#{sname.upcase}_VOMS_DB_NAME=voms_#{sname}_mysql_db
