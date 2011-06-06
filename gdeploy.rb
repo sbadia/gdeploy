@@ -293,13 +293,13 @@ WN_LIST=/opt/glite/yaim/etc/conf/wn-list.conf
 CONFIG_MAUI="yes"
 
 ## Site-info.def Batch
+# CA: subject=/C=FR/O=Grid5000/CN=G5K-CA
+# WC: subject=/C=FR/O=Grid5000/OU=gLite G5K/CN=host/*.grid5000.fr
 BDII_HOST="#{bdii}"
 SE_LIST="#{se}"
 VO_#{sname.upcase}_SW_DIR=/opt/vo_software/#{sname}
-#VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5k-CA"
-VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/ST=Lorraine/O=Grid5000CA/CN=ca.grid5000.fr"
-#VO_#{sname.upcase}_VOMSES="#{sname} glite-io.grid5000.fr 15000 /C=FR/O=Grid5000/OU=#{sname} SCAI/CN=host/glite-io.grid5000.fr #{sname}"
-VO_#{sname.upcase}_VOMSES="#{sname} *.grid5000.fr 15000 /C=FR/ST=Lorraine/O=Grid5000/CN=*.grid5000.fr/emailAddress=sebastien.badia@inria.fr"
+VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5K-CA"
+VO_#{sname.upcase}_VOMSES="#{sname} *.grid5000.fr 15000 /C=FR/O=Grid5000/OU=gLite G5K/CN=host/*.grid5000.fr #{sname}"
 
 ## Site-info.def Ce
 JAVA_LOCATION=/usr/java/default
