@@ -5,12 +5,19 @@
 #
 # == Description
 # gDeploy est un petit script écrit en ruby, dans le but de déployer
-#  et de configurer les services de base du midelware de grilles de
+#  et de configurer les services de base du midleware de grilles de
 #  calcul gLite.
 #
 # gDeploy utilise les classes ruby net/ssh,scp.
 # L'environnement utilisé pour le déploiement est un système Scientific
 # Linux 5.5, et la version de gLite est la 3.2
+#
+# Pour fonctionner gdeploy a besoin de trois tgz, il va les chercher
+# directement dans le public home de sbadia.
+# 	- hostkeys.tgz les certificats de la grille crée.
+# 	- repo.tgz le définitions des repo gLite.
+# 	- ssh-keys.tgz les clés ssh de la grille.
+# Voir http://public.nancy.grid5000.fr/~sbadia/glite/ depuis g5k.
 #
 # == Licence
 # Ce script est sous licence GPLv2.
@@ -21,7 +28,7 @@
 #
 # == Liens
 # - http://sbadia.github.com/gdeploy/
-# - http://github.com/sbadia/gdeploy/
+# - http://dev.sebian.fr/redmine/projects/gdeploy
 #
 # - https://www.grid5000.fr/
 # - http://www.scientificlinux.org/
@@ -162,7 +169,8 @@ def jputs(pre, msg)
 end
 
 
-## Go!
+## Pre-main
+#
 if $cfg.confnodes.empty?
   if ENV['OAR_NODE_FILE'].nil?
     jputs("No nodes","$OAR_NODE_FILE ?")
@@ -183,7 +191,8 @@ end
 #
 sname = $nodes.first.split('.').fetch(1)
 
-# Autres clusters dans la VO et dans la réservation passée.
+# Autres clusters a positionner dans la  VO
+# en fonction de la réservation passée.
 #
 def clusters(nodes)
   cluster = []
@@ -194,7 +203,8 @@ end
   return cluster.uniq
 end
 
-# Attribution des noeuds, le mini est deux (une machine de services, et un worker-node)
+# Attribution des noeuds, le mini est deux
+# (une machine de services, et un worker-node)
 #
 if $nodes.length < 6 :
   if $nodes.length < 2 :
@@ -217,6 +227,10 @@ else
   bdii = cehost = batch = se = $nodes.last
 end
 # vputs("Installation Bdii","Ok")
+
+# Pour savoir ou on en est
+# affichage du service, et node associe
+#
 def display_dep(bdii, batch, cehost, se, wn, voms, ui)
   if $cfg.verbose == true :
     vputs("Nodes","\t#{$nodes.length}")
@@ -228,7 +242,6 @@ def display_dep(bdii, batch, cehost, se, wn, voms, ui)
     vputs("Ui host","#{ui}")
     puts "Workers Nodes:"
     wn.each{|n| puts "\t\t#{n}\n" }
-
   else
     rputs("Assign.","No visual")
   end
@@ -459,6 +472,10 @@ set queue default resources_default.nodes = nodes=1:ppn=1\nEOF
 EOF
   f.close
 end
+
+# Appel des fonctions precedentes pour la creation
+# de la config
+#
 if $cfg.config == true :
   conf_users(sname,sname)
   conf_groups(sname)
@@ -475,6 +492,20 @@ if $cfg.sendconf == true :
   if $cfg.pbar == true:
     pbarc = ProgressBar.new("Update", $nodes.length - 1)
   end
+
+  # == Info ==
+  # Premiere "boucle" ssh:
+  #  On passe sur tous les nœuds de la reservation, et:
+  #   - on cree les repertoires pour yaim
+  #   - on dl les repo gLite
+  #   - on met à jour la distri.
+  #  Dans un deuxieme temps on dl les fichiers de conf notamment:
+  #   - site-info.def la definition de la grille du site
+  #   - users.conf les definitions pour la creations des users
+  #   - groups.conf pour la creation des groupes
+  #   - wn-list.conf une liste de workers.
+  #
+
   Net::SSH::Multi.start do |session|
     #session.on_error = :warn
     $nodes.each do |node|
@@ -514,8 +545,9 @@ if $cfg.sendconf == true :
     pbarb = ProgressBar.new("Brique Bdii", 4)
   end
 
-### Bdii
-#
+  ### Bdii
+  #
+  #
   Net::SSH.start(serv.fetch("bdii"), 'root') do |ssh|
     if $cfg.verbose == true:
       puts "*** Intall bdii server on #{serv.fetch("bdii")}"
@@ -544,8 +576,9 @@ if $cfg.sendconf == true :
      #send_jabber(sname,"*** Intall batch server on #{serv.fetch("batch")}")
    end
 
-#### Batch
-#
+  #### Batch
+  #
+  #
   Net::SSH.start(serv.fetch("batch"), 'root') do |ssh|
     if $cfg.pbar == true:
       pbaro.inc
@@ -577,8 +610,9 @@ if $cfg.sendconf == true :
     pbaro.finish
   end
 
-### Worker nodes
-#
+  ### Worker nodes
+  #
+  #
   Net::SSH::Multi.start do |session|
     #session.on_error = :warn
     wn.each do |node|
@@ -618,8 +652,9 @@ if $cfg.sendconf == true :
     pbaro = ProgressBar.new("Computing Element", 5)
   end
 
-### Computing element
-#
+  ### Computing element
+  #
+  #
   Net::SSH.start(serv.fetch("cehost"), 'root') do |ssh|
     if $cfg.pbar == true:
       pbaro.inc
@@ -655,17 +690,17 @@ if $cfg.sendconf == true :
     if $cfg.pbar == true:
       pbaro.finish
     end
-### VOMS
-#
-# /etc/init.d/mysqld start
-# /usr/bin/mysqladmin -u root password 'new-password'
-# /usr/bin/mysqladmin -u root -h graphene-94 password 'new-password'
-# [root@graphene-78 ~]# mysql --user=root --password=superpass test < toto
-# [root@graphene-78 ~]# cat toto
-# GRANT ALL PRIVILEGES ON *.*  TO 'root'@'graphene-78.nancy.grid5000.fr';
-# [root@graphene-78 ~]#
-#
-#
+  ### VOMS
+  #
+  # Memo:
+  # /etc/init.d/mysqld start
+  # /usr/bin/mysqladmin -u root password 'new-password'
+  # /usr/bin/mysqladmin -u root -h graphene-94 password 'new-password'
+  # [root@graphene-78 ~]# mysql --user=root --password=superpass test < toto
+  # [root@graphene-78 ~]# cat toto
+  # GRANT ALL PRIVILEGES ON *.*  TO 'root'@'graphene-78.nancy.grid5000.fr';
+  #
+  #
   if $cfg.verbose == true:
    puts "*** Install Voms server on #{serv.fetch("voms")}"
    #send_jabber(sname,"*** Install Voms server on #{serv.fetch("voms")}")
@@ -689,8 +724,9 @@ if $cfg.sendconf == true :
     ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
   end
 
-### Ui
-#
+  ### Ui
+  #
+  #
   if $cfg.verbose == true:
   	puts "*** Install User Interface on #{serv.fetch("ui")}"
   end
@@ -709,14 +745,15 @@ if $cfg.sendconf == true :
      ssh.exec!('echo -e "\ngLite UI - (User Interface)\n" >> /etc/motd')
    end
 
-### Lfc se
-# +---------------------------------+
-# |		SE		    |
-# | +-----------+     +-----------+ |
-# | | Head node | <-> | Disk node | |
-# | +-----------+     +-----------+ |
-# +---------------------------------+
-
+  ### Lfc se
+  #
+  # +---------------------------------+
+  # |		SE		      |
+  # | +-----------+     +-----------+ |
+  # | | Head node | <-> | Disk node | |
+  # | +-----------+     +-----------+ |
+  # +---------------------------------+
+  #
   if $cfg.verbose == true:
     puts "*** Install Storage element on #{serv.fetch("se")}"
     #send_jabber(sname,"*** Install Storage element on #{serv.fetch("se")}")
@@ -739,8 +776,9 @@ if $cfg.sendconf == true :
     ssh.exec!('echo -e "\ngLite SE - (Storage Element [LFC,DPM])\n" >> /etc/motd')
   end
 
-### Disp
-#
+  ### Disp
+  #
+  #
   display_dep(bdii, batch, cehost, se, wn, voms, ui)
   #send_jabber(sname,"#{display_dep(bdii, batch, cehost, se, wn, voms)}")
 else
