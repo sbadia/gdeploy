@@ -21,6 +21,8 @@ IV]- TIPS
     			DISK_DRV=ahci \
     			console=tty0 console=ttyS0,38400n8
 
+== Liens ==
+- https://twiki.cern.ch/twiki/bin/view/LCG/LfcAdminGuide
 
 == Gdeploy etapes ==
 - Origin $OAR_NODE_FILE ou entrée manuelle (-m node).
