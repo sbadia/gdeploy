@@ -1,9 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+# Little basic script to generate certs
+# If ca doesn't exist the script create a ca cert.
+# certif.sh user Sebastien-BADIA
+# certif.sh server griffon-10.nancy.grid5000.fr
 
-read num
-
-openssl genrsa -out cle-ssl.key 1024
-openssl req -new -key cle-ssl.key -subj "/C=FR/O=Grid5000/OU=gLite G5K/CN=griffon-$num.nancy.grid5000.fr" > demande-ssl.csr
+TYPE=$1
+CN=$2
 
 if [ ! -f ./cle-CA.key ]; then
   openssl genrsa -out cle-CA.key 1024
@@ -11,10 +13,26 @@ if [ ! -f ./cle-CA.key ]; then
   openssl x509 -in demande-CA.csr -out certif-CA.crt -req -signkey cle-CA.key -days 3650
 fi
 
+if [ $TYPE == "server" ]; then
+  openssl genrsa -out cle-ssl.key 1024
+  openssl req -new -key cle-ssl.key -subj "/C=FR/O=Grid5000/OU=gLite G5K/CN=$CN" > demande-ssl.csr
+elif [ $TYPE == "user" ]; then
+  openssl genrsa -out cle-user-sigca.key 1024
+  openssl req -new -key cle-user-sigca.key -subj "/C=FR/O=GRID5000/OU=PEOPLE/CN=$CN" -out demande-ssl.csr
+else
+  echo $1 $2
+fi
+
 openssl x509 -req -in demande-ssl.csr -out certif-ssl.crt -CA certif-CA.crt -CAkey cle-CA.key -CAcreateserial -CAserial CA.srl
 
-mkdir griffon-$num
-cp certif-ssl.crt ./griffon-$num/hostcert.pem
-cp cle-ssl.key ./griffon-$num/hostkey.pem
+mkdir $CN
 
-rm certif-ssl.crt cle-ssl.key demande-ssl.csr
+if [ $TYPE == "server" ]; then
+  cp certif-ssl.crt ./$CN/hostcert.pem
+  cp cle-ssl.key ./$CN/hostkey.pem
+elif [ $TYPE == "user" ]; then
+  cp certif-ssl.crt ./$CN/usercert.pem
+  cp cle-user-sigca.key ./$CN/userkey.pem
+else
+  echo $1 $2
+fi
