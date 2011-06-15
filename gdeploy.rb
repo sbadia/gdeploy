@@ -381,7 +381,7 @@ LFC_DB_PASSWORD="superpass"
 LFC_DB_HOST=#{se}
 LFC_DB="lfcdb"
 LFC_CENTRAL="#{sname}"
-LFC_LOCAL=
+LFC_LOCAL="#{sname}"
 LFC_HOST=#{se}
 VO_#{sname.upcase}_VOMS_SERVERS="#{voms}"
 
@@ -771,8 +771,8 @@ if $cfg.sendconf == true :
     ssh.exec("echo 'cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz' >> /root/install.log")
     ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root password 'superpass'")
     ssh.exec!("echo '/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root password 'superpass'' >> /root/install.log")
-    ssh.exec!('mkdir -p /var/log/bdii/ && chown edguser:edguser /var/log/bdii/ && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-LFC_mysql -d 1')
-    ssh.exec!("echo 'mkdir -p /var/log/bdii/ && chown edguser:edguser /var/log/bdii/ && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-LFC_mysql -d 1' >> /root/install.log")
+    ssh.exec!('mkdir -p /var/log/bdii/ && touch /var/log/bdii/bdii-update.log && chown edguser:edguser /var/log/bdii/bdii-update.log && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-LFC_mysql -d 1')
+    ssh.exec!("echo 'mkdir -p /var/log/bdii/ && touch /var/log/bdii/bdii-update.log && chown edguser:edguser /var/log/bdii/bdii-update.log && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-LFC_mysql -d 1' >> /root/install.log")
     ssh.exec!('echo -e "\ngLite SE - (Storage Element [LFC,DPM])\n" >> /etc/motd')
   end
 
