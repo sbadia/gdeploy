@@ -74,3 +74,8 @@ qsub -q default test.sh
 ### Interactif
 qsub -q default -I
 qsub -q default -I -l nodes=2:ppn=2
+
+wget http://gkswiki.fzk.de/images/4/4a/Dech_certificate.pem -O /etc/grid-security/vomsdir/glite-io.scai.fraunhofer.de.pem
+cd /etc/grid-security/vomsdir/
+openssl x509 -in glite-io.scai.fraunhofer.de.pem -text -noout
+openssl verify -CApath /etc/grid-security/certificates/ /etc/grid-security/vomsdir/glite-io.scai.fraunhofer.de.pem
