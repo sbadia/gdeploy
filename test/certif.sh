@@ -6,6 +6,9 @@
 
 TYPE=$1
 CN=$2
+OUTDIR=$3
+
+cd $OUTDIR
 
 if [ ! -f ./cle-CA.key ]; then
   openssl genrsa -out cle-CA.key 1024
@@ -34,5 +37,13 @@ elif [ $TYPE == "user" ]; then
   cp certif-ssl.crt ./$CN/usercert.pem
   cp cle-user-sigca.key ./$CN/userkey.pem
 else
-  echo $1 $2
+  echo "soucis server/user"
 fi
+
+#if [ -f ./cle-CA.key ]; then
+#  mkdir CA
+#  # mode 600 -> /etc/ssl/private/
+#  cp cle-CA.key ./CA/ca-cert-glite.key
+#  # mode 644 -> /etc/ssl/certs/
+#  cp certif-CA.crt ./CA/ca-cert-glite.cert
+#fi
