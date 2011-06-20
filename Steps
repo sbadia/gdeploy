@@ -150,3 +150,10 @@ Certificate:
         a8:a2:a8:a7:ef:a5:b7:40:27:8b:8c:fc:40:3d:14:f0:6f:7b:
         fd:f6:76:2c:6c:36:e1:96:53:b4:07:90:74:70:a3:42:e7:fc:
         29:04
+
+
+http://www.openssl.org/docs/apps/verify.html
+http://www.herongyang.com/crypto/openssl_verify_2.html
+http://www.admin-linux.fr/?p=1076
+http://www.docmirror.net/fr/linux/howto/apps/SSL-Certificates-HOWTO/x212.html
+http://blog.utopiaz.org/articles/2008/11/creer-son-autorite-de-certification-ca-avec-openssl
