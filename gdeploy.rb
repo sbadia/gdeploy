@@ -104,7 +104,7 @@ opts = OptionParser::new do |opts|
   opts.on('-v', '--verbose', 'Verbose mode') { $cfg.verbose = true }
   opts.on('-p', '--pbar', 'Use progressbar') { $cfg.pbar = true }
   opts.on('-g', '--glite', 'Select gLite entities') { |g| $cfg.gnodes << g }
-  opts.on('-u', '--user', 'Display user for UI') { cputs("\nUI User (#{serv.fetch("ui")})","#{$cfg.user}" }
+  opts.on('-u', '--user', 'Display user for UI') { cputs("\nUI User (#{serv.fetch("ui")})","#{$cfg.user}") }
   opts.on('-d', '--display', 'Display grid Infos') { display_dep(bdii, batch, cehost, se, wn, voms, ui) }
   opts.separator ''
 end
