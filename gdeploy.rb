@@ -104,6 +104,8 @@ opts = OptionParser::new do |opts|
   opts.on('-v', '--verbose', 'Verbose mode') { $cfg.verbose = true }
   opts.on('-p', '--pbar', 'Use progressbar') { $cfg.pbar = true }
   opts.on('-g', '--glite', 'Select gLite entities') { |g| $cfg.gnodes << g }
+  opts.on('-u', '--user', 'Display user for UI') { cputs("\nUI User (#{serv.fetch("ui")})","#{$cfg.user}" }
+  opts.on('-d', '--display', 'Display grid Infos') { display_dep(bdii, batch, cehost, se, wn, voms, ui) }
   opts.separator ''
 end
 
@@ -312,7 +314,7 @@ BDII_HOST="#{bdii}"
 SE_LIST="#{se}"
 VO_#{sname.upcase}_SW_DIR=/opt/vo_software/#{sname}
 VO_#{sname.upcase}_VOMS_CA_DN="/C=FR/O=Grid5000/CN=G5K-CA"
-VO_#{sname.upcase}_VOMSES="#{sname} *.grid5000.fr 15000 /C=FR/O=Grid5000/OU=gLite G5K/CN=host/*.grid5000.fr #{sname}"
+VO_#{sname.upcase}_VOMSES="#{sname} #{voms} 15000 /C=FR/O=Grid5000/OU=gLite G5K/CN=#{voms} #{sname}"
 
 ## Site-info.def Ce
 JAVA_LOCATION=/usr/java/default
@@ -473,12 +475,13 @@ EOF
   f.close
 end
 
-def certs_ssl(cehost,voms,ui,se)
+#def certs_ssl(cehost,voms,ui,se)
+def certs_ssl(voms)
   system("/bin/bash ./test/certif.sh user #{$cfg.user} #{DIR}/conf/")
-  system("/bin/bash ./test/certif.sh server #{cehost} #{DIR}/conf/")
+  #system("/bin/bash ./test/certif.sh server #{cehost} #{DIR}/conf/")
   system("/bin/bash ./test/certif.sh server #{voms} #{DIR}/conf/")
-  system("/bin/bash ./test/certif.sh server #{ui} #{DIR}/conf/")
-  system("/bin/bash ./test/certif.sh server #{se} #{DIR}/conf/")
+  #system("/bin/bash ./test/certif.sh server #{ui} #{DIR}/conf/")
+  #system("/bin/bash ./test/certif.sh server #{se} #{DIR}/conf/")
 end # def:: certs_ssl
 
 # Appel des fonctions precedentes pour la creation
@@ -491,7 +494,8 @@ if $cfg.config == true :
   export_nfs()
   queue_config(sname, wn)
   conf_site(bdii, sname, cehost, batch, se, voms)
-  certs_ssl(cehost,voms,ui,se)
+  #certs_ssl(cehost,voms,ui,se)
+  certs_ssl(voms)
   display_dep(bdii, batch, cehost, se, wn, voms, ui)
 else
   rputs("Config.","Not created")
@@ -680,7 +684,7 @@ if $cfg.sendconf == true :
   Net::SSH.start(serv.fetch("cehost"), 'root') do |ssh|
     #ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
     #ssh.exec("echo 'cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz' >> /root/install.log")
-    ssh.exec("mkdir -p /etc/grid-security/ && cp -r /opt/glite/yaim/etc/conf/#{serv.fetch("cehost")}/* /etc/grid-security/ && mkdir -p /etc/grid-security/vomsdir/ && cp -r /opt/glite/yaim/etc/conf/certif-CA.crt /etc/grid-security/vomsdir/ca-cert-glite.cert && chmod 644 /etc/grid-security/vomsdir/ca-cert-glite.cert && mkdir -p /etc/grid-security/certificates/ && cp /etc/grid-security/vomsdir/ca-cert-glite.cert /etc/grid-security/certificates/")
+    ssh.exec("mkdir -p /etc/grid-security/ && cp -r /opt/glite/yaim/etc/conf/#{serv.fetch("voms")}/* /etc/grid-security/ && mkdir -p /etc/grid-security/vomsdir/ && cp -r /opt/glite/yaim/etc/conf/certif-CA.crt /etc/grid-security/vomsdir/ca-cert-glite.cert && chmod 644 /etc/grid-security/vomsdir/ca-cert-glite.cert && mkdir -p /etc/grid-security/certificates/ && cp /etc/grid-security/vomsdir/ca-cert-glite.cert /etc/grid-security/certificates/")
 
     if $cfg.pbar == true:
       pbaro.inc
@@ -752,7 +756,7 @@ if $cfg.sendconf == true :
    Net::SSH.start(serv.fetch("ui"), 'root') do |ssh|
      #ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
      #ssh.exec("echo 'cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz' >> /root/install.log")
-    ssh.exec("mkdir -p /etc/grid-security/ && cp -r /opt/glite/yaim/etc/conf/#{serv.fetch("ui")}/* /etc/grid-security/ && mkdir -p /etc/grid-security/vomsdir/ && cp -r /opt/glite/yaim/etc/conf/certif-CA.crt /etc/grid-security/vomsdir/ca-cert-glite.cert && chmod 644 /etc/grid-security/vomsdir/ca-cert-glite.cert && mkdir -p /etc/grid-security/certificates/ && cp /etc/grid-security/vomsdir/ca-cert-glite.cert /etc/grid-security/certificates/")
+    ssh.exec("mkdir -p /etc/grid-security/ && cp -r /opt/glite/yaim/etc/conf/#{serv.fetch("voms")}/* /etc/grid-security/ && mkdir -p /etc/grid-security/vomsdir/ && cp -r /opt/glite/yaim/etc/conf/certif-CA.crt /etc/grid-security/vomsdir/ca-cert-glite.cert && chmod 644 /etc/grid-security/vomsdir/ca-cert-glite.cert && mkdir -p /etc/grid-security/certificates/ && cp /etc/grid-security/vomsdir/ca-cert-glite.cert /etc/grid-security/certificates/")
 
      ssh.exec!('yum install gcc -q -y && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1')
      ssh.exec!("echo 'yum install gcc -q -y && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1' >> /root/install.log")
@@ -784,7 +788,7 @@ if $cfg.sendconf == true :
   Net::SSH.start(serv.fetch("se"), 'root') do |ssh|
     #ssh.exec('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
     #ssh.exec("echo 'cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz' >> /root/install.log")
-    ssh.exec("mkdir -p /etc/grid-security/ && cp -r /opt/glite/yaim/etc/conf/#{serv.fetch("se")}/* /etc/grid-security/ && mkdir -p /etc/grid-security/vomsdir/ && cp -r /opt/glite/yaim/etc/conf/certif-CA.crt /etc/grid-security/vomsdir/ca-cert-glite.cert && chmod 644 /etc/grid-security/vomsdir/ca-cert-glite.cert && mkdir -p /etc/grid-security/certificates/ && cp /etc/grid-security/vomsdir/ca-cert-glite.cert /etc/grid-security/certificates/")
+    ssh.exec("mkdir -p /etc/grid-security/ && cp -r /opt/glite/yaim/etc/conf/#{serv.fetch("voms")}/* /etc/grid-security/ && mkdir -p /etc/grid-security/vomsdir/ && cp -r /opt/glite/yaim/etc/conf/certif-CA.crt /etc/grid-security/vomsdir/ca-cert-glite.cert && chmod 644 /etc/grid-security/vomsdir/ca-cert-glite.cert && mkdir -p /etc/grid-security/certificates/ && cp /etc/grid-security/vomsdir/ca-cert-glite.cert /etc/grid-security/certificates/")
     ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root password 'superpass'")
     ssh.exec!("echo '/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root password 'superpass'' >> /root/install.log")
     ssh.exec!('mkdir -p /var/log/bdii/ && touch /var/log/bdii/bdii-update.log && chown edguser:edguser /var/log/bdii/bdii-update.log && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-LFC_mysql -d 1')
