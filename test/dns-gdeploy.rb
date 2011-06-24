@@ -67,6 +67,10 @@ if $nodes.empty?
   exit(1)
 end
 
+if $cfg.verbose == true:
+  puts "---> Fetch nodes ..."
+end
+
 if $nodes.length < 6 :
   if $nodes.length < 2 :
     rputs("Err","Min 2 nodes")
@@ -97,6 +101,10 @@ def ip(node)
   end
 end # def:: ip(node)
 
+if $cfg.verbose == true:
+  puts "---> Création mararc ..."
+end
+
 def conf_mararc(bdii,sname)
   f = File.new("#{DIR}/../conf/mararc", "w")
   f.puts <<-EOF
@@ -113,6 +121,10 @@ csv2["#{sname}.fr."] = "db.#{sname}.fr"
 EOF
   f.close
 end # def:: conf_mararc(bdii,sname)
+
+if $cfg.verbose == true:
+  puts "---> Création db.#{sname}.fr ..."
+end
 
 def conf_zone(bdii,cehost,batch,se,voms,ui,wn,sname)
   f = File.new("#{DIR}/../conf/db.#{sname}.fr", "w")
@@ -146,6 +158,10 @@ File::open("#{DIR}/../conf/db.#{sname}.fr", "a") do |l|
       l << "node-#{i}.#{sname}.fr FQDN4 #{ip(a)}\n"
     i = i + 1
   end
+end
+
+if $cfg.verbose == true:
+  puts "---> Création resolv.conf ..."
 end
 
 def conf_resolv(bdii,sname)
