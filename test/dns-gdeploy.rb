@@ -106,7 +106,7 @@ ipv4_alias = {}
 hide_disclaimer = "YES"
 chroot_dir = "/etc/maradns"
 recursive_acl = "#{ip(bdii).split('.').fetch(0)}.#{ip(bdii).split('.').fetch(1)}.#{ip(bdii).split('.').fetch(2)}.0/16"
-ipv4_alias["G5KDNS"] = "131.254.203.235"
+ipv4_alias["G5KDNS"] = "131.254.203.235, #{ip("dns.#{sname}.grid5000.fr")}"
 upstream_servers = {}
 upstream_servers["."] = "G5KDNS"
 csv2["#{sname}.fr."] = "db.#{sname}.fr"
@@ -131,18 +131,6 @@ ui.#{sname}.fr. A #{ip(ui)}
 ui.#{sname}.fr. FQDN4 #{ip(ui)}
 #{sname}.fr. A #{ip(ui)}
 #{sname}.fr. FQDN4 #{ip(ui)}
-#{(wn.length - 1).times { |a|
-"node-#{a}.#{sname}.fr A #{
-	for i in wn
-	  "#{ip(i)}"
-	end
-}"
-"node-#{a}.#{sname}.fr FQDN4 #{
-	for i in wn
-	  "#{ip(i)}"
-	end
-}"
-}}
 EOF
   f.close
 end # def:: conf_zone(bdii,cehost,batch,se,voms,ui,wn,sname)
@@ -150,3 +138,12 @@ end # def:: conf_zone(bdii,cehost,batch,se,voms,ui,wn,sname)
 
 conf_mararc(bdii,sname)
 conf_zone(bdii,cehost,batch,se,voms,ui,wn,sname)
+
+i = 1
+File::open("#{DIR}/../conf/db.#{sname}.fr", "a") do |l|
+  wn.each do |a|
+      l << "node-#{i}.#{sname}.fr A #{ip(a)}\n"
+      l << "node-#{i}.#{sname}.fr FQDN4 #{ip(a)}\n"
+    i = i + 1
+  end
+end
