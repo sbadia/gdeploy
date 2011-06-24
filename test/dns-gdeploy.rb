@@ -2,6 +2,11 @@
 # Author:: Sebastien Badia (<sebastien.badia@inria.fr>)
 # Date:: Tue Jun 21 16:36:33 +0200 2011
 # Little basic script to generate dns conf for gLite
+#
+# Usage:
+# 	dns-gdeploy.rb -v -f $OAR_NODE_FILE
+# 	dns-gdeploy.rb
+#
 
 begin
   require 'optparse'
@@ -38,9 +43,12 @@ opts = OptionParser::new do |opts|
   opts.separator 'Contact: Sebastien Badia <sebastien.badia@inria.fr>'
   opts.separator ''
   opts.separator 'General options:'
-  opts.on('-v', '--verbose', 'Verbose mode') { verbose = true }
-  opts.on('-f', '--file', 'File nodes') { |f| $cfg.nodes = nodes_file(f) }
+  opts.on('-f', '--file', 'a File contains nodes') { |f| $cfg.nodes = nodes_file(f) }
+  opts.on('-v', '--verbose', 'Verbose mode') { $cfg.verbose = true }
   opts.separator ''
+  opts.separator 'Usage:'
+  opts.separator '   $ dns-gdeploy.rb -v -f $OAR_NODE_FILE'
+  opts.separator '   $ dns-gdeploy.rb'
 end
 
 begin
