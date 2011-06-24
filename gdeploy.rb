@@ -581,7 +581,7 @@ if $cfg.sendconf == true :
     end
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1 && echo -e "\ngLite Bdii - (Ldap Berkley database index)\n" >> /etc/motd')
     ssh.exec!("echo 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1' >> /root/install.log")
-    ssh.exec!("wget http://public.nancy.grid5000.fr/~sbadia/maradns-1.3.07.09-1.el5.x86_64.rpm && rpm -i maradns-1.3.07.09-1.el5.x86_64.rpm --quiet && cp -f /opt/glite/yaim/etc/conf/mararc /etc/mararc && cp -f /opt/glite/yaim/etc/conf/db.#{sname}.fr /etc/maradns/ && cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf && /etc/init.d/maradns restart")
+    ssh.exec!("wget http://public.nancy.grid5000.fr/~sbadia/maradns-1.3.07.09-1.el5.x86_64.rpm && rpm -i maradns-1.3.07.09-1.el5.x86_64.rpm --quiet && cp -f /opt/glite/yaim/etc/conf/mararc /etc/mararc && cp -f /opt/glite/yaim/etc/conf/db.#{sname}.fr /etc/maradns/ && cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf-new && /etc/init.d/maradns restart")
   end
    if $cfg.pbar == true:
     pbarb.finish
@@ -619,7 +619,7 @@ if $cfg.sendconf == true :
     ssh.exec!("echo '/opt/glite/yaim/bin/yaim -r -s /root/yaim/site-info.def -f config_maui_cfg' >> /root/install.log")
     ssh.exec!('sh /opt/glite/yaim/etc/conf/queue.conf && /etc/init.d/maui restart && echo -e "\ngLite Batch\n" >> /etc/motd')
     ssh.exec!("echo 'sh /opt/glite/yaim/etc/conf/queue.conf && /etc/init.d/maui restart' >> /root/install.log")
-    ssh.exec!('cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf')
+    ssh.exec!('cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf-new')
   end
 
   if $cfg.pbar == true:
@@ -656,7 +656,7 @@ if $cfg.sendconf == true :
       session.use "root@#{node}"
     end
     session.exec('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 > /dev/null 2>&1 && echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
-    ssh.exec('cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf')
+    session.exec('cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf-new')
     session.exec("echo 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 > /dev/null 2>&1' >> /root/install.log")
   end
   if $cfg.verbose == true:
@@ -705,7 +705,7 @@ if $cfg.sendconf == true :
     ssh.exec!("echo 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-creamCE -n glite-TORQUE_utils -d 1' >> /root/install.log")
     #ssh.exec!('/opt/glite/yaim/bin/yaim -f -s /root/yaim/site-info.def -f config_cream_blparser -d 1 && echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
     ssh.exec!('echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
-    ssh.exec!('cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf')
+    ssh.exec!('cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf-new')
   end
     if $cfg.pbar == true:
       pbaro.finish
@@ -743,7 +743,7 @@ if $cfg.sendconf == true :
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1')
     ssh.exec!("echo 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1' >> /root/install.log")
     ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
-    ssh.exec!('cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf')
+    ssh.exec!('cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf-new')
   end
 
   ### Ui
@@ -768,7 +768,7 @@ if $cfg.sendconf == true :
      ssh.exec!("echo 'yum install gcc -q -y && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1' >> /root/install.log")
      ssh.exec!("adduser #{$cfg.user} && mkdir -p /home/#{$cfg.user}/.globus/ && cp -r /opt/glite/yaim/etc/conf/#{$cfg.user}/* /home/#{$cfg.user}/.globus/")
      ssh.exec!('echo -e "\ngLite UI - (User Interface)\n" >> /etc/motd')
-    ssh.exec!('cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf')
+     ssh.exec!('cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf-new')
    end
 
   ### Lfc se
@@ -801,7 +801,7 @@ if $cfg.sendconf == true :
     ssh.exec!('mkdir -p /var/log/bdii/ && touch /var/log/bdii/bdii-update.log && chown edguser:edguser /var/log/bdii/bdii-update.log && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-LFC_mysql -d 1')
     ssh.exec!("echo 'mkdir -p /var/log/bdii/ && touch /var/log/bdii/bdii-update.log && chown edguser:edguser /var/log/bdii/bdii-update.log && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-LFC_mysql -d 1' >> /root/install.log")
     ssh.exec!('echo -e "\ngLite SE - (Storage Element [LFC,DPM])\n" >> /etc/motd')
-    ssh.exec!('cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf')
+    ssh.exec!('cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf-new')
   end
 
   ### Disp
