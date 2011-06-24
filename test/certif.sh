@@ -17,27 +17,36 @@ if [ ! -f ./cle-CA.key ]; then
 fi
 
 if [ $TYPE == "server" ]; then
-  openssl genrsa -out cle-ssl.key 1024
-  openssl req -new -key cle-ssl.key -subj "/C=FR/O=Grid5000/OU=gLite G5K/CN=$CN" > demande-ssl.csr
+  if [ ! -f ./cle-ssl.key ]; then
+    openssl genrsa -out cle-ssl.key 1024
+    openssl req -new -key cle-ssl.key -subj "/C=FR/O=Grid5000/OU=gLite G5K/CN=$CN" > demande-ssl.csr
+  else
+    echo "---> nothing to do !"
+  fi
 elif [ $TYPE == "user" ]; then
-  openssl genrsa -out cle-user-sigca.key 1024
-  openssl req -new -key cle-user-sigca.key -subj "/C=FR/O=GRID5000/OU=PEOPLE/CN=$CN" -out demande-ssl.csr
+  if [ ! -f ./cle-user-sigca.key ]; then
+    openssl genrsa -out cle-user-sigca.key 1024
+    openssl req -new -key cle-user-sigca.key -subj "/C=FR/O=GRID5000/OU=PEOPLE/CN=$CN" -out demande-ssl.csr
+  else
+    echo "---> nothing to do !"
+  fi
 else
   echo $1 $2
 fi
 
-openssl x509 -req -in demande-ssl.csr -out certif-ssl.crt -CA certif-CA.crt -CAkey cle-CA.key -CAcreateserial -CAserial CA.srl
+if [ ! -f ./demande-ssl.csr ]; then
+  openssl x509 -req -in demande-ssl.csr -out certif-ssl.crt -CA certif-CA.crt -CAkey cle-CA.key -CAcreateserial -CAserial CA.srl
+  mkdir $CN
 
-mkdir $CN
-
-if [ $TYPE == "server" ]; then
-  cp certif-ssl.crt ./$CN/hostcert.pem
-  cp cle-ssl.key ./$CN/hostkey.pem
-elif [ $TYPE == "user" ]; then
-  cp certif-ssl.crt ./$CN/usercert.pem
-  cp cle-user-sigca.key ./$CN/userkey.pem
-else
-  echo "soucis server/user"
+  if [ $TYPE == "server" ]; then
+    cp certif-ssl.crt ./$CN/hostcert.pem
+    cp cle-ssl.key ./$CN/hostkey.pem
+  elif [ $TYPE == "user" ]; then
+    cp certif-ssl.crt ./$CN/usercert.pem
+    cp cle-user-sigca.key ./$CN/userkey.pem
+  else
+    echo "soucis server/user"
+  fi
 fi
 
 #if [ -f ./cle-CA.key ]; then
