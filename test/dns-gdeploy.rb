@@ -121,7 +121,7 @@ ipv4_bind_addresses = "#{ip(bdii)}"
 ipv4_alias = {}
 hide_disclaimer = "YES"
 chroot_dir = "/etc/maradns"
-recursive_acl = "#{ip(bdii).split('.').fetch(0)}.#{ip(bdii).split('.').fetch(1)}.#{ip(bdii).split('.').fetch(2)}.0/16"
+recursive_acl = "#{ip(bdii).split('.').fetch(0)}.#{ip(bdii).split('.').fetch(1)}.0.0/16"
 ipv4_alias["G5KDNS"] = "131.254.203.235, #{ip("dns.#{sname}.grid5000.fr")}"
 upstream_servers = {}
 upstream_servers["."] = "G5KDNS"
@@ -162,8 +162,8 @@ conf_zone(bdii,cehost,batch,se,voms,ui,wn,sname)
 i = 1
 File::open("#{DIR}/../conf/db.#{sname}.fr", "a") do |l|
   wn.each do |a|
-      l << "node-#{i}.#{sname}.fr A #{ip(a)}\n"
-      l << "node-#{i}.#{sname}.fr FQDN4 #{ip(a)}\n"
+      l << "node-#{i}.#{sname}.fr. A #{ip(a)}\n"
+      l << "node-#{i}.#{sname}.fr. FQDN4 #{ip(a)}\n"
     i = i + 1
   end
 end
