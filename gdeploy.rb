@@ -496,6 +496,7 @@ if $cfg.config == true :
   conf_site(bdii, sname, cehost, batch, se, voms)
   #certs_ssl(cehost,voms,ui,se)
   certs_ssl(voms)
+  system("/usr/bin/ruby #{DIR}/test/dns-gdeploy.rb")
   display_dep(bdii, batch, cehost, se, wn, voms, ui)
 else
   rputs("Config.","Not created")
@@ -579,6 +580,7 @@ if $cfg.sendconf == true :
       pbarb.inc
     end
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1 && echo -e "\ngLite Bdii - (Ldap Berkley database index)\n" >> /etc/motd')
+    ssh.exec!("wget http://public.nancy.grid5000.fr/~sbadia/maradns-1.3.07.09-1.el5.x86_64.rpm && rpmi -i maradns-1.3.07.09-1.el5.x86_64.rpm && cp -f /opt/glite/yaim/etc/conf/mararc /etc/maradns/mararc && cp -r /opt/glite/yaim/etc/conf/db.#{sname}.fr /etc/maradns/ && echo 'nameserver 127.0.0.1' >> /etc/resolv.conf && /etc/init.d/maradns restart")
     ssh.exec!("echo 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1' >> /root/install.log")
   end
    if $cfg.pbar == true:
