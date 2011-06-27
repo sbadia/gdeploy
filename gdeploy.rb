@@ -477,9 +477,9 @@ end
 
 #def certs_ssl(cehost,voms,ui,se)
 def certs_ssl(voms)
-  system("/bin/bash ./test/certif.sh user #{$cfg.user} #{DIR}/conf/")
+  system("/bin/bash ./test/certif-ca.sh user #{$cfg.user} #{DIR}/conf/")
   #system("/bin/bash ./test/certif.sh server #{cehost} #{DIR}/conf/")
-  system("/bin/bash ./test/certif.sh server #{voms} #{DIR}/conf/")
+  system("/bin/bash ./test/certif-ca.sh server #{voms} #{DIR}/conf/")
   #system("/bin/bash ./test/certif.sh server #{ui} #{DIR}/conf/")
   #system("/bin/bash ./test/certif.sh server #{se} #{DIR}/conf/")
 end # def:: certs_ssl
@@ -581,7 +581,7 @@ if $cfg.sendconf == true :
     end
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1 && echo -e "\ngLite Bdii - (Ldap Berkley database index)\n" >> /etc/motd')
     ssh.exec!("echo 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1' >> /root/install.log")
-    ssh.exec!("wget http://public.nancy.grid5000.fr/~sbadia/maradns-1.3.07.09-1.el5.x86_64.rpm && rpm -i maradns-1.3.07.09-1.el5.x86_64.rpm --quiet && cp -f /opt/glite/yaim/etc/conf/mararc /etc/mararc && cp -f /opt/glite/yaim/etc/conf/db.#{sname}.fr /etc/maradns/ && cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf-new && /etc/init.d/maradns restart")
+    ssh.exec!("cd /root/ && wget http://public.nancy.grid5000.fr/~sbadia/maradns-1.3.07.09-1.el5.x86_64.rpm && rpm -i maradns-1.3.07.09-1.el5.x86_64.rpm --quiet && cp -f /opt/glite/yaim/etc/conf/mararc /etc/mararc && cp -f /opt/glite/yaim/etc/conf/db.#{sname}.fr /etc/maradns/ && cp -f /opt/glite/yaim/etc/conf/resolv.conf /etc/resolv.conf-new")
   end
    if $cfg.pbar == true:
     pbarb.finish
@@ -738,7 +738,9 @@ if $cfg.sendconf == true :
     #ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz')
     #ssh.exec!("echo 'cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz' >> /root/install.log")
     ssh.exec("mkdir -p /etc/grid-security/ && cp -r /opt/glite/yaim/etc/conf/#{serv.fetch("voms")}/* /etc/grid-security/ && mkdir -p /etc/grid-security/vomsdir/ && cp -r /opt/glite/yaim/etc/conf/certif-CA.crt /etc/grid-security/vomsdir/ca-cert-glite.cert && chmod 644 /etc/grid-security/vomsdir/ca-cert-glite.cert && mkdir -p /etc/grid-security/certificates/ && cp /etc/grid-security/vomsdir/ca-cert-glite.cert /etc/grid-security/certificates/")
-    ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root -h #{serv.fetch("voms")} password 'superpass'")
+    #ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root -h #{serv.fetch("voms")} password 'superpass'")
+    ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1")
+    ssh.exec!("sed -e 's/VOMS_DB_HOST=#{voms}/VOMS_DB_HOST=localhost/' -i /root/yaim/site-info.def")
     ssh.exec!("echo '/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root -h #{serv.fetch("voms")} password 'superpass'' >> /root/install.log")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1')
     ssh.exec!("echo 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1' >> /root/install.log")
