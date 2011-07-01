@@ -1,0 +1,41 @@
+=== simple ca ===
+
+GLOBUS_LOCATION="/opt/globus"
+$GLOBUS_LOCATION/setup/globus/setup-simple-ca
+  --> y
+  --> g5kadmin@fgrimoire.nancy.grid5000.fr
+  --> 1825 (5ans)
+  --> toto
+
+$GLOBUS_LOCATION/setup/globus_simple_ca_<ca hash>__setup/setup-gsi -default
+(copie dans grid-security, et installation).
+
+=== demande certs ===
+grid-cert-request -host `hostname -f`
+--> /etc/grid-security/host{key,cert,request}.pem
+
+[mail]
+grid-ca-sign -in hostcert_request.pem -out hostsigned.pem
+mv hostsigned.pem hostcert.pem
+
+openssl x509 -text -noout -in hostcert.pem
+
+=== demande usercert ===
+su - sbadia
+grid-cert-request
+
+~/.globus/user{key,cert,request}.pem
+grid-ca-sign -in usercert_request.pem -out signed.pem
+mv signed.pem usercert.pem
+
+=== install ca ui,ce,voms ===
+GLOBUS_LOCATION="/opt/globus"
+GPT_LOCATION="/opt/gpt"
+
+$GLOBUS_LOCATION/sbin/gpt-build globus_simple_<ca hash>_setup-0.17.tar.gz gcc32dbg
+$GLOBUS_LOCATION/sbin/gpt-postinstall
+$GLOBUS_LOCATION/setup/globus_simple_ca_<ca hash>__setup/setup-gsi -default
+
+=== tests ===
+grid-proxy-init -debug -verify
+--> Proxy Verify OK --> :)
