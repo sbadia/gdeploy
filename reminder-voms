@@ -1,0 +1,22 @@
+mysqladmin -u root password superpass
+chmod 777 /var/log/bdii/
+/opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS
+
+
+
+glite-voms-proxy-destroy
+glite-voms-proxy-info
+glite-voms-proxy-init
+openssl x509 -in /etc/grid-security/vomsdir/certif-Fncy.crt -text -noout
+openssl verify -CApath /etc/grid-security/certificates/ /home/sbadia/.globus/usercert.pem
+openssl verify -CApath /etc/grid-security/certificates/ /etc/grid-security/vomsdir/certif-Fncy.crt
+
+
+openssl x509 -noout -hash -in /etc/grid-security/hostcert.pem
+grid-default-ca -list
+
+/opt/globus/setup/globus_simple_ca_9b24b125_setup/setup-gsi -default
+export GPT_LOCATION="/opt/gpt"
+export GPT_INSTALL_LOCATION="/opt/gpt/
+/opt/gpt/sbin/gpt-build globus_simple_ca_HASH_setup-0.17.tar.gz gcc32dbg
+$GLOBUS_LOCATION/sbin/gpt-postinstall
