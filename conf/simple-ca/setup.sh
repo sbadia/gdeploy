@@ -11,7 +11,7 @@ cp -f /opt/glite/yaim/etc/conf/simple-ca/setup-simple-ca $GLOBUS_LOCATION/setup/
 chmod +x $GLOBUS_LOCATION/setup/globus/setup-simple-ca
 cp -f /opt/glite/yaim/etc/conf/simple-ca/globus_simple_ca_setup_template.tar.gz $GLOBUS_LOCATION/setup/globus/globus_simple_ca_setup_template.tar.gz
 echo "--> run simple-ca"
-$GLOBUS_LOCATION/setup/globus/setup-simple-ca -email root@localhost -days 1825 -pass toto
+$GLOBUS_LOCATION/setup/globus/setup-simple-ca -pass toto
 HASH=`openssl x509 -noout -hash -in /root/.globus/simpleCA/cacert.pem`
 echo "--> install it ($HASH)"
 $GPT_LOCATION/sbin/gpt-build /root/.globus/simpleCA/globus_simple_ca_${HASH}_setup-0.18.tar.gz
@@ -62,6 +62,7 @@ cp /root/.globus/simpleCA/globus_simple_ca_${HASH}_setup-0.18.tar.gz /root/ca.tg
 cd /root/
 scp ui.tgz root@$UI_HOST:
 scp ca.tgz root@$UI_HOST:
+# SET GPT_LOCATION and GLOBUS_LOCATION
 ssh root@$UI_HOST "/opt/gpt/sbin/gpt-build /root/ca.tgz gcc32dbg"
 ssh root@$UI_HOST "/opt/gpt/sbin/gpt-postinstall"
 ssh root@$UI_HOST "/opt/globus/setup/globus_simple_ca_${HASH}_setup/setup-gsi -default"
