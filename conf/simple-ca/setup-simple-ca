@@ -318,7 +318,8 @@ while test -z "${get_ca_email}"; do
     echo ""
     echo "Enter the email of the CA (this is the email where certificate"
     recho "requests will be sent to be signed by the CA): "
-    read GSI_CA_EMAIL_ADDR
+    #read GSI_CA_EMAIL_ADDR
+    GSI_CA_EMAIL_ADDR="root@localhost"
     if test -n ${GSI_CA_EMAIL_ADDR}; then
 	get_ca_email="done"
     fi
@@ -341,7 +342,8 @@ the CA certificate should last before it expires.
 EOF
 
 recho "[default: 5 years (1825 days)]: "
-read _CA_CERT_DAYS
+#read _CA_CERT_DAYS
+_CA_CERT_DAYS="1825"
 CA_CERT_DAYS=${_CA_CERT_DAYS:-${CA_CERT_DAYS}}
 echo
 
