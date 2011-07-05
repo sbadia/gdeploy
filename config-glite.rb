@@ -3,6 +3,9 @@
 require 'pp'
 require 'yaml'
 require 'optparse'
+require 'net/scp'
+require 'net/ssh'
+require 'net/ssh/multi'
 
 if ARGV.length != 1
   puts "config-glite YAMLCONFIG"
@@ -10,7 +13,7 @@ if ARGV.length != 1
 end
 
 $d = YAML::load(IO::read(ARGV[0]))
-puts "## Loaded config file #{ARGV[0]}"
+puts "\033[1;32m####\033[0m Loaded config file #{ARGV[0]}"
 
 DIR = File.expand_path(File.dirname(__FILE__))
 
@@ -205,17 +208,23 @@ EOF
   f.close
 end
 
+$nodes = []
 
 $d['VOs'].each_pair do |name, conf|
   $my_vo = name
   $my_voms = conf['voms']
+  $nodes << conf['voms']
 end
 
-puts "### Create conf files"
+puts "\033[1;36m###\033[0m Create conf files"
 $d['sites'].each_pair do |sname, sconf|
-  puts "## Generate conf::#{sname}"
+  puts "\033[1;33m==>\033[0m Generate conf::#{sname}"
     Dir::mkdir("#{DIR}/conf/#{sname}/", 0755)
     conf_site($my_vo, sconf['bdii'], sname, sconf['ce'], sconf['batch'], $my_voms, sconf['ui'])
+    $nodes << sconf['bdii']
+    $nodes << sconf['ce']
+    $nodes << sconf['batch']
+    $nodes << sconf['ui']
     conf_users(sname ,$my_vo)
     conf_groups(sname, $my_vo)
     export_nfs()
@@ -229,43 +238,64 @@ $d['sites'].each_pair do |sname, sconf|
     fwn = File.new("#{DIR}/conf/#{sname}/wn-list.conf", "w")
     cconf['nodes'].each do |n|
       fwn.write "#{n}\n"
+      $nodes << n
     end
     fwn.close
   end
 end
 
+if ARGV[1]== 1:
+  puts "\033[1;36m###\033[0m Update distrib"
+  Net::SSH::Multi.start do |session|
+    $nodes.each do |node|
+      session.use "root@#{node}"
+    end
+      session.exec('mkdir -p /root/yaim && mkdir -p /opt/glite/yaim/etc && cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-* && wget http://public.nancy.grid5000.fr/~sbadia/glite/repo.tgz -q && tar xzf repo.tgz && yum update -q -y')
+      session.exec("echo 'mkdir -p /root/yaim && mkdir -p /opt/glite/yaim/etc && cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-* && wget http://public.nancy.grid5000.fr/~sbadia/glite/repo.tgz -q && tar xzf repo.tgz && yum update -q -y' >> /root/install.log")
+      session.exec("echo 'In Progress'")
+      session.exec("cd /root/ && wget http://public.nancy.grid5000.fr/~sbadia/glite/scp-ssh.tgz -q && tar xzf scp-ssh.tgz && chown -R root:root /root/.ssh/")
+      session.loop
+  end
+  $nodes.each do |node|
+    Net::SSH.start(node, 'root') do |ssh|
+      begin
+       Net::SCP.start(node, 'root') do |scp|
+         scp.upload!("#{DIR}/conf", "/opt/glite/yaim/etc", :recursive => true)
+       end
+      rescue
+       puts "\033[1;31mErreur\033[0m scp on #{node}"
+      end
+    end
+  end
 
-#puts "## Configuring VOs"
-#$d['VOs'].each_pair do |name, conf|
-#  puts "## Configuring VO=#{name} on VOMS=#{conf['voms']}"
-#  $my_vo = name
-#  $my_voms = conf['voms']
-#  # FIXME
-#end
-#
-#puts "## Configuring sites"
-#$d['sites'].each_pair do |name, conf|
-#  puts "## Configuring site=#{name}"
-#  puts "# Create conf files for #{name}"
-#    Dir::mkdir("#{DIR}/conf/#{name}/", 0755)
-#    conf_site($my_vo, conf['bdii'], name, conf['ce'], conf['batch'], $my_voms, conf['ui'])
-#    conf_users(name ,$my_vo)
-#    conf_groups(name, $my_vo)
-#    export_nfs()
-#  puts "# BDII on #{conf['bdii']}"
-#  # FIXME
-#  puts "# Batch on #{conf['batch']}"
-#  # FIXME
-#  puts "# CE on #{conf['ce']}"
-#  # FIXME
-#  puts "# UI on #{conf['ui']}"
-#  # FIXME
-#  puts "## Configuring #{name}'s clusters"
-#  conf['clusters'].each_pair do |name, conf|
-#    puts "# Cluster #{name} on #{conf['nodes'].join(' ')}"
-#    conf['nodes'].each do |n|
-#      puts "#{n} ..."
-#      # FIXME
-#    end
-#  end
-#end
+  puts "\033[1;36m###\033[0m Configuring VOs"
+  $d['VOs'].each_pair do |name, conf|
+    puts "\033[1;33m==>\033[0m Configuring VO=#{name} on VOMS=#{conf['voms']}"
+    $my_vo = name
+    $my_voms = conf['voms']
+    # FIXME
+  end
+
+  puts "## Configuring sites"
+  $d['sites'].each_pair do |sname, sconf|
+    puts "## Configuring site=#{sname}"
+    puts "# BDII on #{sconf['bdii']}"
+    # FIXME
+    puts "# Batch on #{sconf['batch']}"
+    # FIXME
+    puts "# CE on #{sconf['ce']}"
+    # FIXME
+    puts "# UI on #{sconf['ui']}"
+    # FIXME
+    puts "## Configuring #{sname}'s clusters"
+    sconf['clusters'].each_pair do |cname, cconf|
+      puts "# Cluster #{cname} on #{cconf['nodes'].join(' ')}"
+      cconf['nodes'].each do |n|
+        puts "#{n} ..."
+        # FIXME
+      end
+    end
+  end
+else
+  puts "\033[1;31m==> No install\033[0m"
+end
