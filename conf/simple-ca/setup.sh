@@ -1,5 +1,6 @@
 #!/bin/sh
 # A lancer sur le voms
+export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:$PATH"
 export GLOBUS_LOCATION="/opt/globus"
 export GPT_LOCATION="/opt/gpt"
 source /root/yaim/site-info.def
@@ -10,11 +11,12 @@ cp -f /opt/glite/yaim/etc/conf/simple-ca/setup-simple-ca $GLOBUS_LOCATION/setup/
 chmod +x $GLOBUS_LOCATION/setup/globus/setup-simple-ca
 cp -f /opt/glite/yaim/etc/conf/simple-ca/globus_simple_ca_setup_template.tar.gz $GLOBUS_LOCATION/setup/globus/globus_simple_ca_setup_template.tar.gz
 echo "--> run simple-ca"
-$GLOBUS_LOCATION/setup/globus/setup-simple-ca
+$GLOBUS_LOCATION/setup/globus/setup-simple-ca -email root@localhost -days 1825 -pass toto
 HASH=`openssl x509 -noout -hash -in /root/.globus/simpleCA/cacert.pem`
 echo "--> install it ($HASH)"
 $GPT_LOCATION/sbin/gpt-build /root/.globus/simpleCA/globus_simple_ca_${HASH}_setup-0.18.tar.gz
 $GPT_LOCATION/sbin/gpt-postinstall
+$GLOBUS_LOCATION/setup/globus_simple_ca_${HASH}_setup/setup-gsi -default
 echo "--> hostcert voms ($VOMS_HOST)"
 $GLOBUS_LOCATION/bin/grid-cert-request -host $VOMS_HOST
 cp -f /opt/glite/yaim/etc/conf/simple-ca/grid-ca-sign $GLOBUS_LOCATION/bin/grid-ca-sign
@@ -62,9 +64,9 @@ scp ui.tgz root@$UI_HOST:
 scp ca.tgz root@$UI_HOST:
 ssh root@$UI_HOST "/opt/gpt/sbin/gpt-build /root/ca.tgz gcc32dbg"
 ssh root@$UI_HOST "/opt/gpt/sbin/gpt-postinstall"
-ssh root@$UI_HOST "/opt/globus/setup/globus_simple_ca_*_setup/setup-gsi -default"
+ssh root@$UI_HOST "/opt/globus/setup/globus_simple_ca_${HASH}_setup/setup-gsi -default"
 scp ui.tgz root@$CE_HOST:
 scp ca.tgz root@$CE_HOST:
 ssh root@$CE_HOST "/opt/gpt/sbin/gpt-build /root/ca.tgz gcc32dbg"
 ssh root@$CE_HOST "/opt/gpt/sbin/gpt-postinstall"
-ssh root@$CE_HOST "/opt/globus/setup/globus_simple_ca_*_setup/setup-gsi -default"
+ssh root@$CE_HOST "/opt/globus/setup/globus_simple_ca_${HASH}_setup/setup-gsi -default"
