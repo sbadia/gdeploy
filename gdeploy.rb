@@ -743,6 +743,7 @@ if $cfg.sendconf == true :
     #ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1 && /usr/bin/mysqladmin -u root -h #{serv.fetch("voms")} password 'superpass'")
     ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1")
     ssh.exec!("sed -e 's/VOMS_DB_HOST=#{voms}/VOMS_DB_HOST=localhost/' -i /root/yaim/site-info.def")
+    ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 766 /var/log/bdii/bdii-update.log")
     ssh.exec!("/usr/bin/mysqladmin -u root password superpass && chmod 766 /var/log/bdii")
     ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1')
     ssh.exec!("echo 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1' >> /root/install.log")
@@ -768,6 +769,7 @@ if $cfg.sendconf == true :
      #ssh.exec("echo 'cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/hostkeys.tgz -q && tar xzf hostkeys.tgz && rm -f hostkeys.tgz' >> /root/install.log")
     #ssh.exec("mkdir -p /etc/grid-security/ && cp -r /opt/glite/yaim/etc/conf/#{serv.fetch("voms")}/* /etc/grid-security/ && mkdir -p /etc/grid-security/vomsdir/ && cp -r /opt/glite/yaim/etc/conf/certif-CA.crt /etc/grid-security/vomsdir/ca-cert-glite.cert && chmod 644 /etc/grid-security/vomsdir/ca-cert-glite.cert && mkdir -p /etc/grid-security/certificates/ && cp /etc/grid-security/vomsdir/ca-cert-glite.cert /etc/grid-security/certificates/")
 
+     ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 766 /var/log/bdii/bdii-update.log")
      ssh.exec!('yum install gcc -q -y && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1')
      ssh.exec!("echo 'yum install gcc -q -y && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1' >> /root/install.log")
      ssh.exec!("adduser #{$cfg.user} && mkdir -p /home/#{$cfg.user}/.globus/ && cp -r /opt/glite/yaim/etc/conf/#{$cfg.user}/* /home/#{$cfg.user}/.globus/")
