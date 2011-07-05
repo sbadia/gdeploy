@@ -328,7 +328,13 @@ if ARGV[1]== 1:
        ssh.exec!('echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
      end
     puts "\033[1;35m=>\033[0m UI on #{sconf['ui']}"
-    # FIXME
+      Net::SSH.start(sconf['ui'], 'root') do |ssh|
+       ssh.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def"
+       ssh.exec!("yum groupinstall glite-UI -q -y && yum install lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl")
+       ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 766 /var/log/bdii/bdii-update.log")
+       ssh.exec!('yum install gcc -q -y && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1')
+       ssh.exec!('echo -e "\ngLite UI - (User Interface)\n" >> /etc/motd')
+      end
   end
 else
   puts "\033[1;31m==> No install\033[0m"
