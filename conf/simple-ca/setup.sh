@@ -6,9 +6,9 @@ source /root/yaim/site-info.def
 echo "--> run gpt-postinstall"
 $GPT_LOCATION/sbin/gpt-postinstall
 echo "--> install simple-ca"
-mv /opt/glite/yaim/etc/conf/simple-ca/setup-simple-ca $GLOBUS_LOCATION/setup/globus/setup-simple-ca
+cp -f /opt/glite/yaim/etc/conf/simple-ca/setup-simple-ca $GLOBUS_LOCATION/setup/globus/setup-simple-ca
 chmod +x $GLOBUS_LOCATION/setup/globus/setup-simple-ca
-mv /opt/glite/yaim/etc/conf/simple-ca/globus_simple_ca_setup_template.tar.gz $GLOBUS_LOCATION/setup/globus/globus_simple_ca_setup_template.tar.gz
+cp -f /opt/glite/yaim/etc/conf/simple-ca/globus_simple_ca_setup_template.tar.gz $GLOBUS_LOCATION/setup/globus/globus_simple_ca_setup_template.tar.gz
 echo "--> run simple-ca"
 $GLOBUS_LOCATION/setup/globus/setup-simple-ca
 HASH=`openssl x509 -noout -hash -in /root/.globus/simpleCA/cacert.pem`
@@ -17,30 +17,26 @@ $GPT_LOCATION/sbin/gpt-build /root/.globus/simpleCA/globus_simple_ca_${HASH}_set
 $GPT_LOCATION/sbin/gpt-postinstall
 echo "--> hostcert voms ($VOMS_HOST)"
 $GLOBUS_LOCATION/bin/grid-cert-request -host $VOMS_HOST
-mv /opt/glite/yaim/etc/conf/simple-ca/grid-ca-sign $GLOBUS_LOCATION/bin/grid-ca-sign
+cp -f /opt/glite/yaim/etc/conf/simple-ca/grid-ca-sign $GLOBUS_LOCATION/bin/grid-ca-sign
 chmod +x $GLOBUS_LOCATION/bin/grid-ca-sign
 cd /etc/grid-security/
-$GLOBUS_LOCATION/bin/grid-ca-sign -in hostcert_request.pem -out hostsigned.pem
+$GLOBUS_LOCATION/bin/grid-ca-sign -in hostcert_request.pem -out hostsigned.pem -passin pass:toto
 mv -f hostsigned.pem hostcert.pem
 openssl x509 -text -noout -in hostcert.pem
 mkdir voms
 mv host* voms
 echo "--> hostcert ce ($CE_HOST)"
 $GLOBUS_LOCATION/bin/grid-cert-request -host $CE_HOST
-mv /opt/glite/yaim/etc/conf/simple-ca/grid-ca-sign $GLOBUS_LOCATION/bin/grid-ca-sign
-chmod +x $GLOBUS_LOCATION/bin/grid-ca-sign
 cd /etc/grid-security/
-$GLOBUS_LOCATION/bin/grid-ca-sign -in hostcert_request.pem -out hostsigned.pem
+$GLOBUS_LOCATION/bin/grid-ca-sign -in hostcert_request.pem -out hostsigned.pem -passin pass:toto
 mv -f hostsigned.pem hostcert.pem
 openssl x509 -text -noout -in hostcert.pem
 mkdir ce
 mv host* ce
 echo "--> hostcert voms ($UI_HOST)"
 $GLOBUS_LOCATION/bin/grid-cert-request -host $UI_HOST
-mv /opt/glite/yaim/etc/conf/simple-ca/grid-ca-sign $GLOBUS_LOCATION/bin/grid-ca-sign
-chmod +x $GLOBUS_LOCATION/bin/grid-ca-sign
 cd /etc/grid-security/
-$GLOBUS_LOCATION/bin/grid-ca-sign -in hostcert_request.pem -out hostsigned.pem
+$GLOBUS_LOCATION/bin/grid-ca-sign -in hostcert_request.pem -out hostsigned.pem -passin pass:toto
 mv -f hostsigned.pem hostcert.pem
 openssl x509 -text -noout -in hostcert.pem
 mkdir ui
@@ -48,9 +44,9 @@ mv host* ui
 cp -f voms/host* /etc/grid-security/
 cd /root
 echo "--> usercert nancy001"
-grid-cert-request
+$GLOBUS_LOCATION/bin/grid-cert-request
 cd /root/.globus/
-$GLOBUS_LOCATION/bin/grid-ca-sign -in usercert_request.pem -out signed.pem
+$GLOBUS_LOCATION/bin/grid-ca-sign -in usercert_request.pem -out signed.pem -passin pass:toto
 mv signed.pem usercert.pem
 echo "--> prepare export"
 cd /etc/grid-security/
