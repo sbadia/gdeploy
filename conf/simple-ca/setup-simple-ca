@@ -1,4 +1,4 @@
-#! /bin/sh 
+#! /bin/sh
 
 # catch the kill signal (ctrl-c) and do cleanup
 trap do_trap 1 2 3 6 9 13 15
@@ -69,7 +69,7 @@ make_template_ca_setup() {
         echo ""
         exit 1
     fi
-    
+
     ${GLOBUS_SH_GZIP-gzip} -dc ${template_package_file} | ${GLOBUS_SH_TAR-tar} xf -
     if test $? -ne 0; then
         echo ""
@@ -96,7 +96,7 @@ make_template_ca_setup() {
 create_ca_directory() {
 
 ${GLOBUS_SH_CAT-cat} <<EOF
- 
+
 
     C e r t i f i c a t e    A u t h o r i t y    S e t u p
 
@@ -146,7 +146,7 @@ CA_CERT_FILE=${GRID_CA_DIR}/cacert.pem
 
 ${GLOBUS_SH_RM-rm} -rf ${GRID_CA_DIR}
 
-# from the CA.sh script - setup the CA directory 
+# from the CA.sh script - setup the CA directory
 my_mkdir ${GRID_CA_DIR}
 my_mkdir ${GRID_CA_DIR}/certs/
 my_mkdir ${GRID_CA_DIR}/crl/
@@ -199,7 +199,7 @@ generate_unique_name() {
 tmp_hostname=`export GLOBUS_LOCATION=${GLOBUS_LOCATION};${GLOBUS_LOCATION}/bin/globus-hostname`
 
 if test -z "${tmp_hostname}"; then
-    echo "" 
+    echo ""
     echo "The hostname of this machine is not set.  Set the"
     echo "hostname before running this script."
     echo ""
@@ -216,11 +216,11 @@ split_subject() {
 
     GSI_CA_NAME=`echo ${casubject} | ${GLOBUS_SH_SED-sed} -e "s/[Cc][Nn]=\([^,]*\),.*/\1/"`
     GSI_CA_BASE_DN=`echo ${casubject} | ${GLOBUS_SH_SED-sed} -e "s/[Cc][Nn]=[^,]*,\(.*\)/\1/"`
-    HAS_GLOBUS_NS=`echo ${GSI_CA_BASE_DN} | ${GLOBUS_SH_SED-sed} -e "s/.*\([Oo]=[Gg][Ll][Oo][Bb][Uu][Ss],[ ]*[Oo]=[Gg][Rr][Ii][Dd]\)/\1/"` 
+    HAS_GLOBUS_NS=`echo ${GSI_CA_BASE_DN} | ${GLOBUS_SH_SED-sed} -e "s/.*\([Oo]=[Gg][Ll][Oo][Bb][Uu][Ss],[ ]*[Oo]=[Gg][Rr][Ii][Dd]\)/\1/"`
     check_for_globus_ns "$GSI_CA_BASE_DN"
-    if test -z "${GSI_CA_NAME}" || 
+    if test -z "${GSI_CA_NAME}" ||
         test -z "${GSI_CA_BASE_DN}"; then
-        echo "" 
+        echo ""
         echo "The subject: ${casubject} is not a valid subject name"
         echo "Use the default subject name if you don't know the correct"
         echo "format to use"
@@ -229,7 +229,7 @@ split_subject() {
         echo ""
         echo "ERROR: The Globus namespace (o=Globus, o=Grid) is restricted."
         echo "Please use a different namespace."
-        
+
         GSI_CA_BASE_DN="ou=${CA_ORG_NAME}, ou=GlobusTest, o=Grid"
         GSI_CA_NAME="Globus Simple CA"
         return 1
@@ -239,7 +239,7 @@ split_subject() {
 }
 
 ############################################################
-# get_ca_info: gets the CA information from the user to 
+# get_ca_info: gets the CA information from the user to
 #              create the CA certificate
 ############################################################
 get_ca_info() {
@@ -261,7 +261,7 @@ while test -z "${got_subject}" ; do
     if test -n "${request_subject}"; then
         casubject="${request_subject}"
     fi
-	
+
     echo ""
     echo "The unique subject name for this CA is:"
     echo ""
@@ -278,13 +278,14 @@ while test -z "${got_subject}" ; do
     else
 
         recho "Do you want to keep this as the CA subject (y/n) [y]: "
-        
-        read _answer
+
+        #read _answer
+	_answer="y"
         answer=${_answer:-y}
         first_char_answer="`echo ${answer} | ${GLOBUS_SH_TR-tr} 'A-Z' 'a-z' | ${GLOBUS_SH_CUT-cut} -c1`";
-        
+
         if test "${first_char_answer}" = "n"; then
-            
+
             echo ""
             recho "Enter a unique subject name for this CA: "
             read casubject
@@ -330,12 +331,12 @@ elif test -z "${noint}"; then
 
 ${GLOBUS_SH_CAT-cat}  <<EOF
 
-The CA certificate has an expiration date. Keep in mind that 
-once the CA certificate has expired, all the certificates 
-signed by that CA become invalid.  A CA should regenerate 
-the CA certificate and start re-issuing ca-setup packages 
-before the actual CA certificate expires.  This can be done 
-by re-running this setup script.  Enter the number of DAYS 
+The CA certificate has an expiration date. Keep in mind that
+once the CA certificate has expired, all the certificates
+signed by that CA become invalid.  A CA should regenerate
+the CA certificate and start re-issuing ca-setup packages
+before the actual CA certificate expires.  This can be done
+by re-running this setup script.  Enter the number of DAYS
 the CA certificate should last before it expires.
 EOF
 
@@ -350,7 +351,7 @@ return
 }
 
 ############################################################
-# env_replace: replace environment variables from a 
+# env_replace: replace environment variables from a
 #              file (grid-security.conf) with values
 #              determined from this script
 ############################################################
@@ -370,7 +371,7 @@ save_ca_settings() {
 
     GSI_USER_BASE_DN="ou=\${_domain}, ${GSI_CA_BASE_DN}"
     GSI_HOST_BASE_DN=${GSI_CA_BASE_DN}
-    
+
 #    echo `cat ${security_conf_file} | env_replace SETUP GSI_CA_BASE_DN`
     ${GLOBUS_SH_CAT-cat} ${grid_security_conf_template}  |\
     env_replace SETUP   GSI_CA_BASE_DN    |\
@@ -409,7 +410,7 @@ BEGIN     { FS = ","; lastorg=0; lastou=0; hasgrid=0; }
         split(b[i],c,"=");
         if(tolower(c[1]) ~ /o/)
         {
-	    org[++lastorg]=c[2];	    
+	    org[++lastorg]=c[2];
         }
         i++;
     }
@@ -422,7 +423,7 @@ END {
         {
             hasgrid=i;
         }
-        
+
         if(tolower(org[i]) == "globus" && hasgrid == (i + 1))
         {
             print "YES";
@@ -439,16 +440,16 @@ END {
 ############################################################
 ldap_dn_to_ssl_dn() {
     echo "$1" | ${GLOBUS_SH_AWK-awk} '
-BEGIN     { FS = ","; lastorg=0; lastou=0; } 
+BEGIN     { FS = ","; lastorg=0; lastou=0; }
 
-{ 
+{
     split($0, b, ",");
     i=1;
     while(b[i] != "")
     {
         split(b[i],c,"=");
         if(tolower(c[1]) ~ /ou/)
-        { 
+        {
             ou[lastou++]=c[2];
         }
         else if(tolower(c[1]) ~ /c/)
@@ -497,10 +498,10 @@ create_input_file () {
   _config_file="$2"
 
 # Parse the ssleay configuration file, to determine the
-# correct default 
+# correct default
 
 ${GLOBUS_SH_AWK-awk}  < $_config_file '
- 
+
   /^\[ req_distinguished_name \]/ {
      start_parsing=1;
      next;
@@ -524,7 +525,7 @@ ${GLOBUS_SH_AWK-awk}  < $_config_file '
 }
 
 ############################################################
-# generate_ca_certificate: the meat & potatoes - calls the 
+# generate_ca_certificate: the meat & potatoes - calls the
 #                          openssl req utility that creates
 #                          the CA certificate
 ############################################################
@@ -619,12 +620,12 @@ emit_directions () {
 
 ${GLOBUS_SH_CAT-cat} <<EOF
 
-A self-signed certificate has been generated 
-for the Certificate Authority with the subject: 
+A self-signed certificate has been generated
+for the Certificate Authority with the subject:
 
 ${CA_CERT_SUBJECT}
 
-If this is invalid, rerun this script 
+If this is invalid, rerun this script
 
 $0
 
@@ -692,8 +693,8 @@ install_security_config() {
     else
         ${buildcmd} -force ${GRID_CA_DIR}/${CA_UTILS_PACKAGE} > build.log 2>&1
     fi
-    
-    
+
+
     if [ ! $? -eq 0 ]; then
 	echo "ERROR:  could not run build command: ${buildcmd} -force ${GRID_CA_DIR}/${CA_UTILS_PACKAGE}"
 	exit 1;
@@ -870,7 +871,7 @@ else
     RES=$?
 fi
 
-if test $RES -ne 0; then 
+if test $RES -ne 0; then
 	echo ""
 	echo "SETUP FAILED: Could not create tarball of setup package."
 	echo ""
@@ -928,7 +929,7 @@ do_trap() {
     ${GLOBUS_SH_RM-rm} -rf ${tmp_ca_setup_dir}
 
     cd ${current_dir}
-    
+
     exit 1
 }
 
@@ -974,7 +975,7 @@ if test ! -x ${mycommand}; then
 fi
 
 if test -z "${GLOBUS_LOCATION}"; then
-    
+
     GLOBUS_LOCATION=`echo ${mycommand} | sed -e "s|\(.*\)/setup/globus/setup-simple-ca|\1|"`
     echo ""
     echo "WARNING: GLOBUS_LOCATION not set, assuming:"
@@ -1032,12 +1033,12 @@ ${short_usage}
     -verbose              : Show verbose output
     -dir <loc>            : Will put the Simple CA in <loc>
     -force                : Overwite existing CA install if one exists
-    -subject <CA subject> : Subject of the CA.  
+    -subject <CA subject> : Subject of the CA.
                             If not specified the default is used.
                             Format: "cn=Globus, ou=Globus, o=Grid"
-                            dashes in the subject must be escaped (\-) 
+                            dashes in the subject must be escaped (\-)
     -email <address>      : The email of the CA.  Default is empty.
-    -days <num>           : Expiration of CA certificate 
+    -days <num>           : Expiration of CA certificate
                             (default: 1852 days or 5 years)
     -pass <password>      : CA password for private key.  Since the
                             password is visible to utilities, this
@@ -1051,7 +1052,7 @@ ${short_usage}
                             option also implies -force.
 
     -openssl-help         : Show help text for openssl
- 
+
     [<openssl options>] : Give openssl options to pass to the
                           openssl command.  Use with caution, some
                           options will conflict with this script.
@@ -1089,7 +1090,7 @@ readCommandLine () {
          else
             GRID_CA_DIR=$PWD/$tmp_ca_dir
          fi
-         
+
          shift ; shift
          ;;
      -force)
