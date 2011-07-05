@@ -274,7 +274,7 @@ end
 # Attention à la racine ldap de la vo... Et des certificats associés
 # <QUEUE_NAME>_GROUP_ENABLE=<list of vo>
 #
-def conf_site(bdii, sname, cehost, batch, se, voms)
+def conf_site(bdii, sname, cehost, batch, se, voms, ui)
   f = File.new("#{DIR}/conf/site-info.def", "w")
   f.puts <<-EOF
 ## Site-info.def Bdii
@@ -390,6 +390,7 @@ VO_#{sname.upcase}_VOMS_SERVERS="#{voms}"
 ## site-info.def ui
 PX_HOST=#{voms}
 RB_HOST=#{voms}
+UI_HOST=#{ui}
 EOF
   f.close
 end # def:: conf_site(bdii, sname, cehost, batch, se, voms)
@@ -493,7 +494,7 @@ if $cfg.config == true :
   list_wn(wn)
   export_nfs()
   queue_config(sname, wn)
-  conf_site(bdii, sname, cehost, batch, se, voms)
+  conf_site(bdii, sname, cehost, batch, se, voms, ui)
   #certs_ssl(cehost,voms,ui,se)
   certs_ssl(voms)
   system("/usr/bin/ruby #{DIR}/test/dns-gdeploy.rb")
