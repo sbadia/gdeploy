@@ -271,9 +271,17 @@ if ARGV[1]== 1:
   puts "\033[1;36m###\033[0m Configuring VOs"
   $d['VOs'].each_pair do |name, conf|
     puts "\033[1;33m==>\033[0m Configuring VO=#{name} on VOMS=#{conf['voms']}"
-    $my_vo = name
-    $my_voms = conf['voms']
-    # FIXME
+    Net::SSH.start(conf['voms'], 'root') do |ssh|
+      ssh.scp.upload!("#{DIR}/conf/site-info.def","/root/yaim/site-info.def") do |ch, name, sent, total|
+        print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
+      end
+      ssh.exec!("yum install mysql-server glite-VOMS_mysql -q -y --nogpgcheck > /dev/null 2>&1")
+      ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1")
+      ssh.exec!("sed -e 's/VOMS_DB_HOST=#{conf['voms']}/VOMS_DB_HOST=localhost/' -i /root/yaim/site-info.def")
+      ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 766 /var/log/bdii/bdii-update.log")
+      ssh.exec!("/usr/bin/mysqladmin -u root password superpass && chmod 766 /var/log/bdii")
+      ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1')
+      ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
   end
 
   puts "## Configuring sites"
