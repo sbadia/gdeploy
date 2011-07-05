@@ -288,7 +288,13 @@ if ARGV[1]== 1:
   $d['sites'].each_pair do |sname, sconf|
     puts "## Configuring site=#{sname}"
     puts "# BDII on #{sconf['bdii']}"
-    # FIXME
+      Net::SSH.start(sconf['bdii'], 'root') do |ssh|
+       ssh.scp.upload!("#{DIR}/conf/#{sname}/site-info.def","/root/yaim/site-info.def") do |ch, name, sent, total|
+        print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
+      end
+       ssh.exec!('yum install glite-BDII -q -y')
+       ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1 && echo -e "\ngLite Bdii - (Ldap Berkley database index)\n" >> /etc/motd')
+
     puts "# Batch on #{sconf['batch']}"
     # FIXME
     puts "# CE on #{sconf['ce']}"
