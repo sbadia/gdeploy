@@ -282,24 +282,25 @@ if ARGV[1]== 1:
       ssh.exec!("/usr/bin/mysqladmin -u root password superpass && chmod 766 /var/log/bdii")
       ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1')
       ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
+    end
   end
 
-  puts "## Configuring sites"
+  puts "\033[1;36m###\033[0m Configuring sites"
   $d['sites'].each_pair do |sname, sconf|
-    puts "## Configuring site=#{sname}"
-    puts "# BDII on #{sconf['bdii']}"
+    puts "\033[1;33m==>\033[0m Configuring site=#{sname}"
+    puts "\033[1;35m=>\033[0m BDII on #{sconf['bdii']}"
       Net::SSH.start(sconf['bdii'], 'root') do |ssh|
        ssh.scp.upload!("#{DIR}/conf/#{sname}/site-info.def","/root/yaim/site-info.def") do |ch, name, sent, total|
         print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
-      end
+       end
        ssh.exec!('yum install glite-BDII -q -y')
        ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1 && echo -e "\ngLite Bdii - (Ldap Berkley database index)\n" >> /etc/motd')
-
-    puts "# Batch on #{sconf['batch']}"
+      end
+    puts "\033[1;35m=>\033[0m Batch on #{sconf['batch']}"
       Net::SSH.start(sconf['batch'], 'root') do |ssh|
        ssh.scp.upload!("#{DIR}/conf/#{sname}/site-info.def","/root/yaim/site-info.def") do |ch, name, sent, total|
         print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
-      end
+       end
        ssh.exec!('yum install glite-TORQUE_server -q -y')
        ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz')
        ssh.exec!('mkdir -p /var/spool/pbs/server_logs && mkdir -p /var/spool/pbs/server_priv/accounting')
@@ -307,19 +308,24 @@ if ARGV[1]== 1:
        ssh.exec!('cat /opt/glite/yaim/etc/conf/exports >> /etc/exports && /etc/init.d/nfs restart')
        ssh.exec!('/opt/glite/yaim/bin/yaim -r -s /root/yaim/site-info.def -f config_maui_cfg')
        ssh.exec!('sh /opt/glite/yaim/etc/conf/queue.conf && /etc/init.d/maui restart && echo -e "\ngLite Batch\n" >> /etc/motd')
-
-    puts "# CE on #{sconf['ce']}"
-    # FIXME
-    puts "# UI on #{sconf['ui']}"
-    # FIXME
-    puts "## Configuring #{sname}'s clusters"
+      end
     sconf['clusters'].each_pair do |cname, cconf|
-      puts "# Cluster #{cname} on #{cconf['nodes'].join(' ')}"
-      cconf['nodes'].each do |n|
-        puts "#{n} ..."
-        # FIXME
+      puts "\033[1;35m=>\033[0m Cluster #{cname} on #{cconf['nodes'].join(' ')}"
+      Net::SSH::Multi.start do |session|
+       cconf['nodes'].each do |n|
+        session.use "root@#{n}"
+       end
+       session.exec("yum groupinstall glite-WN -q -y > /dev/null 2>&1 && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
+       session.exec('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 > /dev/null 2>&1 && echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
+       session.loop
       end
     end
+
+    puts "\033[1;35m=>\033[0m CE on #{sconf['ce']}"
+    # FIXME
+    puts "\033[1;35m=>\033[0m UI on #{sconf['ui']}"
+    # FIXME
+    puts "\033[1;33m==>\033[0m Configuring #{sname}'s clusters"
   end
 else
   puts "\033[1;31m==> No install\033[0m"
