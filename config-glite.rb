@@ -296,7 +296,18 @@ if ARGV[1]== 1:
        ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1 && echo -e "\ngLite Bdii - (Ldap Berkley database index)\n" >> /etc/motd')
 
     puts "# Batch on #{sconf['batch']}"
-    # FIXME
+      Net::SSH.start(sconf['batch'], 'root') do |ssh|
+       ssh.scp.upload!("#{DIR}/conf/#{sname}/site-info.def","/root/yaim/site-info.def") do |ch, name, sent, total|
+        print "\r#{name}: #{(sent.to_f * 100 / total.to_f).to_i}%\n"
+      end
+       ssh.exec!('yum install glite-TORQUE_server -q -y')
+       ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz')
+       ssh.exec!('mkdir -p /var/spool/pbs/server_logs && mkdir -p /var/spool/pbs/server_priv/accounting')
+       ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-TORQUE_server -d 1')
+       ssh.exec!('cat /opt/glite/yaim/etc/conf/exports >> /etc/exports && /etc/init.d/nfs restart')
+       ssh.exec!('/opt/glite/yaim/bin/yaim -r -s /root/yaim/site-info.def -f config_maui_cfg')
+       ssh.exec!('sh /opt/glite/yaim/etc/conf/queue.conf && /etc/init.d/maui restart && echo -e "\ngLite Batch\n" >> /etc/motd')
+
     puts "# CE on #{sconf['ce']}"
     # FIXME
     puts "# UI on #{sconf['ui']}"
