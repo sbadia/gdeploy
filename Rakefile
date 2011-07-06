@@ -30,7 +30,7 @@ end
 
 desc "Gen confs"
 task :conf do
-  sh "ruby list2yaml.rb -g $OAR_NODE_FILE > g5k.yaml"
+  sh "ruby list2yaml.rb -g nodes > g5k.yaml"
   sh "ruby config-glite.rb g5k.yaml"
 end
 

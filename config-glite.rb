@@ -253,7 +253,8 @@ if ARGV[1]== 1:
 
   puts "\033[1;36m###\033[0m Configuring VOs"
   $d['VOs'].each_pair do |name, conf|
-    puts "\033[1;33m==>\033[0m Configuring VO=#{name} on VOMS=#{conf['voms']}"
+    first_site = $d['sites'].keys.first
+    puts "\033[1;33m==>\033[0m Configuring VO=#{first_site} on VOMS=#{conf['voms']}"
     Net::SSH.start(conf['voms'], 'root') do |ssh|
       ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
       ssh.exec!("cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x setup.sh && sh setup.sh")
@@ -266,13 +267,13 @@ if ARGV[1]== 1:
       ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
     end
     # Distri
-    Dir::mkdir("#{DIR}/conf/#{name}/", 0755)
+    Dir::mkdir("#{DIR}/conf/#{first_site}ca/", 0755)
     Net::SCP.start(conf['voms'], 'root') do |scp|
-      scp.download!("*.tgz", "#{DIR}/conf/#{name}/")
+      scp.download!("*.tgz", "#{DIR}/conf/#{first_site}ca/")
     end
     $nodes.each do |node|
       Net::SCP.start(node, 'root') do |scp|
-       scp.upload!("#{DIR}/conf/#{name}/", "/opt/glite/yaim/etc/conf", :recursive => true)
+       scp.upload!("#{DIR}/conf/#{fist_site}ca/", "/opt/glite/yaim/etc/conf", :recursive => true)
       end
     end
   end
