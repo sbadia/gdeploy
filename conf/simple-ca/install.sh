@@ -1,4 +1,6 @@
 #!/bin/sh
+set -x
+set -e
 export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:$PATH"
 export GLOBUS_LOCATION="/opt/globus"
 export GPT_LOCATION="/opt/gpt"
