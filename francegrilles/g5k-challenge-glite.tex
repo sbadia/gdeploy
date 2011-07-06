@@ -1,0 +1,143 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage{a4wide}
+\usepackage{url}
+\usepackage{xspace}
+\usepackage[utf8]{inputenc}
+\usepackage{paralist}
+
+\title{Grid-in-a-grid:\\ Deployment of a gLite Grid inside Grid'5000}
+\author{Sébastien Badia and Lucas Nussbaum\\\texttt{\small \{sebastien.badia,lucas.nussbaum\}@loria.fr}\\[0.5em]LORIA / INRIA Nancy -- Grand Est}
+\date{}
+
+\begin{document}
+\maketitle
+\section{Context}
+
+The gLite grid middleware is the core software component of the EGI (formerly
+EGEE) production grid, composed of more than 330 sites and 200000 CPUs.  gLite
+is organized as a set of services to manage security and authentication
+(Virtual Organisation Membership Service -- VOMS), interact with the local
+batch schedulers (Computing Element -- CE), manage data at the grid level
+(Storage Element -- SE), and expose information on the available resources
+(Information Service -- IS). It also provides a user interface to the users,
+enabling them to find resources, submit or cancel jobs, show the status or the
+output of jobs, manage their files, etc.
+
+The performance and ease of use of the grid platform is highly dependent on
+this software stack, and it is therefore crucial to be able to evaluate
+possible improvements in a test environment. Unfortunately, building such a
+test environment with the required features is very hard, as it needs to be
+flexible enough to enable developers to replace some parts of the
+infrastructure, and large enough to reproduce problems that only arise when a
+very large number of resources are involved.  Currently, engineers and
+researchers directly use the production platform to test their improvements,
+which has several limitations (risk of breaking the infrastructure, low
+reproducibility of experiments, waste of production resources).
+
+Grid'5000 is a perfect basis for a development and test environment for
+production grid software such as gLite and other related services. It has most
+of the required features, being composed of a large number of nodes grouped in
+clusters and sites which matches (at a smaller scale) the architecture of the
+EGI production grid, and providing users with the ability to deploy their own
+software stack. However, a lot of hard work is needed to overcome the technical
+locks that one encounters when trying to deploy such complex software.
+
+The goal of this challenge submission is to demonstrate the automated
+deployment of a gLite grid inside Grid'5000. This is a required first step
+towards more intense collaboration between the \textsl{production Grid} and the
+\textsl{research on grids} communities.
+
+\section{Description of the experiment and expected demo}
+
+This experiment includes the deployment of the gLite middleware on several
+Grid'5000 sites, and the setup of the various services composing a gLite
+infrastructure.
+
+We chose to deploy the gLite middleware with a setup matching closely the way
+it is installed on EGI. Therefore, instead of using the standard Debian-based
+Grid'5000 images, we created a \textsl{Scientific Linux 5.5} image for
+Kadeploy.
+
+Our script, written in Ruby, is executed from a central place (a user frontend,
+typically).  After being started, it will first reserve and deploy the
+resources using the Grid'5000 API. Then, it will configure the various pieces
+of the gLite infrastructure that we are going to deploy. To do this
+configuration, two main tools are used:
+
+\begin{compactitem}
+
+\item the \texttt{net/ssh} and \texttt{net/scp} Ruby libraries are used to
+	connect to nodes and copy files on them
+
+\item for some large files, instead of using \texttt{net/scp}, we instead make
+	use of the \texttt{\~/public} directories that are exported via HTTP on
+	all Grid'5000 sites.
+
+\end{compactitem}
+
+The infrastructure that will be deployed is composed of:
+
+\begin{compactitem}
+
+\item one BDII service (\textsl{Berkeley Database Information Index}). This
+	service is a directory service based on LDAP containing the description
+	of the various resources and services available on the grid.
+
+\item one Computing Element (CE) and one batch scheduler per Grid'5000 cluster.
+	The batch scheduler (Torque in our case) is responsible for scheduling
+	the jobs on the worker nodes. The Computing Element (CE) is an
+	abstraction layer enabling users to submit jobs in a way that is
+	independent of the batch scheduler being used.
+
+\item worker nodes, for each other available Grid'5000 node, where the jobs are
+	executed.
+
+\end{compactitem}
+
+Our scripts are available in a Git repository at \url{https://github.com/sbadia/gdeploy}.
+
+\section{Future work}
+
+Automating the deployment of gLite is not an easy task, and several hard
+technical challenges already had to be overcome.  For example, during the development,
+the gLite version changed on several occasions, breaking dependencies between
+packages or simply breaking our scripts. Unfortunately, there is more to come.
+
+\subsection*{Generic Scientific Linux image}
+
+It is harder to generate an image for Scientific Linux that works on every
+Grid'5000 cluster, than it is for Debian images. For example, our image is
+currently limited to clusters using the AHCI interface to control the SATA bus.
+Working on a more generic Scientific Linux image is a prerequisite to perform
+experiments at a larger scale.
+
+\subsection*{Other gLite services}
+
+Our script currently deploys only a subset of gLite services. The next step is
+to install the UI service (which acts as a proxy between the user and the
+various CE). Its installation was not manually, but still needs to be
+automatized.
+
+Another step is to enable a deployment of a more complex grid, with several
+Virtual Organizations (VO). For example, we could deploy a gLite grid with one
+VO per Grid'5000 site. This requires dealing with certificates, which are
+central to the gLite security model, and also very hard to automatize.
+
+Finally, one aspect that has been neglected so far is storage. On EGI, most
+jobs are actually much more data-intensive than CPU-intensive, and the handling
+of data plays a crucial role in the performance of grid applications. gLite
+includes several services that deal with storage (LFC, Storage Element (SE)).
+They will also have to be deployed.
+
+\subsection*{Performing real experiments on gLite}
+
+The deployment of gLite on Grid'5000 is of limited interest if it is not used
+by real experiments to improve the middleware itself, work on software layers
+on top of the middleware, or explore research questions on production grids.
+This will require designing and orchestrating complex experiments, involving
+complex software and a large number of resources. Further developments of
+experimentation software are likely to be required in order to perform such
+experiments without sacrificing experimenter time, or experimental quality.
+
+\end{document}
