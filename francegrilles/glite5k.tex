@@ -1,0 +1,134 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{a4wide}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}  %or: \usepackage[latin1]{inputenc}
+\usepackage{color}
+\usepackage{hyperref}
+
+\newcommand{\todo}[1]{{\color{red}\textsl #1}}
+
+
+\title{gLite sur Grid'5000:\\ vers une plate-forme d'expérimentation\\ à taille réelle pour les grilles de production}
+\date{}
+\author{Sébastien Badia et Lucas Nussbaum\\
+\texttt{\normalsize \{sebastien.badia,lucas.nussbaum\}@loria.fr}\\[1em]
+\normalsize ALGORILLE team, LORIA\\
+INRIA Nancy - Grand Est \& Nancy-Université}
+
+\begin{document}
+\maketitle
+
+\section{Overview}
+\todo{Résumé en anglais}
+
+The Grid has become a huge and important project, playing a key role in the
+everyday work of many researchers. A large amount of software is being developed
+both to manage the grid infrastructure itself (gLite middleware\cite{glite}),
+to facilitate the task of grid users (e.g workflow managers\cite{moteur},
+pilot job managers, etc.), and to run the computations themselves.
+That software must be designed to handle network and services outages in a
+highly distributed environment, while still providing the expected performance.
+It is inconvenient to test software using the production infrastructure, since
+(1) it might not exhibit the behaviour that is required to test extreme
+conditions (services are unlikely to crash as often as required when testing
+fault tolerance); (2) it might not be possible to replace key parts of the
+infrastructure without degrading the user experience.
+
+In this paper, we present our ongoing work on deploying the gLite middleware on
+the Grid'5000 testbed. Grid'5000 is a scientific instrument designed to support
+research on parallel, large-scale and distributed computing. It is composed of
+FIXME nodes (FIXME cores) with unique hardware and network reconfiguration
+features: users can reserve nodes, and then automatically re-install them with
+the software environment required for their experiments.
+
+% FIXME
+
+
+
+\section{Enjeux scientifiques}
+\todo{Enjeux scientifiques, besoin de la grille : Environ une demi-page}
+
+La devenue est devenue une immense et importante plate-forme, qui joue un rôle
+clé dans la travail quotidien de nombreux chercheurs. Un grand nombre de
+logiciels ont été développés pour gérer l'infrastructure elle-même (middleware
+gLite\cite{glite}), pour faciliter le travail des utilisateurs (moteurs de
+workflows comme MOTEUR~\cite{moteur}, gestionnaires de jobs pilotes, etc.), et
+pour exécuter les traitements eux-mêmes.
+Ces logiciels doivent être conçus pour prendre en compte les pannes à
+différents niveaux (réseaux, services), dans une infrastructure largement
+distribuée, tout en fournissant les performances requises.
+
+Il est en général difficile de tester ces logiciels en utilisant
+l'infrastructure de production. D'une part, il est peu probable que
+l'infrastructure de production fournisse le comportement souhaité pendant les
+tests : lors du test de la résistance aux pannes d'un logiciel, il serait peu
+confortable d'attendre une panne sur l'infrastructure de production pour
+vérifier son bon fonctionnement. D'autre part, il n'est pas forcément possible
+de remplacer un composant central de l'infrastructure pour en tester une
+modification sans gêner les utilisateurs.
+
+Dans ce travail, nous proposons d'utiliser la plate-forme
+Grid'5000~\cite{grid5000,grid5000web}, dédiée à la recherche sur les systèmes
+et le calcul parallèle, pour tester l'infrastructure logicielle des grilles de
+production.  Nous visons les cas d'utilisation suivants :
+\begin{description}
+\item[foo]
+\item[bar]
+\item[baz]
+\end{description}
+
+\section{Développements}
+\todo{Développements, déploiement sur la grille : Environ une demi-page}
+
+La plate-forme Grid'5000 est composée de 1700 machines (7000 coeurs) répartis
+dans 10 sites en France. Elle dispose de fonctionnalités de reconfiguration du
+matériel et du réseau : les utilisateurs peuvent, après avoir réservé des
+ressources, réinstaller les machines réservées avec le système requis pour leur
+expérience.
+
+Cette fonctionnalité a été utilisée pour développer un ensemble de scripts
+permettant d'automatiser le déployement d'une infrastructure gLite sur
+Grid'5000, composée de:
+\begin{itemize}
+\item une VO et son VOMS (\textsl{Virtual Organization Membership Service}), annuaire des utilisateurs ;
+\item plusieurs sites, composés de:
+\begin{itemize}
+	\item un BDII (\textsl{Berkeley Database Information Index}), annuaire des ressources disponibles sur chaque site ;
+	\item un CE (\textsl{Computing Element}), interface de soumission des tâches ;
+	\item un WMS (\textsl{Workload Management System}); dans le cadre de notre travail, Torque a été utilisé ;
+	\item une UI (\textsl{User Interface}), interface d'accès pour les utilisateurs ;
+	\item un ou plusieurs clusters composés de noeuds de calcul.
+\end{itemize}
+\end{itemize}
+
+\section{Outils}
+\todo{Outils, difficultés rencontrées : Environ une demi-page}
+
+\section{Résultats scientifiques}
+\todo{Résultats scientifiques : Environ une demi-page à trois quarts de page}
+
+\begin{verbatim}
+2 déploiements:
+- l'un en matchant les sites \& clusters Grid'5000
+- l'autre en "unifiant" les ressources, et en déployant un grand
+  nombre de VO (50?) / clusters
++ infos de timing
+
+Q: terminologie gLite: VO vs site, etc?
+Q: liens vers les meilleures documentations utilisées?
+\end{verbatim}
+
+\section{Perspectives}
+\todo{Perspectives : Environ une demi-page}
+
+\section{Références}
+\todo{Références : Environ une demi-page}
+
+\begin{verbatim}
+
+http://graal.ens-lyon.fr/~desprez/FILES/ProdRech.html
+\end{verbatim}
+
+
+\end{document}
+
