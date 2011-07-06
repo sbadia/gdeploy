@@ -19,9 +19,7 @@ end
 desc "Clean conf files"
 task :clean do
   sh "rm -f ./conf/exports"
-  sh "rm -rf ./conf/bordeaux"
-  sh "rm -rf ./conf/nancy"
-  #sh "rm -rf ./conf/{orsay,lille,nancy,lyon,grenoble,sophia,bordeaux,rennes,toulouse,luxembourg,reims}"
+  sh "rm -rf ./conf/{orsay,lille,nancy,lyon,grenoble,sophia,bordeaux,rennes,toulouse,luxembourg,reims}"
 end
 
 task :default => :upload
