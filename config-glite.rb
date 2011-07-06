@@ -12,6 +12,7 @@ if ARGV.length < 1
   exit 1
 end
 
+install = 1
 $d = YAML::load(IO::read(ARGV[0]))
 puts "\033[1;32m####\033[0m Loaded config file #{ARGV[0]}"
 
@@ -221,13 +222,14 @@ $d['sites'].each_pair do |sname, sconf|
   sconf['clusters'].each_pair do |cname, cconf|
     queue_config(sname, cconf['nodes'])
     File.open("#{DIR}/conf/#{sname}/wn-list.conf", "w") do |fd|
-      fd.puts cconf['nodes'].join(":#{cname}\n")
+      #fd.puts cconf['nodes'].join(":#{cname}\n")
+      fd.puts cconf['nodes'].join("\n")
     end
     $nodes += cconf['nodes']
   end
 end
 p $nodes
-if ARGV[1]== 1:
+if install == 1:
   puts "\033[1;36m###\033[0m Update distrib"
   Net::SSH::Multi.start do |session|
     $nodes.each do |node|
@@ -256,7 +258,7 @@ if ARGV[1]== 1:
     first_site = $d['sites'].keys.first
     puts "\033[1;33m==>\033[0m Configuring VO=#{first_site} on VOMS=#{conf['voms']}"
     Net::SSH.start(conf['voms'], 'root') do |ssh|
-      ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
+      ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{first_site}/site-info.def /root/yaim/site-info.def")
       ssh.exec!("cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x setup.sh && sh setup.sh")
       ssh.exec!("yum install mysql-server glite-VOMS_mysql -q -y --nogpgcheck > /dev/null 2>&1")
       ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1")
@@ -268,9 +270,10 @@ if ARGV[1]== 1:
     end
     # Distri
     Dir::mkdir("#{DIR}/conf/#{first_site}ca/", 0755)
-    Net::SCP.start(conf['voms'], 'root') do |scp|
-      scp.download!("*.tgz", "#{DIR}/conf/#{first_site}ca/")
-    end
+    #Net::SCP.start(conf['voms'], 'root') do |scp|
+    #  scp.download!("*.tgz", "#{DIR}/conf/#{first_site}ca/")
+    #end
+    system("scp -o BatchMode=yes root@#{conf['voms']}:*.tgz /#{DIR}/conf/#{first_site}ca/")
     $nodes.each do |node|
       Net::SCP.start(node, 'root') do |scp|
        scp.upload!("#{DIR}/conf/#{fist_site}ca/", "/opt/glite/yaim/etc/conf", :recursive => true)
