@@ -256,10 +256,10 @@ if install == 1:
   puts "\033[1;36m###\033[0m Configuring VOs"
   $d['VOs'].each_pair do |name, conf|
     first_site = $d['sites'].keys.first
-    puts "\033[1;33m==>\033[0m Configuring VO=#{first_site} on VOMS=#{conf['voms']}"
+    puts "\033[1;33m==>\033[0m Configuring VO=#{name} on VOMS=#{conf['voms']}"
     Net::SSH.start(conf['voms'], 'root') do |ssh|
       ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{first_site}/site-info.def /root/yaim/site-info.def")
-      ssh.exec!("cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x setup.sh && sh setup.sh")
+      ssh.exec!("cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x setup.sh && bash setup.sh && echo 'ca ok'")
       ssh.exec!("yum install mysql-server glite-VOMS_mysql -q -y --nogpgcheck > /dev/null 2>&1")
       ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1")
       ssh.exec!("sed -e 's/VOMS_DB_HOST=#{conf['voms']}/VOMS_DB_HOST=localhost/' -i /root/yaim/site-info.def")
@@ -276,7 +276,7 @@ if install == 1:
     system("scp -o BatchMode=yes root@#{conf['voms']}:*.tgz /#{DIR}/conf/#{first_site}ca/")
     $nodes.each do |node|
       Net::SCP.start(node, 'root') do |scp|
-       scp.upload!("#{DIR}/conf/#{fist_site}ca/", "/opt/glite/yaim/etc/conf", :recursive => true)
+       scp.upload!("#{DIR}/conf/#{first_site}ca/", "/opt/glite/yaim/etc/conf", :recursive => true)
       end
     end
   end
