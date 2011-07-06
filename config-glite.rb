@@ -27,12 +27,9 @@ extinction = Proc.new{
   end
 end
 
-# FIXME
-# Site other clusters
-# (listes des clusters d'un site)
-
-def conf_site(vo, bdii, sname, cehost, batch, voms, ui)
+def conf_site(vo, bdii, sname, cehost, batch, voms, ui, clusters)
   f = File.new("#{DIR}/conf/#{sname}/site-info.def", "w")
+  clusters_string = clusters.keys.map { |c| c.upcase }.join('|')
   f.puts <<-EOF
 ## Site-info.def Bdii
 SITE_BDII_HOST="#{bdii}"
@@ -45,7 +42,7 @@ SITE_EMAIL=root@localhost
 SITE_SECURITY_EMAIL=sbadia@f#{sname}.#{sname}.grid5000.fr
 SITE_SUPPORT_EMAIL=sbadia@f#{sname}.#{sname}.grid5000.fr
 SITE_DESC="Grid5000 - gLite"
-SITE_OTHER_GRID=""
+SITE_OTHER_GRID="#{clusters_string}"
 BDII_REGIONS="CE SITE_BDII BDII WMS"
 BDII_CE_URL="ldap://#{cehost}:2170/mds-vo-name=resource,o=grid"
 BDII_SITE_BDII_URL="ldap://#{bdii}:2170/mds-vo-name=resource,o=grid"
@@ -180,6 +177,7 @@ end
 
 def queue_config(sname, wn)
   f = File.new("#{DIR}/conf/#{sname}/queue.conf", "w")
+  p wn
   f.puts <<-EOF
 #!/bin/sh
 qmgr << EOF
@@ -220,7 +218,7 @@ puts "\033[1;36m###\033[0m Create conf files"
 $d['sites'].each_pair do |sname, sconf|
   puts "\033[1;33m==>\033[0m Generate conf::#{sname}"
     Dir::mkdir("#{DIR}/conf/#{sname}/", 0755)
-    conf_site($my_vo, sconf['bdii'], sname, sconf['ce'], sconf['batch'], $my_voms, sconf['ui'])
+    conf_site($my_vo, sconf['bdii'], sname, sconf['ce'], sconf['batch'], $my_voms, sconf['ui'], sconf['clusters'])
     $nodes << sconf['bdii']
     $nodes << sconf['ce']
     $nodes << sconf['batch']
@@ -229,18 +227,11 @@ $d['sites'].each_pair do |sname, sconf|
     conf_groups(sname, $my_vo)
     export_nfs()
   sconf['clusters'].each_pair do |cname, cconf|
-    # FIXME
-    # fonction pour liste de noeuds voir fwn
-    #list_wn(sname, "#{cconf['nodes']}")
-    # FIXME
-    # wn.length ne va pas
-    queue_config(sname, "#{cconf['nodes']}")
-    fwn = File.new("#{DIR}/conf/#{sname}/wn-list.conf", "w")
-    cconf['nodes'].each do |n|
-      fwn.write "#{n}\n"
-      $nodes << n
+    queue_config(sname, cconf['nodes'])
+    File.open("#{DIR}/conf/#{sname}/wn-list.conf", "w") do |fd|
+      fd.puts cconf['nodes'].join("\n")
     end
-    fwn.close
+    $nodes += cconf['nodes']
   end
 end
 
