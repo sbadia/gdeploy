@@ -255,7 +255,8 @@ if ARGV[1]== 1:
   $d['VOs'].each_pair do |name, conf|
     puts "\033[1;33m==>\033[0m Configuring VO=#{name} on VOMS=#{conf['voms']}"
     Net::SSH.start(conf['voms'], 'root') do |ssh|
-      ssh.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
+      ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
+      ssh.exec!("cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x setup.sh && sh setup.sh")
       ssh.exec!("yum install mysql-server glite-VOMS_mysql -q -y --nogpgcheck > /dev/null 2>&1")
       ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1")
       ssh.exec!("sed -e 's/VOMS_DB_HOST=#{conf['voms']}/VOMS_DB_HOST=localhost/' -i /root/yaim/site-info.def")
@@ -264,6 +265,16 @@ if ARGV[1]== 1:
       ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1')
       ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
     end
+    # Distri
+    Dir::mkdir("#{DIR}/conf/#{name}/", 0755)
+    Net::SCP.start(conf['voms'], 'root') do |scp|
+      scp.download!("*.tgz", "#{DIR}/conf/#{name}/")
+    end
+    $nodes.each do |node|
+      Net::SCP.start(node, 'root') do |scp|
+       scp.upload!("#{DIR}/conf/#{name}/", "/opt/glite/yaim/etc/conf", :recursive => true)
+      end
+    end
   end
 
   puts "\033[1;36m###\033[0m Configuring sites"
@@ -271,13 +282,13 @@ if ARGV[1]== 1:
     puts "\033[1;33m==>\033[0m Configuring site=#{sname}"
     puts "\033[1;35m=>\033[0m BDII on #{sconf['bdii']}"
       Net::SSH.start(sconf['bdii'], 'root') do |ssh|
-       ssh.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
+       ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
        ssh.exec!('yum install glite-BDII -q -y')
        ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1 && echo -e "\ngLite Bdii - (Ldap Berkley database index)\n" >> /etc/motd')
       end
     puts "\033[1;35m=>\033[0m Batch on #{sconf['batch']}"
       Net::SSH.start(sconf['batch'], 'root') do |ssh|
-       ssh.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
+       ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
        ssh.exec!('yum install glite-TORQUE_server -q -y')
        ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz')
        ssh.exec!('mkdir -p /var/spool/pbs/server_logs && mkdir -p /var/spool/pbs/server_priv/accounting')
@@ -302,7 +313,9 @@ if ARGV[1]== 1:
     puts "\033[1;33m==>\033[0m Configuring site=#{sname}"
     puts "\033[1;35m=>\033[0m CE on #{sconf['ce']}"
       Net::SSH.start(sconf['ce'], 'root') do |ssh|
-       ssh.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
+       ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
+       ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{$my_vo}/ca.tgz /root/ && cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x install.sh && sh install.sh")
+       ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{$my_vo}/ce.tgz /etc/grid-security/ && tar xzf /etc/grid-security/ce.tgz")
        ssh.exec!("yum install glite-CREAM glite-TORQUE_utils lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
        ssh.exec!('mkdir -p /var/spool/pbs/server_priv/accounting && mkdir -p /var/spool/pbs/server_logs')
        ssh.exec!("echo '#{sconf['batch']}:/var/spool/pbs/server_priv/accounting /var/spool/pbs/server_priv/accounting nfs     rw,nfsvers=3,hard,intr,async,noatime,nodev,nosuid,auto,rsize=32768,wsize=32768  0' >> /etc/fstab")
@@ -313,6 +326,8 @@ if ARGV[1]== 1:
     puts "\033[1;35m=>\033[0m UI on #{sconf['ui']}"
       Net::SSH.start(sconf['ui'], 'root') do |ssh|
        ssh.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
+       ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{$my_vo}/ca.tgz /root/ && cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x install.sh && sh install.sh")
+       ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{$my_vo}/ui.tgz /etc/grid-security/ && tar xzf /etc/grid-security/ui.tgz")
        ssh.exec!("yum groupinstall glite-UI -q -y && yum install lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl")
        ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 766 /var/log/bdii/bdii-update.log")
        ssh.exec!('yum install gcc -q -y && chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1')
