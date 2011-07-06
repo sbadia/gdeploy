@@ -158,14 +158,6 @@ EOF
   f.close
 end
 
-def list_wn(sname, wn)
-  f = File.new("#{DIR}/conf/#{sname}/wn-list.conf", "w")
-    for i in wn
-      f.write "#{i}\n"
-    end
-  f.close
-end
-
 def export_nfs()
   f = File.new("#{DIR}/conf/exports", "w")
   f.puts <<-EOF
@@ -211,7 +203,7 @@ $nodes = []
 $d['VOs'].each_pair do |name, conf|
   $my_vo = name
   $my_voms = conf['voms']
-  $nodes << conf['voms']
+  $nodes = conf['voms']
 end
 
 puts "\033[1;36m###\033[0m Create conf files"
@@ -219,10 +211,10 @@ $d['sites'].each_pair do |sname, sconf|
   puts "\033[1;33m==>\033[0m Generate conf::#{sname}"
     Dir::mkdir("#{DIR}/conf/#{sname}/", 0755)
     conf_site($my_vo, sconf['bdii'], sname, sconf['ce'], sconf['batch'], $my_voms, sconf['ui'], sconf['clusters'])
-    $nodes << sconf['bdii']
-    $nodes << sconf['ce']
-    $nodes << sconf['batch']
-    $nodes << sconf['ui']
+    $nodes += sconf['bdii']
+    $nodes += sconf['ce']
+    $nodes += sconf['batch']
+    $nodes += sconf['ui']
     conf_users(sname ,$my_vo)
     conf_groups(sname, $my_vo)
     export_nfs()
