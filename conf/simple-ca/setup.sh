@@ -45,29 +45,17 @@ mkdir ui
 mv host* ui
 cp -f voms/host* /etc/grid-security/
 cd /root
-echo "--> usercert nancy001"
-$GLOBUS_LOCATION/bin/grid-cert-request
-cd /root/.globus/
-$GLOBUS_LOCATION/bin/grid-ca-sign -in usercert_request.pem -out signed.pem -passin pass:toto
-mv signed.pem usercert.pem
+#echo "--> usercert nancy001"
+#$GLOBUS_LOCATION/bin/grid-cert-request
+#cd /root/.globus/
+#$GLOBUS_LOCATION/bin/grid-ca-sign -in usercert_request.pem -out signed.pem -passin pass:toto
+#mv signed.pem usercert.pem
 echo "--> prepare export"
 cd /etc/grid-security/
 tar czf ui.tgz ui/*
 tar czf ce.tgz ce/*
 mv *.tgz /root/
-cd /root/.globus/
-tar cvzf nancy001.tgz user*
-mv *.tgz /root/
+#cd /root/.globus/
+#tar cvzf nancy001.tgz user*
+#mv *.tgz /root/
 cp /root/.globus/simpleCA/globus_simple_ca_${HASH}_setup-0.18.tar.gz /root/ca.tgz
-cd /root/
-scp ui.tgz root@$UI_HOST:
-scp ca.tgz root@$UI_HOST:
-# SET GPT_LOCATION and GLOBUS_LOCATION
-ssh root@$UI_HOST "/opt/gpt/sbin/gpt-build /root/ca.tgz gcc32dbg"
-ssh root@$UI_HOST "/opt/gpt/sbin/gpt-postinstall"
-ssh root@$UI_HOST "/opt/globus/setup/globus_simple_ca_${HASH}_setup/setup-gsi -default"
-scp ui.tgz root@$CE_HOST:
-scp ca.tgz root@$CE_HOST:
-ssh root@$CE_HOST "/opt/gpt/sbin/gpt-build /root/ca.tgz gcc32dbg"
-ssh root@$CE_HOST "/opt/gpt/sbin/gpt-postinstall"
-ssh root@$CE_HOST "/opt/globus/setup/globus_simple_ca_${HASH}_setup/setup-gsi -default"
