@@ -286,7 +286,7 @@ if install == 1:
       system("ssh root@#{$my_voms} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x certs.sh && /bin/bash certs.sh #{sconf['ce']} #{sconf['ui']}'")
       system("scp -o BatchMode=yes root@#{$my_voms}:ui.tgz /#{DIR}/conf/#{sname}/")
       system("scp -o BatchMode=yes root@#{$my_voms}:ce.tgz /#{DIR}/conf/#{sname}/")
-      system("ssh root@#{$my_voms} -o BatchMode=yes 'rm -f /root/ui.tgz && rm -f /root/ce.tgz'"
+      system("ssh root@#{$my_voms} -o BatchMode=yes 'rm -f /root/ui.tgz && rm -f /root/ce.tgz'")
       $nodes.each do |node|
         Net::SCP.start(node, 'root') do |scp|
          scp.upload!("#{DIR}/conf/#{sname}/", "/opt/glite/yaim/etc/conf", :recursive => true)
