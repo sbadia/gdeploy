@@ -10,14 +10,15 @@ export GLOBUS_LOCATION="/opt/globus"
 export GPT_LOCATION="/opt/gpt"
 echo "--> usercert toto1"
 adduser toto1
-su -c "$GLOBUS_LOCATION/bin/grid-cert-request" -l toto1
+su -c "$GLOBUS_LOCATION/bin/grid-cert-request -nopw -cn toto1" -l toto1
 cd /home/toto1/.globus/
 echo "--> prepare export and sign"
-scp -o BatchMode=yes user* root@$VOMS_HOST:
-ssh -o BatchMode=yes root@$VOMS_HOST "export GLOBUS_LOCATION='/opt/globus' && $GLOBUS_LOCATION/bin/grid-ca-sign -in usercert_request.pem -out signed.pem -passin pass:toto"
-ssh -o BatchMode=yes root@$VOMS_HOST "mv signed.pem usercert.pem"
+scp -o StrictHostKeyChecking=no -o BatchMode=yes user* root@$VOMS_HOST:
+ssh -o StrictHostKeyChecking=no -o BatchMode=yes root@$VOMS_HOST "export GLOBUS_LOCATION='/opt/globus' && $GLOBUS_LOCATION/bin/grid-ca-sign -in usercert_request.pem -out signed.pem -passin pass:toto"
+ssh -o StrictHostKeyChecking=no -o BatchMode=yes root@$VOMS_HOST "mv signed.pem usercert.pem"
 rm -rf user*
-scp root@$VOMS_HOST:user* ./
+scp -o StrictHostKeyChecking=no -o BatchMode=yes root@$VOMS_HOST:user* ./
 chown -R toto1:toto1 /home/toto1
 chmod 600 userkey.pem
+echo 'toto1' | passwd --stdin toto1
 exit 0
