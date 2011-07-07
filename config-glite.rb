@@ -334,7 +334,6 @@ if install == 1:
        ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{$my_vo}/* /root/ && cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x install.sh")
        ssh.exec!("yum install glite-CREAM glite-TORQUE_utils lcg-CA gcc gcc44 -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
        ssh.exec!('mkdir -p /var/spool/pbs/server_priv/accounting && mkdir -p /var/spool/pbs/server_logs')
-       ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{sname}/ce.tgz /etc/grid-security/ && cd /etc/grid-security/ && tar xzf ce.tgz && mv ce/* ./")
        system("sh root@#{sconf['ce']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash copycert.sh #{sname} ce'")
        ssh.exec!("echo '#{sconf['batch']}:/var/spool/pbs/server_priv/accounting /var/spool/pbs/server_priv/accounting nfs     rw,nfsvers=3,hard,intr,async,noatime,nodev,nosuid,auto,rsize=32768,wsize=32768  0' >> /etc/fstab")
        ssh.exec!("echo '#{sconf['batch']}:/var/spool/pbs/server_logs /var/spool/pbs/server_logs nfs     rw,nfsvers=3,hard,intr,async,noatime,nodev,nosuid,auto,rsize=32768,wsize=32768  0' >> /etc/fstab")
@@ -354,7 +353,7 @@ if install == 1:
        system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash install.sh'")
        ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1')
        ssh.exec!('echo -e "\ngLite UI - (User Interface)\n" >> /etc/motd')
-       system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash user.sh'")
+       system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash user.sh #{$my_vo}'")
       end
     system("ssh root@#{$my_voms} -o BatchMode=yes 'rm -f /root/ui.tgz && rm -f /root/ce.tgz'")
   end
