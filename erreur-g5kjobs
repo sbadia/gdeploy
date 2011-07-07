@@ -1,0 +1,8 @@
+/sid/grid5000/sites/nancy/jobs/330300 running
+/usr/lib/ruby/gems/1.8/gems/rest-client-1.6.1/lib/restclient/request.rb:174:in `transmit': Request Timeout (RestClient::RequestTimeout)
+	from /usr/lib/ruby/gems/1.8/gems/rest-client-1.6.1/lib/restclient/request.rb:60:in `execute'
+	from /usr/lib/ruby/gems/1.8/gems/rest-client-1.6.1/lib/restclient/request.rb:31:in `execute'
+	from /usr/lib/ruby/gems/1.8/gems/rest-client-1.6.1/lib/restclient/resource.rb:54:in `get'
+	from g5kjobs.rb:42
+	from g5kjobs.rb:41:in `each'
+	from g5kjobs.rb:41
