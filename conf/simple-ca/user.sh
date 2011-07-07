@@ -7,6 +7,7 @@ VOMS_HOST=$1
 export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:$PATH"
 export GLOBUS_LOCATION="/opt/globus"
 export GPT_LOCATION="/opt/gpt"
+export TERM="xterm"
 echo "--> usercert toto1"
 adduser toto1
 su -c "$GLOBUS_LOCATION/bin/grid-cert-request -nopw -cn toto1" -l toto1

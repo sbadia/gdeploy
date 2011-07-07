@@ -7,6 +7,7 @@ UI_HOST=$2
 export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:$PATH"
 export GLOBUS_LOCATION="/opt/globus"
 export GPT_LOCATION="/opt/gpt"
+export TERM="xterm"
 sleep 2
 cd /etc/grid-security/
 mv -f host* voms
