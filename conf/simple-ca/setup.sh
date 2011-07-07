@@ -1,10 +1,13 @@
 #!/bin/sh
 # A lancer sur le voms
+set -x
+set -e
 export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:$PATH"
 export GLOBUS_LOCATION="/opt/globus"
 export GPT_LOCATION="/opt/gpt"
 source /root/yaim/site-info.def
 echo "--> run gpt-postinstall"
+sleep 2
 $GPT_LOCATION/sbin/gpt-postinstall
 echo "--> install simple-ca"
 cp -f /opt/glite/yaim/etc/conf/simple-ca/setup-simple-ca $GLOBUS_LOCATION/setup/globus/setup-simple-ca
