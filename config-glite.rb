@@ -57,9 +57,9 @@ CE_SMPSIZE=`grep -c processor /proc/cpuinfo`
 VOS="#{vo}"
 QUEUES="default"
 DEFAULT_GROUP_ENABLE="#{vo}"
-USERS_CONF=/opt/glite/yaim/etc/conf/users.conf
-GROUPS_CONF=/opt/glite/yaim/etc/conf/groups.conf
-WN_LIST=/opt/glite/yaim/etc/conf/wn-list.conf
+USERS_CONF=/opt/glite/yaim/etc/conf/#{sname}/users.conf
+GROUPS_CONF=/opt/glite/yaim/etc/conf/#{sname}/groups.conf
+WN_LIST=/opt/glite/yaim/etc/conf/#{sname}/wn-list.conf
 CONFIG_MAUI="yes"
 
 ## Site-info.def Batch
@@ -271,6 +271,7 @@ if install == 1:
     # Distri
     Dir::mkdir("#{DIR}/conf/#{$my_vo}/", 0755)
     system("scp -o BatchMode=yes root@#{conf['voms']}:*.tgz /#{DIR}/conf/#{$my_vo}/")
+    system("scp -o BatchMode=yes root@#{conf['voms']}:*.gz /#{DIR}/conf/#{$my_vo}/")
     system("scp -o BatchMode=yes root@#{conf['voms']}:hash /#{DIR}/conf/#{$my_vo}/")
     $nodes.each do |node|
       Net::SCP.start(node, 'root') do |scp|
@@ -282,7 +283,7 @@ if install == 1:
   puts "\033[1;36m###\033[0m Configuring sites"
   $d['sites'].each_pair do |sname, sconf|
     puts "\033[1;33m==>\033[0m Configuring site=#{sname}"
-    puts "\033[1;35m=>\033[0m Create certificats for (#{sconf['ce']},#{sconf['ui']}"
+    puts "\033[1;35m=>\033[0m Create certificats for (ce: #{sconf['ce']}, ui: #{sconf['ui']})"
       system("ssh root@#{$my_voms} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x certs.sh && /bin/bash certs.sh #{sconf['ce']} #{sconf['ui']}'")
       system("scp -o BatchMode=yes root@#{$my_voms}:ui.tgz /#{DIR}/conf/#{sname}/")
       system("scp -o BatchMode=yes root@#{$my_voms}:ce.tgz /#{DIR}/conf/#{sname}/")
@@ -304,9 +305,9 @@ if install == 1:
        ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz')
        ssh.exec!('mkdir -p /var/spool/pbs/server_logs && mkdir -p /var/spool/pbs/server_priv/accounting')
        ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-TORQUE_server -d 1')
-       ssh.exec!('cat /opt/glite/yaim/etc/conf/exports >> /etc/exports && /etc/init.d/nfs restart')
+       ssh.exec!("cat /opt/glite/yaim/etc/conf/#{sname}/exports >> /etc/exports && /etc/init.d/nfs restart")
        ssh.exec!('/opt/glite/yaim/bin/yaim -r -s /root/yaim/site-info.def -f config_maui_cfg')
-       ssh.exec!('sh /opt/glite/yaim/etc/conf/queue.conf && /etc/init.d/maui restart && echo -e "\ngLite Batch\n" >> /etc/motd')
+       ssh.exec!("sh /opt/glite/yaim/etc/conf/#{sname}/queue.conf && /etc/init.d/maui restart && echo -e "\ngLite Batch\n" >> /etc/motd")
       end
     puts "\033[1;33m==>\033[0m Configuring #{sname}'s clusters"
     sconf['clusters'].each_pair do |cname, cconf|
