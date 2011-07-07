@@ -101,7 +101,7 @@ Grid'5000, composée de:
 		tâches ;
 
 	\item un WMS (\textsl{Workload Management System}); dans le cadre de
-		notre travail, Torque a été utilisé ;
+		notre travail, le couple Torque/Maui a été utilisé ;
 
 	\item une UI (\textsl{User Interface}), interface d'accès pour les
 		utilisateurs ;
@@ -114,12 +114,23 @@ Grid'5000, composée de:
 Le processus est composé de différentes étapes implémentées dans différents
 scripts qu'il est possible d'enchainer automatiquement.  D'abord, les machines
 réservées sont réinstallées avec une installation Scientific Linux 5.5
-minimale. Puis le dépot RPM de gLite (\textsl{glitesoft.cern.ch}) est ajouté,
+minimale. Puis le dépôt RPM de gLite (\textsl{glitesoft.cern.ch}) est ajouté,
 et les paquets nécessaires sont installés en fonction du rôle choisi pour la
 machine cible (VOMS, BDII, noeud de travail, \ldots). Enfin, l'ensemble des
 noeuds sont configurés.
 
 \todo{dire un mot de l'infra au niveau certificats ?}
+gLite repose sur un système de certificats clients/serveurs, pour autoriser l'accès
+ou non aux ressources, trois possibilités :
+\begin{listing}
+\item Demander un certificat signé par une autorité de certification externe
+\item Créer sa	propre autorité et signer soit même les certificats (SimpleCA).
+\item Créer un certificat auto-signé et l'injecter dans la racine
+\end{listing}
+Nous avons donc suivi la méthode 2, une autorité de certification est donc déployé à
+l'aide des scipts "simpleCA" disponible dans l'archive Globus.\footnote{http://www.globus.org/toolkit/docs/4.0/admin/docbook/ch07.html}
+Celle-ci est situé sur note voms, des scripts ont été développés pour permettre la signature
+immédiate et transparent des certificats machine et utilisateurs.
 
 Deux difficultés importantes ont été rencontrées :
 
