@@ -269,12 +269,12 @@ if install == 1:
       ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
     end
     # Distri
-    Dir::mkdir("#{DIR}/conf/#{$my_voms}/", 0755)
-    system("scp -o BatchMode=yes root@#{conf['voms']}:*.tgz /#{DIR}/conf/#{$my_voms}/")
-    system("scp -o BatchMode=yes root@#{conf['voms']}:hash /#{DIR}/conf/#{$my_voms}/")
+    Dir::mkdir("#{DIR}/conf/#{$my_vo}/", 0755)
+    system("scp -o BatchMode=yes root@#{conf['voms']}:*.tgz /#{DIR}/conf/#{$my_vo}/")
+    system("scp -o BatchMode=yes root@#{conf['voms']}:hash /#{DIR}/conf/#{$my_vo}/")
     $nodes.each do |node|
       Net::SCP.start(node, 'root') do |scp|
-       scp.upload!("#{DIR}/conf/#{$my_voms}/", "/opt/glite/yaim/etc/conf", :recursive => true)
+       scp.upload!("#{DIR}/conf/#{$my_vo}/", "/opt/glite/yaim/etc/conf", :recursive => true)
       end
     end
   end
