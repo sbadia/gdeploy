@@ -16,6 +16,7 @@ echo "--> prepare export and sign"
 scp -o StrictHostKeyChecking=no -o BatchMode=yes user* root@$VOMS_HOST:
 ssh -o StrictHostKeyChecking=no -o BatchMode=yes root@$VOMS_HOST "export GLOBUS_LOCATION='/opt/globus' && $GLOBUS_LOCATION/bin/grid-ca-sign -in usercert_request.pem -out signed.pem -passin pass:toto"
 ssh -o StrictHostKeyChecking=no -o BatchMode=yes root@$VOMS_HOST "mv signed.pem usercert.pem"
+ssh -o StrictHostKeyChecking=no -o BatchMode=yes root@$VOMS_HOST "/opt/glite/sbin/voms-db-deploy.py add-admin --vo grid5000 --cert usercert.pem"
 rm -rf user*
 scp -o StrictHostKeyChecking=no -o BatchMode=yes root@$VOMS_HOST:user* ./
 chown -R toto1:toto1 /home/toto1
