@@ -1,8 +1,0 @@
-If the CN=root is not appropriate, rerun this
-script with the -force -cn "Common Name" options.
-
-Your private key is stored in /root/.globus/userkey.pem
-Your request is stored in /root/.globus/usercert_request.pem
-
-Please e-mail the request to the Globus Simple CA root@localhost
-You may use a command similar to the following:
