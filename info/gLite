@@ -1,0 +1,33 @@
+Point gLite 14/06
+=================
+objectif: gLite 3.2  http://glite.cern.ch/R3.2/
+
+Ce qui marche:
+==============
+déployer tous les services indépendemment pour un site de base
+
+obligatoire:
+BDII: annuaire des services dispos sur un site
+CE: computing element, qui interagit avec le batch (= resource broker, RB)
+UI: service de plus haut niveau utilisé par les utilisateurs finaux (+ interaction avec les UI des autres sites). Implémente certification, auth, etc. Parle avec BDII, CE, SE, ...
+VOMS: annuaire orienté utilisateurs
+facultatif:
+SE: storage element: 1 LFC (= "cette donnée est sur ce DPM") + DPMs (disk pool managers)
+
+prochaines étapes:
+- scripter la génération des certificats en fonction des machines et des utilisateurs
+- image générique
+
+Plan:
+V0: BDII+CE+UI+VOMS+ts les certifs générés automatiquement en mono-VO
+V1: + plusieurs VO
+V2: + DNS perso?
+V3: + SE
+V4: + déploiement avec Ruote
+indépendant: image SL générique
+
+V1/V2 pour le 06/07
+
+Future work:
+SL6?
+expés réelles [voir T. Glatard / Vincent Breton / Fred Suter]

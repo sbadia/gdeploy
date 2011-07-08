@@ -1,0 +1,89 @@
+=== simple ca ===
+
+export GLOBUS_LOCATION="/opt/globus"
+export GPT_LOCATION="/opt/gpt"
+/opt/gpt/sbin/gpt-postinstall
+mv setup-simple-ca /opt/globus/setup/globus/setup-simple-ca
+mv globus_simple_ca_setup_template.tar.gz /opt/globus/setup/globus/globus_simple_ca_setup_template.tar.gz
+
+$GLOBUS_LOCATION/setup/globus/setup-simple-ca
+  --> y
+  --> g5kadmin@fgrimoire.nancy.grid5000.fr
+  --> 1825 (5ans)
+  --> toto
+
+/O=Grid/OU=GlobusTest/OU=simpleCA-graphene-46.nancy.grid5000.fr/CN=Globus Simple CA
+
+
+$GLOBUS_LOCATION/setup/globus_simple_ca_<ca hash>__setup/setup-gsi -default
+(copie dans grid-security, et installation).
+
+$GPT_LOCATION/sbin/gpt-build /root/.globus/simpleCA//globus_simple_ca_274a23e6_setup-0.18.tar.gz
+
+$GPT_LOCATION/sbin/gpt-postinstall
+
+
+=== demande certs ===
+/opt/globus/bin/grid-cert-request -host `hostname -f`
+--> /etc/grid-security/host{key,cert,request}.pem
+
+/O=Grid/OU=GlobusTest/OU=simpleCA-graphene-46.nancy.grid5000.fr/CN=host/graphene-46.nancy.grid5000.fr
+
+[mail]
+mv grid-ca-sign /opt/globus/bin/grid-ca-sign
+chmod +x /opt/globus/bin/grid-ca-sign
+/opt/globus/bin/grid-ca-sign -in hostcert_request.pem -out hostsigned.pem
+mv hostsigned.pem hostcert.pem
+
+openssl x509 -text -noout -in hostcert.pem
+
+=== demande usercert ===
+su - sbadia
+grid-cert-request
+
+~/.globus/user{key,cert,request}.pem
+grid-ca-sign -in usercert_request.pem -out signed.pem
+mv signed.pem usercert.pem
+
+=== install ca ui,ce,voms ===
+GLOBUS_LOCATION="/opt/globus"
+GPT_LOCATION="/opt/gpt"
+
+$GLOBUS_LOCATION/sbin/gpt-build globus_simple_<ca hash>_setup-0.17.tar.gz gcc32dbg
+$GLOBUS_LOCATION/sbin/gpt-postinstall
+$GLOBUS_LOCATION/setup/globus_simple_ca_<ca hash>__setup/setup-gsi -default
+
+=== tests ===
+grid-proxy-init -debug -verify
+--> Proxy Verify OK --> :)
+
+
+[sbadia@graphene-48 ~]$ voms-proxy-init --voms nancy --debug
+Detected Globus version: 22
+Unspecified proxy version, settling on Globus version: 2
+Number of bits in key :1024
+Loading configuration file /home/sbadia/.glite/vomses
+Loading configuration file /opt/glite/etc/vomses
+Files being used:
+ CA certificate file: none
+ Trusted certificates directory : /etc/grid-security/certificates
+ Proxy certificate file : /tmp/x509up_u500
+ User certificate file: /home/sbadia/.globus/usercert.pem
+ User key file: /home/sbadia/.globus/userkey.pem
+Output to /tmp/x509up_u500
+Enter GRID pass phrase:
+Your identity: /O=Grid/OU=GlobusTest/OU=simpleCA-graphene-46.nancy.grid5000.fr/OU=nancy.grid5000.fr/CN=Sebastien Badia
+Using configuration file /home/sbadia/.glite/vomses
+Using configuration file /opt/glite/etc/vomses
+Loading configuration file /home/sbadia/.glite/vomses
+Loading configuration file /opt/glite/etc/vomses
+Creating temporary proxy to /tmp/tmp_x509up_u500_12278 ................++++++
+...........................................++++++
+ Done
+Contacting  graphene-46.nancy.grid5000.fr:15000 [/O=Grid/OU=GlobusTest/OU=simpleCA-graphene-46.nancy.grid5000.fr/CN=host/graphene-46.nancy.grid5000.fr] "nancy" Failed
+
+Error: nancy: User unknown to this VO.
+
+None of the contacted servers for nancy were capable
+of returning a valid AC for the user.
+[sbadia@graphene-48 ~]$

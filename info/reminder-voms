@@ -1,0 +1,42 @@
+mysqladmin -u root password superpass
+chmod 777 /var/log/bdii/
+/opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS
+
+
+
+glite-voms-proxy-destroy
+glite-voms-proxy-info
+glite-voms-proxy-init
+openssl x509 -in /etc/grid-security/vomsdir/certif-Fncy.crt -text -noout
+openssl verify -CApath /etc/grid-security/certificates/ /home/sbadia/.globus/usercert.pem
+openssl verify -CApath /etc/grid-security/certificates/ /etc/grid-security/vomsdir/certif-Fncy.crt
+
+
+openssl x509 -noout -hash -in /etc/grid-security/hostcert.pem
+grid-default-ca -list
+
+/opt/globus/setup/globus_simple_ca_9b24b125_setup/setup-gsi -default
+export GPT_LOCATION="/opt/gpt"
+export GPT_INSTALL_LOCATION="/opt/gpt/
+/opt/gpt/sbin/gpt-build globus_simple_ca_HASH_setup-0.17.tar.gz gcc32dbg
+$GLOBUS_LOCATION/sbin/gpt-postinstall
+
+
+could not open config file "/etc/bdii/bdii-slapd.conf": Permission denied (13)
+voms /var/log/bdii/bdii-update.log
+
+
+   INFO: Adding default admin from /etc/grid-security/hostcert.pem
+Admin '/O=Grid/OU=GlobusTest/OU=simpleCA-graphene-46.nancy.grid5000.fr/CN=host/graphene-46.nancy.grid5000.fr,/O=Grid/OU=GlobusTest/OU=simpleCA-graphene-46.nancy.grid5000.fr/CN=Globus Simple CA' already exists in database...
+This admin will be granted full privileges on the VOMS database.
+Adding ALL permissions on '/nancy' for admin '/O=Grid/OU=GlobusTest/OU=simpleCA-graphene-46.nancy.grid5000.fr/CN=host/graphene-46.nancy.grid5000.fr,/O=Grid/OU=GlobusTest/OU=simpleCA-graphene-46.nancy.grid5000.fr/CN=Globus Simple CA'
+Adding ALL permissions on role '/nancy/Role=VO-Admin' for admin '/O=Grid/OU=GlobusTest/OU=simpleCA-graphene-46.nancy.grid5000.fr/CN=host/graphene-46.nancy.grid5000.fr,/O=Grid/OU=GlobusTest/OU=simpleCA-graphene-46.nancy.grid5000.fr/CN=Globus Simple CA'
+
+
+export GPT_LOCATION="/opt/gpt"
+export GLOBUS_LOCATION="/opt/globus"
+$GPT_LOCATION/sbin/gpt-build globus_simple_ca_274a23e6_setup-0.18.tar.gz gcc32dbg
+/opt/gpt/sbin/gpt-postinstall
+/opt/globus/setup/globus_simple_ca_274a23e6_setup/setup-gsi -default
+grid-default-ca -list
+/opt/globus/bin/grid-default-ca -list
