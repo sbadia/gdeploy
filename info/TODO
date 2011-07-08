@@ -1,0 +1,43 @@
+Legende:
+  + : à faire
+  * : fait, en test
+  - : terminé
+
+I]- FIXME/BUGS
+  - VOMS_CA_DN/VOMSES dans la conf CE.
+  - hostkey.pem sans passphrase.
+  - clées ssh/authorized_keys
+  - Certificats dans /etc/grid-security/hostkey.pem.
+  + Output joli.
+  - afficher les briques dans le motd.
+  - hack fetch-crl sur ce.
+  - verif maui (/etc/init.d/maui & pbs_server start)
+  - config queue.
+  - Erreur java lors de l'install des wn et du ce.
+  - Mise en place nfs sur batch pour partage avec ce.
+  - Gestion multiclusters (un ce/batch pour deux clusters).
+
+II]- FEATURES
+  + Gestion 2 nodes (un service/un wn et écrasement conf).
+  + Réorganisation fct/opts pour update, et service seuls.
+  + Ajout des briques lfc/se.
+  + Gestion Multivo (proxy/certificats).
+
+III]- LONG TERM
+  + Gestion conf puppet/cfengine/quattor.org ?
+  + Image sl 6.0/5.5 générique
+
+IV]- TIPS
+  o kernel_params : ETH_DRV=igb ETH_DEV=eth0 \
+    			DISK_DRV=ahci \
+    			console=tty0 console=ttyS0,38400n8
+
+
+== Gdeploy etapes ==
+- Origin $OAR_NODE_FILE ou entrée manuelle (-m node).
+- Determiner le nombre de nodes min pour expé (bdii,batch,ce,ui,lfc,wn).
+- Deployer les noeuds sur sl5.
+- Lancer la génération de la configuration en fonction des noeuds qu'on a.
+- Certification.
+- Deployer la conf sur les machines de service (site-info.def et certifs).
+- Lancer les scripts en fonction de la machine visée.
