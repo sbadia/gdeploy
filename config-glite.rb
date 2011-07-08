@@ -269,10 +269,9 @@ if install == 1:
       ssh.exec!("sed -e 's/VOMS_DB_HOST=#{conf['voms']}/VOMS_DB_HOST=localhost/' -i /root/yaim/site-info.def")
       ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 777 /var/log/bdii/bdii-update.log")
       ssh.exec!("/usr/bin/mysqladmin -u root password superpass && chmod 777 /var/log/bdii")
-      #ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS -d 1')
-      ssh.exec!("echo '/opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS'")
       #ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS')
-      system("ssh root@#{conf['voms']} -o BatchMode=yes 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS'")
+      #system("ssh root@#{conf['voms']} -o BatchMode=yes 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS'")
+      system("ssh root@#{conf['voms']} -o BatchMode=yes 'chmod +x /opt/glite/yaim/etc/conf/yaim/voms.sh && sh /opt/glite/yaim/etc/conf/yaim/voms.sh'")
       ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
     end
     # Distri
@@ -329,8 +328,12 @@ if install == 1:
        end
        session.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
        session.exec("yum groupinstall glite-WN -q -y > /dev/null 2>&1 && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
-       session.exec('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 > /dev/null 2>&1 && echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
+       #session.exec('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 > /dev/null 2>&1 && echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
+       session.exec('echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
        session.loop
+      end
+      cconf['nodes'].each do |n|
+        system("ssh root@#{n} -o BatchMode=yes 'chmod +x /opt/glite/yaim/etc/conf/yaim/wn.sh && sh /opt/glite/yaim/etc/conf/yaim/wn.sh'")
       end
     end
     puts "\033[1;33m==>\033[0m Configuring site=#{sname}"
