@@ -1,7 +1,9 @@
 #!/usr/bin/ruby
 
 # ruby g5kjobs.rb > nodes
-# kadeploy3 -f nodes --multi-server -a http://public.nancy.grid5000.fr/~sbadia/sl55-ahci.dsc -k ~/.ssh/id_dsa.pub -d -V4
+# kadeploy3 -f nodes --multi-server -a http://public.nancy.grid5000.fr/~sbadia/sl55-ahci.dsc -k ~/.ssh/id_dsa.pub -o ~/dnodes
+# ruby list2yaml.rb -g dnodes > g5k.yaml
+# time ruby config-glite.rb g5k.yaml
 
 require 'rubygems'
 require 'restclient'
