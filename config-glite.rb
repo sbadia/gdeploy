@@ -6,7 +6,7 @@ require 'optparse'
 require 'net/scp'
 require 'net/ssh'
 require 'net/ssh/multi'
-require 'peach'
+require 'misc/peach'
 
 if ARGV.length < 1
   puts "config-glite YAMLCONFIG 1 (for install)"
@@ -292,7 +292,7 @@ if install == 1:
   $d['sites'].to_a.peach do |sname, sconf|
     puts "\033[1;33m==>\033[0m Configuring site=#{sname}"
     mutex.synchronize do
-      puts "\033[1;35m=>\033[0m Create certificats for (ce: #{sconf['ce']}, ui: #{sconf['ui']})"
+      puts "\033[1;35m=>\033[0m Create certificats for #{sname} (ce: #{sconf['ce']}, ui: #{sconf['ui']})"
       system("ssh root@#{$my_voms} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x certs.sh && /bin/bash certs.sh #{sconf['ce']} #{sconf['ui']}'")
       system("scp -o BatchMode=yes root@#{$my_voms}:ui.tgz /#{DIR}/conf/#{sname}/")
       system("scp -o BatchMode=yes root@#{$my_voms}:ce.tgz /#{DIR}/conf/#{sname}/")
@@ -301,6 +301,7 @@ if install == 1:
          scp.upload!("#{DIR}/conf/#{sname}/", "/opt/glite/yaim/etc/conf", :recursive => true)
         end
       end
+      system("ssh root@#{$my_voms} -o BatchMode=yes 'rm -f /root/ui.tgz && rm -f /root/ce.tgz'")
     end
     puts "\033[1;35m=>\033[0m BDII on #{sconf['bdii']}"
       Net::SSH.start(sconf['bdii'], 'root') do |ssh|
@@ -360,7 +361,6 @@ if install == 1:
        ssh.exec!('echo -e "\ngLite UI - (User Interface)\n" >> /etc/motd')
        system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash user.sh #{$my_voms}'")
       end
-    system("ssh root@#{$my_voms} -o BatchMode=yes 'rm -f /root/ui.tgz && rm -f /root/ce.tgz'")
   end
 else
   puts "\033[1;31m==> No install\033[0m"
