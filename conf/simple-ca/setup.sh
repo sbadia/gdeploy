@@ -1,7 +1,7 @@
 #!/bin/sh
 # A lancer sur le voms configuration du ca et preparation export
-set -x
-set -e
+#set -x
+#set -e
 VOMS_HOST=`hostname -f`
 export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:$PATH"
 export GLOBUS_LOCATION="/opt/globus"

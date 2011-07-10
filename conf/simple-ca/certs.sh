@@ -1,7 +1,7 @@
 #!/bin/sh
 # A lancer sur le voms
-set -x
-set -e
+#set -x
+#set -e
 CE_HOST=$1
 UI_HOST=$2
 export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:$PATH"

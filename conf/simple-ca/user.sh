@@ -1,8 +1,8 @@
 #!/bin/sh
 # A lancer sur l'ui, sert à configurer automatiquement le cert utilisateur.
 # user.sh <voms>
-set -x
-set -e
+#set -x
+#set -e
 VOMS_HOST=$1
 export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:$PATH"
 export GLOBUS_LOCATION="/opt/globus"
