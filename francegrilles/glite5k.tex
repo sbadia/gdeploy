@@ -2,11 +2,12 @@
 \usepackage{a4wide}
 \usepackage[french]{babel}
 \usepackage[utf8]{inputenc}  %or: \usepackage[latin1]{inputenc}
-\usepackage{color}
-\usepackage{hyperref}
+\usepackage[colorlinks=false]{hyperref}
+%\usepackage{color}
 \usepackage{times}
 
-\newcommand{\todo}[1]{{\color{red}\textsl #1}}
+%\newcommand{\todo}[1]{{\color{red}\textsl #1}}
+\setlength{\parskip}{0.5em}
 
 
 \title{gLite sur Grid'5000:\\ vers une plate-forme d'expérimentation\\ à taille réelle pour les grilles de production}
@@ -20,13 +21,13 @@ INRIA Nancy - Grand Est \& Nancy-Université}
 \maketitle
 
 \section{Overview}
-\todo{Résumé en anglais}
+%\todo{Résumé en anglais}
 
 The Grid has become a huge and important project, playing a key role in the
 everyday work of many researchers. A large amount of software is being developed
-both to manage the grid infrastructure itself (gLite middleware\cite{glite}),
-to facilitate the task of grid users (e.g workflow managers\cite{moteur},
-pilot job managers, etc.), and to run the computations themselves.
+both to manage the grid infrastructure itself (gLite middleware),
+to facilitate the task of grid users (e.g workflow managers,
+pilot job managers, etc.), and to run the computations.
 That software must be designed to handle network and services outages in a
 highly distributed environment, while still providing the expected performance.
 It is inconvenient to test software using the production infrastructure, since
@@ -36,18 +37,17 @@ fault tolerance); (2) it might not be possible to replace key parts of the
 infrastructure without degrading the user experience.
 
 In this paper, we present our ongoing work on deploying the gLite middleware on
-the Grid'5000 testbed. Grid'5000 is a scientific instrument designed to support
-research on parallel, large-scale and distributed computing. It is composed of
-FIXME nodes (FIXME cores) with unique hardware and network reconfiguration
-features: users can reserve nodes, and then automatically re-install them with
-the software environment required for their experiments.
-
-% FIXME réécrire sous forme d'un (vrai) résumé
+the Grid'5000 testbed, a scientific instrument designed to support research on
+parallel, large-scale and distributed computing. Tools were written to
+automatize the deployment of the gLite middleware on several sites and
+clusters, resulting in a deployment of XX sites and XX clusters on XX machines
+in less than XX minutes.  This provides a solid basis for future experiments on
+the gLite middleware and on software that interact with the middleware.
 
 \section{Enjeux scientifiques}
-\todo{Enjeux scientifiques, besoin de la grille : Environ une demi-page}
+%\todo{Enjeux scientifiques, besoin de la grille : Environ une demi-page}
 
-La devenue est devenue une immense et importante plate-forme, qui joue un rôle
+La grille est devenue une immense et importante plate-forme, qui joue un rôle
 clé dans la travail quotidien de nombreux chercheurs. Un grand nombre de
 logiciels ont été développés pour gérer l'infrastructure elle-même (middleware
 gLite\cite{glite}), pour faciliter le travail des utilisateurs (moteurs de
@@ -64,7 +64,7 @@ tests : lors du test de la résistance aux pannes d'un logiciel, il serait peu
 confortable d'attendre une panne sur l'infrastructure de production pour
 vérifier son bon fonctionnement. D'autre part, il n'est pas forcément possible
 de remplacer un composant central de l'infrastructure pour en tester une
-modification sans gêner les utilisateurs.
+version modifiée sans gêner les utilisateurs.
 
 Dans ce travail, nous proposons d'utiliser la plate-forme
 Grid'5000~\cite{grid5000,grid5000web}, dédiée à la recherche sur les systèmes
@@ -72,8 +72,8 @@ et le calcul parallèle, pour tester l'infrastructure logicielle des grilles de
 production.
 
 \section{Développements et outils}
-\todo{Développements, déploiement sur la grille : Environ une demi-page}
-\todo{Outils, difficultés rencontrées : Environ une demi-page}
+%\todo{Développements, déploiement sur la grille : Environ une demi-page}
+%\todo{Outils, difficultés rencontrées : Environ une demi-page}
 
 La plate-forme Grid'5000 est composée de 1700 machines (7000 coeurs) répartis
 dans 10 sites en France. Elle dispose de fonctionnalités de reconfiguration du
@@ -85,14 +85,14 @@ Cette fonctionnalité a été utilisée pour développer un ensemble de scripts
 permettant d'automatiser le déployement d'une infrastructure gLite sur
 Grid'5000, composée de:
 
-\begin{itemize}
+\begin{enumerate}
 
 \item une VO et son VOMS (\textsl{Virtual Organization Membership Service}),
 	annuaire des utilisateurs ;
 
 \item plusieurs sites, composés de:
 
-\begin{itemize}
+\begin{enumerate}
 
 	\item un BDII (\textsl{Berkeley Database Information Index}), annuaire
 		des ressources disponibles sur chaque site ;
@@ -108,10 +108,10 @@ Grid'5000, composée de:
 
 	\item un ou plusieurs clusters composés de noeuds de calcul.
 
-\end{itemize}
-\end{itemize}
+\end{enumerate}
+\end{enumerate}
 
-Le processus est composé de différentes étapes implémentées dans différents
+Le processus est composé de différentes étapes implémentées dans des
 scripts qu'il est possible d'enchainer automatiquement.  D'abord, les machines
 réservées sont réinstallées avec une installation Scientific Linux 5.5
 minimale. Puis le dépôt RPM de gLite (\textsl{glitesoft.cern.ch}) est ajouté,
@@ -119,20 +119,14 @@ et les paquets nécessaires sont installés en fonction du rôle choisi pour la
 machine cible (VOMS, BDII, noeud de travail, \ldots). Enfin, l'ensemble des
 noeuds sont configurés.
 
-\todo{dire un mot de l'infra au niveau certificats ?}
-gLite repose sur un système de certificats clients/serveurs, pour autoriser l'accès
-ou non aux ressources, trois possibilités :
-\begin{listing}
-\item Demander un certificat signé par une autorité de certification externe
-\item Créer sa	propre autorité et signer soit même les certificats (SimpleCA).
-\item Créer un certificat auto-signé et l'injecter dans la racine
-\end{listing}
-Nous avons donc suivi la méthode 2, une autorité de certification est donc déployé à
-l'aide des scipts "simpleCA" disponible dans l'archive Globus.\footnote{http://www.globus.org/toolkit/docs/4.0/admin/docbook/ch07.html}
-Celle-ci est situé sur note voms, des scripts ont été développés pour permettre la signature
-immédiate et transparent des certificats machine et utilisateurs.
+Afin de générer les certificats utilisés pour identifier les machines et les
+utilisateurs, nos scripts créent une autorité de certification à l'aide des
+scripts \textsl{simpleCA} disponibles dans l'archive
+Globus\footnote{http://www.globus.org/toolkit/docs/4.0/admin/docbook/ch07.html}.
+Il est ainsi possible de générer et signer automatiquement les certificats
+nécessaires au déploiement de notre infrastructure.
 
-Deux difficultés importantes ont été rencontrées :
+Deux difficultés importantes ont été rencontrées lors de la mise au point des scripts :
 
 \begin{itemize}
 
@@ -149,35 +143,30 @@ Deux difficultés importantes ont été rencontrées :
 
 Les scripts utilisés sont disponibles et documentés sur \url{https://github.com/sbadia/gdeploy/}.
 
-\todo{nettoyer le dépot git: merger multi dans master, supprimer les fichiers utiles, rajouter un README.}
-
 \section{Résultats scientifiques}
-\todo{Résultats scientifiques : Environ une demi-page à trois quarts de page}
+%\todo{Résultats scientifiques : Environ une demi-page à trois quarts de page}
 
 Avec les scripts développés, nous avons réalisé le déploiement de gLite sur XX
-machines de Grid'5000, réparties dans XX sites et XX clusters (figure
-\ref{depl}). Le déploiement de l'environnement Scientific Linux sur l'ensemble
-des machines avec Kadeploy a pris XX minutes, et la configuration de l'ensemble
-des noeuds gLite a pris XX minutes.
+machines de Grid'5000, réparties dans XX sites et XX clusters. Le déploiement
+de l'environnement Scientific Linux sur l'ensemble des machines avec Kadeploy a
+pris XX minutes, et la configuration de l'ensemble des noeuds gLite a pris XX
+minutes.
 
 \section{Perspectives}
-\todo{Perspectives : Environ une demi-page}
+%\todo{Perspectives : Environ une demi-page}
 
 Ce travail vise à démontrer la faisabilité de l'utilisation de Grid'5000 pour
 tester ou évaluer des logiciels de l'écosystème des grilles de production.
 
 Nos scripts peuvent être assez largement améliorés. Une première étape est de
 permettre de configurer une plate-forme composée d'un nombre de VOs, de sites
-et de clusters arbitraires (sans rapport avec l'architecture des ressources
-réservées sur Grid'5000) afin de pouvoir se placer dans des configurations
+et de clusters arbitraires afin de pouvoir se placer dans des configurations
 expérimentales plus variées et intéressantes.
 
-Concernant la durée de déploiement, la configuration de l'ensemble des machines
-se fait de manière séquentielle, ce qui explique la durée très importante du
-déploiement. Nous explorons actuellement l'utilisation d'un moteur de workflow
+Concernant la durée de déploiement, nous explorons actuellement l'utilisation d'un moteur de workflow
 pour orchestrer les différentes étapes du déploiement, ce qui permettra
 d'extraire le parallélisme implicite entre les différentes étapes et devrait
-significativement réduire la durée du déploiement. D'autres améliorations sont
+significativement réduire la durée du déploie\-ment. D'autres améliorations sont
 également prévues, comme l'ajout d'un cache pour les paquets RPM de Scientific
 Linux ce qui réduira la charge sur les serveurs \textsl{proxy} HTTP de
 Grid'5000, et la modification de l'image Scientific Linux afin qu'elle puisse
@@ -196,17 +185,19 @@ suivants :
 \begin{itemize}
 
 \item \textit{Expériences sur des évolutions de composants du middleware
-	gLite}, qui pourront ainsi être réalisées à grande échelle sans
-	affecter les utilisateurs de la grille ;
+	gLite}. Ces expériences pourraient être réalisées à grande échelle,
+	sans affecter les utilisateurs de la grille ;
 
 \item \textit{Expériences sur des outils interagissant avec le middleware
-	gLite}, éventuellement en simulant la panne de services, en injectant
-	de la charge applicative, etc.
+	gLite}. Grâce à l'utilisation d'une infrastructure distincte, il sera
+	possible de simuler des pannes de services, d'injecter de la charge
+	applicative, et de soumettre un grand nombre de jobs factices sans
+	perturber le travail des autres utilisateurs.
 
 \end{itemize}
 
 \section{Références}
-\todo{Références : Environ une demi-page}
+%\todo{Références : Environ une demi-page}
 
 
 
