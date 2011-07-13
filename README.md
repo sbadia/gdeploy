@@ -18,9 +18,11 @@ Dépendances
 -------
 Pour fonctionner gdeploy a besoin de trois tgz, il va les chercher
 directement dans le public home de sbadia.
+
 * hostkeys.tgz les certificats de la grille crée.
 * repo.tgz le définitions des repo gLite.
 * ssh-keys.tgz les clés ssh de la grille.
+
 Voir [http://public.nancy.grid5000.fr/~sbadia/glite/](http://public.nancy.grid5000.fr/~sbadia/glite/) depuis g5k.
 
 Licence
@@ -29,8 +31,8 @@ Ce script est sous licence GPLv2.
 
 Contacts
 -------
-* Lucas Nussbaum <lucas.nussbaum@loria.fr>
-* Sebastien Badia <sebastien.badia@inria.fr>
+* Lucas Nussbaum (<lucas.nussbaum@loria.fr>)
+* Sebastien Badia (<sebastien.badia@inria.fr>)
 
 Utilisation
 -------
@@ -42,44 +44,41 @@ Utilisation
 
 Lexique
 -------
-Egee:
- -CE = Computing Element (Cluster).
- -SE = Stockage Element (Baie).
-   - Gsiftp transfert intégral
-   - Rfio accès direct API Posix Like.
- -FTS = File Transfert Service.
- -WMS = Workload Management System (meta-scheduler). -> Condor-G.
- -BDII = Système d'Information (Publication des ressources et inforamtions diverses (stats dynamiques).
- -VOMS = Virtual Organisation Membership Service.
- -LFC = File Catalog (non distribué).
- -VO = Virtual Organisation.
- -EGEE = Enabling Grids for E-sciencE.
- -UI = User Interface (pas GUI) mais client de la grille.
- -SRM = Storage Ressource Manager.
- -ROC = Regional Operation Center.
- -RC = Replica Catalog.
- -GOC = Grid Operations Center.
- -WN = Working Node.
- -LB = Logging & Brokekeeping.
- -JSS = Job Submission Service.
- -RB = Ressources Broker.
- -IS = Information System.
 
-AlGorille:
- -SG = SimGrid.
+* CE = Computing Element (Cluster).
+* SE = Stockage Element (Baie). Gsiftp transfert intégral, Rfio accès direct API Posix Like.
+* FTS = File Transfert Service.
+* WMS = Workload Management System (meta-scheduler). -> Condor-G.
+* BDII = Système d'Information (Publication des ressources et inforamtions diverses (stats dynamiques).
+* VOMS = Virtual Organisation Membership Service.
+* LFC = File Catalog (non distribué).
+* VO = Virtual Organisation.
+* EGEE = Enabling Grids for E-sciencE.
+* UI = User Interface (pas GUI) mais client de la grille.
+* SRM = Storage Ressource Manager.
+* ROC = Regional Operation Center.
+* RC = Replica Catalog.
+* GOC = Grid Operations Center.
+* WN = Working Node.
+* LB = Logging & Brokekeeping.
+* JSS = Job Submission Service.
+* RB = Ressources Broker.
+* IS = Information System.
 
 Deployments
 -------
 Image new (ahci):
- - Graphene
- - Adonis
- - Edel
- - Chinqchint
- - Chirloute
- - Parapide
- - Parapluie
+
+* Graphene
+*  Adonis
+*  Edel
+*  Chinqchint
+*  Chirloute
+*  Parapide
+*  Parapluie
 
 Image previous (ata_piix):
- - Genepi
- - Griffon
- - Paradent
+
+* Genepi
+* Griffon
+* Paradent
