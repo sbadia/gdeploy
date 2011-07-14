@@ -4,3 +4,6 @@ conf/*.def
 .*~
 *.swp
 sandbox/*
+*.log
+*.aux
+*.out
