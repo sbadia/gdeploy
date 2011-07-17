@@ -2,7 +2,7 @@
 \usepackage{a4wide}
 \usepackage[french]{babel}
 \usepackage[utf8]{inputenc}  %or: \usepackage[latin1]{inputenc}
-\usepackage[colorlinks=false]{hyperref}
+\usepackage[colorlinks=false,pdfborder={0 0 0}]{hyperref}
 %\usepackage{color}
 \usepackage{times}
 
@@ -40,8 +40,8 @@ In this paper, we present our ongoing work on deploying the gLite middleware on
 the Grid'5000 testbed, a scientific instrument designed to support research on
 parallel, large-scale and distributed computing. Tools were written to
 automatize the deployment of the gLite middleware on several sites and
-clusters, resulting in a deployment of XX sites and XX clusters on XX machines
-in less than XX minutes.  This provides a solid basis for future experiments on
+clusters, resulting in a deployment of 3 sites and 5 clusters on 130 machines
+in less than an hour.  This provides a solid basis for future experiments on
 the gLite middleware and on software that interact with the middleware.
 
 \section{Enjeux scientifiques}
@@ -196,7 +196,7 @@ suivants :
 
 \end{itemize}
 
-\section{Références}
+\section{Documentations utilisées}
 %\todo{Références : Environ une demi-page}
 \begin{itemize}
 \item \url{http://glite.cern.ch/admin_documentation}
@@ -206,11 +206,13 @@ suivants :
 \item \url{http://www.nordugrid.org/papers.html}
 \end{itemize}
 
-
 \section*{Remerciements}
 
 Ce travail a été en partie financé par le thème EDGE du CPER MISN de la Région
 Lorraine et par l'appel \textsl{Interfaces Recherche en grilles - Grilles de
 production} de l'Institut des Grilles du CNRS et de l'action INRIA Aladdin-G5K.
+
+\bibliographystyle{unsrt}
+\bibliography{glite}
 
 \end{document}
