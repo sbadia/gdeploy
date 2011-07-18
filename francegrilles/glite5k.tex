@@ -23,7 +23,7 @@ INRIA Nancy - Grand Est \& Nancy-Université}
 \section{Overview}
 %\todo{Résumé en anglais}
 
-The Grid has become a huge and important project, playing a key role in the
+The Grid has become a huge and important instrument, playing a key role in the
 everyday work of many researchers. A large amount of software is being developed
 both to manage the grid infrastructure itself (gLite middleware),
 to facilitate the task of grid users (e.g workflow managers,
@@ -34,7 +34,7 @@ It is inconvenient to test software using the production infrastructure, since
 (1) it might not exhibit the behaviour that is required to test extreme
 conditions (services are unlikely to crash as often as required when testing
 fault tolerance); (2) it might not be possible to replace key parts of the
-infrastructure without degrading the user experience.
+infrastructure without degrading the user experience; (3) experiments are not easily reproduced in production conditions.
 
 In this paper, we present our ongoing work on deploying the gLite middleware on
 the Grid'5000 testbed, a scientific instrument designed to support research on
@@ -47,7 +47,7 @@ the gLite middleware and on software that interact with the middleware.
 \section{Enjeux scientifiques}
 %\todo{Enjeux scientifiques, besoin de la grille : Environ une demi-page}
 
-La grille est devenue une immense et importante plate-forme, qui joue un rôle
+La grille EGI est devenue une immense et importante plate-forme, qui joue un rôle
 clé dans la travail quotidien de nombreux chercheurs. Un grand nombre de
 logiciels ont été développés pour gérer l'infrastructure elle-même (middleware
 gLite\cite{glite}), pour faciliter le travail des utilisateurs (moteurs de
@@ -97,16 +97,14 @@ Grid'5000, composée de:
 	\item un BDII (\textsl{Berkeley Database Information Index}), annuaire
 		des ressources disponibles sur chaque site ;
 
-	\item un CE (\textsl{Computing Element}), interface de soumission des
-		tâches ;
+	\item un CE (\textsl{Computing Element}), service de soumission des
+		tâches à un site de calcul donné, et un ou plusieurs clusters composés de noeuds de calcul ;
 
-	\item un WMS (\textsl{Workload Management System}); dans le cadre de
+	\item un WMS (\textsl{Workload Management System}), méta-ordonnanceur entre les sites de la grille; dans le cadre de
 		notre travail, le couple Torque/Maui a été utilisé ;
 
 	\item une UI (\textsl{User Interface}), interface d'accès pour les
-		utilisateurs ;
-
-	\item un ou plusieurs clusters composés de noeuds de calcul.
+		utilisateurs.
 
 \end{enumerate}
 \end{enumerate}
