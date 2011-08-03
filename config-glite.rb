@@ -8,10 +8,17 @@ require 'net/ssh'
 require 'net/ssh/multi'
 require 'misc/peach'
 
+$tlaunch = Time::now
+
 if ARGV.length < 1
   puts "config-glite YAMLCONFIG 1 (for install)"
   exit 1
 end
+
+
+def time_elapsed
+	return (Time::now - $tlaunch).to_i
+end # def:: time_elapsed
 
 install = 1
 $d = YAML::load(IO::read(ARGV[0]))
@@ -211,7 +218,7 @@ $d['VOs'].each_pair do |name, conf|
   $nodes << conf['voms']
 end
 
-puts "\033[1;36m###\033[0m Create conf files"
+puts "\033[1;36m###\033[0m {#{time_elapsed}} -- Create conf files"
 $d['sites'].each_pair do |sname, sconf|
   puts "\033[1;33m==>\033[0m Generate conf::#{sname}"
     Dir::mkdir("#{DIR}/conf/#{sname}/", 0755)
@@ -234,7 +241,7 @@ $d['sites'].each_pair do |sname, sconf|
 end
 p $nodes
 if install == 1:
-  puts "\033[1;36m###\033[0m Update distrib"
+  puts "\033[1;36m###\033[0m {#{time_elapsed}} -- Update distrib"
   Net::SSH::Multi.start do |session|
     $nodes.each do |node|
       session.use "root@#{node}"
@@ -257,7 +264,7 @@ if install == 1:
     end
   end
 
-  puts "\033[1;36m###\033[0m Configuring VOs"
+  puts "\033[1;36m###\033[0m {#{time_elapsed}} -- Configuring VOs"
   $d['VOs'].each_pair do |name, conf|
     first_site = $d['sites'].keys.first
     puts "\033[1;33m==>\033[0m Configuring VO=#{name} on VOMS=#{conf['voms']}"
@@ -287,7 +294,7 @@ if install == 1:
   end
 
   mutex = Mutex::new
-  puts "\033[1;36m###\033[0m Configuring sites"
+  puts "\033[1;36m###\033[0m {#{time_elapsed}} -- Configuring sites"
   $d['sites'].to_a.peach do |sname, sconf|
     puts "\033[1;33m==>\033[0m Configuring site=#{sname}"
     mutex.synchronize do
@@ -365,6 +372,7 @@ if install == 1:
        system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash user.sh #{$my_voms}'")
       end
   end
+  puts "\033[1;36m###\033[0m {#{time_elapsed}} -- gLite install finished"
 else
   puts "\033[1;31m==> No install\033[0m"
 end
