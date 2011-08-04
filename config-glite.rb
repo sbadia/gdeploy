@@ -373,8 +373,8 @@ if install == 1:
       end
   end
   puts "\033[1;36m###\033[0m {#{time_elapsed}} -- gLite install finished"
-  puts "\033[1;36m###\033[0m {#{time_elapsed / 60}} min"
   system("cat #{ARGV[0]}")
+  puts "\033[1;36m###\033[0m {#{time_elapsed / 60} min}"
 else
   puts "\033[1;31m==> No install\033[0m"
 end
