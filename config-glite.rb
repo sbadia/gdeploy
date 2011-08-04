@@ -339,7 +339,7 @@ if install == 1:
        session.exec('echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
        session.loop
       end
-      cconf['nodes'].each do |n|
+      cconf['nodes'].to_a.peach do |n|
         system("ssh root@#{n} -o BatchMode=yes 'chmod +x /opt/glite/yaim/etc/conf/yaim/wn.sh && sh /opt/glite/yaim/etc/conf/yaim/wn.sh'")
       end
     end
