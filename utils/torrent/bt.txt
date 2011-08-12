@@ -1,0 +1,24 @@
+[Sur le tracker] -> fgrimoire
+  bttrack --port 6666 --dfile btfile
+  cd /var/www/
+  btmakemetafile /var/www/cache.tgz http://fgrimoire.nancy.grid5000.fr:6666/announce
+  btdownloadcurses cache.tgz.torrent
+
+[Sur le client] sl55
+  yum install bittorrent -q -y
+  wget http://fgrimoire.nancy.grid5000.fr/cache.tgz.torrent -q
+  bittorrent-console --max_upload_rate 0 cache.tgz.torrent > /tmp/debug.torrent
+
+[Supervision] laptop
+  ssh -L 3443:fgrimoire.nancy.grid5000.fr:6666 local
+  http://localhost:3443/
+
+[Sur tous les noeuds] sl55
+  cache.tgz 585M
+  cp cache.tgz /
+  tar xzf /cache.tgz
+
+[Taktuk]
+  cat $OAR_NODE_FILE |uniq > nodes
+  taktuk -s -l root -m griffon-90.nancy.grid5000.fr broadcast exec [ date ]
+  taktuk -s -l root -f nodes broadcast exec [ date ]
