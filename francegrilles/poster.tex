@@ -1,0 +1,193 @@
+\documentclass[final]{beamer}
+% you can chose your theme here:
+\usetheme{I6dv}
+% further beamerposter themes are available at 
+% http://www-i6.informatik.rwth-aachen.de/~dreuw/latexbeamerposter.php
+  \usepackage{type1cm}
+  \usepackage{calc} 
+  \usepackage{times}
+  \usepackage{amsmath,amsthm, amssymb, latexsym}
+\usepackage[utf8]{inputenc}  %or: \usepackage[latin1]{inputenc}
+  \boldmath
+  \usepackage[english]{babel}
+  \usepackage[orientation=portrait,size=a1,scale=1.5,debug]{beamerposter}
+\title{gLite sur Grid'5000:\\[0.1em] vers une plate-forme d'expérimentation\\[0.1em] à taille réelle pour les grilles de production}
+\author{Sébastien Badia et Lucas Nussbaum}
+\institute{LORIA / Nancy-Université \hskip 2em INRIA Nancy -- Grand Est}
+
+%  \newcommand{\footlinetext}{Lehrstuhl f\"ur Informatik 6 - Computer Science Department - RWTH Aachen University - Aachen, Germany \par Mail: \texttt{<surname>@cs.rwth-aachen.de} \hfill WWW: \texttt{http://www-i6.informatik.rwth-aachen.de}\vskip1ex}
+%  \date{Jul. 31th, 2007}
+
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\normalsize}
+
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[wd=\paperwidth]{upper separation line foot}
+    \rule{0pt}{2pt}
+  \end{beamercolorbox}
+
+  \begin{beamercolorbox}{footline}%
+    \vskip 0.3em
+    \begin{columns}[t]
+	    \begin{column}{0.24\linewidth}
+		    \center		    \includegraphics[height=3em]{grid5000}
+	    \end{column}
+
+	    \begin{column}{0.24\linewidth}
+		    \center	    \includegraphics[height=3em]{logo_loria_complet_couleur-crop}
+	    \end{column}
+
+	    \begin{column}{0.24\linewidth}
+		    \center    \includegraphics[height=3em]{NancyU}
+	    \end{column}
+	    \begin{column}{0.24\linewidth}
+		    \center		    \includegraphics[height=3em]{INRIA_SCIENTIFIQUE_FR_CMJN_CROP.pdf}
+	    \end{column}
+
+    \end{columns}
+    \vskip 1em
+  \end{beamercolorbox}
+}
+
+  \begin{document}
+  \begin{frame}{} 
+	  \begin{center}
+    \begin{columns}[t]
+      \begin{column}{.48\linewidth}
+
+	\begin{block}{Objectifs}
+		\begin{itemize}
+			\item \textbf{Utiliser Grid'5000 comme infrastructure de test pour gLite}
+					\bigskip
+			\begin{itemize}
+				\item Pouvoir reproduire les conditions expérimentales nécessaires (exemple: simuler un crash de services)
+					\bigskip
+				\item Pouvoir remplacer des parties de l'infrastructure pour tester de nouvelles versions de composants du middleware
+
+					\bigskip
+				\item Pouvoir réaliser et reproduire des expériences dans un environnement stable
+					\bigskip
+				\item Éviter de perturber ou de surcharger l'infrastructure de production
+			\end{itemize}
+	\end{itemize}
+	\end{block} \vskip 1em
+
+	\begin{block}{Grid'5000}
+		\begin{itemize}
+			\item Plate-forme expérimentale pour la recherche sur les systèmes distribués et le calcul parallèle à hautes performances
+					\bigskip
+			\item 1700 machines (7000 coeurs) dans 10 sites en France
+					\bigskip
+			\item Reconfiguration: remplacement du système installé sur les noeuds, isolation via VLANs, etc.
+		\end{itemize}
+		\bigskip
+		\centerline{\includegraphics[width=0.3\columnwidth]{g5k}}
+	\end{block}  \vskip 1em
+
+	\begin{block}{Infrastructure gLite déployée}
+\begin{itemize}
+
+	\item une \textbf{VO} et son \textbf{VOMS (\textsl{Virtual Organization Membership Service})},
+	annuaire des utilisateurs ;
+					\bigskip
+
+\item plusieurs sites, composés de:
+
+		\bigskip
+\begin{enumerate}
+
+	\item un \textbf{BDII (\textsl{Berkeley Database Information Index})}, annuaire
+		des ressources disponibles sur chaque site ;
+
+		\bigskip
+
+	\item un \textbf{CE (\textsl{Computing Element})}, service de soumission des
+		tâches à un site de calcul donné, et un ou plusieurs clusters composés de noeuds de calcul ;
+
+		\bigskip
+	\item un \textbf{WMS (\textsl{Workload Management System})}, méta-ordonnanceur entre les sites de la grille; dans le cadre de
+		notre travail, le couple \textbf{Torque/Maui} a été utilisé ;
+		\bigskip
+
+	\item une \textbf{UI (\textsl{User Interface})}, interface d'accès pour les
+		utilisateurs.
+
+\end{enumerate}
+\end{itemize}
+	\end{block}
+
+      \end{column}
+      \begin{column}{.48\linewidth}
+\begin{block}{Outils développés}
+	\begin{itemize}
+		\item \textbf{Image Scientific Linux 5.5} minimale générique (fonctionnant sur tous les clusters de Grid'5000) ;
+		\bigskip
+		\item \textbf{Scripts Ruby} permettant une installation automatique de gLite à partir des dépôts RPM
+		\bigskip
+		\begin{itemize}
+			\item Génération d'une autorité de certification pour générer et signer automatiquement les certificats des utilisateurs et des machines
+		\bigskip
+			\item Pré-remplissage du cache RPM sur les noeuds avec BitTorrent
+		\end{itemize}
+	\end{itemize}
+	\begin{center}
+		\textbf{\url{https://github.com/sbadia/gdeploy/}}
+	\end{center}
+	\end{block} \vskip 1em
+
+
+\begin{block}{Résultats}
+	\begin{center}
+		\textbf{Utilisation de Grid'5000 pour déployer le middleware gLite}
+	\end{center}
+\begin{itemize}
+	\item Déploiement sur \textbf{5 sites, 8 clusters et 441 machines}
+		\bigskip
+\item Installation de l'ensemble des machines sous Scientific Linux 5.5 minimale avec Kadeploy: 10 minutes
+		\bigskip
+\item Configuration automatique de l'infrastructure gLite: \textbf{FIXME minutes}
+\end{itemize}
+	\end{block} \vskip 1em
+
+	\begin{block}{Perspectives}
+	\begin{itemize}
+		\item Déploiement de plusieurs VO
+		\bigskip
+		\item Déploiement de services gLite supplémentaires
+		\bigskip
+			\begin{itemize}
+				\item Stockage
+		\bigskip
+				\item Monitoring
+		\bigskip
+			\end{itemize}
+		\item \textbf{Collaborations ?}
+		\bigskip
+			\begin{itemize}
+				\item \textbf{Expériences sur des évolutions de composants du middleware gLite}
+		\bigskip
+				\item \textbf{Expériences sur des outils interagissant avec le middleware gLite: moteurs de workflows, gestionnaires de jobs pilotes, etc.}
+		\bigskip
+					\begin{itemize}
+						\item Simulation de pannes de services
+		\bigskip
+						\item Injection de charge
+		\bigskip
+						\item Soumission d'un grand nombre de tâches factices
+					\end{itemize}
+			\end{itemize}
+	\end{itemize}
+	\end{block}
+      
+      \end{column}
+    \end{columns}
+ \vfill
+    \end{center}
+  \end{frame}
+\end{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-PDF-mode: t
