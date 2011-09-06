@@ -14,8 +14,8 @@
   \boldmath
   \usepackage[english]{babel}
   \usepackage[orientation=portrait,size=a0,scale=1.5]{beamerposter}
-\setbeamersize{text margin left=15mm} 
-\setbeamersize{text margin right=15mm}
+\setbeamersize{text margin left=18mm} 
+\setbeamersize{text margin right=18mm}
   \title{gLite sur Grid'5000~:\\[0.1em] vers une plate-forme d'expérimentation\\[0.1em] à taille réelle pour les grilles de production}
 \author{Sébastien Badia et Lucas Nussbaum}
 \institute{LORIA / Nancy-Université \hskip 2em INRIA Nancy -- Grand Est}
@@ -65,8 +65,9 @@
 
   \begin{document}
   \begin{frame}{} 
-	  \begin{center}
-	  \begin{minipage}{0.48\linewidth}
+	  \vskip -0.5em
+	  \begin{columns}[t]
+	  \begin{column}{0.48\linewidth}
 
 	\begin{block}{Objectifs}
 		\begin{itemize}
@@ -87,7 +88,7 @@
 
 	\begin{block}{Grid'5000}
 	\begin{columns}
-	\begin{column}{0.60\columnwidth}
+	\begin{column}{0.65\columnwidth}
 		\begin{itemize}
 			\item \textbf{Plate-forme expérimentale pour la recherche sur les systèmes distribués} et le calcul parallèle à hautes performances
 					\bigskip
@@ -96,7 +97,7 @@
 			\item Reconfiguration par les utilisateurs~: remplacement du système installé sur les noeuds avec KaDeploy, isolation réseau avec KaVLAN
 		\end{itemize}
 	\end{column}
-	\begin{column}{0.38\columnwidth}
+	\begin{column}{0.33\columnwidth}
 		\centerline{\includegraphics[width=0.9\columnwidth]{g5k}}
 	\end{column}
 \end{columns}
@@ -136,32 +137,40 @@
 \end{enumerate}
 \end{itemize}
 	\end{block}
-
-      \end{minipage}
-      \hfill
-      \begin{minipage}{0.48\linewidth}
+      \end{column}
+      \begin{column}{0.48\linewidth}
 \begin{block}{Outils développés}
+	\begin{columns}[b]
+	\begin{column}{0.75\linewidth}
 	\begin{itemize}
-		\item \textbf{Image Scientific Linux 5.5} minimale générique (fonctionnant sur tous les clusters de Grid'5000) pour l'outil de déploiement KaDeploy
+		\item \textbf{Image Scientific Linux 5.5} minimale et générique (fonctionnant sur tous les clusters de Grid'5000) pour l'outil de déploiement KaDeploy
+	\end{itemize}
+	\end{column}
+	\begin{column}{0.2\linewidth}
+		\includegraphics[width=0.98\columnwidth]{sl-logo-800}
+	\end{column}
+	\end{columns}
 		\bigskip
-		\item \textbf{Scripts Ruby} documentés permettant une installation automatique de gLite à partir des dépôts RPM
+	\begin{itemize}
+		\item \textbf{Scripts Ruby} documentés permettant une installation totalement automatisée de gLite à partir des dépôts RPM
 		\bigskip
 		\begin{itemize}
+			\item Description de la plate-forme à déployer (VO, sites, clusters) dans un fichier de configuration
+			\bigskip
 			\item Création d'une autorité de certification pour générer et signer automatiquement les certificats des utilisateurs et des machines
 		\bigskip
 			\item Pré-remplissage du cache RPM sur les noeuds avec BitTorrent pour accélérer le déploiement
 		\end{itemize}
 	\end{itemize}
+	\vskip 0.5em
 	\begin{center}
 		\textbf{\url{https://github.com/sbadia/gdeploy/}}
 	\end{center}
-	\end{block} \vskip 0.5em
+	\end{block} \vskip 1.3em
 
 
 \begin{block}{Résultats}
-	\begin{center}
-		\textbf{Utilisation de Grid'5000 pour déployer le middleware gLite}
-	\end{center}
+	\textbf{Utilisation de Grid'5000 pour déployer le middleware gLite}
 \begin{itemize}
 	\item Déploiement sur \textbf{5 sites, 8 clusters et 441 machines}
 		\bigskip
@@ -169,11 +178,11 @@
 		\bigskip
 \item Configuration de l'infrastructure gLite~: \textbf{40~minutes}
 \end{itemize}
-	\end{block} \vskip 0.5em
+	\end{block} \vskip 1.3em
 
 	\begin{block}{Perspectives}
 	\begin{itemize}
-		\item \textbf{Amélioration des scripts de déploiement}
+		\item \textbf{Amélioration du script de déploiement}
 		\begin{itemize}
 		\item Déploiement de plusieurs VO
 		\item Déploiement d'autres services gLite~: stockage, monitoring
@@ -193,28 +202,56 @@
 			\end{itemize}
 	\end{itemize}
 	\end{block}
-\end{minipage}
+\end{column}
+\end{columns}
+
+\vskip 0.5em
       
     \begin{block}{Processus de déploiement}
+	    \center
 \begin{tikzpicture}[node distance=1em]
-\tikzstyle{every task} = [thick]
+\tikzstyle{every task} = [thick,fill=i6colorscheme3]
 \tikzstyle{every sequence} = [thick]
-\tikzstyle{every message} = []
-\tikzstyle{every association} = []
-\tikzstyle{every event} = [thick]
+\tikzstyle{every gateway} = [thick,fill=i6colorscheme3]
+\tikzstyle{every event} = [thick,fill=i6colorscheme3]
+\tikzstyle{end event} = [event,line width=5pt,fill=i6colorscheme3]
 
 	\node[event] (start) {};
-	\node[task,right=of start] (updglite) { Update SL and add \\gLite RPM repos\\ on all nodes };
+	\node[task,right=of start] (updglite) { Update SL and \\ add gLite RPM \\ repositories \\ on all nodes };
 	\draw[sequence,->] (start) -- (updglite);
 	\node[task,right=of updglite] (ca) { Create \\ CA };
 	\draw[sequence,->] (updglite) -- (ca);
 	\node[task,right=of ca] (vo) { Create VO and \\configure VOMS};
 	\draw[sequence,->] (ca) -- (vo);
-  \end{tikzpicture}
+	\node[gateway,right=of vo] (pg) {+};
+	\draw[sequence,->] (vo) -- (pg);
+	\node[task,above right=of pg] (bdii) {Configure \\ BDII};
+	\draw[sequence,->] (pg) |- (bdii);
+	\node[gateway,right=of bdii] (pg2) {+};
+	\draw[sequence,->] (bdii) -- (pg2);
+	\node[task,right=of pg2] (wn) {Configure \\ worker nodes\\ and batch};
+	\draw[sequence,->] (pg2) -- (wn);
+	\node[align=center,below=of wn] (etc2) { {\Large \ldots } \\ \small (on each cluster)};
+%	\node[below right=of pg2] (etc2-target) {};
+	\draw[sequence,->,loosely dashed] (pg2) |- (etc2);
+	\node[gateway,below right=of wn] (pg3) {+};
+	\draw[sequence,->,loosely dashed] (etc2) -| (pg3);
+	\draw[sequence,->] (wn) -| (pg3);
+	\node[task,right=of pg3] (ce) {Configure \\ CE};
+	\draw[sequence,->] (pg3) -- (ce);
+	\node[task,right=of ce] (ui) {Configure \\ UI};
+	\draw[sequence,->] (ce) -- (ui);
+	\node[gateway,right=of ui] (pg4) {+};
+	\draw[sequence,->] (ui) -- (pg4);
+	\node[end event,right=of pg4] (end) {};
+	\draw[sequence,->] (pg4) -- (end);
 
-	
+
+	\node[align=center,below=of etc2] (etc1) { {\Large \ldots } \small (on each site)};
+	\draw[sequence,->,loosely dashed] (pg) |- (etc1);
+	\draw[sequence,->,loosely dashed] (etc1) -| (pg4);
+  \end{tikzpicture}
      \end{block}
-    \end{center}
   \end{frame}
 \end{document}
 
