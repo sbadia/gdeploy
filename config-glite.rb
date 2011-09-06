@@ -7,11 +7,13 @@ require 'net/scp'
 require 'net/ssh'
 require 'net/ssh/multi'
 require 'misc/peach'
+require 'misc/progressbar'
+require 'logger'
 
 $tlaunch = Time::now
 
 if ARGV.length < 1
-  puts "config-glite YAMLCONFIG 1 (for install)"
+  puts "ruby config-glite.rb g5k.yaml"
   exit 1
 end
 
