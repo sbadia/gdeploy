@@ -27,6 +27,7 @@ $d = YAML::load(IO::read(ARGV[0]))
 puts "\033[1;32m####\033[0m Loaded config file #{ARGV[0]}"
 
 DIR = File.expand_path(File.dirname(__FILE__))
+OUT = "> /dev/null 2>&1"
 
 extinction = Proc.new{
   puts "Received extinction request..."
@@ -244,6 +245,7 @@ end
 p $nodes
 if install == 1:
   puts "\033[1;36m###\033[0m {#{time_elapsed}} -- Update distrib"
+  #Net::SSH::Multi.start(:current_connections => nil) do |session|
   Net::SSH::Multi.start do |session|
     $nodes.each do |node|
       session.use "root@#{node}"
@@ -272,22 +274,23 @@ if install == 1:
     puts "\033[1;33m==>\033[0m Configuring VO=#{name} on VOMS=#{conf['voms']}"
     Net::SSH.start(conf['voms'], 'root') do |ssh|
       ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{first_site}/site-info.def /root/yaim/site-info.def")
-      ssh.exec!("yum install mysql-server glite-VOMS_mysql gcc gcc44 -q -y --nogpgcheck > /dev/null 2>&1")
-      system("ssh root@#{conf['voms']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x setup.sh && /bin/bash setup.sh'")
+      ssh.exec!("yum install mysql-server glite-VOMS_mysql gcc gcc44 -q -y --nogpgcheck #{OUT}")
+      system("ssh root@#{conf['voms']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x setup.sh && /bin/bash setup.sh #{OUT}'")
       ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1")
       ssh.exec!("sed -e 's/VOMS_DB_HOST=#{conf['voms']}/VOMS_DB_HOST=localhost/' -i /root/yaim/site-info.def")
       ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 777 /var/log/bdii/bdii-update.log")
       ssh.exec!("/usr/bin/mysqladmin -u root password superpass && chmod 777 /var/log/bdii")
-      #ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS')
-      #system("ssh root@#{conf['voms']} -o BatchMode=yes 'chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS'")
-      system("ssh root@#{conf['voms']} -o BatchMode=yes 'chmod +x /opt/glite/yaim/etc/conf/yaim/voms.sh && sh /opt/glite/yaim/etc/conf/yaim/voms.sh'")
+      ssh.exec!("chmod 777 /var/log/bdii && /usr/bin/mysqladmin -u root password superpass #{OUT}")
+      ssh.exec!("chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS #{OUT}")
+      #system("ssh root@#{conf['voms']} -o BatchMode=yes 'chmod +x /opt/glite/yaim/etc/conf/yaim/voms.sh && sh /opt/glite/yaim/etc/conf/yaim/voms.sh'")
       ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
     end
+    puts "\033[1;31m###\033[0m {#{time_elapsed}} -- VOs config finished (create distri)"
     # Distri
     Dir::mkdir("#{DIR}/conf/#{$my_vo}/", 0755)
-    system("scp -o BatchMode=yes root@#{conf['voms']}:*.tgz /#{DIR}/conf/#{$my_vo}/")
-    system("scp -o BatchMode=yes root@#{conf['voms']}:*.gz /#{DIR}/conf/#{$my_vo}/")
-    system("scp -o BatchMode=yes root@#{conf['voms']}:hash /#{DIR}/conf/#{$my_vo}/")
+    system("scp -o BatchMode=yes root@#{conf['voms']}:*.tgz /#{DIR}/conf/#{$my_vo}/ #{OUT}")
+    system("scp -o BatchMode=yes root@#{conf['voms']}:*.gz /#{DIR}/conf/#{$my_vo}/ #{OUT}")
+    system("scp -o BatchMode=yes root@#{conf['voms']}:hash /#{DIR}/conf/#{$my_vo}/ #{OUT}")
     $nodes.each do |node|
       Net::SCP.start(node, 'root') do |scp|
        scp.upload!("#{DIR}/conf/#{$my_vo}/", "/opt/glite/yaim/etc/conf", :recursive => true)
@@ -298,80 +301,82 @@ if install == 1:
   mutex = Mutex::new
   puts "\033[1;36m###\033[0m {#{time_elapsed}} -- Configuring sites"
   $d['sites'].to_a.peach do |sname, sconf|
-    puts "\033[1;33m==>\033[0m Configuring site=#{sname}"
+    puts "\033[1;33m==>\033[0m {#{time_elapsed}} -- Configuring site=#{sname}"
     mutex.synchronize do
       puts "\033[1;35m=>\033[0m Create certificats for #{sname} (ce: #{sconf['ce']}, ui: #{sconf['ui']})"
-      system("ssh root@#{$my_voms} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x certs.sh && /bin/bash certs.sh #{sconf['ce']} #{sconf['ui']}'")
-      system("scp -o BatchMode=yes root@#{$my_voms}:ui.tgz /#{DIR}/conf/#{sname}/")
-      system("scp -o BatchMode=yes root@#{$my_voms}:ce.tgz /#{DIR}/conf/#{sname}/")
+      system("ssh root@#{$my_voms} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x certs.sh && /bin/bash certs.sh #{sconf['ce']} #{sconf['ui']} #{OUT}'")
+      system("scp -o BatchMode=yes root@#{$my_voms}:ui.tgz /#{DIR}/conf/#{sname}/ #{OUT}")
+      system("scp -o BatchMode=yes root@#{$my_voms}:ce.tgz /#{DIR}/conf/#{sname}/ #{OUT}")
       $nodes.each do |node|
         Net::SCP.start(node, 'root') do |scp|
          scp.upload!("#{DIR}/conf/#{sname}/", "/opt/glite/yaim/etc/conf", :recursive => true)
         end
       end
-      system("ssh root@#{$my_voms} -o BatchMode=yes 'rm -f /root/ui.tgz && rm -f /root/ce.tgz'")
+      system("ssh root@#{$my_voms} -o BatchMode=yes 'rm -f /root/ui.tgz && rm -f /root/ce.tgz #{OUT}'")
+      puts "\033[1;31m==>\033[Om {#{time_elapsed}} -- Create Site config #{sname} finished"
     end
-    puts "\033[1;35m=>\033[0m BDII on #{sconf['bdii']}"
+    puts "\033[1;31m###\033[0m {#{time_elapsed}} -- Create Sites config finished"
+    puts "\033[1;35m=>\033[0m {#{time_elapsed}} -- BDII on #{sconf['bdii']}"
       Net::SSH.start(sconf['bdii'], 'root') do |ssh|
        ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
-       ssh.exec!('yum install glite-BDII -q -y')
-       ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1 && echo -e "\ngLite Bdii - (Ldap Berkley database index)\n" >> /etc/motd')
+       ssh.exec!("yum install glite-BDII -q -y #{OUT}")
+       ssh.exec!("chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-BDII_site -d 1 #{OUT}")
+       ssh.exec!('echo -e "\ngLite Bdii - (Ldap Berkley database index)\n" >> /etc/motd')
       end
-    puts "\033[1;35m=>\033[0m Batch on #{sconf['batch']}"
+    puts "\033[1;35m=>\033[0m {#{time_elapsed}} -- Batch on #{sconf['batch']}"
       Net::SSH.start(sconf['batch'], 'root') do |ssh|
        ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
-       ssh.exec!('yum install glite-TORQUE_server -q -y')
+       ssh.exec!("yum install glite-TORQUE_server -q -y #{OUT}")
        ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz')
        ssh.exec!('mkdir -p /var/spool/pbs/server_logs && mkdir -p /var/spool/pbs/server_priv/accounting')
-       ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-TORQUE_server -d 1')
-       ssh.exec!("cat /opt/glite/yaim/etc/conf/exports >> /etc/exports && /etc/init.d/nfs restart")
-       ssh.exec!('/opt/glite/yaim/bin/yaim -r -s /root/yaim/site-info.def -f config_maui_cfg')
-       ssh.exec!("sh /opt/glite/yaim/etc/conf/#{sname}/queue.conf && /etc/init.d/maui restart && echo -e '\ngLite Batch\n' >> /etc/motd")
+       ssh.exec!("chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-TORQUE_server -d 1 #{OUT}")
+       ssh.exec!("cat /opt/glite/yaim/etc/conf/exports >> /etc/exports && /etc/init.d/nfs restart #{OUT}")
+       ssh.exec!("/opt/glite/yaim/bin/yaim -r -s /root/yaim/site-info.def -f config_maui_cfg #{OUT}")
+       ssh.exec!("sh /opt/glite/yaim/etc/conf/#{sname}/queue.conf #{OUT} && /etc/init.d/maui restart #{OUT} && echo -e '\ngLite Batch\n' >> /etc/motd")
       end
-    puts "\033[1;33m==>\033[0m Configuring #{sname}'s clusters"
+    puts "\033[1;33m==>\033[0m {#{time_elapsed}} -- Configuring #{sname}'s clusters"
     sconf['clusters'].each_pair do |cname, cconf|
-      puts "\033[1;35m=>\033[0m Cluster #{cname} on #{cconf['nodes'].join(' ')}"
+      puts "\033[1;35m=>\033[0m {#{time_elapsed}} --  Cluster #{cname} on #{cconf['nodes'].join(' ')}"
       Net::SSH::Multi.start do |session|
        cconf['nodes'].each do |n|
         session.use "root@#{n}"
        end
        session.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
-       session.exec("yum groupinstall glite-WN -q -y > /dev/null 2>&1 && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
-       #session.exec('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-WN -n TORQUE_client -d 1 > /dev/null 2>&1 && echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
+       session.exec("yum groupinstall glite-WN -q -y > #{OUT} && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz #{OUT} && rm -f ssh-keys.tgz")
        session.exec('echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
        session.loop
       end
       cconf['nodes'].to_a.peach do |n|
-        system("ssh root@#{n} -o BatchMode=yes 'chmod +x /opt/glite/yaim/etc/conf/yaim/wn.sh && sh /opt/glite/yaim/etc/conf/yaim/wn.sh'")
+        system("ssh root@#{n} -o BatchMode=yes 'chmod +x /opt/glite/yaim/etc/conf/yaim/wn.sh && sh /opt/glite/yaim/etc/conf/yaim/wn.sh #{OUT}'")
       end
     end
-    puts "\033[1;33m==>\033[0m Configuring site=#{sname}"
-    puts "\033[1;35m=>\033[0m CE on #{sconf['ce']}"
+    puts "\033[1;33m==>\033[0m {#{time_elapsed}} -- Configuring site=#{sname}"
+    puts "\033[1;35m=>\033[0m {#{time_elapsed}} -- CE on #{sconf['ce']}"
       Net::SSH.start(sconf['ce'], 'root') do |ssh|
        ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
        ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{$my_vo}/* /root/ && cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x install.sh")
-       ssh.exec!("yum install glite-CREAM glite-TORQUE_utils lcg-CA gcc gcc44 -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
+       ssh.exec!("yum install glite-CREAM glite-TORQUE_utils lcg-CA gcc gcc44 -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz #{OUT} && rm -f ssh-keys.tgz")
        ssh.exec!('mkdir -p /var/spool/pbs/server_priv/accounting && mkdir -p /var/spool/pbs/server_logs')
-       system("ssh root@#{sconf['ce']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash copycert.sh #{sname} ce'")
+       system("ssh root@#{sconf['ce']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash copycert.sh #{sname} ce #{OUT}'")
        ssh.exec!("echo '#{sconf['batch']}:/var/spool/pbs/server_priv/accounting /var/spool/pbs/server_priv/accounting nfs     rw,nfsvers=3,hard,intr,async,noatime,nodev,nosuid,auto,rsize=32768,wsize=32768  0' >> /etc/fstab")
        ssh.exec!("echo '#{sconf['batch']}:/var/spool/pbs/server_logs /var/spool/pbs/server_logs nfs     rw,nfsvers=3,hard,intr,async,noatime,nodev,nosuid,auto,rsize=32768,wsize=32768  0' >> /etc/fstab")
-       system("ssh root@#{sconf['ce']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash install.sh'")
-       ssh.exec!("mount -a")
+       system("ssh root@#{sconf['ce']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash install.sh #{OUT}'")
+       ssh.exec!("mount -a #{OUT}")
        ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 766 /var/log/bdii/bdii-update.log")
-       ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-creamCE -n glite-TORQUE_utils -d 1')
+       ssh.exec!("chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-creamCE -n glite-TORQUE_utils -d 1 #{OUT}")
        ssh.exec!('echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
      end
-    puts "\033[1;35m=>\033[0m UI on #{sconf['ui']}"
+    puts "\033[1;35m=>\033[0m {#{time_elapsed}} -- UI on #{sconf['ui']}"
       Net::SSH.start(sconf['ui'], 'root') do |ssh|
        ssh.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
        ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{$my_vo}/* /root/ && cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x install.sh")
-       ssh.exec!("yum groupinstall glite-UI -q -y && yum install gcc gcc44 lcg-CA -q -y --nogpgcheck > /dev/null 2>&1 && sed '1iexit 0' -i /usr/sbin/fetch-crl")
-       system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash copycert.sh #{sname} ui'")
+       ssh.exec!("yum groupinstall glite-UI -q -y #{OUT} && yum install gcc gcc44 lcg-CA -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl")
+       system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash copycert.sh #{sname} ui #{OUT}'")
        ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 766 /var/log/bdii/bdii-update.log")
-       system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash install.sh'")
-       ssh.exec!('chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1')
+       system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash install.sh #{OUT}'")
+       ssh.exec!("chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-UI -d 1 #{OUT}")
        ssh.exec!('echo -e "\ngLite UI - (User Interface)\n" >> /etc/motd')
-       system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash user.sh #{$my_voms}'")
+       system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash user.sh #{$my_voms} #{OUT}'")
       end
   end
   puts "\033[1;36m###\033[0m {#{time_elapsed}} -- gLite install finished"
