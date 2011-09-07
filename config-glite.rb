@@ -7,7 +7,6 @@ require 'net/scp'
 require 'net/ssh'
 require 'net/ssh/multi'
 require 'misc/peach'
-require 'misc/progressbar'
 require 'logger'
 
 $tlaunch = Time::now
@@ -300,7 +299,7 @@ if install == 1:
 
   mutex = Mutex::new
   puts "\033[1;36m###\033[0m {#{time_elapsed}} -- Configuring sites"
-  $d['sites'].to_a.peach do |sname, sconf|
+  $d['sites'].to_a.peach($d['sites'].length) do |sname, sconf|
     puts "\033[1;33m==>\033[0m {#{time_elapsed}} -- Configuring site=#{sname}"
     mutex.synchronize do
       puts "\033[1;35m=>\033[0m Create certificats for #{sname} (ce: #{sconf['ce']}, ui: #{sconf['ui']})"
@@ -350,7 +349,7 @@ if install == 1:
        session.exec('echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
        session.loop
       end
-      cconf['nodes'].to_a.peach do |n|
+      cconf['nodes'].to_a.peach(cconf['nodes'].length) do |n|
         system("ssh root@#{n} -o BatchMode=yes 'chmod +x /opt/glite/yaim/etc/conf/yaim/wn.sh && sh /opt/glite/yaim/etc/conf/yaim/wn.sh #{OUT}'")
       end
       puts "\033[1;31m###\033[0m {#{time_elapsed}} -- Cluster #{cname} on #{sname} config finished"
