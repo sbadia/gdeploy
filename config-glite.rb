@@ -313,7 +313,7 @@ if install == 1:
         end
       end
       system("ssh root@#{$my_voms} -o BatchMode=yes 'rm -f /root/ui.tgz && rm -f /root/ce.tgz #{OUT}'")
-      puts "\033[1;31m==>\033[Om {#{time_elapsed}} -- Create Site config #{sname} finished"
+      puts "\033[1;31m==>\033[0m {#{time_elapsed}} -- Create Site config #{sname} finished"
     end
     puts "\033[1;31m###\033[0m {#{time_elapsed}} -- Create Sites config finished"
     puts "\033[1;33m==>\033[0m {#{time_elapsed}} -- Configuring site=#{sname}"
@@ -339,13 +339,14 @@ if install == 1:
       end
     puts "\033[1;33m==>\033[0m {#{time_elapsed}} -- Configuring #{sname}'s clusters"
     sconf['clusters'].each_pair do |cname, cconf|
-      puts "\033[1;35m=>\033[0m {#{time_elapsed}} --  Cluster #{cname} on #{cconf['nodes'].join(' ')}"
+      puts "\033[1;35m=>\033[0m {#{time_elapsed}} --  Cluster #{cname}"
+      puts "Run on #{cconf['nodes'].join(' ')}"
       Net::SSH::Multi.start do |session|
        cconf['nodes'].each do |n|
         session.use "root@#{n}"
        end
        session.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
-       session.exec("yum groupinstall glite-WN -q -y > #{OUT} && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz #{OUT} && rm -f ssh-keys.tgz")
+       session.exec("yum groupinstall glite-WN -q -y #{OUT} && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz #{OUT} && rm -f ssh-keys.tgz")
        session.exec('echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
        session.loop
       end
