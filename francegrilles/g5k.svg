@@ -7,7 +7,6 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="739.63422"
@@ -17,43 +16,7 @@
    inkscape:version="0.48.1 r9760"
    sodipodi:docname="g5k.svg">
   <defs
-     id="defs4">
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 526.18109 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="744.09448 : 526.18109 : 1"
-       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
-       id="perspective10" />
-    <inkscape:perspective
-       id="perspective2824"
-       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2986"
-       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3226"
-       inkscape:persp3d-origin="189.343 : 123.95133 : 1"
-       inkscape:vp_z="378.686 : 185.927 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 185.927 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective4630"
-       inkscape:persp3d-origin="293.75 : 183.33333 : 1"
-       inkscape:vp_z="587.5 : 275 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 275 : 1"
-       sodipodi:type="inkscape:persp3d" />
-  </defs>
+     id="defs4" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -61,16 +24,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="465.08187"
-     inkscape:cy="176.48892"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="496.98905"
+     inkscape:cy="416.12546"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1680"
-     inkscape:window-height="974"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-width="1364"
+     inkscape:window-height="747"
+     inkscape:window-x="1680"
+     inkscape:window-y="19"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -93,13 +56,6 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(1405.0092,47.389117)">
-    <image
-       y="1090.9282"
-       x="-155.6067"
-       id="image2988"
-       height="740.85712"
-       width="803.64166"
-       xlink:href="file:///home/toma/Bureau/128px-CarteSites.JPG" />
     <g
        id="g3803">
       <path
@@ -281,5 +237,15 @@
          d="m -971.61235,205.72734 78.73785,170.13982"
          style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     </g>
+    <path
+       sodipodi:type="arc"
+       style="fill:#3a5196;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3146"
+       sodipodi:cx="-875"
+       sodipodi:cy="-60.672321"
+       sodipodi:rx="27.857143"
+       sodipodi:ry="27.857143"
+       d="m -847.14286,-60.672321 a 27.857143,27.857143 0 1 1 -55.71428,0 27.857143,27.857143 0 1 1 55.71428,0 z"
+       transform="translate(-10.080325,248.83215)" />
   </g>
 </svg>

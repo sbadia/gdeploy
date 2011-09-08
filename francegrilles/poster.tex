@@ -1,10 +1,10 @@
 \documentclass[final]{beamer}
 % you can chose your theme here:
 \usetheme{I6dv}
-% further beamerposter themes are available at 
+% further beamerposter themes are available at
 % http://www-i6.informatik.rwth-aachen.de/~dreuw/latexbeamerposter.php
   \usepackage{type1cm}
-  \usepackage{calc} 
+  \usepackage{calc}
   \usepackage{times}
   \usepackage{amsmath,amsthm, amssymb, latexsym}
 \usepackage{tikz}
@@ -14,7 +14,7 @@
   \boldmath
   \usepackage[english]{babel}
   \usepackage[orientation=portrait,size=a0,scale=1.5]{beamerposter}
-\setbeamersize{text margin left=18mm} 
+\setbeamersize{text margin left=18mm}
 \setbeamersize{text margin right=18mm}
   \title{gLite sur Grid'5000~:\\[0.1em] vers une plate-forme d'expérimentation\\[0.1em] à taille réelle pour les grilles de production}
 \author{Sébastien Badia et Lucas Nussbaum}
@@ -64,7 +64,7 @@
 }
 
   \begin{document}
-  \begin{frame}{} 
+  \begin{frame}{}
 	  \vskip -0.5em
 	  \begin{columns}[t]
 	  \begin{column}{0.48\linewidth}
@@ -102,7 +102,7 @@
 	\end{column}
 \end{columns}
 	\end{block}
-	
+
 	\vskip 0.5em
 
 	\begin{block}{Infrastructure gLite déployée}
@@ -124,7 +124,7 @@
 
 	\item Un \textbf{CE (\textsl{Computing Element})}, service de soumission des
 		tâches à un site de calcul donné
-		
+
 	\item Des \textbf{worker nodes} et un \textbf{batch scheduler}
 		permettant d'y accéder. Le couple \textbf{Torque/Maui} a été
 		utilisé
@@ -159,7 +159,7 @@
 			\bigskip
 			\item Création d'une autorité de certification pour générer et signer automatiquement les certificats des utilisateurs et des machines
 		\bigskip
-			\item Pré-remplissage du cache RPM sur les noeuds avec BitTorrent pour accélérer le déploiement
+			\item Pré-remplissage du cache RPM sur les noeuds avec KaDeploy pour accélérer le déploiement (intégré à l'image)
 		\end{itemize}
 	\end{itemize}
 	\vskip 0.5em
@@ -206,7 +206,7 @@
 \end{columns}
 
 \vskip 0.5em
-      
+
     \begin{block}{Processus de déploiement}
 	    \center
 \begin{tikzpicture}[node distance=1em]
@@ -257,6 +257,6 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-PDF-mode: t
