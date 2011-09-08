@@ -183,7 +183,7 @@ end
 
 def queue_config(sname, wn)
   f = File.new("#{DIR}/conf/#{sname}/queue.conf", "w")
-  p wn
+  #p wn
   f.puts <<-EOF
 #!/bin/sh
 qmgr << EOF
@@ -241,7 +241,7 @@ $d['sites'].each_pair do |sname, sconf|
     $nodes += cconf['nodes']
   end
 end
-p $nodes
+#p $nodes
 if install == 1:
   puts "\033[1;36m###\033[0m {#{time_elapsed}} -- Update distrib on all nodes"
   #Net::SSH::Multi.start(:current_connections => nil) do |session|
@@ -249,8 +249,7 @@ if install == 1:
     $nodes.each do |node|
       session.use "root@#{node}"
     end
-      session.exec('mkdir -p /root/yaim && mkdir -p /opt/glite/yaim/etc && cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-* && wget http://public.nancy.grid5000.fr/~sbadia/glite/repo.tgz -q && tar xzf repo.tgz && mv -f repo/* ./ && rm -rf repo* && rm -f adobe.repo && yum update -q -y && sed -e "s/keepcache=0/keepcache=1/" -i /etc/yum.conf')
-      session.exec("echo 'mkdir -p /root/yaim && mkdir -p /opt/glite/yaim/etc && cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-* && wget http://public.nancy.grid5000.fr/~sbadia/glite/repo.tgz -q && tar xzf repo.tgz && yum update -q -y > /root/install-glite.log 2>&1'")
+      session.exec("mkdir -p /root/yaim && mkdir -p /opt/glite/yaim/etc && cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-* && wget http://public.nancy.grid5000.fr/~sbadia/glite/repo.tgz -q && tar xzf repo.tgz && mv -f repo/* ./ && rm -rf repo* && rm -f adobe.repo && yum update -q -y #{OUT} && sed -e 's/keepcache=0/keepcache=1/' -i /etc/yum.conf")
       session.exec("cd /root/ && wget http://public.nancy.grid5000.fr/~sbadia/glite/scp-ssh.tgz -q && tar xzf scp-ssh.tgz && chown -R root:root /root/.ssh/")
       session.loop
   end
