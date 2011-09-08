@@ -279,6 +279,7 @@ if install == 1:
       ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 777 /var/log/bdii/bdii-update.log")
       ssh.exec!("/usr/bin/mysqladmin -u root password superpass && chmod 777 /var/log/bdii")
       ssh.exec!("chmod 777 /var/log/bdii && /usr/bin/mysqladmin -u root password superpass #{OUT}")
+      ssh.exec!("echo 'Time for : ssh root@#{conf['voms']} \"opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS\"'")
       ssh.exec!("chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS #{OUT}")
       #system("ssh root@#{conf['voms']} -o BatchMode=yes 'chmod +x /opt/glite/yaim/etc/conf/yaim/voms.sh && sh /opt/glite/yaim/etc/conf/yaim/voms.sh'")
       ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
