@@ -1,0 +1,40 @@
+#### Loaded config file g5k.yaml
+### {0} -- Create conf files
+==> Generate conf::lille
+==> Generate conf::grenoble
+==> Generate conf::toulouse
+==> Generate conf::sophia
+==> Generate conf::rennes
+==> Generate conf::nancy
+==> Generate conf::bordeaux
+==> Generate conf::reims
+==> Generate conf::orsay
+### {0} -- Update distrib on all nodes
+./net/ssh/known_hosts.rb:93:in `initialize': Too many open files - /home/sbadia/.ssh/known_hosts (Errno::EMFILE)
+        from ./net/ssh/known_hosts.rb:93:in `open'
+        from ./net/ssh/known_hosts.rb:93:in `keys_for'
+        from ./net/ssh/known_hosts.rb:23:in `search_in'
+        from ./net/ssh/known_hosts.rb:23:in `map'
+        from ./net/ssh/known_hosts.rb:23:in `search_in'
+        from ./net/ssh/known_hosts.rb:17:in `search_for'
+        from ./net/ssh/transport/algorithms.rb:213:in `prepare_preferred_algorithms!'
+        from ./net/ssh/transport/algorithms.rb:96:in `initialize'
+        from ./net/ssh/transport/session.rb:77:in `new'
+        from ./net/ssh/transport/session.rb:77:in `initialize'
+        from ./net/ssh.rb:179:in `new'
+        from ./net/ssh.rb:179:in `start'
+        from ./net/ssh/multi/server.rb:186:in `new_session'
+        from ./net/ssh/multi/session.rb:483:in `next_session'
+        from ./net/ssh/multi/server.rb:139:in `session'
+        from ./net/ssh/multi/session_actions.rb:36:in `sessions'
+        from ./net/ssh/multi/session_actions.rb:36:in `map'
+        from ./net/ssh/multi/session_actions.rb:36:in `sessions'
+        from ./net/ssh/multi/session_actions.rb:81:in `open_channel'
+        from ./net/ssh/multi/session_actions.rb:120:in `exec'
+        from config-glite.rb:252
+        from ./net/ssh/multi.rb:62:in `start'
+        from config-glite.rb:248
+
+real    5m48.560s
+user    0m43.639s
+sys     0m11.121s
