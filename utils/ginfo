@@ -1,0 +1,29 @@
+#!/usr/bin/ruby -w
+
+require 'yaml'
+
+
+if ARGV.length < 1
+  puts "ruby config-glite.rb g5k.yaml"
+  exit 1
+end
+
+$nodes = []
+
+$d = YAML::load(IO::read(ARGV[0]))
+puts "\033[1;32m####\033[0m Loaded config file #{ARGV[0]}"
+puts "Nombre de VOs : 1 (Grid5000)"
+puts "Nombre de sites : #{$d['sites'].length}"
+$d['sites'].to_a.each do |sname, sconf|
+  puts "#{sname} : +4 (bdii, ce, batch, ui)"
+    $nodes << sconf['bdii']
+    $nodes << sconf['ce']
+    $nodes << sconf['batch']
+    $nodes << sconf['ui']
+  sconf['clusters'].each_pair do |cname, cconf|
+      $nodes += cconf['nodes']
+      puts  "#{cname} : #{cconf['nodes'].length} noeuds"
+  end
+  puts "\n"
+end
+puts "Nodes total #{$nodes.to_a.length}"

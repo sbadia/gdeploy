@@ -1,0 +1,118 @@
+[17:30:19] sbadia@frennes:~/gdeploy $ time ruby config-glite.rb g5k.yaml
+#### Loaded config file g5k.yaml
+### {0} -- Create conf files
+==> Generate conf::lille
+==> Generate conf::rennes
+==> Generate conf::orsay
+### {0} -- Update distrib on all nodes
+### {105} -- Update distrib finished
+### {119} -- Configuring VOs
+==> Configuring VO=grid5000 on VOMS=chinqchint-2.lille.grid5000.fr
+### {351} -- VOs config finished (create distri)
+### {357} -- Configuring sites
+==> {357} -- Configuring site=lille
+=> Create certificats for lille (ce: chinqchint-26.lille.grid5000.fr, ui: chinqchint-28.lille.grid5000.fr)
+==> {357} -- Configuring site=rennes
+==> {357} -- Configuring site=orsay
+==> {366} -- Create Site config lille finished
+=> Create certificats for rennes (ce: paramount-18.rennes.grid5000.fr, ui: paramount-2.rennes.grid5000.fr)
+### {366} -- Create Sites config finished
+==> {366} -- Configuring site=lille
+=> {366} -- BDII on chinqchint-20.lille.grid5000.fr
+==> {375} -- Create Site config rennes finished
+=> Create certificats for orsay (ce: netgdx-28.orsay.grid5000.fr, ui: netgdx-29.orsay.grid5000.fr)
+### {375} -- Create Sites config finished
+==> {375} -- Configuring site=rennes
+=> {375} -- BDII on paramount-10.rennes.grid5000.fr
+==> {384} -- Create Site config orsay finished
+### {384} -- Create Sites config finished
+==> {384} -- Configuring site=orsay
+=> {384} -- BDII on netgdx-25.orsay.grid5000.fr
+=> {400} -- BDII lille config finished
+=> {400} -- Batch on chinqchint-23.lille.grid5000.fr
+=> {406} -- BDII rennes config finished
+=> {406} -- Batch on paramount-11.rennes.grid5000.fr
+=> {422} -- Batch lille config finished
+==> {422} -- Configuring lille's clusters
+=> {422} --  Cluster chinqchint
+Run on chinqchint-29.lille.grid5000.fr chinqchint-3.lille.grid5000.fr chinqchint-30.lille.grid5000.fr chinqchint-31.lille.grid5000.fr chinqchint-32.lille.grid5000.fr
+=> {426} -- Batch rennes config finished
+==> {426} -- Configuring rennes's clusters
+=> {426} --  Cluster paramount
+Run on paramount-23.rennes.grid5000.fr paramount-24.rennes.grid5000.fr paramount-26.rennes.grid5000.fr paramount-28.rennes.grid5000.fr paramount-30.rennes.grid5000.fr paramount-5.rennes.grid5000.fr
+=> {427} -- BDII orsay config finished
+=> {427} -- Batch on netgdx-26.orsay.grid5000.fr
+=> {453} -- Batch orsay config finished
+==> {453} -- Configuring orsay's clusters
+=> {453} --  Cluster netgdx
+Run on netgdx-3.orsay.grid5000.fr netgdx-30.orsay.grid5000.fr netgdx-4.orsay.grid5000.fr netgdx-5.orsay.grid5000.fr netgdx-6.orsay.grid5000.fr netgdx-7.orsay.grid5000.fr
+=> {547} -- Cluster paramount on rennes config finished
+=> {547} -- CE on paramount-18.rennes.grid5000.fr
+=> {622} -- Cluster chinqchint on lille config finished
+=> {622} -- CE on chinqchint-26.lille.grid5000.fr
+=> {664} -- Cluster netgdx on orsay config finished
+=> {664} -- CE on netgdx-28.orsay.grid5000.fr
+=> {698} -- CE rennes config finished
+=> {698} -- UI on paramount-2.rennes.grid5000.fr
+=> {850} -- CE lille config finished
+=> {850} -- UI on chinqchint-28.lille.grid5000.fr
+=> {907} -- CE orsay config finished
+=> {907} -- UI on netgdx-29.orsay.grid5000.fr
+=> {1060} -- UI rennes config finished
+==> {1060} -- Site rennes config finished
+=> {1256} -- UI lille config finished
+==> {1256} -- Site lille config finished
+=> {1486} -- UI orsay config finished
+==> {1486} -- Site orsay config finished
+### {1486} -- gLite install finished
+--- 
+VOs: 
+  grid5000: 
+    voms: chinqchint-2.lille.grid5000.fr
+sites: 
+  lille: 
+    ce: chinqchint-26.lille.grid5000.fr
+    bdii: chinqchint-20.lille.grid5000.fr
+    clusters: 
+      chinqchint: 
+        nodes: 
+        - chinqchint-29.lille.grid5000.fr
+        - chinqchint-3.lille.grid5000.fr
+        - chinqchint-30.lille.grid5000.fr
+        - chinqchint-31.lille.grid5000.fr
+        - chinqchint-32.lille.grid5000.fr
+    batch: chinqchint-23.lille.grid5000.fr
+    ui: chinqchint-28.lille.grid5000.fr
+  rennes: 
+    ce: paramount-18.rennes.grid5000.fr
+    bdii: paramount-10.rennes.grid5000.fr
+    clusters: 
+      paramount: 
+        nodes: 
+        - paramount-23.rennes.grid5000.fr
+        - paramount-24.rennes.grid5000.fr
+        - paramount-26.rennes.grid5000.fr
+        - paramount-28.rennes.grid5000.fr
+        - paramount-30.rennes.grid5000.fr
+        - paramount-5.rennes.grid5000.fr
+    batch: paramount-11.rennes.grid5000.fr
+    ui: paramount-2.rennes.grid5000.fr
+  orsay: 
+    ce: netgdx-28.orsay.grid5000.fr
+    bdii: netgdx-25.orsay.grid5000.fr
+    clusters: 
+      netgdx: 
+        nodes: 
+        - netgdx-3.orsay.grid5000.fr
+        - netgdx-30.orsay.grid5000.fr
+        - netgdx-4.orsay.grid5000.fr
+        - netgdx-5.orsay.grid5000.fr
+        - netgdx-6.orsay.grid5000.fr
+        - netgdx-7.orsay.grid5000.fr
+    batch: netgdx-26.orsay.grid5000.fr
+    ui: netgdx-29.orsay.grid5000.fr
+### {24 min}
+
+real	24m47.242s
+user	0m31.614s
+sys	0m11.509s

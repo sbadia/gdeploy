@@ -1,0 +1,188 @@
+[23:20:09] sbadia@fnancy:~/gdeploy $ time ruby config-glite.rb g5k.yaml
+#### Loaded config file g5k.yaml
+### {0} -- Create conf files
+==> Generate conf::lille
+==> Generate conf::grenoble
+==> Generate conf::toulouse
+==> Generate conf::sophia
+==> Generate conf::rennes
+==> Generate conf::nancy
+==> Generate conf::bordeaux
+==> Generate conf::reims
+==> Generate conf::orsay
+### {0} -- Update distrib on all nodes
+[sol-18.sophia.grid5000.fr] tar: .ssh/id_dsa.pub: time stamp 2011-07-05 11:26:53 is 297406938 s in the future
+[sol-18.sophia.grid5000.fr] tar: .ssh/id_dsa: time stamp 2011-07-05 11:26:53 is 297406938 s in the future
+[sol-18.sophia.grid5000.fr] tar: .ssh/authorized_keys: time stamp 2011-07-05 11:32:28 is 297407273 s in the future
+[sol-18.sophia.grid5000.fr] tar: .ssh: time stamp 2011-07-05 11:32:28 is 297407273 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/adobe.repo: time stamp 2011-08-03 18:41:09 is 299938594 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/atrpms.repo: time stamp 2011-08-03 18:35:27 is 299938252 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/dag.repo: time stamp 2011-08-03 18:39:56 is 299938521 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-APEL.repo: time stamp 2011-02-17 16:16:06 is 285504691 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-ARGUS.repo: time stamp 2011-02-17 16:16:09 is 285504694 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-BDII.repo: time stamp 2011-02-17 16:16:12 is 285504697 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-BDII_site.repo: time stamp 2011-02-17 16:16:15 is 285504700 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-BDII_top.repo: time stamp 2011-02-17 16:16:18 is 285504703 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-CREAM.repo: time stamp 2011-02-17 16:16:22 is 285504707 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-FTA_oracle.repo: time stamp 2011-02-17 16:16:25 is 285504710 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-FTM.repo: time stamp 2011-02-17 16:16:28 is 285504713 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-FTS_oracle.repo: time stamp 2011-02-17 16:16:32 is 285504717 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-GLEXEC_wn.repo: time stamp 2011-02-17 16:16:36 is 285504721 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-LB.repo: time stamp 2011-02-17 16:16:39 is 285504724 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-LFC_mysql.repo: time stamp 2011-02-17 16:16:42 is 285504727 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-LFC_oracle.repo: time stamp 2011-02-17 16:16:45 is 285504730 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-LSF_utils.repo: time stamp 2011-02-17 16:16:48 is 285504733 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-MPI_utils.repo: time stamp 2011-02-17 16:16:51 is 285504736 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-SCAS.repo: time stamp 2011-02-17 16:16:56 is 285504741 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-SE_dpm_disk.repo: time stamp 2011-02-17 16:17:01 is 285504746 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-SE_dpm_mysql.repo: time stamp 2011-02-17 16:17:04 is 285504749 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-SGE_utils.repo: time stamp 2011-02-17 16:17:07 is 285504752 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-TORQUE_client.repo: time stamp 2011-02-17 16:17:10 is 285504755 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-TORQUE_server.repo: time stamp 2011-02-17 16:17:13 is 285504758 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-TORQUE_utils.repo: time stamp 2011-02-17 16:17:16 is 285504761 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-UI.repo: time stamp 2011-02-17 16:17:19 is 285504764 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-VOBOX.repo: time stamp 2011-02-17 16:17:23 is 285504768 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-VOMS_mysql.repo: time stamp 2011-02-17 16:17:27 is 285504772 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-VOMS_oracle.repo: time stamp 2011-02-17 16:17:29 is 285504774 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/glite-WN.repo: time stamp 2011-02-17 16:17:32 is 285504777 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/lcg-CA.repo: time stamp 2011-02-17 16:17:35 is 285504780 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/sl-contrib.repo: time stamp 2011-08-03 18:35:27 is 299938252 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/sl-debuginfo.repo: time stamp 2011-08-03 18:35:27 is 299938252 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/sl-fastbugs.repo: time stamp 2011-08-03 18:35:27 is 299938252 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/sl-security.repo: time stamp 2011-08-03 18:35:27 is 299938252 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/sl-srpms.repo: time stamp 2011-08-03 18:35:27 is 299938252 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/sl-testing.repo: time stamp 2011-08-03 18:35:27 is 299938252 s in the future
+[sol-18.sophia.grid5000.fr] tar: repo/sl.repo: time stamp 2011-08-03 18:35:27 is 299938252 s in the future
+### {284} -- Update distrib finished
+### {4813} -- Configuring VOs
+==> Configuring VO=grid5000 on VOMS=bordereau-5.bordeaux.grid5000.fr
+### {5037} -- VOs config finished (create distri)
+### {5630} -- Configuring sites
+==> {5630} -- Configuring site=lille
+=> Create certificats for lille (ce: chicon-11.lille.grid5000.fr, ui: chicon-12.lille.grid5000.fr)
+==> {5630} -- Configuring site=grenoble
+==> {5630} -- Configuring site=toulouse
+==> {5630} -- Configuring site=sophia
+==> {5630} -- Configuring site=rennes
+==> {5630} -- Configuring site=nancy
+==> {5630} -- Configuring site=bordeaux
+==> {5630} -- Configuring site=reims
+==> {5630} -- Configuring site=orsay
+==> {6473} -- Create Site config lille finished
+=> Create certificats for grenoble (ce: edel-11.grenoble.grid5000.fr, ui: edel-12.grenoble.grid5000.fr)
+### {6473} -- Create Sites config finished
+==> {6473} -- Configuring site=lille
+=> {6473} -- BDII on chicon-1.lille.grid5000.fr
+=> {6511} -- BDII lille config finished
+=> {6511} -- Batch on chicon-10.lille.grid5000.fr
+=> {6532} -- Batch lille config finished
+==> {6532} -- Configuring lille's clusters
+=> {6532} --  Cluster chinqchint
+Run on chinqchint-1.lille.grid5000.fr chinqchint-10.lille.grid5000.fr chinqchint-11.lille.grid5000.fr chinqchint-12.lille.grid5000.fr chinqchint-13.lille.grid5000.fr chinqchint-14.lille.grid5000.fr chinqchint-15.lille.grid5000.fr chinqchint-16.lille.grid5000.fr chinqchint-17.lille.grid5000.fr chinqchint-18.lille.grid5000.fr chinqchint-19.lille.grid5000.fr chinqchint-2.lille.grid5000.fr chinqchint-20.lille.grid5000.fr chinqchint-23.lille.grid5000.fr chinqchint-24.lille.grid5000.fr chinqchint-26.lille.grid5000.fr chinqchint-28.lille.grid5000.fr chinqchint-29.lille.grid5000.fr chinqchint-3.lille.grid5000.fr chinqchint-30.lille.grid5000.fr chinqchint-31.lille.grid5000.fr chinqchint-32.lille.grid5000.fr chinqchint-33.lille.grid5000.fr chinqchint-34.lille.grid5000.fr chinqchint-36.lille.grid5000.fr chinqchint-37.lille.grid5000.fr chinqchint-38.lille.grid5000.fr chinqchint-39.lille.grid5000.fr chinqchint-4.lille.grid5000.fr chinqchint-40.lille.grid5000.fr chinqchint-41.lille.grid5000.fr chinqchint-42.lille.grid5000.fr chinqchint-43.lille.grid5000.fr chinqchint-44.lille.grid5000.fr chinqchint-45.lille.grid5000.fr chinqchint-46.lille.grid5000.fr chinqchint-5.lille.grid5000.fr chinqchint-6.lille.grid5000.fr chinqchint-7.lille.grid5000.fr chinqchint-8.lille.grid5000.fr
+=> {7008} -- Cluster chinqchint on lille config finished
+=> {7008} --  Cluster chimint
+Run on chimint-1.lille.grid5000.fr chimint-10.lille.grid5000.fr chimint-11.lille.grid5000.fr chimint-12.lille.grid5000.fr chimint-13.lille.grid5000.fr chimint-14.lille.grid5000.fr chimint-15.lille.grid5000.fr chimint-16.lille.grid5000.fr chimint-17.lille.grid5000.fr chimint-18.lille.grid5000.fr chimint-19.lille.grid5000.fr chimint-2.lille.grid5000.fr chimint-20.lille.grid5000.fr chimint-3.lille.grid5000.fr chimint-5.lille.grid5000.fr chimint-6.lille.grid5000.fr chimint-7.lille.grid5000.fr chimint-8.lille.grid5000.fr chimint-9.lille.grid5000.fr
+=> {7223} -- Cluster chimint on lille config finished
+=> {7223} --  Cluster chicon
+Run on chicon-13.lille.grid5000.fr chicon-14.lille.grid5000.fr chicon-15.lille.grid5000.fr chicon-16.lille.grid5000.fr chicon-17.lille.grid5000.fr chicon-18.lille.grid5000.fr chicon-19.lille.grid5000.fr chicon-2.lille.grid5000.fr chicon-21.lille.grid5000.fr chicon-22.lille.grid5000.fr chicon-23.lille.grid5000.fr chicon-25.lille.grid5000.fr chicon-26.lille.grid5000.fr chicon-3.lille.grid5000.fr chicon-4.lille.grid5000.fr chicon-5.lille.grid5000.fr chicon-7.lille.grid5000.fr chicon-8.lille.grid5000.fr chicon-9.lille.grid5000.fr
+==> {7288} -- Create Site config grenoble finished
+=> Create certificats for toulouse (ce: pastel-13.toulouse.grid5000.fr, ui: pastel-14.toulouse.grid5000.fr)
+### {7288} -- Create Sites config finished
+==> {7288} -- Configuring site=grenoble
+=> {7288} -- BDII on edel-1.grenoble.grid5000.fr
+=> {7337} -- BDII grenoble config finished
+=> {7337} -- Batch on edel-10.grenoble.grid5000.fr
+=> {7356} -- Batch grenoble config finished
+==> {7356} -- Configuring grenoble's clusters
+=> {7356} --  Cluster genepi
+Run on genepi-10.grenoble.grid5000.fr genepi-11.grenoble.grid5000.fr genepi-12.grenoble.grid5000.fr genepi-13.grenoble.grid5000.fr genepi-14.grenoble.grid5000.fr genepi-15.grenoble.grid5000.fr genepi-16.grenoble.grid5000.fr genepi-17.grenoble.grid5000.fr genepi-18.grenoble.grid5000.fr genepi-19.grenoble.grid5000.fr genepi-2.grenoble.grid5000.fr genepi-20.grenoble.grid5000.fr genepi-22.grenoble.grid5000.fr genepi-23.grenoble.grid5000.fr genepi-24.grenoble.grid5000.fr genepi-25.grenoble.grid5000.fr genepi-26.grenoble.grid5000.fr genepi-27.grenoble.grid5000.fr genepi-28.grenoble.grid5000.fr genepi-29.grenoble.grid5000.fr genepi-30.grenoble.grid5000.fr genepi-32.grenoble.grid5000.fr genepi-33.grenoble.grid5000.fr genepi-4.grenoble.grid5000.fr genepi-5.grenoble.grid5000.fr genepi-6.grenoble.grid5000.fr genepi-8.grenoble.grid5000.fr genepi-9.grenoble.grid5000.fr
+=> {7621} -- Cluster genepi on grenoble config finished
+=> {7621} --  Cluster edel
+Run on edel-13.grenoble.grid5000.fr edel-14.grenoble.grid5000.fr edel-15.grenoble.grid5000.fr edel-16.grenoble.grid5000.fr edel-17.grenoble.grid5000.fr edel-18.grenoble.grid5000.fr edel-19.grenoble.grid5000.fr edel-2.grenoble.grid5000.fr edel-22.grenoble.grid5000.fr edel-23.grenoble.grid5000.fr edel-25.grenoble.grid5000.fr edel-26.grenoble.grid5000.fr edel-27.grenoble.grid5000.fr edel-28.grenoble.grid5000.fr edel-29.grenoble.grid5000.fr edel-3.grenoble.grid5000.fr edel-30.grenoble.grid5000.fr edel-31.grenoble.grid5000.fr edel-32.grenoble.grid5000.fr edel-33.grenoble.grid5000.fr edel-34.grenoble.grid5000.fr edel-35.grenoble.grid5000.fr edel-36.grenoble.grid5000.fr edel-38.grenoble.grid5000.fr edel-39.grenoble.grid5000.fr edel-4.grenoble.grid5000.fr edel-40.grenoble.grid5000.fr edel-42.grenoble.grid5000.fr edel-43.grenoble.grid5000.fr edel-44.grenoble.grid5000.fr edel-45.grenoble.grid5000.fr edel-46.grenoble.grid5000.fr edel-47.grenoble.grid5000.fr edel-48.grenoble.grid5000.fr edel-49.grenoble.grid5000.fr edel-51.grenoble.grid5000.fr edel-52.grenoble.grid5000.fr edel-53.grenoble.grid5000.fr edel-54.grenoble.grid5000.fr edel-55.grenoble.grid5000.fr edel-56.grenoble.grid5000.fr edel-57.grenoble.grid5000.fr edel-58.grenoble.grid5000.fr edel-59.grenoble.grid5000.fr edel-6.grenoble.grid5000.fr edel-60.grenoble.grid5000.fr edel-61.grenoble.grid5000.fr edel-62.grenoble.grid5000.fr edel-63.grenoble.grid5000.fr edel-64.grenoble.grid5000.fr edel-65.grenoble.grid5000.fr edel-66.grenoble.grid5000.fr edel-67.grenoble.grid5000.fr edel-68.grenoble.grid5000.fr edel-69.grenoble.grid5000.fr edel-7.grenoble.grid5000.fr edel-70.grenoble.grid5000.fr edel-71.grenoble.grid5000.fr edel-8.grenoble.grid5000.fr edel-9.grenoble.grid5000.fr
+=> {7663} -- Cluster chicon on lille config finished
+=> {7663} -- CE on chicon-11.lille.grid5000.fr
+=> {7898} -- CE lille config finished
+=> {7898} -- UI on chicon-12.lille.grid5000.fr
+==> {8140} -- Create Site config toulouse finished
+=> Create certificats for sophia (ce: sol-11.sophia.grid5000.fr, ui: sol-12.sophia.grid5000.fr)
+### {8140} -- Create Sites config finished
+==> {8140} -- Configuring site=toulouse
+=> {8140} -- BDII on pastel-1.toulouse.grid5000.fr
+=> {8186} -- BDII toulouse config finished
+=> {8186} -- Batch on pastel-10.toulouse.grid5000.fr
+=> {8211} -- Batch toulouse config finished
+==> {8211} -- Configuring toulouse's clusters
+=> {8211} --  Cluster pastel
+Run on pastel-15.toulouse.grid5000.fr pastel-16.toulouse.grid5000.fr pastel-17.toulouse.grid5000.fr pastel-18.toulouse.grid5000.fr pastel-19.toulouse.grid5000.fr pastel-2.toulouse.grid5000.fr pastel-20.toulouse.grid5000.fr pastel-21.toulouse.grid5000.fr pastel-22.toulouse.grid5000.fr pastel-23.toulouse.grid5000.fr pastel-24.toulouse.grid5000.fr pastel-26.toulouse.grid5000.fr pastel-27.toulouse.grid5000.fr pastel-28.toulouse.grid5000.fr pastel-29.toulouse.grid5000.fr pastel-30.toulouse.grid5000.fr pastel-31.toulouse.grid5000.fr pastel-32.toulouse.grid5000.fr pastel-33.toulouse.grid5000.fr pastel-34.toulouse.grid5000.fr pastel-35.toulouse.grid5000.fr pastel-36.toulouse.grid5000.fr pastel-67.toulouse.grid5000.fr pastel-68.toulouse.grid5000.fr pastel-69.toulouse.grid5000.fr pastel-7.toulouse.grid5000.fr pastel-71.toulouse.grid5000.fr pastel-73.toulouse.grid5000.fr pastel-75.toulouse.grid5000.fr pastel-77.toulouse.grid5000.fr pastel-78.toulouse.grid5000.fr pastel-8.toulouse.grid5000.fr
+=> {8236} -- Cluster edel on grenoble config finished
+=> {8236} -- CE on edel-11.grenoble.grid5000.fr
+=> {8402} -- UI lille config finished
+==> {8402} -- Site lille config finished
+=> {8548} -- CE grenoble config finished
+=> {8548} -- UI on edel-12.grenoble.grid5000.fr
+==> {8989} -- Create Site config sophia finished
+=> Create certificats for rennes (ce: paradent-11.rennes.grid5000.fr, ui: paradent-12.rennes.grid5000.fr)
+### {8989} -- Create Sites config finished
+==> {8989} -- Configuring site=sophia
+=> {8989} -- BDII on sol-1.sophia.grid5000.fr
+=> {9028} -- BDII sophia config finished
+=> {9028} -- Batch on sol-10.sophia.grid5000.fr
+=> {9050} -- Batch sophia config finished
+==> {9050} -- Configuring sophia's clusters
+=> {9050} --  Cluster suno
+Run on suno-1.sophia.grid5000.fr suno-10.sophia.grid5000.fr suno-11.sophia.grid5000.fr suno-12.sophia.grid5000.fr suno-13.sophia.grid5000.fr suno-14.sophia.grid5000.fr suno-15.sophia.grid5000.fr suno-16.sophia.grid5000.fr suno-17.sophia.grid5000.fr suno-18.sophia.grid5000.fr suno-19.sophia.grid5000.fr suno-2.sophia.grid5000.fr suno-20.sophia.grid5000.fr suno-22.sophia.grid5000.fr suno-23.sophia.grid5000.fr suno-24.sophia.grid5000.fr suno-25.sophia.grid5000.fr suno-26.sophia.grid5000.fr suno-27.sophia.grid5000.fr suno-40.sophia.grid5000.fr suno-41.sophia.grid5000.fr suno-42.sophia.grid5000.fr suno-43.sophia.grid5000.fr suno-44.sophia.grid5000.fr suno-45.sophia.grid5000.fr suno-5.sophia.grid5000.fr suno-6.sophia.grid5000.fr suno-7.sophia.grid5000.fr suno-8.sophia.grid5000.fr suno-9.sophia.grid5000.fr
+=> {9122} -- UI grenoble config finished
+==> {9122} -- Site grenoble config finished
+=> {9406} -- Cluster suno on sophia config finished
+=> {9406} --  Cluster sol
+Run on sol-13.sophia.grid5000.fr sol-14.sophia.grid5000.fr sol-15.sophia.grid5000.fr sol-16.sophia.grid5000.fr sol-17.sophia.grid5000.fr sol-18.sophia.grid5000.fr sol-19.sophia.grid5000.fr sol-2.sophia.grid5000.fr sol-20.sophia.grid5000.fr sol-21.sophia.grid5000.fr sol-22.sophia.grid5000.fr sol-23.sophia.grid5000.fr sol-24.sophia.grid5000.fr sol-25.sophia.grid5000.fr sol-26.sophia.grid5000.fr sol-27.sophia.grid5000.fr sol-28.sophia.grid5000.fr sol-43.sophia.grid5000.fr sol-44.sophia.grid5000.fr sol-45.sophia.grid5000.fr sol-46.sophia.grid5000.fr sol-47.sophia.grid5000.fr sol-48.sophia.grid5000.fr sol-49.sophia.grid5000.fr sol-5.sophia.grid5000.fr sol-50.sophia.grid5000.fr sol-6.sophia.grid5000.fr sol-7.sophia.grid5000.fr sol-8.sophia.grid5000.fr sol-9.sophia.grid5000.fr
+=> {9679} -- Cluster sol on sophia config finished
+=> {9679} -- CE on sol-11.sophia.grid5000.fr
+==> {9840} -- Create Site config rennes finished
+=> Create certificats for nancy (ce: graphene-100.nancy.grid5000.fr, ui: graphene-101.nancy.grid5000.fr)
+### {9840} -- Create Sites config finished
+==> {9840} -- Configuring site=rennes
+=> {9840} -- BDII on paradent-1.rennes.grid5000.fr
+=> {9872} -- BDII rennes config finished
+=> {9872} -- Batch on paradent-10.rennes.grid5000.fr
+=> {9891} -- Batch rennes config finished
+==> {9891} -- Configuring rennes's clusters
+=> {9891} --  Cluster paramount
+Run on paramount-10.rennes.grid5000.fr paramount-11.rennes.grid5000.fr paramount-18.rennes.grid5000.fr paramount-2.rennes.grid5000.fr paramount-22.rennes.grid5000.fr paramount-23.rennes.grid5000.fr paramount-24.rennes.grid5000.fr paramount-25.rennes.grid5000.fr paramount-26.rennes.grid5000.fr paramount-27.rennes.grid5000.fr paramount-28.rennes.grid5000.fr paramount-30.rennes.grid5000.fr paramount-32.rennes.grid5000.fr paramount-33.rennes.grid5000.fr paramount-5.rennes.grid5000.fr paramount-6.rennes.grid5000.fr paramount-8.rennes.grid5000.fr paramount-9.rennes.grid5000.fr
+=> {10064} -- Cluster paramount on rennes config finished
+=> {10064} --  Cluster parapide
+Run on parapide-1.rennes.grid5000.fr parapide-10.rennes.grid5000.fr parapide-11.rennes.grid5000.fr parapide-12.rennes.grid5000.fr parapide-13.rennes.grid5000.fr parapide-14.rennes.grid5000.fr parapide-15.rennes.grid5000.fr parapide-16.rennes.grid5000.fr parapide-17.rennes.grid5000.fr parapide-18.rennes.grid5000.fr parapide-19.rennes.grid5000.fr parapide-2.rennes.grid5000.fr parapide-20.rennes.grid5000.fr parapide-21.rennes.grid5000.fr parapide-22.rennes.grid5000.fr parapide-23.rennes.grid5000.fr parapide-24.rennes.grid5000.fr parapide-25.rennes.grid5000.fr parapide-3.rennes.grid5000.fr parapide-4.rennes.grid5000.fr parapide-5.rennes.grid5000.fr parapide-6.rennes.grid5000.fr parapide-7.rennes.grid5000.fr parapide-8.rennes.grid5000.fr parapide-9.rennes.grid5000.fr
+=> {10078} -- CE sophia config finished
+=> {10078} -- UI on sol-12.sophia.grid5000.fr
+=> {10240} -- Cluster parapide on rennes config finished
+=> {10240} --  Cluster paradent
+Run on paradent-13.rennes.grid5000.fr paradent-14.rennes.grid5000.fr paradent-15.rennes.grid5000.fr paradent-16.rennes.grid5000.fr paradent-17.rennes.grid5000.fr paradent-18.rennes.grid5000.fr paradent-19.rennes.grid5000.fr paradent-2.rennes.grid5000.fr paradent-20.rennes.grid5000.fr paradent-21.rennes.grid5000.fr paradent-22.rennes.grid5000.fr paradent-23.rennes.grid5000.fr paradent-24.rennes.grid5000.fr paradent-25.rennes.grid5000.fr paradent-26.rennes.grid5000.fr paradent-27.rennes.grid5000.fr paradent-28.rennes.grid5000.fr paradent-29.rennes.grid5000.fr paradent-3.rennes.grid5000.fr paradent-30.rennes.grid5000.fr paradent-31.rennes.grid5000.fr paradent-32.rennes.grid5000.fr paradent-33.rennes.grid5000.fr paradent-34.rennes.grid5000.fr paradent-35.rennes.grid5000.fr paradent-36.rennes.grid5000.fr paradent-37.rennes.grid5000.fr paradent-38.rennes.grid5000.fr paradent-39.rennes.grid5000.fr paradent-4.rennes.grid5000.fr paradent-40.rennes.grid5000.fr paradent-41.rennes.grid5000.fr paradent-43.rennes.grid5000.fr paradent-44.rennes.grid5000.fr paradent-46.rennes.grid5000.fr paradent-47.rennes.grid5000.fr paradent-48.rennes.grid5000.fr paradent-49.rennes.grid5000.fr paradent-5.rennes.grid5000.fr paradent-50.rennes.grid5000.fr paradent-52.rennes.grid5000.fr paradent-53.rennes.grid5000.fr paradent-54.rennes.grid5000.fr paradent-55.rennes.grid5000.fr
+=> Create certificats for bordeaux (ce: bordereau-12.bordeaux.grid5000.fr, ui: bordereau-13.bordeaux.grid5000.fr)
+=> {10498} -- Cluster paradent on rennes config finished
+=> {10498} -- CE on paradent-11.rennes.grid5000.fr
+ssh: connect to host bordereau-5.bordeaux.grid5000.fr port 22: Connection timed out
+=> Create certificats for reims (ce: stremi-11.reims.grid5000.fr, ui: stremi-12.reims.grid5000.fr)
+Permission denied (publickey,password).
+=> Create certificats for orsay (ce: gdx-100.orsay.grid5000.fr, ui: gdx-101.orsay.grid5000.fr)
+Permission denied (publickey,password).
+=> {10570} -- UI sophia config finished
+==> {10570} -- Site sophia config finished
+=> {10676} -- CE rennes config finished
+=> {10676} -- UI on paradent-12.rennes.grid5000.fr
+=> {11096} -- UI rennes config finished
+==> {11096} -- Site rennes config finished
+./net/ssh/ruby_compat.rb:33:in `select': closed stream (IOError)
+  from ./misc/peach.rb:13:in `join'
+  from ./misc/peach.rb:13:in `peach'
+  from ./misc/peach.rb:13:in `each'
+  from ./misc/peach.rb:13:in `peach'
+  from config-glite.rb:302
+
+real    221m55.072s
+user    9m16.879s
+sys     2m8.176s
+[03:02:13] sbadia@fnancy:~/gdeploy $ bash: line 1: 22160 Killed                  ( exec -a -${SHELL##*/} $SHELL )
+Connection to fnancy.nancy.grid5000.fr closed.
+Disconnected from OAR job 333272
+[03:03:36] sbadia@fnancy:~ $
+
