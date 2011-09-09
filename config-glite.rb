@@ -244,8 +244,8 @@ end
 #p $nodes
 if install == 1:
   puts "\033[1;36m###\033[0m {#{time_elapsed}} -- Update distrib on all nodes"
-  #Net::SSH::Multi.start(:current_connections => nil) do |session|
-  Net::SSH::Multi.start do |session|
+  # Default :current_connections => nil -> fenetre max... >1024.
+  Net::SSH::Multi.start(:on_error => :warn) do |session|
     $nodes.each do |node|
       session.use "root@#{node}"
     end
@@ -340,7 +340,7 @@ if install == 1:
     sconf['clusters'].each_pair do |cname, cconf|
       puts "\033[1;35m=>\033[0m {#{time_elapsed}} --  Cluster #{cname}"
       puts "Run on #{cconf['nodes'].join(' ')}"
-      Net::SSH::Multi.start do |session|
+      Net::SSH::Multi.start(:on_error => :warn) do |session|
        cconf['nodes'].each do |n|
         session.use "root@#{n}"
        end
