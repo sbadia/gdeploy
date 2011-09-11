@@ -1,5 +1,26 @@
 #!/usr/bin/ruby
 
+=begin
+
+G5kjobs, a tool for reserve ressources on Grid'5000 (Using g5k api).
+For more information see <http://github.com/sbadia/gdeploy/>
+Copyright (C) 2011  Lucas Nussbaum
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+=end
+
 # ruby g5kjobs.rb > nodes
 # kadeploy3 -f nodes --multi-server -a http://public.nancy.grid5000.fr/~sbadia/sl55-ahci.dsc -k ~/.ssh/id_dsa.pub -o ~/dnodes
 # ruby list2yaml.rb -g dnodes > g5k.yaml
