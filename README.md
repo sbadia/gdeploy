@@ -16,8 +16,7 @@ Linux](http://www.scientificlinux.org/) 5.5, et la version de [gLite](http://gli
 
 Dépendances
 -------
-Pour fonctionner gdeploy a besoin de trois tgz, il va les chercher
-directement dans le public home de sbadia.
+Pour fonctionner gdeploy a besoin de trois tgz, il va les chercher directement dans le public home de sbadia @nancy.
 
 * hostkeys.tgz les certificats de la grille crée.
 * repo.tgz le définitions des repo gLite.
@@ -27,7 +26,13 @@ Voir [http://public.nancy.grid5000.fr/~sbadia/glite/](http://public.nancy.grid50
 
 Licence
 -------
-Ce script est sous licence GPLv2.
+Copyright (C) 2011  Lucas Nussbaum, Sebastien Badia
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Contacts
 -------
@@ -64,21 +69,3 @@ Lexique
 * JSS = Job Submission Service.
 * RB = Ressources Broker.
 * IS = Information System.
-
-Deployments
--------
-Image new (ahci):
-
-* Graphene
-*  Adonis
-*  Edel
-*  Chinqchint
-*  Chirloute
-*  Parapide
-*  Parapluie
-
-Image previous (ata_piix):
-
-* Genepi
-* Griffon
-* Paradent

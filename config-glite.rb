@@ -1,5 +1,26 @@
 #!/usr/bin/ruby -w
 
+=begin
+
+Config-glite is designed for deploy gLite midleware on Grid'5000.
+For more information see <http://github.com/sbadia/gdeploy/>
+Copyright (C) 2011  Sebastien Badia
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+=end
+
 require 'pp'
 require 'yaml'
 require 'optparse'
@@ -10,23 +31,31 @@ require 'misc/peach'
 require 'logger'
 
 $tlaunch = Time::now
+INSTALL = 1
+DIR = File.expand_path(File.dirname(__FILE__))
+OUT = "> /dev/null 2>&1"
+NAME = "config-glite"
+
+
 
 if ARGV.length < 1
   puts "ruby config-glite.rb g5k.yaml"
   exit 1
 end
 
+puts <<-EOF
+#{NAME} Copyright (C) 2011  Sebastien Badia
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions.
+EOF
 
 def time_elapsed
 	return (Time::now - $tlaunch).to_i
 end # def:: time_elapsed
 
-install = 1
 $d = YAML::load(IO::read(ARGV[0]))
 puts "\033[1;32m####\033[0m Loaded config file #{ARGV[0]}"
-
-DIR = File.expand_path(File.dirname(__FILE__))
-OUT = "> /dev/null 2>&1"
 
 extinction = Proc.new{
   puts "Received extinction request..."
@@ -242,10 +271,11 @@ $d['sites'].each_pair do |sname, sconf|
   end
 end
 #p $nodes
-if install == 1:
+if INSTALL == 1:
   puts "\033[1;36m###\033[0m {#{time_elapsed}} -- Update distrib on all nodes"
   # Default :current_connections => nil -> fenetre max... >1024.
   Net::SSH::Multi.start(:on_error => :warn) do |session|
+    # Creation de la session
     $nodes.each do |node|
       session.use "root@#{node}"
     end
@@ -254,7 +284,8 @@ if install == 1:
       session.loop
   end
   puts "\033[1;31m###\033[0m {#{time_elapsed}} -- Update distrib finished"
-  $nodes.each do |node|
+  $nodes.to_a.peach($nodes.length) do |node|
+    # Envoi des configs génères sur les noeuds de l'expe
     Net::SSH.start(node, 'root') do |ssh|
       begin
        Net::SCP.start(node, 'root') do |scp|
@@ -290,7 +321,7 @@ if install == 1:
     system("scp -o BatchMode=yes root@#{conf['voms']}:*.tgz /#{DIR}/conf/#{$my_vo}/ #{OUT}")
     system("scp -o BatchMode=yes root@#{conf['voms']}:*.gz /#{DIR}/conf/#{$my_vo}/ #{OUT}")
     system("scp -o BatchMode=yes root@#{conf['voms']}:hash /#{DIR}/conf/#{$my_vo}/ #{OUT}")
-    $nodes.each do |node|
+    $nodes.to_a.peach($nodes.length) do |node|
       Net::SCP.start(node, 'root') do |scp|
        scp.upload!("#{DIR}/conf/#{$my_vo}/", "/opt/glite/yaim/etc/conf", :recursive => true)
       end
@@ -306,7 +337,7 @@ if install == 1:
       system("ssh root@#{$my_voms} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x certs.sh && /bin/bash certs.sh #{sconf['ce']} #{sconf['ui']} #{OUT}'")
       system("scp -o BatchMode=yes root@#{$my_voms}:ui.tgz /#{DIR}/conf/#{sname}/ #{OUT}")
       system("scp -o BatchMode=yes root@#{$my_voms}:ce.tgz /#{DIR}/conf/#{sname}/ #{OUT}")
-      $nodes.each do |node|
+      $nodes.to_a.peach($nodes.length) do |node|
         Net::SCP.start(node, 'root') do |scp|
          scp.upload!("#{DIR}/conf/#{sname}/", "/opt/glite/yaim/etc/conf", :recursive => true)
         end
