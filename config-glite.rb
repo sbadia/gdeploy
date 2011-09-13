@@ -44,10 +44,9 @@ if ARGV.length < 1
 end
 
 puts <<-EOF
-#{NAME} Copyright (C) 2011  Sebastien Badia
+#{NAME.capitalize} Copyright (C) 2011  Lucas Nussbaum, Sebastien Badia.
 This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it
-under certain conditions.
+This is free software, and you are welcome to redistribute it under certain conditions.
 EOF
 
 def time_elapsed
