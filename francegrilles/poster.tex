@@ -66,22 +66,22 @@
   \begin{document}
   \begin{frame}{}
 	  \vskip -0.5em
-	  \begin{columns}[t]
-	  \begin{column}{0.48\linewidth}
+	  \begin{columns}[t,onlytextwidth]
+	  \begin{column}{0.485\textwidth}
 
 	\begin{block}{Objectifs}
 		\begin{itemize}
 			\item \textbf{Utiliser Grid'5000 comme infrastructure de test pour gLite}
 					\bigskip
 			\begin{itemize}
-				\item Pouvoir reproduire les conditions expérimentales nécessaires à une expérience, mais difficiles à rencontrer en production (exemple~: comportement d'une application face à un crash de services)
+				\item Pouvoir \textbf{reproduire les conditions expérimentales} nécessaires à une expérience, mais difficiles à rencontrer en production (exemple~: comportement d'une application face à un crash de services)
 					\bigskip
-				\item Pouvoir remplacer des parties de l'infrastructure par d'autres versions de composants du middleware (test de nouvelles versions, test d'interopérabilité)
+				\item Pouvoir \textbf{remplacer des parties de l'infrastructure} par d'autres versions de composants du middleware (test de nouvelles versions, test d'interopérabilité)
 
 					\bigskip
-				\item Pouvoir réaliser et reproduire des expériences dans un environnement stable (pas de variations entre des expériences $\leadsto$ pouvoir comparer les résultats)
+				\item Pouvoir réaliser et reproduire des expériences dans un \textbf{environnement stable} (pas de variations entre des expériences $\leadsto$ pouvoir comparer les résultats)
 					\bigskip
-				\item Éviter de perturber ou de surcharger l'infrastructure de production avec des tâches de test
+				\item \textbf{Éviter de perturber ou de surcharger} l'infrastructure de production avec des tâches de test
 			\end{itemize}
 	\end{itemize}
 	\end{block} \vskip 0.5em
@@ -94,7 +94,7 @@
 					\bigskip
 			\item 1700 machines (7000 coeurs) dans 10 sites en France
 					\bigskip
-			\item Reconfiguration par les utilisateurs~: remplacement du système installé sur les noeuds avec Kadeploy, isolation réseau avec KaVLAN
+			\item \textbf{Reconfiguration par les utilisateurs}~: remplacement du système installé sur les noeuds avec Kadeploy, isolation réseau avec KaVLAN
 		\end{itemize}
 	\end{column}
 	\begin{column}{0.33\columnwidth}
@@ -137,8 +137,10 @@
 \end{enumerate}
 \end{itemize}
 	\end{block}
-      \end{column}
-      \begin{column}{0.48\linewidth}
+      \end{column} \hskip 0.015\textwidth
+%      \begin{column}{0.04\textwidth}
+%      \end{column}
+      \begin{column}{0.485\textwidth}
 \begin{block}{Outils développés}
 	\begin{columns}[b]
 	\begin{column}{0.75\linewidth}
@@ -146,7 +148,7 @@
 		\item \textbf{Image Scientific Linux 5.5} minimale et générique (fonctionnant sur tous les clusters de Grid'5000) pour l'outil de déploiement Kadeploy
 	\end{itemize}
 	\end{column}
-	\begin{column}{0.2\linewidth}
+	\begin{column}{0.17\linewidth}
 		\includegraphics[width=0.98\columnwidth]{sl-logo-800}
 	\end{column}
 	\end{columns}
@@ -166,19 +168,19 @@
 	\begin{center}
 		\textbf{\url{https://github.com/sbadia/gdeploy/}}
 	\end{center}
-	\end{block} \vskip 0.8em
+	\end{block} \vskip 0.625em
 
 
 \begin{block}{Résultats}
 	\textbf{Utilisation de Grid'5000 pour déployer le middleware gLite}
 \begin{itemize}
-	\item Déploiement sur \textbf{9 sites, 17 clusters et 926 machines}
+	\item Déploiement jusqu'à \textbf{926 machines (17 clusters, 9 sites)}
 		\bigskip
 \item Installation de l'ensemble des machines sous Scientific Linux 5.5 minimale avec Kadeploy~: 10~minutes
 		\bigskip
-\item Configuration de l'infrastructure gLite~: \textbf{40~minutes}
+\item Configuration de gLite sur 666 machines (6~sites, 66~clusters)~: \textbf{666~minutes} % FIXME
 \end{itemize}
-	\end{block} \vskip 0.8em
+	\end{block} \vskip 0.625em
 
 	\begin{block}{Perspectives}
 	\begin{itemize}
