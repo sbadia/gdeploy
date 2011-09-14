@@ -23,9 +23,9 @@ end
 
 desc "Clean conf files"
 task :clean do
-  sh "rm -f ./conf/exports"
-  sh "rm -f ./g5k.yaml"
-  sh "rm -rf ./conf/{orsay,lille,nancy,lyon,grenoble,sophia,bordeaux,rennes,toulouse,luxembourg,reims}"
+  sh "rm -f ./conf/exports ~/public/config-glite-42.tgz"
+  sh "rm -f ./g5k.yaml ./nodes"
+  sh "rm -rf ./conf/{grid5000,orsay,lille,nancy,lyon,grenoble,sophia,bordeaux,rennes,toulouse,luxembourg,reims}"
 end
 
 desc "Gen confs"
