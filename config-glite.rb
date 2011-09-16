@@ -44,9 +44,9 @@ if ARGV.length < 1
 end
 
 puts <<-EOF
-#{NAME.capitalize} Copyright (C) 2011  Lucas Nussbaum, Sebastien Badia.
+\n#{NAME.capitalize} -- Copyright (C) 2011  Lucas Nussbaum, Sebastien Badia.
 This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions.
+This is free software, and you are welcome to redistribute it under certain conditions.\n
 EOF
 
 def time_elapsed
@@ -291,12 +291,12 @@ if INSTALL == 1:
     puts "\033[1;33m==>\033[0m Configuring VO=#{name} on VOMS=#{conf['voms']}"
     Net::SSH.start(conf['voms'], 'root') do |ssh|
       ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{first_site}/site-info.def /root/yaim/site-info.def")
-      ssh.exec!("yum install mysql-server glite-VOMS_mysql gcc gcc44 xml-commons-apis -q -y --nogpgcheck #{OUT}")
+      ssh.exec!("yum install mysql-server lcg-CA glite-VOMS_mysql gcc gcc44 xml-commons-apis -q -y --nogpgcheck #{OUT}")
       system("ssh root@#{conf['voms']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x setup.sh && /bin/bash setup.sh #{OUT}'")
-      ssh.exec!("/etc/init.d/mysqld start > /dev/null 2>&1")
+      ssh.exec!("/etc/init.d/mysqld start #{OUT}")
       ssh.exec!("sed -e 's/VOMS_DB_HOST=#{conf['voms']}/VOMS_DB_HOST=localhost/' -i /root/yaim/site-info.def")
       ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 777 /var/log/bdii/bdii-update.log")
-      ssh.exec!("/usr/bin/mysqladmin -u root password superpass && chmod 777 /var/log/bdii")
+      ssh.exec!("/usr/bin/mysqladmin -u root password superpass && chmod 777 /var/log/bdii && sed '1iexit 0' -i /usr/sbin/fetch-crl")
       ssh.exec!("chmod 777 /var/log/bdii && /usr/bin/mysqladmin -u root password superpass #{OUT}")
       ssh.exec!("echo 'Time for : ssh root@#{conf['voms']} \"opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS\"'")
       ssh.exec("chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS #{OUT}")
