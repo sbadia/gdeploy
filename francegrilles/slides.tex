@@ -1,14 +1,17 @@
-\documentclass[10pt,final,usepdftitle=false,handout]{beamer}
+\documentclass[11pt,final,usepdftitle=false,handout]{beamer}
 \mode<presentation>
 \usetheme{lucasw}
 \usepackage{tikz}
 \usepackage{tikz-bpmn}
 \usetikzlibrary{positioning}
 
-\hypersetup{pdftitle={Sébastien Badia et Lucas Nussbaum - Installation de GNU/Linux - Introduction}}
-\title[gLite sur Grid'5000]{gLite sur Grid'5000~:\\[0.1em] vers une plate-forme d'expérimentation\\[0.1em] à taille réelle pour les grilles de production}
-\author[Sébastien Badia et Lucas Nussbaum]{Sébastien Badia et Lucas Nussbaum}
-\institute{\vskip 3em
+\hypersetup{pdftitle={Sébastien Badia et Lucas Nussbaum - gLite on Grid'5000}}
+\title[gLite on Grid'5000]{gLite on Grid'5000~:\\[0.1em] towards a real-size testbed for production grids}
+\author[Sébastien Badia and Lucas Nussbaum]{Sébastien Badia and Lucas Nussbaum}
+\institute{Partially funded by \textbf{Simglite project}\\
+Appel Interfaces Recherche en grilles – Grilles de production\\
+Institut des Grilles du CNRS — Action Aladdin INRIA\\
+\vskip 3em
 \includegraphics[height=3.5em]{logo_loria_complet_couleur-crop} \hskip 4em
 \includegraphics[height=2.5em]{NancyU} \hskip 4em
 \includegraphics[height=2.5em]{INRIA_SCIENTIFIQUE_FR_CMJN_CROP.pdf}
@@ -19,33 +22,33 @@
 
 \frame{\titlepage}
 
-\begin{frame}{Objectifs}
+\begin{frame}{Goal}
 		\begin{itemize}
-			\item \textbf{Utiliser Grid'5000 comme infrastructure de test pour gLite}
-					\bigskip
+			\item \textbf{Use Grid'5000 as a testbed for gLite}
+					\medskip
+			\item Use cases: developers of gLite components, and of applications interacting with the gLite middleware
+					\medskip
 			\begin{itemize}
-				\item Pouvoir \textbf{reproduire les conditions expérimentales} nécessaires à une expérience, mais difficiles à rencontrer en production\\ (exemple~: comportement d'une application face à un crash de services)
-					\bigskip
-				\item Pouvoir \textbf{remplacer des parties de l'infrastructure} par d'autres versions de composants du middleware (test de nouvelles versions, test d'interopérabilité)
-
-					\bigskip
-				\item Pouvoir réaliser et reproduire des expériences dans un \textbf{environnement stable} (pas de variations entre des expériences\\ $\leadsto$ pouvoir comparer les résultats)
-					\bigskip
-				\item \textbf{Éviter de perturber ou de surcharger} l'infrastructure de production avec des tâches de test
+				\item Be able to \textbf{run experiments in a stable environment} (no variation between experiments) $\leadsto$ compare results
+					\medskip
+				\item Be able to \textbf{create experimental conditions required by an experiment}, possibly hard to meet in a production environment (e.g service crash)
+					\medskip
+				\item Be able to \textbf{replace components of the infrastructure}\\ $\leadsto$ test new versions, test interoperability
+					\medskip
+				\item \textbf{Avoid overloading or influencing the production infrastructure} with test jobs
 			\end{itemize}
 	\end{itemize}
-
 \end{frame}
 
 \begin{frame}{Grid'5000}
 	\begin{columns}
 	\begin{column}{0.65\columnwidth}
 		\begin{itemize}
-			\item \textbf{Plate-forme expérimentale pour la recherche sur les systèmes distribués} et le calcul parallèle à hautes performances
+			\item \textbf{Experimental platform for research\\ on distributed systems} and high performance parallel computing
 					\bigskip
-			\item 1700 machines (7000 coeurs) dans 10 sites en France
+			\item 1700 nodes (7000 cores),\\ 10 sites in France
 					\bigskip
-			\item \textbf{Reconfiguration par les utilisateurs}~: remplacement du système installé sur les noeuds avec Kadeploy, isolation réseau avec KaVLAN
+			\item \textbf{Reconfigurable by users}~: operating system on nodes can be replaced using Kadeploy, network isolation with KaVLAN
 		\end{itemize}
 	\end{column}
 	\begin{column}{0.33\columnwidth}
@@ -58,44 +61,40 @@
 \end{columns}
 \end{frame}
 
-	\begin{frame}{Infrastructure gLite déployée}
+	\begin{frame}{Deployed gLite infrastructure}
 \begin{itemize}
 
-	\item Une \textbf{VO} et son \textbf{VOMS (\textsl{Virtual Organization Membership Service})},
-	annuaire des utilisateurs
-					\bigskip
+	\item One \textbf{VO} and its \textbf{VOMS (\textsl{Virtual Organization Membership Service})},
+	users directory
+					\medskip
 
-\item Plusieurs sites, composés de~:
+\item Several sites, composed of~:
 
-		\bigskip
+		\medskip
 \begin{enumerate}
 
-	\item Un \textbf{BDII (\textsl{Berkeley Database Information Index})}, annuaire
-		des ressources disponibles sur chaque site
+	\item One \textbf{BDII (\textsl{Berkeley Database Information Index})}, directory of resources available on each site
 
-		\bigskip
+		\medskip
 
-	\item Un \textbf{CE (\textsl{Computing Element})}, service de soumission des
-		tâches à un site de calcul donné
-\bigskip
-	\item Des \textbf{worker nodes} et un \textbf{batch scheduler}
-		permettant d'y accéder. Le couple \textbf{Torque/Maui} a été
-		utilisé
+	\item One \textbf{CE (\textsl{Computing Element})}, task submission service for a given computing site
+\medskip
+	\item \textbf{Worker nodes} and a \textbf{batch scheduler}
+		to access them. \textbf{Torque/Maui} was used
 
-		\bigskip
+		\medskip
 
-	\item Une \textbf{UI (\textsl{User Interface})}, interface d'accès pour les
-		utilisateurs
+	\item One \textbf{UI (\textsl{User Interface})}, used by users to access the resources
 
 \end{enumerate}
 \end{itemize}
 	\end{frame}
 
-\begin{frame}{Outils développés}
+\begin{frame}{Tools developed}
 	\begin{columns}[b]
 	\begin{column}{0.75\linewidth}
 	\begin{itemize}
-		\item \textbf{Image Scientific Linux 5.5} minimale et générique (fonctionnant sur tous les clusters de Grid'5000) pour l'outil de déploiement Kadeploy
+		\item \textbf{Scientific Linux 5.5} image, minimal and generic (working on all Grid'5000 clusters) for the Kadeploy deployment tool
 	\end{itemize}
 	\end{column}
 	\begin{column}{0.17\linewidth}
@@ -104,14 +103,14 @@
 	\end{columns}
 		\bigskip
 	\begin{itemize}
-		\item \textbf{Scripts Ruby} documentés permettant une installation totalement automatisée de gLite à partir des dépôts RPM
+		\item \textbf{Ruby scripts} enabling an automated installation of gLite from RPM repositories
 		\bigskip
 		\begin{itemize}
-			\item Description de la plate-forme à déployer (VO, sites, clusters) dans un fichier de configuration
+			\item Description of the platform to deploy (VO, sites, clusters) in a configuration file
 			\bigskip
-			\item Création d'une autorité de certification pour générer et signer automatiquement les certificats des utilisateurs et des machines
+			\item Creation of a certification authority to generate and automatically sign users and machines certificates
 		\bigskip
-			\item Pré-remplissage du cache RPM sur les noeuds avec Kadeploy pour accélérer le déploiement (intégré à l'image)
+			\item Pre-filling of the RPM cache on nodes using Kadeploy to accelerate deployment
 		\end{itemize}
 	\end{itemize}
 	\vskip 0.5em
@@ -121,9 +120,9 @@
 	\end{frame}
 
 
-    \begin{frame}{Processus de déploiement}
+    \begin{frame}{Deployment process}
 	    \center
-	    \small
+	    \footnotesize
 \begin{tikzpicture}[node distance=1.2em]
 \tikzstyle{every task} = [thick,fill=white]
 \tikzstyle{every sequence} = [thick]
@@ -175,35 +174,36 @@
 
 
 
-\begin{frame}{Résultats}
-	\textbf{Utilisation de Grid'5000 pour déployer le middleware gLite}
+\begin{frame}{Results}
+	\textbf{Use of Grid'5000 to deploy the gLite middleware}
+		\bigskip
 \begin{itemize}
-	\item Déploiement jusqu'à \textbf{926 machines (17 clusters, 9 sites)}
+	\item Deployment up to \textbf{926 nodes (17 clusters, 9 sites)}
 		\bigskip
-\item Installation de l'ensemble des machines sous Scientific Linux 5.5 minimale avec Kadeploy~: 10~minutes
+\item Installation of machines with Scientific Linux 5.5 using Kadeploy~: 10~minutes
 		\bigskip
-\item Configuration de gLite avec une VO sur 597 machines (6~sites, 10~clusters)~: \textbf{170~minutes}
+\item Configuration of gLite with one VO on 597 nodes (6~sites, 10~clusters)~: \textbf{170~minutes}
 \end{itemize}
 	\end{frame}
 
-	\begin{frame}{Perspectives}
+	\begin{frame}{Future work}
 	\begin{itemize}
-		\item \textbf{Amélioration du script de déploiement}
+		\item \textbf{Improvements to the deployment script}
 		\begin{itemize}
-		\item Déploiement de plusieurs VO
-		\item Déploiement d'autres services gLite~:\\ stockage, supervision
+		\item Deployment of several VO
+		\item Deployment of other gLite services: storage, monitoring
 		\bigskip
 			\end{itemize}
 		\item \textbf{Collaborations}
 		\smallskip
 			\begin{itemize}
-				\item \textbf{Expériences sur des évolutions de composants du middleware gLite}
+				\item \textbf{Experiments on evolution of gLite components}
 		\medskip
-				\item \textbf{Expériences sur des outils interagissant avec le middleware gLite~: moteurs de workflows, gestionnaires de jobs pilotes, etc.}
+				\item \textbf{Experiments on tools interacting with the gLite middleware: workflow engines, pilot jobs managers, etc.}
 					\begin{itemize}
-						\item Simulation de pannes de services
-						\item Injection de charge
-						\item Soumission d'un grand nombre de tâches factices
+						\item Simulation of services crash
+						\item Load injection 
+						\item Submission of a large number of fake tasks
 					\end{itemize}
 			\end{itemize}
 	\end{itemize}
