@@ -36,4 +36,5 @@ cp -f host* voms
 cp -f /root/.globus/simpleCA/globus_simple_ca_${HASH}_setup-0.18.tar.gz /root/globus_simple_ca_${HASH}_setup-0.18.tar.gz
 cd /root
 echo $HASH > hash
+openssl ca -config /root/.globus/simpleCA/grid-ca-ssl.conf -gencrl -crldays 365 -out /etc/grid-security/certificates/${HASH}.r0 -key toto
 exit 0
