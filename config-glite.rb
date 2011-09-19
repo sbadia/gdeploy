@@ -300,6 +300,8 @@ if INSTALL == 1:
       ssh.exec!("chmod 777 /var/log/bdii && /usr/bin/mysqladmin -u root password superpass #{OUT}")
       ssh.exec!("echo 'Time for : ssh root@#{conf['voms']} \"opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS\"'")
       ssh.exec("chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n VOMS #{OUT}")
+      ssh.exec!("echo 'http://public.#{first_site}.grid5000.fr/~sbadia/crl.r0' > /etc/grid-security/certificates/$(cat /root/hash).crl_url")
+      ssh.exec!("/opt/glite/sbin/voms-db-deploy.py add-admin --vo grid5000 --dn '/O=VOMS/O=System/CN=Unauthenticated Client' --ca '/O=VOMS/O=System/CN=Dummy Certificate Authority' --email sbadia@f#{first_site}.#{first_site}.grid5000.fr #{OUT}")
       ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
     end
     puts "\033[1;31m###\033[0m {#{time_elapsed}} -- VOs config finished (create distri)"
@@ -376,7 +378,7 @@ if INSTALL == 1:
       Net::SSH.start(sconf['ce'], 'root') do |ssh|
        ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
        ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{$my_vo}/* /root/ && cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x install.sh")
-       ssh.exec!("yum install glite-CREAM glite-TORQUE_utils lcg-CA gcc gcc44 -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz #{OUT} && rm -f ssh-keys.tgz")
+       ssh.exec!("yum install glite-CREAM glite-TORQUE_utils lcg-CA gcc gcc44 xml-commons-apis -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz #{OUT} && rm -f ssh-keys.tgz")
        ssh.exec!('mkdir -p /var/spool/pbs/server_priv/accounting && mkdir -p /var/spool/pbs/server_logs')
        system("ssh root@#{sconf['ce']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash copycert.sh #{sname} ce #{OUT}'")
        ssh.exec!("echo '#{sconf['batch']}:/var/spool/pbs/server_priv/accounting /var/spool/pbs/server_priv/accounting nfs     rw,nfsvers=3,hard,intr,async,noatime,nodev,nosuid,auto,rsize=32768,wsize=32768  0' >> /etc/fstab")
@@ -386,13 +388,14 @@ if INSTALL == 1:
        ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 766 /var/log/bdii/bdii-update.log")
        ssh.exec!("chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-creamCE -n glite-TORQUE_utils -d 1 #{OUT}")
        ssh.exec!('echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
+       ssh.exec!("cp -rf /opt/glite/yaim/etc/conf/yaim/server.xml /etc/tomcat/server.xml && /etc/init.d/tomcat restart #{OUT}")
        puts "\033[1;31m=>\033[0m {#{time_elapsed}} -- CE #{sname} config finished"
      end
     puts "\033[1;35m=>\033[0m {#{time_elapsed}} -- UI on #{sconf['ui']}"
       Net::SSH.start(sconf['ui'], 'root') do |ssh|
        ssh.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
        ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{$my_vo}/* /root/ && cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x install.sh")
-       ssh.exec!("yum groupinstall glite-UI -q -y #{OUT} && yum install gcc gcc44 lcg-CA -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl")
+       ssh.exec!("yum groupinstall glite-UI -q -y #{OUT} && yum install gcc gcc44 lcg-CA xml-commons-apis -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl")
        system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash copycert.sh #{sname} ui #{OUT}'")
        ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 766 /var/log/bdii/bdii-update.log")
        system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash install.sh #{OUT}'")
@@ -407,6 +410,7 @@ if INSTALL == 1:
   system("cat #{ARGV[0]}")
   puts "\033[1;36m###\033[0m {#{time_elapsed / 60} min}"
   system("rm -rf ~/public/#{NAME}-42.tgz")
+  system("ssh root@#{$my_voms} -o BatchMode=yes 'mv -f /opt/glite/yaim/etc/conf/yaim/server.xml /etc/tomcat/server.xml && /etc/init.d/tomcat restart #{OUT}'")
 else
   puts "\033[1;31m==> No install\033[0m"
 end
