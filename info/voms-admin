@@ -1,4 +1,0 @@
-./voms-admin-configure install --vo grid5000 --dbtype mysql --dbusername grid5000u --dbpassword superpass --dbname grid5000db --port 15000 --mail-from sbadia@fnancy.nancy.grid5000.fr --smtp-host mail --host chinqchint-42.lille.grid5000.fr
-
-source /etc/profile.d/grid-env.sh
-voms-admin --vo grid5000 list-users
