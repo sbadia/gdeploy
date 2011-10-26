@@ -407,7 +407,7 @@ if INSTALL == 1:
     puts "\033[1;35m=>\033[0m {#{time_elapsed}} -- SE on #{sconf['ce']}"
       Net::SSH.start(sconf['ce'], 'root') do |ssh|
        ssh.exec!("yum install glite-SE_dpm_mysql glite-SE_dpm_disk -q -y --nogpgcheck #{OUT} && touch /var/log/gridftp.log")
-       ssh.exec!("/opt/glite/yaim/bin/yaim -c -s /root/siteinfo/site-info.def -n glite-SE_dpm_mysql #{OUT}")
+       ssh.exec!("/opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-SE_dpm_mysql #{OUT}")
        ssh.exec!('echo -e "\ngLite SE - (Storage Element)\n" >> /etc/motd')
        puts "\033[1;31m=>\033[0m {#{time_elapsed}} -- SE #{sname} config finished"
      end
