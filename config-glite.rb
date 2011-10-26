@@ -155,6 +155,18 @@ BLP_PORT=33333
 CREAM_PORT=56565
 CEMON_HOST=#{cehost}
 
+## Dpm
+DPM_HOST=#{cehost}
+DPMPOOL=Permanent
+DPM_FILESYSTEMS="$DPM_HOST:/storage"
+DPM_DB_USER=dpmmgr
+DPM_DB_PASSWORD=pass
+DPM_DB_HOST=$DPM_HOST
+DPM_INFO_USER=dpminfo
+DPM_INFO_PASS=pass
+DPMFSIZE=20M
+SE_GRIDFTP_LOGFILE=/var/log/gridftp.log
+
 ## site-info.def voms
 MYSQL_PASSWORD="superpass"
 VOMS_HOST=#{voms}
@@ -391,6 +403,15 @@ if INSTALL == 1:
        ssh.exec!("cp -rf /opt/glite/yaim/etc/conf/yaim/server.xml /etc/tomcat/server.xml && /etc/init.d/tomcat restart #{OUT}")
        puts "\033[1;31m=>\033[0m {#{time_elapsed}} -- CE #{sname} config finished"
      end
+
+    puts "\033[1;35m=>\033[0m {#{time_elapsed}} -- SE on #{sconf['ce']}"
+      Net::SSH.start(sconf['ce'], 'root') do |ssh|
+       ssh.exec!("yum install glite-SE_dpm_mysql glite-SE_dpm_disk -q -y --nogpgcheck #{OUT} && touch /var/log/gridftp.log")
+       ssh.exec!("/opt/glite/yaim/bin/yaim -c -s /root/siteinfo/site-info.def -n glite-SE_dpm_mysql #{OUT}")
+       ssh.exec!('echo -e "\ngLite SE - (Storage Element)\n" >> /etc/motd')
+       puts "\033[1;31m=>\033[0m {#{time_elapsed}} -- SE #{sname} config finished"
+     end
+
     puts "\033[1;35m=>\033[0m {#{time_elapsed}} -- UI on #{sconf['ui']}"
       Net::SSH.start(sconf['ui'], 'root') do |ssh|
        ssh.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
