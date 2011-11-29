@@ -1,0 +1,1 @@
+./voms-db-deploy.py add-admin --vo grid5000 --dn '/O=VOMS/O=System/CN=Unauthenticated Client' --ca '/O=VOMS/O=System/CN=Dummy Certificate Authority' --email root@paramount-10.rennes.grid5000.fr
