@@ -291,7 +291,7 @@ if INSTALL == 1:
     $nodes.each do |node|
       session.use "root@#{node}"
     end
-      session.exec("mkdir -p /root/yaim && mkdir -p /opt/glite/yaim/etc && cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-* && wget http://public.nancy.grid5000.fr/~sbadia/glite/repo.tgz -q && tar xzf repo.tgz && mv -f repo/* ./ && rm -rf repo* && rm -f adobe.repo && yum update -q -y #{OUT} && sed -e 's/keepcache=0/keepcache=1/' -i /etc/yum.conf && cd /opt/glite/yaim/etc/ && wget http://public.nancy.grid5000.fr/~sbadia/#{NAME}-42.tgz -q && tar xzf #{NAME}-42.tgz && rm -rf #{NAME}-42.tgz")
+      session.exec("mkdir -p /root/yaim && mkdir -p /opt/glite/yaim/etc && cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-* && wget http://public.nancy.grid5000.fr/~sbadia/glite/repo.tgz -q && tar xzf repo.tgz && mv -f repo/* ./ && rm -rf repo* && rm -f adobe.repo && yum update -q -y #{OUT} && sed -e 's/keepcache=0/keepcache=1/' -i /etc/yum.conf && cd /opt/glite/yaim/etc/ && wget http://public.nancy.grid5000.fr/#{ENV['USER']}/#{NAME}-42.tgz -q && tar xzf #{NAME}-42.tgz && rm -rf #{NAME}-42.tgz")
       session.exec("cd /root/ && wget http://public.nancy.grid5000.fr/~sbadia/glite/scp-ssh.tgz -q && tar xzf scp-ssh.tgz && chown -R root:root /root/.ssh/")
       session.loop
   end
@@ -433,7 +433,7 @@ if INSTALL == 1:
   system("rm -rf ~/public/#{NAME}-42.tgz")
   system("ssh root@#{$my_voms} -o BatchMode=yes 'mv -f /opt/glite/yaim/etc/conf/yaim/server.xml /etc/tomcat/server.xml'")
   system("ssh root@#{$my_voms} -o BatchMode=yes '/etc/init.d/tomcat restart #{OUT}'")
-  system("ssh root@#{$my_voms} -o BatchMode=yes '/opt/glite/sbin/voms-db-deploy.py add-admin --vo grid5000 --dn '/O=VOMS/O=System/CN=Unauthenticated Client' --ca '/O=VOMS/O=System/CN=Dummy Certificate Authority' --email sb    adia@fnancy.nancy.grid5000.fr #{OUT}'")
+  system("ssh root@#{$my_voms} -o BatchMode=yes '/opt/glite/sbin/voms-db-deploy.py add-admin --vo grid5000 --dn '/O=VOMS/O=System/CN=Unauthenticated Client' --ca '/O=VOMS/O=System/CN=Dummy Certificate Authority' --email #{ENV['USER']}@fnancy.nancy.grid5000.fr #{OUT}'")
 else
   puts "\033[1;31m==> No install\033[0m"
 end
