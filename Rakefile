@@ -2,15 +2,17 @@
 # Date:: Tue Jul 05 15:00:46 +0200 2011
 require 'rubygems'
 
+SITE = "nancy"
+
 version = "0.1.3"
 
-desc "Upload to nancy"
+desc "Upload to #{SITE}"
 task :up do
   sh "ssh local 'rm -rf gdeploy'"
-  sh "scp -r /home/sbadia/dev/gdeploy/ local:"
+  sh "scp -r ~/dev/edge/gdeploy/ local:"
 end
 
-desc "Download from nancy"
+desc "Download from #{SITE}"
 task :down do
   sh "scp -r local:gdeloy/ /tmp"
 end
