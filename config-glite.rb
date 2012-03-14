@@ -291,7 +291,7 @@ if INSTALL == 1:
     $nodes.each do |node|
       session.use "root@#{node}"
     end
-      session.exec("mkdir -p /root/yaim; mkdir -p /opt/glite/yaim/etc; cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-*; #{WGET}repo.tgz && tar xzf repo.tgz && mv -f repo/* ./ && rm -rf repo* && rm -f adobe.repo && yum update -q -y #{OUT} && sed -e 's/keepcache=0/keepcache=1/' -i /etc/yum.conf && cd /opt/glite/yaim/etc/ && wget http://public.#{SITE}.grid5000.fr/~#{ENV['USER']}/#{NAME}-42.tgz -q && tar xzf #{NAME}-42.tgz && rm -rf #{NAME}-42.tgz")
+      session.exec("mkdir -p /root/yaim; mkdir -p /opt/glite/yaim/etc; cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-*; #{WGET}repo.tgz && tar xzf repo.tgz && mv -f repo/* ./ && rm -rf repo* && rm -f adobe.repo && yum update -q -y #{OUT} && sed -e 's/keepcache=0/keepcache=1/' -i /etc/yum.conf && cd /opt/glite/yaim/etc/ && wget http://public.#{SITE}.grid5000.fr/~#{ENV['USER']}/#{NAME}-42.tgz -q && tar xzf #{NAME}-42.tgz && rm -rf #{NAME}-42.tgz;sed -i /root/.bashrc -e 's/alias.*//'")
       # FIXME (ugly hack for ssh keys (sbadia key dependent...))
       session.exec("cd /root/ && #{WGET}scp-ssh.tgz && tar xzf scp-ssh.tgz && chown -R root:root /root/.ssh/")
       session.loop
@@ -405,7 +405,7 @@ if INSTALL == 1:
        ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 766 /var/log/bdii/bdii-update.log")
        ssh.exec!("chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-creamCE -n glite-TORQUE_utils -d 1 #{OUT}")
        ssh.exec!('echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
-       ssh.exec!("\cp -rf /opt/glite/yaim/etc/conf/yaim/server.xml /etc/tomcat5/server.xml && /etc/init.d/tomcat5 restart #{OUT}")
+       ssh.exec!("cp -rf /opt/glite/yaim/etc/conf/yaim/server.xml /etc/tomcat5/server.xml && /etc/init.d/tomcat5 restart #{OUT}")
        puts "\033[1;31m=>\033[0m {#{time_elapsed}} -- CE #{sname} config finished"
      end
 
@@ -437,7 +437,7 @@ if INSTALL == 1:
   system("cat #{ARGV[0]}")
   puts "\033[1;36m###\033[0m {#{time_elapsed / 60} min}"
   #system("rm -rf ~/public/#{NAME}-42.tgz")
-  system("ssh root@#{$my_voms} -o BatchMode=yes '\cp -f /opt/glite/yaim/etc/conf/yaim/server.xml /etc/tomcat5/server.xml'")
+  system("ssh root@#{$my_voms} -o BatchMode=yes 'cp -f /opt/glite/yaim/etc/conf/yaim/server.xml /etc/tomcat5/server.xml'")
   system("ssh root@#{$my_voms} -o BatchMode=yes '/etc/init.d/tomcat5 restart #{OUT}'")
   system("ssh root@#{$my_voms} -o BatchMode=yes '/opt/glite/sbin/voms-db-deploy.py add-admin --vo grid5000 --dn '/O=VOMS/O=System/CN=Unauthenticated Client' --ca '/O=VOMS/O=System/CN=Dummy Certificate Authority' --email #{ENV['USER']}@f#{SITE}.#{SITE}.grid5000.fr #{OUT}'")
 else
