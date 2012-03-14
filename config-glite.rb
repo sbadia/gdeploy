@@ -316,6 +316,7 @@ if INSTALL == 1:
       ssh.exec!("echo 'http://public.#{first_site}.grid5000.fr/~sbadia/crl.r0' > /etc/grid-security/certificates/$(cat /root/hash).crl_url")
       ssh.exec!("/opt/glite/sbin/voms-db-deploy.py add-admin --vo grid5000 --dn '/O=VOMS/O=System/CN=Unauthenticated Client' --ca '/O=VOMS/O=System/CN=Dummy Certificate Authority' --email sbadia@f#{first_site}.#{first_site}.grid5000.fr #{OUT}")
       ssh.exec!('echo -e "\ngLite VOMS - (VOMS MySQL)\n" >> /etc/motd')
+      # Test with "export GLOBUS_LOCATION=/opt/globus/; /opt/globus/bin/grid-default-ca -list"
     end
     puts "\033[1;31m###\033[0m {#{time_elapsed}} -- VOs config finished (create distri)"
     # Distri
@@ -360,13 +361,15 @@ if INSTALL == 1:
     puts "\033[1;35m=>\033[0m {#{time_elapsed}} -- Batch on #{sconf['batch']}"
       Net::SSH.start(sconf['batch'], 'root') do |ssh|
        ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
-       ssh.exec!("yum install glite-TORQUE_server -q -y #{OUT}")
-       ssh.exec!('cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz')
-       ssh.exec!('mkdir -p /var/spool/pbs/server_logs && mkdir -p /var/spool/pbs/server_priv/accounting')
+       ssh.exec!("yum install glite-TORQUE_server munge -q -y #{OUT}")
+       ssh.exec!("cd / && #{WGET}ssh-keys.tgz && tar xzf ssh-keys.tgz && rm -f ssh-keys.tgz")
+       ssh.exec!("mkdir -p /etc/munge/ && #{WGET}munge.key -O /etc/munge/munge.key && chown munge:munge /etc/munge/munge.key;chmod 400 /etc/munge/munge.key")
+       ssh.exec!("mkdir -p /var/spool/pbs/server_logs && mkdir -p /var/spool/pbs/server_priv/accounting")
        ssh.exec!("chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-TORQUE_server -d 1 #{OUT}")
        ssh.exec!("cat /opt/glite/yaim/etc/conf/exports >> /etc/exports && /etc/init.d/nfs restart #{OUT}")
        ssh.exec!("/opt/glite/yaim/bin/yaim -r -s /root/yaim/site-info.def -f config_maui_cfg #{OUT}")
        ssh.exec!("sh /opt/glite/yaim/etc/conf/#{sname}/queue.conf #{OUT} && /etc/init.d/maui restart #{OUT} && echo -e '\ngLite Batch\n' >> /etc/motd")
+       # Test with pbsnodes
        puts "\033[1;31m=>\033[0m {#{time_elapsed}} -- Batch #{sname} config finished"
       end
     puts "\033[1;33m==>\033[0m {#{time_elapsed}} -- Configuring #{sname}'s clusters"
@@ -401,23 +404,24 @@ if INSTALL == 1:
        ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 766 /var/log/bdii/bdii-update.log")
        ssh.exec!("chmod -R 600 /root/yaim && /opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-creamCE -n glite-TORQUE_utils -d 1 #{OUT}")
        ssh.exec!('echo -e "\ngLite CE - (Computing Element)\n" >> /etc/motd')
-       ssh.exec!("cp -rf /opt/glite/yaim/etc/conf/yaim/server.xml /etc/tomcat/server.xml && /etc/init.d/tomcat restart #{OUT}")
+       ssh.exec!("\cp -rf /opt/glite/yaim/etc/conf/yaim/server.xml /etc/tomcat5/server.xml && /etc/init.d/tomcat5 restart #{OUT}")
        puts "\033[1;31m=>\033[0m {#{time_elapsed}} -- CE #{sname} config finished"
      end
 
-    puts "\033[1;35m=>\033[0m {#{time_elapsed}} -- SE on #{sconf['ce']}"
-      Net::SSH.start(sconf['ce'], 'root') do |ssh|
-       ssh.exec!("yum install glite-SE_dpm_mysql glite-SE_dpm_disk -q -y --nogpgcheck #{OUT} && touch /var/log/gridftp.log")
-       ssh.exec!("/opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-SE_dpm_mysql #{OUT}")
-       ssh.exec!('echo -e "\ngLite SE - (Storage Element)\n" >> /etc/motd')
-       puts "\033[1;31m=>\033[0m {#{time_elapsed}} -- SE #{sname} config finished"
-     end
+#    puts "\033[1;35m=>\033[0m {#{time_elapsed}} -- SE on #{sconf['ce']}"
+#      Net::SSH.start(sconf['ce'], 'root') do |ssh|
+#       ssh.exec!("yum install glite-SE_dpm_mysql glite-SE_dpm_disk -q -y --nogpgcheck #{OUT} && touch /var/log/gridftp.log")
+#       ssh.exec!("/opt/glite/yaim/bin/yaim -c -s /root/yaim/site-info.def -n glite-SE_dpm_mysql #{OUT}")
+#       ssh.exec!('echo -e "\ngLite SE - (Storage Element)\n" >> /etc/motd')
+#       puts "\033[1;31m=>\033[0m {#{time_elapsed}} -- SE #{sname} config finished"
+#     end
 
     puts "\033[1;35m=>\033[0m {#{time_elapsed}} -- UI on #{sconf['ui']}"
       Net::SSH.start(sconf['ui'], 'root') do |ssh|
        ssh.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
        ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{$my_vo}/* /root/ && cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x install.sh")
-       ssh.exec!("yum groupinstall glite-UI -q -y #{OUT} && yum install gcc gcc44 lcg-CA xml-commons-apis -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl")
+       ssh.exec!("mkdir -p /etc/munge/ && #{WGET}munge.key -O /etc/munge/munge.key && chown munge:munge /etc/munge/munge.key;chmod 400 /etc/munge/munge.key")
+       ssh.exec!("yum groupinstall glite-UI -q -y #{OUT} && yum install munge gcc gcc44 lcg-CA xml-commons-apis -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl")
        system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash copycert.sh #{sname} ui #{OUT}'")
        ssh.exec!("chmod 766 /etc/bdii/bdii-slapd.conf && touch /var/log/bdii/bdii-update.log && chmod 766 /var/log/bdii/bdii-update.log")
        system("ssh root@#{sconf['ui']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash install.sh #{OUT}'")
