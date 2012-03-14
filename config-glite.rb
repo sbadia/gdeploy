@@ -226,28 +226,33 @@ def queue_config(sname, wn)
   #p wn
   f.puts <<-EOF
 #!/bin/sh
-qmgr << EOF
-set server scheduling = True
-set server acl_hosts = *.grid5000.fr
-set server managers = root@`hostname -f`
-set server operators = root@`hostname -f`
-set server default_queue = default
-set server scheduler_iteration = 600
-set server node_check_rate = 150
-set server tcp_timeout = 12
-set server poll_jobs = False
-set server log_level = 3
-set queue default Priority = 100
-set queue default max_queuable = 100
-set queue default max_running = 100
-set queue default resources_max.nodect = #{wn.length - 1}
-set server query_other_jobs = True
-set server resources_default.cput = 01:00:00
-set server resources_default.neednodes = 1
-set server resources_default.nodect = #{wn.length - 1}
-set server resources_default.nodes = 1
-set server default_node = 1#shared
-set queue default resources_default.nodes = nodes=1:ppn=1\nEOF
+qmgr -c "create queue default"
+qmgr -c "active queue default"
+qmgr -c "set server scheduling=true"
+qmgr -c "set queue default started=true"
+qmgr -c "set queue default enabled=true"
+qmgr -c "set server scheduling = True"
+qmgr -c "set server acl_hosts = *.grid5000.fr"
+qmgr -c "set server managers = root@`hostname -f`"
+qmgr -c "set server operators = root@`hostname -f`"
+qmgr -c "set server default_queue = default"
+qmgr -c "set server scheduler_iteration = 600"
+qmgr -c "set server node_check_rate = 150"
+qmgr -c "set server tcp_timeout = 12"
+qmgr -c "set server poll_jobs = False"
+qmgr -c "set server log_level = 3"
+qmgr -c "set queue default Priority = 100"
+qmgr -c "set queue default max_queuable = 100"
+qmgr -c "set queue default max_running = 100"
+qmgr -c "set queue default resources_max.nodect = #{wn.length - 1}"
+qmgr -c "set server query_other_jobs = True"
+qmgr -c "set server resources_default.cput = 01:00:00"
+qmgr -c "set server resources_default.neednodes = 1"
+qmgr -c "set server resources_default.nodect = #{wn.length - 1}"
+qmgr -c "set server resources_default.nodes = 1"
+qmgr -c "set queue default resources_default.walltime=3600"
+qmgr -c "set queue default resources_default.nodes = nodes=1:ppn=1"
+qmgr -c "set server default_node = 1#shared"
 EOF
   f.close
 end
