@@ -8,13 +8,13 @@ version = "0.1.3"
 
 desc "Upload to #{SITE}"
 task :up do
-  sh "ssh local 'rm -rf gdeploy'"
-  sh "scp -r ~/dev/edge/gdeploy/ local:"
+  sh "ssh #{SITE}.user 'rm -rf gdeploy'"
+  sh "scp -r ~/dev/edge/gdeploy/ #{SITE}.user:"
 end
 
 desc "Download from #{SITE}"
 task :down do
-  sh "scp -r local:gdeloy/ /tmp"
+  sh "scp -r #{SITE}.user:gdeloy/ /tmp"
 end
 
 desc "New release (tag and push)"
