@@ -36,7 +36,7 @@ DIR = File.expand_path(File.dirname(__FILE__))
 OUT = "> /dev/null 2>&1"
 NAME = "config-glite"
 SITE = %x{hostname --fqdn}.chomp.split('.')[1]
-
+WGET = "wget -q http://public.nancy.grid5000.fr/~sbadia/glite/"
 
 if ARGV.length < 1
   puts "ruby config-glite.rb g5k.yaml"
@@ -291,9 +291,9 @@ if INSTALL == 1:
     $nodes.each do |node|
       session.use "root@#{node}"
     end
-      session.exec("mkdir -p /root/yaim; mkdir -p /opt/glite/yaim/etc; cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-*; wget http://public.nancy.grid5000.fr/~sbadia/glite/repo.tgz -q && tar xzf repo.tgz && mv -f repo/* ./ && rm -rf repo* && rm -f adobe.repo && yum update -q -y #{OUT} && sed -e 's/keepcache=0/keepcache=1/' -i /etc/yum.conf && cd /opt/glite/yaim/etc/ && wget http://public.#{SITE}.grid5000.fr/~#{ENV['USER']}/#{NAME}-42.tgz -q && tar xzf #{NAME}-42.tgz && rm -rf #{NAME}-42.tgz")
+      session.exec("mkdir -p /root/yaim; mkdir -p /opt/glite/yaim/etc; cd /etc/yum.repos.d/ && rm -rf dag.repo* glite-* lcg-*; #{WGET}repo.tgz && tar xzf repo.tgz && mv -f repo/* ./ && rm -rf repo* && rm -f adobe.repo && yum update -q -y #{OUT} && sed -e 's/keepcache=0/keepcache=1/' -i /etc/yum.conf && cd /opt/glite/yaim/etc/ && wget http://public.#{SITE}.grid5000.fr/~#{ENV['USER']}/#{NAME}-42.tgz -q && tar xzf #{NAME}-42.tgz && rm -rf #{NAME}-42.tgz")
       # FIXME (ugly hack for ssh keys (sbadia key dependent...))
-      session.exec("cd /root/ && wget http://public.nancy.grid5000.fr/~sbadia/glite/scp-ssh.tgz -q && tar xzf scp-ssh.tgz && chown -R root:root /root/.ssh/")
+      session.exec("cd /root/ && #{WGET}scp-ssh.tgz && tar xzf scp-ssh.tgz && chown -R root:root /root/.ssh/")
       session.loop
   end
   puts "\033[1;31m###\033[0m {#{time_elapsed}} -- Update distrib finished"
@@ -381,7 +381,7 @@ if INSTALL == 1:
         session.use "root@#{n}"
        end
        session.exec("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
-       session.exec("yum groupinstall glite-WN -q -y #{OUT} && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz #{OUT} && rm -f ssh-keys.tgz")
+       session.exec("yum groupinstall glite-WN -q -y #{OUT} && yum install glite-TORQUE_client lcg-CA -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && #{WGET}ssh-keys.tgz && tar xzf ssh-keys.tgz #{OUT} && rm -f ssh-keys.tgz")
        session.exec('echo -e "\ngLite WN - (WorkerNode)\n" >> /etc/motd')
        session.loop
       end
@@ -394,8 +394,9 @@ if INSTALL == 1:
       Net::SSH.start(sconf['ce'], 'root') do |ssh|
        ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{sname}/site-info.def /root/yaim/site-info.def")
        ssh.exec!("cp -r /opt/glite/yaim/etc/conf/#{$my_vo}/* /root/ && cd /opt/glite/yaim/etc/conf/simple-ca/ && chmod +x install.sh")
-       ssh.exec!("yum install glite-CREAM glite-TORQUE_utils lcg-CA gcc gcc44 xml-commons-apis -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && wget http://public.nancy.grid5000.fr/~sbadia/glite/ssh-keys.tgz -q && tar xzf ssh-keys.tgz #{OUT} && rm -f ssh-keys.tgz")
-       ssh.exec!('mkdir -p /var/spool/pbs/server_priv/accounting && mkdir -p /var/spool/pbs/server_logs')
+       ssh.exec!("mkdir -p /etc/munge/ && #{WGET}munge.key -O /etc/munge/munge.key && chown munge:munge /etc/munge/munge.key;chmod 400 /etc/munge/munge.key")
+       ssh.exec!("yum install munge glite-CREAM glite-TORQUE_utils lcg-CA gcc gcc44 xml-commons-apis -q -y --nogpgcheck #{OUT} && sed '1iexit 0' -i /usr/sbin/fetch-crl && cd / && #{WGET}ssh-keys.tgz && tar xzf ssh-keys.tgz #{OUT} && rm -f ssh-keys.tgz")
+       ssh.exec!("mkdir -p /var/spool/pbs/server_priv/accounting && mkdir -p /var/spool/pbs/server_logs")
        system("ssh root@#{sconf['ce']} -o BatchMode=yes 'cd /opt/glite/yaim/etc/conf/simple-ca/ && /bin/bash copycert.sh #{sname} ce #{OUT}'")
        ssh.exec!("echo '#{sconf['batch']}:/var/spool/pbs/server_priv/accounting /var/spool/pbs/server_priv/accounting nfs     rw,nfsvers=3,hard,intr,async,noatime,nodev,nosuid,auto,rsize=32768,wsize=32768  0' >> /etc/fstab")
        ssh.exec!("echo '#{sconf['batch']}:/var/spool/pbs/server_logs /var/spool/pbs/server_logs nfs     rw,nfsvers=3,hard,intr,async,noatime,nodev,nosuid,auto,rsize=32768,wsize=32768  0' >> /etc/fstab")
