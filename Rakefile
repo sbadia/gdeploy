@@ -4,7 +4,7 @@ require 'rubygems'
 
 SITE = "nancy"
 
-version = "0.1.3"
+version = "0.1.4"
 
 desc "Upload to #{SITE}"
 task :up do
